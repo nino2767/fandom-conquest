@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP 팬덤 땅따먹기 — 화면 목업 v0.1</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+  :root{
+    --nj:#4C8DFF; --ive:#FF4D62; --aes:#C25CFF; --lsf:#22D3B7;
+    --ink:#16171F; --ink2:#5B5E6B; --line:#E2E5EC; --sub:#6C7180; --txt:#1B1D26;
+    --frame:#FFFFFF; --panel:#F4F5F8; --panel2:#EAECF1; --amber:#E08A00;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+    background:#E7E9EF; color:var(--ink); padding:40px 24px 64px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{ font-family:ui-monospace,'SF Mono',Menlo,monospace; font-variant-numeric:tabular-nums; }
+  .wrap{ max-width:1180px; margin:0 auto; }
+  .head h1{ font-size:26px; font-weight:800; letter-spacing:-0.02em; }
+  .head p{ margin-top:8px; font-size:13px; color:var(--ink2); }
+  .grid{ margin-top:36px; display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:34px 26px; }
+
+  .cell .lab{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+  .cell .lab b{ font-size:14px; font-weight:800; }
+  .cell .lab span{ font-size:11px; color:var(--ink2); }
+  .cell .cap{ margin-top:12px; font-size:11.5px; line-height:1.55; color:#43454F; }
+  .cell .cap b{ color:var(--ink); }
+
+  /* 폰 프레임 */
+  .phone{
+    width:100%; max-width:270px; aspect-ratio:270/540; background:var(--frame);
+    border-radius:30px; border:1px solid var(--line); overflow:hidden; position:relative;
+    color:var(--txt); box-shadow:0 16px 40px rgba(30,34,60,.14); margin:0 auto;
+  }
+  .notch{ position:absolute; top:8px; left:50%; transform:translateX(-50%); width:82px; height:18px; background:#000; border-radius:14px; z-index:20; }
+  .scr{ position:absolute; inset:0; display:flex; flex-direction:column; }
+
+  .chip{ display:inline-flex; align-items:center; gap:5px; border:1px solid var(--line); background:var(--panel2); border-radius:999px; padding:3px 8px; font-size:10px; font-weight:700; }
+  .dot{ width:7px; height:7px; border-radius:999px; display:inline-block; }
+  .badge{ font-size:8.5px; font-weight:800; padding:1px 6px; border-radius:999px; }
+  .bar{ height:8px; border-radius:999px; background:#E9ECF2; overflow:hidden; display:flex; }
+  .seg{ height:100%; }
+  .btn{ height:38px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:#06122B; }
+  .tabbar{ margin-top:auto; display:flex; align-items:center; justify-content:space-around; padding:8px 10px 12px; border-top:1px solid var(--line); }
+  .tabi{ display:flex; flex-direction:column; align-items:center; gap:3px; font-size:8.5px; color:#5A607A; }
+  .tabi .ic{ width:16px; height:16px; border-radius:5px; border:1.6px solid #5A607A; }
+
+  /* 규칙 카드 */
+  .rulecard{ background:#FFFFFF; border:1px solid #E2E5EC; border-radius:20px; padding:20px; }
+  .rulecard h3{ font-size:14px; font-weight:800; display:flex; align-items:center; gap:7px; }
+  .rulecard ul{ margin-top:12px; list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .rulecard li{ font-size:12px; color:#43454F; line-height:1.4; display:flex; gap:8px; }
+  .rulecard li b{ color:var(--ink); }
+  .kbd{ flex-shrink:0; width:16px; height:16px; border-radius:5px; background:var(--ink); color:#fff; font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+  .legend{ margin-top:16px; padding-top:14px; border-top:1px dashed #E2E5EC; display:flex; flex-wrap:wrap; gap:10px; }
+  .legend .li{ display:flex; align-items:center; gap:6px; font-size:11px; color:#43454F; }
+  .footer{ margin-top:40px; font-size:11px; color:var(--ink2); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <h1>IP 팬덤 땅따먹기 — 화면 목업 v0.1</h1>
+    <p>테마: 위치기반 팬덤 점령 게이미피케이션 · 모바일 다크 · 화면 플로우 S1–S5 · 논의용 (수치·비주얼은 자리표시)</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- ===================== S1 ===================== -->
+    <div class="cell">
+      <div class="lab"><b>S1 · 성지 지도(홈)</b><span>핵심</span></div>
+      <div class="phone"><div class="notch"></div><div class="scr">
+        <!-- 헤더 -->
+        <div style="padding:26px 12px 8px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:5px"><span style="font-size:14px">⛳</span><b style="font-size:14px;letter-spacing:-.02em">팬덤 땅따먹기</b></div>
+            <span class="chip"><span class="dot" style="background:var(--nj)"></span>뉴진스</span>
+          </div>
+          <div style="margin-top:9px;display:flex;align-items:center;gap:6px;background:rgba(76,141,255,.10);border:1px solid rgba(76,141,255,.28);border-radius:9px;padding:6px 8px">
+            <span class="dot" style="background:var(--ive)"></span>
+            <span style="font-size:10px">방금 <b style="color:var(--nj)">마포</b>가 뉴진스 색으로 뒤집혔어요</span>
+          </div>
+          <div style="margin-top:9px;display:flex;gap:5px;overflow:hidden">
+            <span class="badge" style="background:var(--nj);color:#06122B;display:inline-flex;align-items:center;gap:3px;padding:4px 7px">★ 내 팬덤만</span>
+            <span class="chip" style="border-color:var(--nj)"><span class="dot" style="background:var(--nj)"></span>뉴진스</span>
+            <span class="chip" style="opacity:.5"><span class="dot" style="background:var(--ive)"></span>아이브</span>
+          </div>
+        </div>
+        <!-- 지도 -->
+        <div style="flex:1;margin:0 10px;border-radius:16px;border:1px solid var(--line);background:#F5F7FB;overflow:hidden;position:relative">
+          <svg viewBox="0 0 220 250" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+            <path d="M -10 132 C 60 118, 110 158, 150 138 S 220 132, 240 148 L 240 162 C 200 148, 150 172, 100 150 S 30 138, -10 152 Z" fill="#DCE8F7" opacity=".9"/>
+            <!-- districts -->
+            <g font-family="Pretendard" font-weight="700">
+              <rect x="14" y="26" width="48" height="40" rx="10" fill="#D9DDE7" fill-opacity=".9"/>
+              <text x="38" y="49" font-size="9" fill="#1B1D26" text-anchor="middle" opacity=".6">은평</text>
+
+              <rect x="92" y="20" width="46" height="34" rx="9" fill="var(--aes)" fill-opacity=".45"/>
+              <text x="115" y="37" font-size="9" fill="#1B1D26" text-anchor="middle">종로</text>
+              <text x="115" y="47" font-size="7.5" fill="var(--aes)" text-anchor="middle" class="mono">47%</text>
+
+              <rect x="150" y="66" width="52" height="42" rx="11" fill="var(--nj)" fill-opacity=".45"/>
+              <text x="176" y="85" font-size="9" fill="#1B1D26" text-anchor="middle">성동</text>
+              <text x="176" y="96" font-size="7.5" fill="var(--nj)" text-anchor="middle" class="mono">44%</text>
+
+              <rect x="22" y="74" width="48" height="40" rx="10" fill="var(--ive)" fill-opacity=".42"/>
+              <text x="46" y="93" font-size="9" fill="#1B1D26" text-anchor="middle">서대문</text>
+              <text x="46" y="104" font-size="7.5" fill="var(--ive)" text-anchor="middle" class="mono">42%</text>
+
+              <rect x="78" y="62" width="60" height="54" rx="12" fill="var(--nj)" fill-opacity=".6" stroke="var(--nj)" stroke-width="1.5"/>
+              <text x="108" y="86" font-size="10" fill="#0E1A33" text-anchor="middle">마포</text>
+              <text x="108" y="98" font-size="8" fill="var(--nj)" text-anchor="middle" class="mono">51%</text>
+
+              <rect x="72" y="152" width="52" height="40" rx="10" fill="var(--lsf)" fill-opacity=".4"/>
+              <text x="98" y="171" font-size="9" fill="#1B1D26" text-anchor="middle">용산</text>
+              <text x="98" y="182" font-size="7.5" fill="var(--lsf)" text-anchor="middle" class="mono">41%</text>
+
+              <rect x="140" y="158" width="58" height="46" rx="11" fill="var(--aes)" fill-opacity=".42"/>
+              <text x="169" y="179" font-size="9" fill="#1B1D26" text-anchor="middle">강남</text>
+              <text x="169" y="190" font-size="7.5" fill="var(--aes)" text-anchor="middle" class="mono">40%</text>
+            </g>
+            <!-- pins -->
+            <g>
+              <circle cx="108" cy="70" r="9" fill="var(--nj)" stroke="#fff" stroke-width="1.5"/>
+              <text x="108" y="55" font-size="7.5" fill="#06122B" text-anchor="middle" class="mono" font-weight="800" style="paint-order:stroke"></text>
+              <rect x="96" y="44" width="24" height="12" rx="3" fill="var(--nj)"/><text x="108" y="53" font-size="8" fill="#06122B" text-anchor="middle" class="mono" font-weight="800">D-3</text>
+              <circle cx="44" cy="96" r="7" fill="var(--ive)" stroke="#fff" stroke-width="1.3"/>
+              <circle cx="98" cy="168" r="7" fill="var(--lsf)" stroke="#fff" stroke-width="1.3"/>
+            </g>
+          </svg>
+          <div style="position:absolute;left:8px;bottom:8px;display:flex;gap:8px;background:rgba(255,255,255,.86);border:1px solid var(--line);border-radius:8px;padding:5px 7px">
+            <span style="display:flex;align-items:center;gap:4px;font-size:8.5px;color:#9AA0B8"><span style="width:8px;height:6px;border-radius:2px;background:var(--nj);display:inline-block"></span>점령 40%↑</span>
+          </div>
+        </div>
+        <!-- 탭 -->
+        <div class="tabbar">
+          <div class="tabi"><span class="ic" style="border-color:#1B1D26"></span><span style="color:#1B1D26">지도</span></div>
+          <div class="tabi"><span class="ic"></span>전황</div>
+          <div class="tabi"><span style="width:26px;height:26px;margin-top:-12px;border-radius:9px;background:var(--nj);display:flex;align-items:center;justify-content:center;color:#06122B;font-weight:800;font-size:14px">＋</span>인증</div>
+          <div class="tabi"><span class="ic"></span>랭킹</div>
+          <div class="tabi"><span class="ic"></span>MY</div>
+        </div>
+      </div></div>
+      <p class="cap"><b>성지 핀 + 구 단위 팬덤 색칠 + 선호 IP 필터.</b> 점령 = 구 점유 40%↑ 1위. 첫 화면에서 "뺏고 뺏김"을 티커로 전달.</p>
+    </div>
+
+    <!-- ===================== S2 ===================== -->
+    <div class="cell">
+      <div class="lab"><b>S2 · 성지 상세</b><span>행동 진입</span></div>
+      <div class="phone"><div class="notch"></div><div class="scr">
+        <!-- 히어로 -->
+        <div style="height:120px;position:relative;background:radial-gradient(120% 100% at 50% -10%, rgba(76,141,255,.35), rgba(76,141,255,.10) 45%, #FFFFFF 80%)">
+          <div style="position:absolute;top:24px;left:12px;right:12px;display:flex;justify-content:space-between">
+            <span style="width:26px;height:26px;border-radius:999px;border:1px solid var(--line);background:rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;font-size:13px">‹</span>
+            <span style="width:26px;height:26px;border-radius:999px;border:1px solid var(--line);background:rgba(0,0,0,.05)"></span>
+          </div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:40px">🎂</div>
+          <div style="position:absolute;left:12px;bottom:10px;display:flex;gap:5px">
+            <span class="badge" style="background:var(--nj);color:#06122B;padding:3px 7px">🔥 마감 D-3</span>
+            <span class="badge" style="background:rgba(255,255,255,.85);border:1px solid var(--line);color:var(--txt);padding:3px 7px">이벤트 성지</span>
+          </div>
+        </div>
+        <!-- 본문 -->
+        <div style="padding:12px 13px 0">
+          <div style="display:flex;align-items:center;gap:5px"><span class="dot" style="background:var(--nj)"></span><span style="font-size:10px;font-weight:700;color:var(--nj)">뉴진스</span></div>
+          <div style="margin-top:4px;font-size:18px;font-weight:800;letter-spacing:-.02em">하니 생일 카페</div>
+          <div style="margin-top:4px;font-size:10.5px;color:var(--sub)">📍 <b style="color:var(--txt)">어반소스</b> · 마포구 연남동</div>
+
+          <div style="margin-top:12px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:11px;font-weight:700">이 성지 점령 현황</span>
+              <span class="mono" style="font-size:9px;color:var(--sub)">인증 200건</span>
+            </div>
+            <div style="margin-top:8px;display:flex;align-items:center;gap:6px">
+              <span class="mono" style="font-size:16px;font-weight:800;color:var(--nj)">62%</span>
+              <span style="font-size:11px;font-weight:700">뉴진스 1위</span>
+              <span class="badge" style="color:var(--nj);background:rgba(76,141,255,.13);padding:2px 7px">✓ 점령</span>
+            </div>
+            <div class="bar" style="margin-top:8px;height:10px">
+              <span class="seg" style="width:62%;background:var(--nj)"></span>
+              <span class="seg" style="width:26%;background:var(--ive);opacity:.5"></span>
+              <span class="seg" style="width:12%;background:var(--aes);opacity:.5"></span>
+            </div>
+          </div>
+        </div>
+        <!-- CTA -->
+        <div style="margin-top:auto;padding:10px 13px 16px;border-top:1px solid var(--line)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-size:10px;color:var(--sub)">인증 시 내 팬덤</span>
+            <span class="chip"><span class="dot" style="background:var(--nj)"></span>뉴진스 ▾</span>
+          </div>
+          <div class="btn" style="background:var(--nj)">📷 영수증 인증하기</div>
+        </div>
+      </div></div>
+      <p class="cap"><b>이 성지의 팬덤별 점유(인증 건수 기반)와 D-day.</b> 구 전체 점유는 S4에서. 인증 1건은 팬덤 1개에 귀속.</p>
+    </div>
+
+    <!-- ===================== S3 ===================== -->
+    <div class="cell">
+      <div class="lab"><b>S3 · 영수증 인증</b><span>결과 화면</span></div>
+      <div class="phone"><div class="notch"></div>
+        <div class="scr" style="background:radial-gradient(120% 70% at 50% 0%, rgba(76,141,255,.28), #FFFFFF 60%)">
+          <div style="flex:1;padding:34px 16px 12px;display:flex;flex-direction:column;align-items:center">
+            <div style="width:56px;height:56px;border-radius:999px;background:var(--nj);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px rgba(76,141,255,.5);font-size:28px;color:#06122B;font-weight:800">✓</div>
+            <div style="margin-top:12px;font-size:17px;font-weight:800">인증 완료!</div>
+            <div style="margin-top:6px;font-size:12px;text-align:center;line-height:1.4"><b style="color:var(--nj)">마포구</b>를 뉴진스 색으로<br><b style="color:var(--nj)">뒤집었어요!</b> 🎉</div>
+
+            <div style="margin-top:16px;width:100%;background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:14px;padding:12px">
+              <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:7px"><span style="color:var(--sub)">마포구 점령 현황</span><span class="mono" style="color:var(--nj);font-weight:800">뉴진스 51%</span></div>
+              <div class="bar" style="height:12px"><span class="seg" style="width:51%;background:var(--nj)"></span><span class="seg" style="width:46%;background:var(--ive);opacity:.55"></span></div>
+              <div class="mono" style="margin-top:7px;font-size:9.5px;color:var(--sub);text-align:center">기존 48% → <b style="color:var(--nj)">51%</b></div>
+            </div>
+
+            <div style="margin-top:12px;width:100%;display:flex;gap:7px">
+              <div style="flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:9px 6px;text-align:center"><div style="font-size:8.5px;color:var(--sub)">획득</div><div class="mono" style="font-size:14px;font-weight:800">+1점</div></div>
+              <div style="flex:1;background:var(--panel);border:1px solid rgba(76,141,255,.4);border-radius:12px;padding:9px 6px;text-align:center"><div style="font-size:8.5px;color:var(--sub)">내 기여</div><div class="mono" style="font-size:14px;font-weight:800;color:var(--nj)">+0.4%p</div></div>
+              <div style="flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:9px 6px;text-align:center"><div style="font-size:8.5px;color:var(--sub)">이번주</div><div class="mono" style="font-size:14px;font-weight:800">3위</div></div>
+            </div>
+          </div>
+          <div style="padding:8px 16px 16px"><div class="btn" style="background:var(--nj)">전황 보기 →</div></div>
+        </div>
+      </div>
+      <p class="cap"><b>카메라 → AI 판독(항목추출·4겹 어뷰징 방어) → 결과.</b> "마포 +0.4%, 뒤집힘"이 서비스의 핵심 쾌감.</p>
+    </div>
+
+    <!-- ===================== S4 ===================== -->
+    <div class="cell">
+      <div class="lab"><b>S4 · 점령 전황</b><span>워룸</span></div>
+      <div class="phone"><div class="notch"></div><div class="scr">
+        <div style="padding:26px 12px 8px">
+          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px">⚔️</span><b style="font-size:15px">점령 전황</b><span class="chip" style="margin-left:auto"><span class="dot" style="background:var(--nj)"></span>뉴진스</span></div>
+          <div style="margin-top:9px;display:flex;gap:6px">
+            <div style="flex:1;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 4px;text-align:center"><div class="mono" style="font-size:15px;font-weight:800;color:var(--nj)">2</div><div style="font-size:9px;color:var(--sub)">점령</div></div>
+            <div style="flex:1;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 4px;text-align:center"><div class="mono" style="font-size:15px;font-weight:800;color:var(--amber)">1</div><div style="font-size:9px;color:var(--sub)">위태</div></div>
+            <div style="flex:1;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 4px;text-align:center"><div class="mono" style="font-size:15px;font-weight:800">1</div><div style="font-size:9px;color:var(--sub)">도전</div></div>
+          </div>
+        </div>
+        <div style="flex:1;overflow:hidden;padding:0 11px">
+          <!-- 뒤집힘 알림 -->
+          <div style="border-radius:12px;padding:10px;background:linear-gradient(135deg,rgba(76,141,255,.18),rgba(76,141,255,.04));border:1px solid rgba(76,141,255,.35)">
+            <div style="display:flex;align-items:center;gap:5px"><span style="font-size:11px">🔥</span><b style="font-size:11px;color:var(--nj)">방금 뒤집었어요</b></div>
+            <div style="margin-top:5px;font-size:10.5px;line-height:1.4"><b>마포</b>가 아이브 → <b style="color:var(--nj)">뉴진스</b>. 당신의 인증이 결정타!</div>
+          </div>
+          <!-- 위태 알림 -->
+          <div style="margin-top:8px;border-radius:12px;padding:10px;background:linear-gradient(135deg,rgba(255,176,32,.12),rgba(255,176,32,.03));border:1px solid rgba(255,176,32,.35)">
+            <div style="display:flex;align-items:center;gap:5px"><span style="font-size:11px">🛡️</span><b style="font-size:11px;color:var(--amber)">성동이 위태로워요</b><span class="mono" style="margin-left:auto;font-size:9.5px;color:var(--amber)">격차 4%p</span></div>
+            <div style="margin-top:5px;font-size:10px;color:#D6C7A0">아이브가 4%p까지 추격 중 · 방어하기 ›</div>
+          </div>
+          <!-- 구 리스트 -->
+          <div style="margin-top:11px;display:flex;flex-direction:column;gap:7px">
+            <div style="background:var(--panel);border:1px solid rgba(76,141,255,.4);border-radius:11px;padding:9px 10px">
+              <div style="display:flex;align-items:center;gap:5px"><b style="font-size:11.5px">마포</b><span class="badge" style="color:var(--nj);background:rgba(76,141,255,.13);padding:1px 6px">점령</span><span class="badge" style="color:var(--nj);border:1px solid rgba(76,141,255,.4);padding:1px 6px">🔥뒤집음</span><span class="mono" style="margin-left:auto;font-size:12px;font-weight:800;color:var(--nj)">51%</span></div>
+              <div class="bar" style="margin-top:6px"><span class="seg" style="width:51%;background:var(--nj)"></span><span class="seg" style="width:46%;background:var(--ive);opacity:.5"></span></div>
+            </div>
+            <div style="background:var(--panel);border:1px solid rgba(255,176,32,.4);border-radius:11px;padding:9px 10px">
+              <div style="display:flex;align-items:center;gap:5px"><b style="font-size:11.5px">성동</b><span class="badge" style="color:var(--nj);background:rgba(76,141,255,.13);padding:1px 6px">점령</span><span class="badge" style="color:var(--amber);border:1px solid rgba(255,176,32,.4);padding:1px 6px">⚠위태</span><span class="mono" style="margin-left:auto;font-size:12px;font-weight:800;color:var(--nj)">41%</span></div>
+              <div class="bar" style="margin-top:6px"><span class="seg" style="width:41%;background:var(--nj)"></span><span class="seg" style="width:37%;background:var(--ive);opacity:.5"></span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <p class="cap"><b>구별 1·2위 격차 + 뒤집힘/위태로움 알림.</b> 내 팬덤 점령지가 좁혀지면 방어 유도(B3). 감쇠로 뺏고 뺏김.</p>
+    </div>
+
+    <!-- ===================== S5 ===================== -->
+    <div class="cell">
+      <div class="lab"><b>S5 · 랭킹</b><span>개인 / 팬덤</span></div>
+      <div class="phone"><div class="notch"></div><div class="scr">
+        <div style="padding:26px 12px 8px">
+          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px">🏆</span><b style="font-size:15px">랭킹</b><span class="chip" style="margin-left:auto"><span class="dot" style="background:var(--nj)"></span>뉴진스</span></div>
+          <div style="margin-top:9px;display:flex;gap:5px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:3px">
+            <div style="flex:1;text-align:center;padding:6px 0;border-radius:7px;background:#1B1D26;color:#fff;font-size:11px;font-weight:800">개인 · 누적</div>
+            <div style="flex:1;text-align:center;padding:6px 0;font-size:11px;font-weight:700;color:var(--sub)">팬덤 · 점유</div>
+          </div>
+          <div style="margin-top:8px;display:flex;gap:6px;align-items:center">
+            <span class="chip" style="border-color:var(--nj)">전체 서울</span>
+            <span class="chip" style="opacity:.6">마포구</span>
+            <span style="margin-left:auto;font-size:9px;color:var(--sub)">인증 건수 · 영구</span>
+          </div>
+        </div>
+        <div style="flex:1;overflow:hidden;padding:2px 11px;display:flex;flex-direction:column;gap:6px">
+          <!-- rows -->
+          <div style="display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:8px 10px">
+            <span style="width:20px;height:20px;border-radius:999px;background:#F5C542;color:#06122B;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">1</span>
+            <span style="width:26px;height:26px;border-radius:999px;background:rgba(76,141,255,.18);border:1.4px solid var(--nj);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--nj)">하</span>
+            <div style="flex:1"><div style="font-size:11.5px;font-weight:700">하니러버</div><div style="font-size:9px;color:var(--sub)">뉴진스</div></div>
+            <span class="mono" style="font-size:13px;font-weight:800">312<span style="font-size:9px;color:var(--sub)"> 건</span></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:8px 10px">
+            <span style="width:20px;height:20px;border-radius:999px;background:#C7CDD9;color:#06122B;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">2</span>
+            <span style="width:26px;height:26px;border-radius:999px;background:rgba(255,77,98,.18);border:1.4px solid var(--ive);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--ive)">레</span>
+            <div style="flex:1"><div style="font-size:11.5px;font-weight:700">레이맘</div><div style="font-size:9px;color:var(--sub)">아이브</div></div>
+            <span class="mono" style="font-size:13px;font-weight:800">289<span style="font-size:9px;color:var(--sub)"> 건</span></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:8px 10px">
+            <span style="width:20px;height:20px;border-radius:999px;background:#CD8B54;color:#06122B;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">3</span>
+            <span style="width:26px;height:26px;border-radius:999px;background:rgba(194,92,255,.18);border:1.4px solid var(--aes);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--aes)">카</span>
+            <div style="flex:1"><div style="font-size:11.5px;font-weight:700">카리나포켓</div><div style="font-size:9px;color:var(--sub)">에스파</div></div>
+            <span class="mono" style="font-size:13px;font-weight:800">264<span style="font-size:9px;color:var(--sub)"> 건</span></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(76,141,255,.10);border:1px solid var(--nj);border-radius:11px;padding:8px 10px">
+            <span class="mono" style="width:20px;text-align:center;font-size:12px;font-weight:800;color:var(--nj)">7</span>
+            <span style="width:26px;height:26px;border-radius:999px;background:rgba(76,141,255,.18);border:1.4px solid var(--nj);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--nj)">지</span>
+            <div style="flex:1"><div style="font-size:11.5px;font-weight:700">지수 <span class="badge" style="background:var(--nj);color:#06122B;padding:1px 5px">나</span></div><div style="font-size:9px;color:var(--sub)">뉴진스</div></div>
+            <span class="mono" style="font-size:13px;font-weight:800;color:var(--nj)">198<span style="font-size:9px;color:var(--sub)"> 건</span></span>
+          </div>
+        </div>
+        <div style="padding:8px 12px 14px;border-top:1px solid var(--line)">
+          <div style="display:flex;align-items:center;gap:9px;background:rgba(76,141,255,.12);border:1px solid var(--nj);border-radius:11px;padding:8px 11px">
+            <span class="mono" style="font-size:14px;font-weight:800;color:var(--nj)">7위</span>
+            <div style="flex:1"><div style="font-size:10.5px;font-weight:700">내 순위 · 전체 서울</div><div style="font-size:9px;color:var(--sub)">누적 인증 198건</div></div>
+            <span style="font-size:10px;font-weight:700;color:#3FD07E">▲ +2</span>
+          </div>
+        </div>
+      </div></div>
+      <p class="cap"><b>개인 = 누적 인증(영구) / 팬덤 = 현재 점유(유동).</b> 범위 전체·구 전환. 마포로 좁히면 "이번주 기여 3위".</p>
+    </div>
+
+    <!-- ===================== 규칙 카드 ===================== -->
+    <div class="cell">
+      <div class="lab"><b>핵심 규칙 & 범례</b><span>정책</span></div>
+      <div class="rulecard">
+        <h3>🎯 땅따먹기 규칙</h3>
+        <ul>
+          <li><span class="kbd">1</span><span><b>점령</b> = 구 점유율 <b>40%↑</b>이면서 1위</span></li>
+          <li><span class="kbd">2</span><span><b>점수</b> = 인증 건수 (균등 1건 = 1점)</span></li>
+          <li><span class="kbd">3</span><span><b>감쇠</b>로 시간이 지나면 점유가 줄어 뺏고 뺏김</span></li>
+          <li><span class="kbd">4</span><span><b>팬덤 = 색</b>으로 구분, 지도를 색으로 점령</span></li>
+          <li><span class="kbd">5</span><span>인증 <b>1건 = 팬덤 1개</b>에 귀속 (결제 영수증)</span></li>
+        </ul>
+        <div class="legend">
+          <div class="li"><span class="dot" style="background:var(--nj)"></span>뉴진스</div>
+          <div class="li"><span class="dot" style="background:var(--ive)"></span>아이브</div>
+          <div class="li"><span class="dot" style="background:var(--aes)"></span>에스파</div>
+          <div class="li"><span class="dot" style="background:var(--lsf)"></span>르세라핌</div>
+        </div>
+      </div>
+      <p class="cap">데모 팬덤·수치는 자리표시입니다. 실제 색/IP는 파트너·라이선스에 맞춰 조정.</p>
+    </div>
+
+  </div>
+
+  <div class="footer">IP 팬덤 땅따먹기 · 화면 목업 v0.1 · S1 지도 · S2 상세 · S3 인증 · S4 전황 · S5 랭킹</div>
+</div>
+</body>
+</html>

@@ -14,9 +14,13 @@ fandom-conquest/
        └── skills/                 # 문서 스타일 컴파일 등 에이전트 확장 스킬
 ```
 
-## 🛠️ 기술 스택 (예정)
+## 🛠️ 기술 스택 (B2C user-view)
 
-*사용자가 목업 프로젝트를 이식한 이후에 확정 및 업데이트 예정입니다.*
+- **Framework**: Next.js 15 (React 19, TypeScript)
+- **Routing**: App Router (`src/app/` 기반)
+- **Styling**: Vanilla CSS 및 Inline Styles
+- **Icons**: Lucide React
+- **Aesthetics**: 모바일 웹앱 전용 셸 레이아웃 (가로 `max-width: 390px ~ 430px` 중앙 정렬)
 
 ## 👥 에이전트 역할군
 
