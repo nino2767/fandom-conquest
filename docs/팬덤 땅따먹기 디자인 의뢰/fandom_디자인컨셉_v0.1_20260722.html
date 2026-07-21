@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  body{margin:0;background:#e9e6df;font-family:"Pretendard",system-ui,sans-serif}
+  a{color:#2a78d6}a:hover{color:#1c5fb0}
+  .dv-turn{padding:44px 48px 40px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
+  .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+  .dv-tname{font:700 14px/1.2 "Pretendard",system-ui;color:#1a1a1a}
+  .dv-sub{margin:0 0 26px;max-width:720px;font:400 12.5px/1.6 "Pretendard",system-ui;color:rgba(0,0,0,.55)}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:38px;align-items:flex-start}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+  .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+  .dv-olabel{display:flex;align-items:baseline;gap:9px;font:600 12px/1.35 "Pretendard",system-ui;color:rgba(0,0,0,.68)}
+  .dv-olabel small{font-weight:400;color:rgba(0,0,0,.45)}
+  .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+  .dv-next{margin:26px 0 0;font:12.5px/1.6 "Pretendard",system-ui;color:rgba(0,0,0,.5)}
+  /* phone shell */
+  .ph{position:relative;width:336px;height:712px;border-radius:46px;background:#0c0c0d;padding:11px;box-shadow:0 28px 60px -22px rgba(0,0,0,.45),0 4px 14px rgba(0,0,0,.18)}
+  .ph-scr{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden}
+  .ph-notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:104px;height:26px;background:#0c0c0d;border-radius:16px;z-index:40}
+  .sbar{position:absolute;top:0;left:0;right:0;height:50px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 6px;font:600 13px "Pretendard";z-index:35}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t4">
+  <div class="dv-thd"><a class="dv-tid" href="#t4">4</a><span class="dv-tname">뉴스 개표 그래픽 톤 · 구별 점령 현황</span></div>
+  <p class="dv-sub">선거 방송의 시도별 코로플레스에서 착안 — 구마다 <b>우세 팬덤 색 + 점유율 숫자</b>로 칠합니다. <a class="dv-oid" href="#4a">4a</a>는 실제 지도형 색칠, <a class="dv-oid" href="#4b">4b</a>는 타일 카토그램(정방형 격자). "S1 홈"을 도시 전체 전황 화면으로 보여주는 버전입니다.</p>
+  <div class="dv-opts">
+
+    <!-- ============ 4a  지도형 코로플레스 ============ -->
+    <div class="dv-opt" id="4a">
+      <div class="dv-olabel"><a class="dv-oid" href="#4a">4a</a> 지도형 색칠 <small>· 구 경계 + 점유율 라벨 + 범례</small></div>
+      <div class="ph">
+        <div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#f2f5fa">
+          <div class="sbar" style="color:#1b2a4a"><span>9:41</span><span style="display:flex;gap:5px;align-items:center;font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <!-- news header -->
+          <div style="position:absolute;top:48px;left:0;right:0;padding:8px 16px 12px;z-index:30;background:#f2f5fa">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between">
+              <div>
+                <div style="font:900 20px/1 'Pretendard';color:#1b2a4a;letter-spacing:-.03em">서울 점령 현황 <span style="font-size:11px;color:#8a94a8;font-weight:700">LIVE</span></div>
+                <div style="font:600 11px 'Pretendard';color:#8a94a8;margin-top:4px">자치구별 우세 팬덤 · 실시간(잠정)</div>
+              </div>
+              <div style="text-align:right"><div style="font:900 22px/1 'Pretendard';color:#e63b83">54.2%</div><div style="font:700 9.5px 'Pretendard';color:#8a94a8">aespa 우세</div></div>
+            </div>
+          </div>
+          <!-- map -->
+          <svg viewBox="0 0 336 712" style="position:absolute;top:0;left:0;width:100%;height:100%">
+            <rect width="336" height="712" fill="#f2f5fa"></rect>
+            <g stroke="#f2f5fa" stroke-width="2.5" stroke-linejoin="round">
+              <polygon points="22,180 100,168 118,262 96,290 30,278" fill="#a9c4ff"></polygon>
+              <polygon points="118,168 210,176 214,272 128,262" fill="#6f9bff"></polygon>
+              <polygon points="210,174 314,188 306,278 216,270" fill="#ffd6e6"></polygon>
+              <polygon points="30,280 96,292 110,398 40,412" fill="#3f74f5"></polygon>
+              <polygon points="128,264 214,274 210,398 122,394" fill="#ff9dc0"></polygon>
+              <polygon points="216,272 306,282 300,400 210,396" fill="#e63b83"></polygon>
+              <polygon points="40,414 110,400 120,520 52,530" fill="#ffe6b3"></polygon>
+              <polygon points="122,396 210,400 206,522 128,518" fill="#dbe6ff"></polygon>
+              <polygon points="210,398 300,402 294,520 206,520" fill="#f76aa0"></polygon>
+            </g>
+            <g font-family="Pretendard" text-anchor="middle">
+              <text x="66" y="230" font-size="11" font-weight="700" fill="#1b2a4a">은평</text><text x="66" y="246" font-size="13" font-weight="900" fill="#1b2a4a">52.1</text>
+              <text x="166" y="216" font-size="11" font-weight="700" fill="#fff">강북</text><text x="166" y="232" font-size="13" font-weight="900" fill="#fff">58.0</text>
+              <text x="262" y="224" font-size="11" font-weight="700" fill="#8a2b57">노원</text><text x="262" y="240" font-size="13" font-weight="900" fill="#8a2b57">49.3</text>
+              <text x="70" y="342" font-size="11" font-weight="700" fill="#fff">마포</text><text x="70" y="358" font-size="13" font-weight="900" fill="#fff">63.4</text>
+              <text x="166" y="330" font-size="11" font-weight="700" fill="#7a2148">성북</text><text x="166" y="346" font-size="13" font-weight="900" fill="#7a2148">55.2</text>
+              <text x="258" y="332" font-size="11" font-weight="700" fill="#fff">성동</text><text x="258" y="348" font-size="14" font-weight="900" fill="#fff">67.0</text>
+              <text x="80" y="464" font-size="11" font-weight="700" fill="#7a5a12">강서</text><text x="80" y="480" font-size="13" font-weight="900" fill="#7a5a12">51.4</text>
+              <text x="166" y="456" font-size="11" font-weight="700" fill="#2a3a5c">관악</text><text x="166" y="472" font-size="13" font-weight="900" fill="#2a3a5c">50.2</text>
+              <text x="252" y="456" font-size="11" font-weight="700" fill="#fff">강남</text><text x="252" y="472" font-size="13" font-weight="900" fill="#fff">61.5</text>
+            </g>
+          </svg>
+          <!-- hotspot callout -->
+          <div style="position:absolute;right:14px;top:40%;z-index:31;background:#fff;border:2px solid #e63b83;border-radius:12px;padding:7px 10px;box-shadow:0 6px 16px rgba(0,0,0,.1)">
+            <div style="font:800 10px 'Pretendard';color:#e63b83">🔥 성동 · 성수</div>
+            <div style="font:600 9.5px 'Pretendard';color:#8a94a8;margin-top:1px">성지 24곳 최다</div>
+          </div>
+          <!-- legend footer -->
+          <div style="position:absolute;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid #e6ebf2;padding:12px 16px 16px">
+            <div style="display:flex;gap:14px;margin-bottom:12px">
+              <div style="display:flex;align-items:center;gap:6px;font:700 11px 'Pretendard';color:#1b2a4a"><span style="width:11px;height:11px;border-radius:3px;background:#3f74f5"></span>NewJeans</div>
+              <div style="display:flex;align-items:center;gap:6px;font:700 11px 'Pretendard';color:#1b2a4a"><span style="width:11px;height:11px;border-radius:3px;background:#e63b83"></span>aespa</div>
+              <div style="display:flex;align-items:center;gap:6px;font:700 11px 'Pretendard';color:#1b2a4a"><span style="width:11px;height:11px;border-radius:3px;background:#f7b733"></span>IVE</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font:700 10px 'Pretendard';color:#8a94a8">점유율</span>
+              <div style="flex:1;height:9px;border-radius:5px;background:linear-gradient(90deg,#e9eef6,#a9c4ff,#6f9bff,#3f74f5,#1b2a4a)"></div>
+              <div style="display:flex;gap:11px;font:700 9px 'Pretendard';color:#8a94a8"><span>45</span><span>55</span><span>65+</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 4b  타일 카토그램 ============ -->
+    <div class="dv-opt" id="4b">
+      <div class="dv-olabel"><a class="dv-oid" href="#4b">4b</a> 타일 카토그램 <small>· 정방형 격자 · 데이터 그래픽 톤</small></div>
+      <div class="ph">
+        <div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#0f1420">
+          <div class="sbar" style="color:#e8edf5"><span>9:41</span><span style="display:flex;gap:5px;align-items:center;font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:48px;left:0;right:0;padding:8px 18px 4px;z-index:30">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between">
+              <div><div style="font:900 19px/1 'Pretendard';color:#fff;letter-spacing:-.02em">SEOUL 점령 현황</div><div style="font:600 10.5px 'Pretendard';color:#7c869a;margin-top:4px">자치구 25 · 실시간 잠정</div></div>
+              <div style="text-align:right"><div style="font:900 20px/1 'Pretendard';color:#ff5c98">54.2%</div><div style="font:700 9px 'Pretendard';color:#7c869a">aespa 우세</div></div>
+            </div>
+          </div>
+          <!-- tile grid -->
+          <div style="position:absolute;top:118px;left:0;right:0;bottom:118px;padding:0 20px;z-index:20;display:flex;flex-direction:column;gap:7px;justify-content:center">
+            <div style="display:flex;gap:7px;justify-content:center">
+              <div style="width:60px;height:60px;border-radius:11px;background:#6f9bff;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 16px 'Pretendard';color:#fff">58</span><span style="font:700 8.5px 'Pretendard';color:rgba(255,255,255,.8)">강북</span></div>
+              <div style="width:60px;height:60px;border-radius:11px;background:#2a3550;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #ff9dc0"><span style="font:900 16px 'Pretendard';color:#ff9dc0">49</span><span style="font:700 8.5px 'Pretendard';color:#8b96ac">노원</span></div>
+              <div style="width:60px;height:60px;border-radius:11px;background:#a9c4ff;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 16px 'Pretendard';color:#1b2a4a">52</span><span style="font:700 8.5px 'Pretendard';color:#33436a">은평</span></div>
+            </div>
+            <div style="display:flex;gap:7px;justify-content:center">
+              <div style="width:60px;height:60px;border-radius:11px;background:#3f74f5;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 16px 'Pretendard';color:#fff">63</span><span style="font:700 8.5px 'Pretendard';color:rgba(255,255,255,.85)">마포</span></div>
+              <div style="width:60px;height:60px;border-radius:11px;background:#ff9dc0;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 16px 'Pretendard';color:#5c1636">55</span><span style="font:700 8.5px 'Pretendard';color:#8a2b57">성북</span></div>
+              <div style="width:60px;height:60px;border-radius:11px;background:#e63b83;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 2px #ff5c98,0 0 16px rgba(230,59,131,.6)"><span style="font:900 17px 'Pretendard';color:#fff">67</span><span style="font:700 8.5px 'Pretendard';color:rgba(255,255,255,.9)">성동🔥</span></div>
+            </div>
+            <div style="display:flex;gap:7px;justify-content:center">
+              <div style="width:60px;height:60px;border-radius:11px;background:#f7b733;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 16px 'Pretendard';color:#4a3708">51</span><span style="font:700 8.5px 'Pretendard';color:#7a5a12">강서</span></div>
+              <div style="width:60px;height:60px;border-radius:11px;background:#dbe6ff;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 16px 'Pretendard';color:#1b2a4a">50</span><span style="font:700 8.5px 'Pretendard';color:#33436a">관악</span></div>
+              <div style="width:60px;height:60px;border-radius:11px;background:#f76aa0;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 16px 'Pretendard';color:#fff">61</span><span style="font:700 8.5px 'Pretendard';color:rgba(255,255,255,.85)">강남</span></div>
+            </div>
+          </div>
+          <!-- legend -->
+          <div style="position:absolute;left:0;right:0;bottom:0;z-index:30;padding:12px 20px 16px;border-top:1px solid rgba(255,255,255,.08)">
+            <div style="display:flex;gap:14px;margin-bottom:10px">
+              <div style="display:flex;align-items:center;gap:6px;font:700 10.5px 'Pretendard';color:#c7d0de"><span style="width:10px;height:10px;border-radius:3px;background:#3f74f5"></span>NewJeans 8</div>
+              <div style="display:flex;align-items:center;gap:6px;font:700 10.5px 'Pretendard';color:#c7d0de"><span style="width:10px;height:10px;border-radius:3px;background:#e63b83"></span>aespa 13</div>
+              <div style="display:flex;align-items:center;gap:6px;font:700 10.5px 'Pretendard';color:#c7d0de"><span style="width:10px;height:10px;border-radius:3px;background:#f7b733"></span>IVE 4</div>
+            </div>
+            <div style="font:600 10px 'Pretendard';color:#7c869a">숫자 = 우세 팬덤 점유율(%) · 진할수록 격차 큼</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">다음에 이렇게 · "<a class="dv-oid" href="#4a">4a</a>로 확정, 나머지 화면 만들어줘" · "<a class="dv-oid" href="#4a">4a</a>에 <a class="dv-oid" href="#4b">4b</a>처럼 격차 강조 추가" · "구 라벨에 성지 개수도"</p>
+</section>
+<section class="dv-turn" id="t3">
+  <div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname"><a class="dv-oid" href="#2a">2a</a> 리소 프린트 · 지도 스타일 실험</span></div>
+  <p class="dv-sub">헤더·필터·바텀시트는 <a class="dv-oid" href="#2a">2a</a> 그대로. 지도 표현만 바꿨습니다. <a class="dv-oid" href="#3a">3a</a>는 등고선 지형도, <a class="dv-oid" href="#3b">3b</a>는 도트 밀도 그리드.</p>
+  <div class="dv-opts">
+
+    <!-- ============ 3a  등고선 지형도 ============ -->
+    <div class="dv-opt" id="3a">
+      <div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a> 등고선 지형도 <small>· 점유가 높을수록 겹겹이</small></div>
+      <div class="ph">
+        <div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="display:flex;gap:5px;align-items:center;font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:48px;left:0;right:0;padding:6px 18px 10px;z-index:30">
+            <div style="display:flex;align-items:flex-end;justify-content:space-between">
+              <div><div style="font:700 11px 'Pretendard';color:#c0492f;letter-spacing:.22em">SEONGSU DISTRICT</div><div style="font:800 24px/1 'Pretendard';color:#22201c;letter-spacing:-.03em;margin-top:3px">성수, 물들다</div></div>
+              <div style="width:34px;height:34px;border-radius:50%;border:2px solid #22201c;display:flex;align-items:center;justify-content:center;font-size:13px;color:#22201c">◎</div>
+            </div>
+            <div style="display:flex;gap:0;margin-top:13px;border:1.5px solid #22201c;border-radius:9px;overflow:hidden;width:fit-content">
+              <div style="padding:6px 13px;background:#22201c;color:#fff;font:700 11.5px 'Pretendard'">전체</div>
+              <div style="padding:6px 13px;font:700 11.5px 'Pretendard';color:#22201c;border-left:1.5px solid #22201c">NewJeans</div>
+              <div style="padding:6px 13px;font:700 11.5px 'Pretendard';color:#22201c;border-left:1.5px solid #22201c">aespa</div>
+            </div>
+          </div>
+          <svg viewBox="0 0 336 460" style="position:absolute;top:0;left:0;width:100%;height:65%">
+            <rect width="336" height="460" fill="#fff"></rect>
+            <g fill="none" stroke-width="1.6">
+              <g stroke="#e64980" opacity=".9">
+                <circle cx="215" cy="180" r="20"></circle><circle cx="215" cy="180" r="38"></circle><circle cx="215" cy="180" r="57"></circle><circle cx="215" cy="180" r="77"></circle><circle cx="215" cy="180" r="98"></circle>
+              </g>
+              <g stroke="#2f6bff" opacity=".85">
+                <circle cx="92" cy="215" r="18"></circle><circle cx="92" cy="215" r="34"></circle><circle cx="92" cy="215" r="52"></circle><circle cx="92" cy="215" r="72"></circle>
+              </g>
+              <g stroke="#f59f00" opacity=".7">
+                <circle cx="170" cy="360" r="16"></circle><circle cx="170" cy="360" r="32"></circle><circle cx="170" cy="360" r="50"></circle>
+              </g>
+            </g>
+            <circle cx="215" cy="180" r="5" fill="#e64980"></circle>
+            <circle cx="92" cy="215" r="5" fill="#2f6bff"></circle>
+            <circle cx="170" cy="360" r="5" fill="#f59f00"></circle>
+          </svg>
+          <div style="position:absolute;left:27%;top:26%;transform:translate(-50%,-100%);z-index:20"><div style="width:14px;height:14px;border-radius:50%;background:#2f6bff;border:2px solid #22201c"></div><div style="width:2px;height:10px;background:#22201c;margin:0 auto"></div></div>
+          <div style="position:absolute;left:62%;top:31%;transform:translate(-50%,-100%);z-index:22"><div style="padding:4px 8px;background:#e64980;border:2px solid #22201c;font:800 10.5px 'Pretendard';color:#fff">D-2</div><div style="width:2px;height:10px;background:#22201c;margin:0 auto"></div></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;height:35%;background:#fff;border-top:2px solid #22201c;z-index:30;padding:11px 18px 0">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px"><div style="font:800 15px 'Pretendard';color:#22201c">내 주변 성지 <span style="color:#c0492f">12</span></div><div style="font:700 11px 'Pretendard';color:#8a8272;letter-spacing:.05em">NEARBY ▾</div></div>
+            <div style="display:flex;gap:13px;align-items:center;padding:10px 0;border-bottom:1.5px solid #ececec"><div style="width:44px;height:44px;border:2px solid #22201c;background:#e64980;flex:none;display:flex;align-items:center;justify-content:center;font:800 11px 'Pretendard';color:#fff">ae</div><div style="flex:1;min-width:0"><div style="font:800 13px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">어반소스 × 하니 생일카페</div><div style="font:600 11px 'Pretendard';color:#8a8272;margin-top:2px">성수동1가 · 220m · <span style="color:#c0492f">D-2</span></div></div><div style="font:800 15px 'Pretendard';color:#e64980">61%</div></div>
+            <div style="display:flex;gap:13px;align-items:center;padding:10px 0"><div style="width:44px;height:44px;border:2px solid #22201c;background:#2f6bff;flex:none;display:flex;align-items:center;justify-content:center;font:800 13px 'Pretendard';color:#fff">N</div><div style="flex:1;min-width:0"><div style="font:800 13px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">언더스탠드 카페</div><div style="font:600 11px 'Pretendard';color:#8a8272;margin-top:2px">서울숲 · 480m · 상설</div></div><div style="font:800 15px 'Pretendard';color:#2f6bff">74%</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 3b  도트 밀도 그리드 ============ -->
+    <div class="dv-opt" id="3b">
+      <div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a> 도트 밀도 그리드 <small>· 인증이 쌓일수록 촘촘히</small></div>
+      <div class="ph">
+        <div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="display:flex;gap:5px;align-items:center;font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:48px;left:0;right:0;padding:6px 18px 10px;z-index:30">
+            <div style="display:flex;align-items:flex-end;justify-content:space-between">
+              <div><div style="font:700 11px 'Pretendard';color:#c0492f;letter-spacing:.22em">SEONGSU DISTRICT</div><div style="font:800 24px/1 'Pretendard';color:#22201c;letter-spacing:-.03em;margin-top:3px">성수, 물들다</div></div>
+              <div style="width:34px;height:34px;border-radius:50%;border:2px solid #22201c;display:flex;align-items:center;justify-content:center;font-size:13px;color:#22201c">◎</div>
+            </div>
+            <div style="display:flex;gap:0;margin-top:13px;border:1.5px solid #22201c;border-radius:9px;overflow:hidden;width:fit-content">
+              <div style="padding:6px 13px;background:#22201c;color:#fff;font:700 11.5px 'Pretendard'">전체</div>
+              <div style="padding:6px 13px;font:700 11.5px 'Pretendard';color:#22201c;border-left:1.5px solid #22201c">NewJeans</div>
+              <div style="padding:6px 13px;font:700 11.5px 'Pretendard';color:#22201c;border-left:1.5px solid #22201c">aespa</div>
+            </div>
+          </div>
+          <svg viewBox="0 0 336 460" style="position:absolute;top:0;left:0;width:100%;height:65%">
+            <rect width="336" height="460" fill="#fff"></rect>
+            <g stroke="#22201c" stroke-width="1.4" fill="none" opacity=".85">
+              <polygon points="24,120 150,108 164,244 46,262"></polygon>
+              <polygon points="168,104 316,120 310,248 178,244"></polygon>
+              <polygon points="30,278 132,270 142,404 48,420"></polygon>
+            </g>
+            <g fill="#2f6bff"><circle cx="46" cy="140" r="3.4"></circle><circle cx="70" cy="140" r="3.4"></circle><circle cx="94" cy="140" r="3.4"></circle><circle cx="118" cy="140" r="3.4"></circle><circle cx="46" cy="166" r="3.4"></circle><circle cx="70" cy="166" r="3.4"></circle><circle cx="94" cy="166" r="3.4"></circle><circle cx="118" cy="166" r="3.4"></circle><circle cx="142" cy="166" r="3.4"></circle><circle cx="58" cy="192" r="3.4"></circle><circle cx="82" cy="192" r="3.4"></circle><circle cx="106" cy="192" r="3.4"></circle><circle cx="130" cy="192" r="3.4"></circle><circle cx="70" cy="218" r="3.4"></circle><circle cx="94" cy="218" r="3.4"></circle><circle cx="118" cy="218" r="3.4"></circle></g>
+            <g fill="#e64980"><circle cx="192" cy="130" r="4"></circle><circle cx="218" cy="130" r="4"></circle><circle cx="244" cy="130" r="4"></circle><circle cx="270" cy="130" r="4"></circle><circle cx="296" cy="132" r="4"></circle><circle cx="188" cy="158" r="4"></circle><circle cx="214" cy="158" r="4"></circle><circle cx="240" cy="158" r="4"></circle><circle cx="266" cy="158" r="4"></circle><circle cx="292" cy="160" r="4"></circle><circle cx="192" cy="186" r="4"></circle><circle cx="218" cy="186" r="4"></circle><circle cx="244" cy="186" r="4"></circle><circle cx="270" cy="186" r="4"></circle><circle cx="296" cy="188" r="4"></circle><circle cx="196" cy="214" r="4"></circle><circle cx="222" cy="214" r="4"></circle><circle cx="248" cy="214" r="4"></circle><circle cx="274" cy="214" r="4"></circle></g>
+            <g fill="#f59f00" opacity=".8"><circle cx="56" cy="300" r="3.2"></circle><circle cx="80" cy="300" r="3.2"></circle><circle cx="104" cy="300" r="3.2"></circle><circle cx="66" cy="326" r="3.2"></circle><circle cx="90" cy="326" r="3.2"></circle><circle cx="78" cy="352" r="3.2"></circle></g>
+          </svg>
+          <div style="position:absolute;left:26%;top:29%;transform:translate(-50%,-100%);z-index:20"><div style="width:14px;height:14px;border-radius:50%;background:#2f6bff;border:2px solid #22201c"></div><div style="width:2px;height:10px;background:#22201c;margin:0 auto"></div></div>
+          <div style="position:absolute;left:68%;top:24%;transform:translate(-50%,-100%);z-index:22"><div style="padding:4px 8px;background:#e64980;border:2px solid #22201c;font:800 10.5px 'Pretendard';color:#fff">D-2</div><div style="width:2px;height:10px;background:#22201c;margin:0 auto"></div></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;height:35%;background:#fff;border-top:2px solid #22201c;z-index:30;padding:11px 18px 0">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px"><div style="font:800 15px 'Pretendard';color:#22201c">내 주변 성지 <span style="color:#c0492f">12</span></div><div style="font:700 11px 'Pretendard';color:#8a8272;letter-spacing:.05em">NEARBY ▾</div></div>
+            <div style="display:flex;gap:13px;align-items:center;padding:10px 0;border-bottom:1.5px solid #ececec"><div style="width:44px;height:44px;border:2px solid #22201c;background:#e64980;flex:none;display:flex;align-items:center;justify-content:center;font:800 11px 'Pretendard';color:#fff">ae</div><div style="flex:1;min-width:0"><div style="font:800 13px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">어반소스 × 하니 생일카페</div><div style="font:600 11px 'Pretendard';color:#8a8272;margin-top:2px">성수동1가 · 220m · <span style="color:#c0492f">D-2</span></div></div><div style="font:800 15px 'Pretendard';color:#e64980">61%</div></div>
+            <div style="display:flex;gap:13px;align-items:center;padding:10px 0"><div style="width:44px;height:44px;border:2px solid #22201c;background:#2f6bff;flex:none;display:flex;align-items:center;justify-content:center;font:800 13px 'Pretendard';color:#fff">N</div><div style="flex:1;min-width:0"><div style="font:800 13px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">언더스탠드 카페</div><div style="font:600 11px 'Pretendard';color:#8a8272;margin-top:2px">서울숲 · 480m · 상설</div></div><div style="font:800 15px 'Pretendard';color:#2f6bff">74%</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============ 3c  실제 지도 축약 ============ -->
+    <div class="dv-opt" id="3c">
+      <div class="dv-olabel"><a class="dv-oid" href="#3c">3c</a> 실제 지도 축약 <small>· 도로·철도·하천이 있는 약도</small></div>
+      <div class="ph">
+        <div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="display:flex;gap:5px;align-items:center;font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:48px;left:0;right:0;padding:6px 18px 10px;z-index:30">
+            <div style="display:flex;align-items:flex-end;justify-content:space-between">
+              <div><div style="font:700 11px 'Pretendard';color:#c0492f;letter-spacing:.22em">SEONGSU DISTRICT</div><div style="font:800 24px/1 'Pretendard';color:#22201c;letter-spacing:-.03em;margin-top:3px">성수, 물들다</div></div>
+              <div style="width:34px;height:34px;border-radius:50%;border:2px solid #22201c;display:flex;align-items:center;justify-content:center;font-size:13px;color:#22201c">◎</div>
+            </div>
+            <div style="display:flex;gap:0;margin-top:13px;border:1.5px solid #22201c;border-radius:9px;overflow:hidden;width:fit-content">
+              <div style="padding:6px 13px;background:#22201c;color:#fff;font:700 11.5px 'Pretendard'">전체</div>
+              <div style="padding:6px 13px;font:700 11.5px 'Pretendard';color:#22201c;border-left:1.5px solid #22201c">NewJeans</div>
+              <div style="padding:6px 13px;font:700 11.5px 'Pretendard';color:#22201c;border-left:1.5px solid #22201c">aespa</div>
+            </div>
+          </div>
+          <svg viewBox="0 0 336 460" style="position:absolute;top:0;left:0;width:100%;height:65%">
+            <rect width="336" height="460" fill="#fbfaf7"></rect>
+            <!-- 하천(중랑천) -->
+            <path d="M-10,40 C40,120 20,200 60,280 C90,340 70,420 40,470 L-20,470 L-20,40 Z" fill="#dcebff"></path>
+            <path d="M-10,40 C40,120 20,200 60,280 C90,340 70,420 40,470" fill="none" stroke="#a9cdf5" stroke-width="1.5"></path>
+            <!-- 서울숲 공원 -->
+            <path d="M84,300 Q120,286 156,300 Q168,340 150,392 Q112,408 82,388 Q74,344 84,300 Z" fill="#e4f0d8" stroke="#bcd79a" stroke-width="1.5"></path>
+            <!-- 블록 채색(팬덤) -->
+            <rect x="120" y="96" width="96" height="90" rx="3" fill="#2f6bff" fill-opacity=".16" stroke="#2f6bff" stroke-width="1.4"></rect>
+            <rect x="228" y="104" width="86" height="92" rx="3" fill="#e64980" fill-opacity=".2" stroke="#e64980" stroke-width="1.4"></rect>
+            <rect x="230" y="212" width="82" height="86" rx="3" fill="#e64980" fill-opacity=".1" stroke="#e6a0bd" stroke-width="1.2"></rect>
+            <rect x="200" y="322" width="98" height="86" rx="3" fill="#f59f00" fill-opacity=".14" stroke="#f0be5e" stroke-width="1.2"></rect>
+            <!-- 도로망 -->
+            <g stroke="#efe9dc" stroke-width="12" stroke-linecap="round" fill="none">
+              <path d="M96,60 L108,470"></path><path d="M40,196 L336,178"></path><path d="M40,306 L336,300"></path><path d="M220,60 L232,470"></path>
+            </g>
+            <g stroke="#e5ddca" stroke-width="1" fill="none">
+              <path d="M96,60 L108,470"></path><path d="M40,196 L336,178"></path><path d="M40,306 L336,300"></path><path d="M220,60 L232,470"></path>
+            </g>
+            <!-- 철도(2호선 지상) -->
+            <path d="M20,150 L330,132" stroke="#22201c" stroke-width="2.4" stroke-dasharray="9 5"></path>
+            <circle cx="150" cy="141" r="4.5" fill="#fff" stroke="#22201c" stroke-width="2.2"></circle>
+            <!-- 라벨 -->
+            <text x="150" y="90" font-family="Pretendard" font-size="10" font-weight="700" fill="#5a6b8a">중랑천</text>
+            <text x="112" y="356" font-family="Pretendard" font-size="10.5" font-weight="700" fill="#7c9a52">서울숲</text>
+            <text x="160" y="129" font-family="Pretendard" font-size="9.5" font-weight="700" fill="#22201c">뚝섬역</text>
+          </svg>
+          <div style="position:absolute;left:44%;top:22%;transform:translate(-50%,-100%);z-index:20"><div style="width:14px;height:14px;border-radius:50%;background:#2f6bff;border:2px solid #22201c"></div><div style="width:2px;height:10px;background:#22201c;margin:0 auto"></div></div>
+          <div style="position:absolute;left:74%;top:20%;transform:translate(-50%,-100%);z-index:22"><div style="padding:4px 8px;background:#e64980;border:2px solid #22201c;font:800 10.5px 'Pretendard';color:#fff">D-2</div><div style="width:2px;height:10px;background:#22201c;margin:0 auto"></div></div>
+          <div style="position:absolute;left:70%;top:40%;transform:translate(-50%,-100%);z-index:20"><div style="width:12px;height:12px;border-radius:50%;background:#f59f00;border:2px solid #22201c"></div><div style="width:2px;height:9px;background:#22201c;margin:0 auto"></div></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;height:35%;background:#fff;border-top:2px solid #22201c;z-index:30;padding:11px 18px 0">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px"><div style="font:800 15px 'Pretendard';color:#22201c">내 주변 성지 <span style="color:#c0492f">12</span></div><div style="font:700 11px 'Pretendard';color:#8a8272;letter-spacing:.05em">NEARBY ▾</div></div>
+            <div style="display:flex;gap:13px;align-items:center;padding:10px 0;border-bottom:1.5px solid #ececec"><div style="width:44px;height:44px;border:2px solid #22201c;background:#e64980;flex:none;display:flex;align-items:center;justify-content:center;font:800 11px 'Pretendard';color:#fff">ae</div><div style="flex:1;min-width:0"><div style="font:800 13px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">어반소스 × 하니 생일카페</div><div style="font:600 11px 'Pretendard';color:#8a8272;margin-top:2px">성수동1가 · 220m · <span style="color:#c0492f">D-2</span></div></div><div style="font:800 15px 'Pretendard';color:#e64980">61%</div></div>
+            <div style="display:flex;gap:13px;align-items:center;padding:10px 0"><div style="width:44px;height:44px;border:2px solid #22201c;background:#2f6bff;flex:none;display:flex;align-items:center;justify-content:center;font:800 13px 'Pretendard';color:#fff">N</div><div style="flex:1;min-width:0"><div style="font:800 13px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">언더스탠드 카페</div><div style="font:600 11px 'Pretendard';color:#8a8272;margin-top:2px">서울숲 · 480m · 상설</div></div><div style="font:800 15px 'Pretendard';color:#2f6bff">74%</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">다음에 이렇게 · "<a class="dv-oid" href="#3c">3c</a> 약도로 확정" · "<a class="dv-oid" href="#3b">3b</a>로 확정, 나머지 화면 만들어줘" · "<a class="dv-oid" href="#3a">3a</a> 등고선을 더 촘촘하게" · "원래 <a class="dv-oid" href="#2a">2a</a> 하프톤 지도가 나아"</p>
+</section>
+<section class="dv-turn" id="t2">
+  <div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">S1 지도 · 방향 두 가지 더</span></div>
+  <p class="dv-sub">1차와 겹치지 않는 두 결을 더 얹었습니다. <a class="dv-oid" href="#2a">2a</a>는 리소그래프 프린트 감성, <a class="dv-oid" href="#2b">2b</a>는 데이터룸 같은 정밀·글래스 톤입니다.</p>
+  <div class="dv-opts">
+
+    <!-- ============ 2a  리소 프린트 ============ -->
+    <div class="dv-opt" id="2a">
+      <div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a> 리소 프린트 <small>· 오버프린트 · 하프톤 · 편집 감성</small></div>
+      <div class="ph">
+        <div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c">
+            <span>9:41</span>
+            <span style="display:flex;gap:5px;align-items:center;font-size:11px">◗◗◗ 5G ▚▚</span>
+          </div>
+          <div style="position:absolute;top:48px;left:0;right:0;padding:6px 18px 10px;z-index:30">
+            <div style="display:flex;align-items:flex-end;justify-content:space-between">
+              <div>
+                <div style="font:700 11px 'Pretendard';color:#c0492f;letter-spacing:.22em">SEONGSU DISTRICT</div>
+                <div style="font:800 24px/1 'Pretendard';color:#22201c;letter-spacing:-.03em;margin-top:3px">성수, 물들다</div>
+              </div>
+              <div style="width:34px;height:34px;border-radius:50%;border:2px solid #22201c;display:flex;align-items:center;justify-content:center;font-size:13px;color:#22201c">◎</div>
+            </div>
+            <div style="display:flex;gap:0;margin-top:13px;border:1.5px solid #22201c;border-radius:9px;overflow:hidden;width:fit-content">
+              <div style="padding:6px 13px;background:#22201c;color:#f6efe1;font:700 11.5px 'Pretendard'">전체</div>
+              <div style="padding:6px 13px;font:700 11.5px 'Pretendard';color:#22201c;border-left:1.5px solid #22201c">NewJeans</div>
+              <div style="padding:6px 13px;font:700 11.5px 'Pretendard';color:#22201c;border-left:1.5px solid #22201c">aespa</div>
+            </div>
+          </div>
+          <svg viewBox="0 0 336 460" style="position:absolute;top:0;left:0;width:100%;height:65%">
+            <defs>
+              <pattern id="ht1" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.6" fill="#2f6bff"></circle></pattern>
+              <pattern id="ht2" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.7" fill="#e64980"></circle></pattern>
+              <pattern id="ht3" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.5" fill="#c0492f"></circle></pattern>
+            </defs>
+            <rect width="336" height="460" fill="#fff"></rect>
+            <polygon points="18,120 156,106 172,244 40,262" fill="url(#ht1)" opacity=".85"></polygon>
+            <polygon points="18,120 156,106 172,244 40,262" fill="#2f6bff" fill-opacity=".14"></polygon>
+            <polygon points="164,102 322,120 316,248 178,244" fill="url(#ht2)" opacity=".9"></polygon>
+            <polygon points="164,102 322,120 316,248 178,244" fill="#e64980" fill-opacity=".14"></polygon>
+            <polygon points="16,272 128,266 138,404 34,422" fill="url(#ht3)" opacity=".7"></polygon>
+            <polygon points="150,258 316,262 300,418 160,426" fill="url(#ht1)" opacity=".55"></polygon>
+            <g stroke="#22201c" stroke-width="2" fill="none" opacity=".9">
+              <polygon points="18,120 156,106 172,244 40,262"></polygon>
+              <polygon points="164,102 322,120 316,248 178,244"></polygon>
+              <polygon points="16,272 128,266 138,404 34,422"></polygon>
+              <polygon points="150,258 316,262 300,418 160,426"></polygon>
+            </g>
+          </svg>
+          <div style="position:absolute;left:24%;top:30%;transform:translate(-50%,-100%);z-index:20">
+            <div style="width:14px;height:14px;border-radius:50%;background:#2f6bff;border:2px solid #22201c"></div><div style="width:2px;height:10px;background:#22201c;margin:0 auto"></div>
+          </div>
+          <div style="position:absolute;left:64%;top:26%;transform:translate(-50%,-100%);z-index:22">
+            <div style="padding:4px 8px;background:#e64980;border:2px solid #22201c;font:800 10.5px 'Pretendard';color:#fff">D-2</div><div style="width:2px;height:10px;background:#22201c;margin:0 auto"></div>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;height:35%;background:#fff;border-top:2px solid #22201c;z-index:30;padding:11px 18px 0">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+              <div style="font:800 15px 'Pretendard';color:#22201c">내 주변 성지 <span style="color:#c0492f">12</span></div>
+              <div style="font:700 11px 'Pretendard';color:#8a8272;letter-spacing:.05em">NEARBY ▾</div>
+            </div>
+            <div style="display:flex;gap:13px;align-items:center;padding:10px 0;border-bottom:1.5px solid #ececec">
+              <div style="width:44px;height:44px;border:2px solid #22201c;background:url(#ht2),#e64980;flex:none;display:flex;align-items:center;justify-content:center;font:800 11px 'Pretendard';color:#fff">ae</div>
+              <div style="flex:1;min-width:0">
+                <div style="font:800 13px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">어반소스 × 하니 생일카페</div>
+                <div style="font:600 11px 'Pretendard';color:#8a8272;margin-top:2px">성수동1가 · 220m · <span style="color:#c0492f">D-2</span></div>
+              </div>
+              <div style="font:800 15px 'Pretendard';color:#e64980">61%</div>
+            </div>
+            <div style="display:flex;gap:13px;align-items:center;padding:10px 0">
+              <div style="width:44px;height:44px;border:2px solid #22201c;background:#2f6bff;flex:none;display:flex;align-items:center;justify-content:center;font:800 13px 'Pretendard';color:#fff">N</div>
+              <div style="flex:1;min-width:0">
+                <div style="font:800 13px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">언더스탠드 카페</div>
+                <div style="font:600 11px 'Pretendard';color:#8a8272;margin-top:2px">서울숲 · 480m · 상설</div>
+              </div>
+              <div style="font:800 15px 'Pretendard';color:#2f6bff">74%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 2b  데이터룸 글래스 ============ -->
+    <div class="dv-opt" id="2b">
+      <div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a> 데이터룸 <small>· 무채색 위성 · 프로스트 글래스 · 정밀</small></div>
+      <div class="ph">
+        <div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#1a1d21">
+          <div class="sbar" style="color:#eef1f4">
+            <span>9:41</span>
+            <span style="display:flex;gap:5px;align-items:center;font-size:11px">◗◗◗ 5G ▚▚</span>
+          </div>
+          <!-- grayscale map -->
+          <svg viewBox="0 0 336 712" style="position:absolute;top:0;left:0;width:100%;height:100%">
+            <rect width="336" height="712" fill="#20242a"></rect>
+            <g stroke="#2b3037" stroke-width="1">
+              <path d="M0,180 H336 M0,320 H336 M0,470 H336 M0,600 H336"></path>
+              <path d="M84,60 V712 M168,60 V712 M252,60 V712"></path>
+            </g>
+            <polygon points="30,200 150,188 166,330 52,348" fill="#3a4048"></polygon>
+            <polygon points="176,186 306,204 300,332 182,328" fill="#3a4048"></polygon>
+            <polygon points="28,360 130,352 140,486 46,504" fill="#343a41"></polygon>
+            <polygon points="152,344 300,348 288,486 162,494" fill="#3a4048"></polygon>
+            <g fill="none" stroke-width="2.5">
+              <polygon points="30,200 150,188 166,330 52,348" stroke="#2f6bff" stroke-opacity=".9"></polygon>
+              <polygon points="176,186 306,204 300,332 182,328" stroke="#e64980" stroke-opacity=".9"></polygon>
+              <polygon points="152,344 300,348 288,486 162,494" stroke="#f59f00" stroke-opacity=".7"></polygon>
+            </g>
+            <polygon points="30,200 150,188 166,330 52,348" fill="#2f6bff" fill-opacity=".1"></polygon>
+            <polygon points="176,186 306,204 300,332 182,328" fill="#e64980" fill-opacity=".12"></polygon>
+          </svg>
+          <!-- floating glass header -->
+          <div style="position:absolute;top:56px;left:14px;right:14px;padding:13px 15px;border-radius:16px;background:rgba(28,32,38,.62);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.1);z-index:30">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font:700 11px 'Pretendard';color:#8b96a5;letter-spacing:.12em">SEONGSU · 실시간</div>
+              <div style="font:600 10.5px 'Pretendard';color:#5cd6a0">● 동기화됨</div>
+            </div>
+            <div style="display:flex;gap:14px;margin-top:11px">
+              <div style="flex:1"><div style="font:800 17px 'Pretendard';color:#7ba6ff">33.2<span style="font-size:11px;color:#8b96a5">%</span></div><div style="font:600 10px 'Pretendard';color:#8b96a5;margin-top:1px">NewJeans</div></div>
+              <div style="flex:1"><div style="font:800 17px 'Pretendard';color:#ff7bab">44.6<span style="font-size:11px;color:#8b96a5">%</span></div><div style="font:600 10px 'Pretendard';color:#8b96a5;margin-top:1px">aespa</div></div>
+              <div style="flex:1"><div style="font:800 17px 'Pretendard';color:#ffc04d">22.2<span style="font-size:11px;color:#8b96a5">%</span></div><div style="font:600 10px 'Pretendard';color:#8b96a5;margin-top:1px">IVE</div></div>
+            </div>
+            <div style="display:flex;height:6px;border-radius:4px;overflow:hidden;margin-top:11px">
+              <div style="width:33.2%;background:#2f6bff"></div><div style="width:44.6%;background:#e64980"></div><div style="width:22.2%;background:#f59f00"></div>
+            </div>
+          </div>
+          <!-- pins minimal -->
+          <div style="position:absolute;left:26%;top:37%;transform:translate(-50%,-50%);z-index:20"><div style="width:11px;height:11px;border-radius:50%;background:#2f6bff;box-shadow:0 0 0 3px rgba(47,107,255,.2)"></div></div>
+          <div style="position:absolute;left:70%;top:35%;transform:translate(-50%,-100%);z-index:22"><div style="padding:3px 7px;border-radius:8px;background:rgba(230,73,128,.92);color:#fff;font:700 10px 'Pretendard';white-space:nowrap">어반소스 D-2</div></div>
+          <!-- glass bottom sheet -->
+          <div style="position:absolute;left:0;right:0;bottom:0;height:29%;background:rgba(24,28,33,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-radius:20px 20px 0 0;border-top:1px solid rgba(255,255,255,.1);z-index:30;padding:10px 16px 0">
+            <div style="width:36px;height:4px;border-radius:3px;background:rgba(255,255,255,.16);margin:0 auto 12px"></div>
+            <div style="font:700 13px 'Pretendard';color:#eef1f4;margin-bottom:11px">내 주변 성지 · 거리순</div>
+            <div style="display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07)">
+              <div style="width:40px;height:40px;border-radius:10px;background:#2a2f36;border:1px solid rgba(255,255,255,.08);flex:none"></div>
+              <div style="flex:1;min-width:0">
+                <div style="font:700 12.5px 'Pretendard';color:#eef1f4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">언더스탠드 카페</div>
+                <div style="font:500 10.5px 'Pretendard';color:#8b96a5;margin-top:2px">서울숲 · 480m · 상설</div>
+              </div>
+              <div style="text-align:right"><div style="font:800 13px 'Pretendard';color:#7ba6ff">74.1%</div><div style="font:500 9px 'Pretendard';color:#5b6470">점령</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;padding:8px 0">
+              <div style="width:40px;height:40px;border-radius:10px;background:#2a2f36;border:1px solid rgba(255,255,255,.08);flex:none"></div>
+              <div style="flex:1;min-width:0">
+                <div style="font:700 12.5px 'Pretendard';color:#eef1f4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">어반소스 × 하니 생일</div>
+                <div style="font:500 10.5px 'Pretendard';color:#8b96a5;margin-top:2px">성수동1가 · 220m · D-2</div>
+              </div>
+              <div style="text-align:right"><div style="font:800 13px 'Pretendard';color:#ff7bab">61.0%</div><div style="font:500 9px 'Pretendard';color:#5b6470">경합</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">다음에 이렇게 · "<a class="dv-oid" href="#2b">2b</a>로 나머지 화면 전부" · "<a class="dv-oid" href="#2a">2a</a>인데 하프톤은 빼고 플랫하게" · "<a class="dv-oid" href="#1b">1b</a>랑 <a class="dv-oid" href="#2b">2b</a> 섞어줘"</p>
+</section>
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">S1 성지 지도 · 세 가지 방향</span></div>
+  <p class="dv-sub">"내 팬덤 색으로 물든 땅"의 첫인상을 세 방향으로 탐색합니다. 예시 팬덤은 <b>NewJeans·aespa·IVE</b>, 무대는 <b>성수 일대</b>. 하나를 고르면 그 방향으로 S2 상세·S3 인증·S4 전황·S5 랭킹까지 이어서 만듭니다.</p>
+  <div class="dv-opts">
+
+    <!-- ============ 1a  차분한 지도 ============ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a> 차분한 지도 <small>· 페이퍼맵 · 은은한 점령</small></div>
+      <div class="ph">
+        <div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#f4f1ea">
+          <div class="sbar" style="color:#2a2721">
+            <span>9:41</span>
+            <span style="display:flex;gap:5px;align-items:center;font-size:11px">◗◗◗ 5G ▚▚</span>
+          </div>
+          <!-- header -->
+          <div style="position:absolute;top:50px;left:0;right:0;padding:6px 18px 10px;z-index:30">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font:800 19px 'Pretendard';color:#2a2721;letter-spacing:-.02em">성수동 <span style="color:#9a9384;font-weight:600">일대</span></div>
+              <div style="width:34px;height:34px;border-radius:50%;background:#e7e2d6;display:flex;align-items:center;justify-content:center;font-size:13px;color:#6b6455">◎</div>
+            </div>
+            <div style="display:flex;gap:7px;margin-top:11px">
+              <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;background:#2a2721;color:#f4f1ea;border-radius:20px;font:600 12px 'Pretendard'">전체</div>
+              <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;background:#fff;border:1px solid #e0dacb;border-radius:20px;font:600 12px 'Pretendard';color:#4a4438"><span style="width:8px;height:8px;border-radius:50%;background:#2f6bff"></span>NewJeans</div>
+              <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;background:#fff;border:1px solid #e0dacb;border-radius:20px;font:600 12px 'Pretendard';color:#4a4438"><span style="width:8px;height:8px;border-radius:50%;background:#e64980"></span>aespa</div>
+            </div>
+          </div>
+          <!-- map -->
+          <svg viewBox="0 0 336 470" style="position:absolute;top:0;left:0;width:100%;height:64%;">
+            <rect width="336" height="470" fill="#eae5da"></rect>
+            <polygon points="18,110 156,96 172,232 40,250" fill="#2f6bff" fill-opacity=".26"></polygon>
+            <polygon points="164,92 322,110 316,236 178,232" fill="#e64980" fill-opacity=".24"></polygon>
+            <polygon points="16,262 128,256 138,392 34,410" fill="#7d9b58" fill-opacity=".3"></polygon>
+            <polygon points="150,246 316,250 300,404 160,412" fill="#2f6bff" fill-opacity=".18"></polygon>
+            <polygon points="44,420 288,406 300,470 60,470" fill="#f59f00" fill-opacity=".2"></polygon>
+            <g stroke="#d8d1c0" stroke-width="5" fill="none" stroke-linecap="round">
+              <path d="M0,246 L336,236"></path><path d="M160,80 L152,470"></path><path d="M40,250 L34,410"></path>
+            </g>
+            <g stroke="#fff" stroke-width="1.5" stroke-dasharray="1 7" stroke-linecap="round" opacity=".7">
+              <path d="M0,246 L336,236"></path><path d="M160,80 L152,470"></path>
+            </g>
+          </svg>
+          <!-- pins -->
+          <div style="position:absolute;left:24%;top:26%;transform:translate(-50%,-100%);z-index:20">
+            <div style="width:30px;height:30px;border-radius:50% 50% 50% 2px;transform:rotate(45deg);background:#2f6bff;box-shadow:0 4px 10px rgba(47,107,255,.4);border:2.5px solid #fff"></div>
+          </div>
+          <div style="position:absolute;left:63%;top:22%;transform:translate(-50%,-100%);z-index:21">
+            <div style="width:34px;height:34px;border-radius:50% 50% 50% 2px;transform:rotate(45deg);background:#e64980;box-shadow:0 4px 12px rgba(230,73,128,.45);border:2.5px solid #fff;position:relative"><span style="position:absolute;inset:0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;color:#fff;font:800 11px 'Pretendard'">D-2</span></div>
+          </div>
+          <div style="position:absolute;left:48%;top:44%;transform:translate(-50%,-100%);z-index:20">
+            <div style="width:28px;height:28px;border-radius:50% 50% 50% 2px;transform:rotate(45deg);background:#f59f00;box-shadow:0 4px 10px rgba(245,159,0,.4);border:2.5px solid #fff"></div>
+          </div>
+          <!-- bottom sheet peek -->
+          <div style="position:absolute;left:0;right:0;bottom:0;height:34%;background:#fff;border-radius:24px 24px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.08);z-index:30;padding:10px 18px 0">
+            <div style="width:38px;height:4px;border-radius:3px;background:#e2ddd0;margin:0 auto 14px"></div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+              <div style="font:700 15px 'Pretendard';color:#2a2721">내 주변 성지 <span style="color:#9a9384">12</span></div>
+              <div style="font:600 12px 'Pretendard';color:#9a9384">거리순 ▾</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #f0ece2">
+              <div style="width:46px;height:46px;border-radius:12px;background:repeating-linear-gradient(135deg,#efe9dc,#efe9dc 5px,#e7e0cf 5px,#e7e0cf 10px);flex:none"></div>
+              <div style="flex:1;min-width:0">
+                <div style="font:700 13.5px 'Pretendard';color:#2a2721;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">어반소스 × 하니 생일카페</div>
+                <div style="font:500 11.5px 'Pretendard';color:#9a9384;margin-top:2px">성수동1가 · 220m · <span style="color:#e64980">D-2</span></div>
+              </div>
+              <div style="text-align:right;flex:none"><div style="font:800 13px 'Pretendard';color:#e64980">61%</div><div style="font:600 9.5px 'Pretendard';color:#c9c2b2">aespa 우세</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;padding:10px 0">
+              <div style="width:46px;height:46px;border-radius:12px;background:repeating-linear-gradient(135deg,#e8effc,#e8effc 5px,#dde8fb 5px,#dde8fb 10px);flex:none"></div>
+              <div style="flex:1;min-width:0">
+                <div style="font:700 13.5px 'Pretendard';color:#2a2721;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">언더스탠드 카페</div>
+                <div style="font:500 11.5px 'Pretendard';color:#9a9384;margin-top:2px">서울숲 · 480m · 상설</div>
+              </div>
+              <div style="text-align:right;flex:none"><div style="font:800 13px 'Pretendard';color:#2f6bff">74%</div><div style="font:600 9.5px 'Pretendard';color:#c9c2b2">NewJeans 점령</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1b  네온 배틀 ============ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a> 네온 배틀 <small>· 다크맵 · 실시간 점령 HUD</small></div>
+      <div class="ph">
+        <div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#0c1018">
+          <div class="sbar" style="color:#e6ecf7">
+            <span>9:41</span>
+            <span style="display:flex;gap:5px;align-items:center;font-size:11px">◗◗◗ 5G ▚▚</span>
+          </div>
+          <!-- HUD header -->
+          <div style="position:absolute;top:50px;left:0;right:0;padding:8px 18px 12px;z-index:30">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div style="font:800 12px 'Pretendard';color:#6d7b93;letter-spacing:.14em">LIVE · 성수구역</div>
+                <div style="font:800 20px 'Pretendard';color:#fff;letter-spacing:-.02em;margin-top:2px">점령 전쟁 <span style="color:#e64980">67%</span></div>
+              </div>
+              <div style="padding:5px 10px;border-radius:11px;background:rgba(230,73,128,.16);border:1px solid rgba(230,73,128,.5);font:800 11px 'Pretendard';color:#ff6aa0">🔥 뒤집힘 3</div>
+            </div>
+            <div style="display:flex;gap:7px;margin-top:12px">
+              <div style="padding:6px 12px;border-radius:11px;background:rgba(47,107,255,.16);border:1px solid rgba(47,107,255,.55);font:700 11.5px 'Pretendard';color:#7ba6ff">NewJeans 33%</div>
+              <div style="padding:6px 12px;border-radius:11px;background:rgba(230,73,128,.18);border:1px solid rgba(230,73,128,.6);font:700 11.5px 'Pretendard';color:#ff7bab">aespa 44%</div>
+              <div style="padding:6px 12px;border-radius:11px;background:rgba(245,159,0,.14);border:1px solid rgba(245,159,0,.5);font:700 11.5px 'Pretendard';color:#ffc04d">IVE 23%</div>
+            </div>
+          </div>
+          <!-- map -->
+          <svg viewBox="0 0 336 470" style="position:absolute;top:0;left:0;width:100%;height:70%">
+            <rect width="336" height="470" fill="#0c1018"></rect>
+            <polygon points="18,150 156,136 172,272 40,290" fill="#2f6bff" fill-opacity=".32" stroke="#4d84ff" stroke-width="1.5" style="filter:drop-shadow(0 0 8px rgba(47,107,255,.55))"></polygon>
+            <polygon points="164,132 322,150 316,276 178,272" fill="#e64980" fill-opacity=".38" stroke="#ff5c98" stroke-width="1.5" style="filter:drop-shadow(0 0 10px rgba(230,73,128,.6))"></polygon>
+            <polygon points="16,302 128,296 138,432 34,450" fill="#7d9b58" fill-opacity=".22" stroke="#a8cc7a" stroke-width="1.2"></polygon>
+            <polygon points="150,286 316,290 300,444 160,452" fill="#e64980" fill-opacity=".2" stroke="#ff5c98" stroke-width="1"></polygon>
+            <polygon points="44,460 288,446 300,470 60,470" fill="#f59f00" fill-opacity=".24" stroke="#ffb020" stroke-width="1"></polygon>
+          </svg>
+          <!-- pins -->
+          <div style="position:absolute;left:24%;top:30%;transform:translate(-50%,-50%);z-index:20">
+            <div style="width:16px;height:16px;border-radius:50%;background:#4d84ff;box-shadow:0 0 0 4px rgba(77,132,255,.25),0 0 14px rgba(77,132,255,.9)"></div>
+          </div>
+          <div style="position:absolute;left:63%;top:26%;transform:translate(-50%,-100%);z-index:22">
+            <div style="padding:5px 9px;border-radius:12px;background:#e64980;color:#fff;font:800 11px 'Pretendard';box-shadow:0 0 18px rgba(230,73,128,.8);white-space:nowrap">🔥 D-2</div>
+            <div style="width:2px;height:12px;background:#e64980;margin:0 auto;box-shadow:0 0 8px rgba(230,73,128,.8)"></div>
+          </div>
+          <div style="position:absolute;left:47%;top:50%;transform:translate(-50%,-50%);z-index:20">
+            <div style="width:16px;height:16px;border-radius:50%;background:#ffb020;box-shadow:0 0 0 4px rgba(255,176,32,.22),0 0 14px rgba(255,176,32,.85)"></div>
+          </div>
+          <!-- bottom sheet -->
+          <div style="position:absolute;left:0;right:0;bottom:0;height:30%;background:linear-gradient(180deg,#121826,#0e131e);border-radius:22px 22px 0 0;border-top:1px solid rgba(255,255,255,.08);box-shadow:0 -10px 30px rgba(0,0,0,.5);z-index:30;padding:10px 18px 0">
+            <div style="width:38px;height:4px;border-radius:3px;background:rgba(255,255,255,.18);margin:0 auto 12px"></div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px">
+              <div style="font:800 14px 'Pretendard';color:#fff">위태로운 성지 <span style="color:#ff6aa0">2</span></div>
+              <div style="font:700 11px 'Pretendard';color:#6d7b93">방어하기 ▾</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06)">
+              <div style="width:44px;height:44px;border-radius:12px;background:repeating-linear-gradient(135deg,#1a2536,#1a2536 5px,#141d2b 5px,#141d2b 10px);flex:none;box-shadow:0 0 0 1px rgba(77,132,255,.4)"></div>
+              <div style="flex:1;min-width:0">
+                <div style="font:800 13px 'Pretendard';color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">언더스탠드 카페</div>
+                <div style="font:600 11px 'Pretendard';color:#ff8a8a;margin-top:2px">⚠ 격차 4% · 곧 뒤집힘</div>
+              </div>
+              <div style="padding:7px 12px;border-radius:10px;background:#2f6bff;color:#fff;font:800 11.5px 'Pretendard';box-shadow:0 0 16px rgba(47,107,255,.6)">방어</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;padding:9px 0">
+              <div style="width:44px;height:44px;border-radius:12px;background:repeating-linear-gradient(135deg,#2a1826,#2a1826 5px,#221420 5px,#221420 10px);flex:none;box-shadow:0 0 0 1px rgba(230,73,128,.4)"></div>
+              <div style="flex:1;min-width:0">
+                <div style="font:800 13px 'Pretendard';color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">어반소스 × 하니 생일</div>
+                <div style="font:600 11px 'Pretendard';color:#6d7b93;margin-top:2px">aespa 61% 우세 · D-2</div>
+              </div>
+              <div style="padding:7px 12px;border-radius:10px;background:rgba(255,255,255,.08);color:#c7d2e3;font:800 11.5px 'Pretendard'">공략</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1c  스티커 컬렉션 ============ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a> 스티커 컬렉션 <small>· 통통한 색블록 · 친근함</small></div>
+      <div class="ph">
+        <div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fffdf7">
+          <div class="sbar" style="color:#26221c">
+            <span>9:41</span>
+            <span style="display:flex;gap:5px;align-items:center;font-size:11px">◗◗◗ 5G ▚▚</span>
+          </div>
+          <!-- header -->
+          <div style="position:absolute;top:50px;left:0;right:0;padding:6px 16px 10px;z-index:30">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font:900 21px 'Pretendard';color:#1c1a16;letter-spacing:-.03em">성수 땅따먹기</div>
+              <div style="width:36px;height:36px;border-radius:14px;background:#ffe14d;border:2.5px solid #1c1a16;display:flex;align-items:center;justify-content:center;font-size:14px">👤</div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:11px">
+              <div style="padding:8px 13px;background:#1c1a16;color:#fff;border-radius:14px;font:800 12px 'Pretendard'">전체</div>
+              <div style="padding:8px 13px;background:#fff;border:2.5px solid #2f6bff;border-radius:14px;font:800 12px 'Pretendard';color:#2f6bff">NewJeans</div>
+              <div style="padding:8px 13px;background:#fff;border:2.5px solid #e64980;border-radius:14px;font:800 12px 'Pretendard';color:#e64980">aespa</div>
+            </div>
+          </div>
+          <!-- map -->
+          <svg viewBox="0 0 336 430" style="position:absolute;top:0;left:0;width:100%;height:60%">
+            <rect width="336" height="430" fill="#f2ede2"></rect>
+            <polygon points="20,120 152,108 168,242 42,258" fill="#2f6bff" fill-opacity=".85" stroke="#1c1a16" stroke-width="3" stroke-linejoin="round"></polygon>
+            <polygon points="162,104 320,122 314,244 176,240" fill="#e64980" fill-opacity=".85" stroke="#1c1a16" stroke-width="3" stroke-linejoin="round"></polygon>
+            <polygon points="18,270 126,262 136,396 36,412" fill="#7cc47a" fill-opacity=".9" stroke="#1c1a16" stroke-width="3" stroke-linejoin="round"></polygon>
+            <polygon points="150,252 316,256 302,404 160,414" fill="#ffe14d" fill-opacity=".9" stroke="#1c1a16" stroke-width="3" stroke-linejoin="round"></polygon>
+          </svg>
+          <!-- pins -->
+          <div style="position:absolute;left:24%;top:30%;transform:translate(-50%,-100%);z-index:20">
+            <div style="width:36px;height:36px;border-radius:50%;background:#2f6bff;border:3px solid #1c1a16;box-shadow:3px 3px 0 rgba(28,26,22,.25);display:flex;align-items:center;justify-content:center;color:#fff;font:900 15px 'Pretendard'">N</div>
+          </div>
+          <div style="position:absolute;left:63%;top:26%;transform:translate(-50%,-100%);z-index:22">
+            <div style="width:40px;height:40px;border-radius:50%;background:#e64980;border:3px solid #1c1a16;box-shadow:3px 3px 0 rgba(28,26,22,.25);display:flex;align-items:center;justify-content:center;color:#fff;font:900 12px 'Pretendard';position:relative">ae<span style="position:absolute;top:-9px;right:-9px;background:#ffe14d;border:2.5px solid #1c1a16;border-radius:9px;padding:1px 5px;font:900 9px 'Pretendard';color:#1c1a16">D-2</span></div>
+          </div>
+          <!-- bottom sheet -->
+          <div style="position:absolute;left:0;right:0;bottom:0;height:37%;background:#fff;border-radius:26px 26px 0 0;border-top:3px solid #1c1a16;box-shadow:0 -6px 0 rgba(28,26,22,.06);z-index:30;padding:12px 16px 0">
+            <div style="width:44px;height:5px;border-radius:3px;background:#1c1a16;opacity:.2;margin:0 auto 14px"></div>
+            <div style="font:900 15px 'Pretendard';color:#1c1a16;margin-bottom:12px">내 주변 성지 🗺️</div>
+            <div style="display:flex;gap:12px;align-items:center;padding:11px;background:#fff5f8;border:2.5px solid #e64980;border-radius:18px;margin-bottom:10px">
+              <div style="width:48px;height:48px;border-radius:14px;background:#e64980;border:2.5px solid #1c1a16;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font:900 11px 'Pretendard'">ae</div>
+              <div style="flex:1;min-width:0">
+                <div style="font:800 13.5px 'Pretendard';color:#1c1a16;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">어반소스 × 하니 생일</div>
+                <div style="font:700 11.5px 'Pretendard';color:#b23a63;margin-top:2px">성수1가 · 220m · D-2 🔥</div>
+              </div>
+              <div style="font:900 15px 'Pretendard';color:#e64980">61%</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;padding:11px;background:#eef4ff;border:2.5px solid #2f6bff;border-radius:18px">
+              <div style="width:48px;height:48px;border-radius:14px;background:#2f6bff;border:2.5px solid #1c1a16;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font:900 13px 'Pretendard'">N</div>
+              <div style="flex:1;min-width:0">
+                <div style="font:800 13.5px 'Pretendard';color:#1c1a16;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">언더스탠드 카페</div>
+                <div style="font:700 11.5px 'Pretendard';color:#2456c8;margin-top:2px">서울숲 · 480m · 상설</div>
+              </div>
+              <div style="font:900 15px 'Pretendard';color:#2f6bff">74%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">다음에 이렇게 말해보세요 · "<a class="dv-oid" href="#1b">1b</a> 방향으로 나머지 화면 전부 만들어줘" · "<a class="dv-oid" href="#1a">1a</a> 인데 핀은 <a class="dv-oid" href="#1c">1c</a>처럼 통통하게" · "네 번째 방향도 보고 싶어"</p>
+</section>
+
+</x-dc>
+</body>
+</html>
