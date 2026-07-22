@@ -47,47 +47,47 @@ flowchart TB
 - **정책**: 팬임을 증명하는 절차 없음 — 인증 시 귀속 팬덤을 자기 신고로 고른다. 선호 팬덤은 여러 개·언제든 변경.
 - **경계**: 팬덤 "소속"을 강제하지 않는다. 한 유저가 여러 팬덤으로 활동 가능(단 인증 1건은 팬덤 1개에 귀속).
 - **MVP**: 이메일/소셜 로그인, 한국 휴대폰 인증 비의존(외국인 포용).
-<page url="https://app.notion.com/p/3a0b01d734408116a9c9f53264a45d31">팬(User) 상세 정책</page>
-<empty-block/>
+- 📄 **세부 정책**: [fandom_팬_상세정책_v1.0_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/fandom_팬_상세정책_v1.0_20260722.md)
+
 ### 장소 (Place)
 - **정의**: 현실의 그 가게. 사업자번호로 식별되는 물리적 사업장.
 - **주요 속성**: 상호, 주소, 좌표, 사업자번호, 소속 구(region), 상태(운영/폐업).
 - **정책**: 유일키 = 사업자번호. 상호·주소 표기가 흔들려도 사업자번호 같으면 동일 장소. 사업자번호가 바뀌면(양도·신규) 새 장소.
 - **경계**: 장소 ≠ 성지 — 장소는 그릇, 성지는 그 위에 얹히는 이벤트. 폐업·변경돼도 삭제 금지, status=closed(과거 인증 보존).
 - **MVP**: 운영자 수동 등록. 결제 사업자번호 없는 곳(공원·벽화)은 장소로도 안 들어옴.
-<page url="https://app.notion.com/p/3a0b01d73440815db2b1e486d7d3fb19">장소(Place) 상세 정책</page>
-<empty-block/>
+- 📄 **세부 정책**: [fandom_장소_상세정책_v1.0_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/fandom_장소_상세정책_v1.0_20260722.md)
+
 ### 성지 (Spot)
 - **정의**: 팬덤 맥락 + 결제 영수증이 나오는 지점. 지도의 핀, 점수를 버는 "총알".
 - **주요 속성**: 장소(FK), 유형(이벤트형/상설형), 귀속 팬덤, 운영기간, 상태(active/archived).
 - **정책**: 사업자번호 등록된 장소 위에 생성. 이벤트 단위로 살고 종료 시 아카이브. 점유율 40% 이상이면 점령 컬러링.
 - **경계**: 성지 ≠ 장소 — 장소는 그릇, 성지는 그 위 이벤트. 결제 영수증 안 나오면 성지 불가(MVP).
 - **MVP**: 운영자 수동 등록, 결제형만.
-<page url="https://app.notion.com/p/3a0b01d73440809eb730e9e75f5ba6b6">성지 상세정책</page>
-<empty-block/>
+- 📄 **세부 정책**: [fandom_성지_상세정책_v1.0_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/fandom_성지_상세정책_v1.0_20260722.md)
+
 ### 인증 (Verification)
 - **정의**: 유저가 성지에서 결제하고 영수증을 올린 행위 하나. 점수의 최소 단위.
 - **주요 속성**: 유저, 성지, 귀속 팬덤, dedup_key(승인번호/조합키), 거래일시·금액, 좌표·GPS 통과여부, 상태(대기/자동승인/수동검수/승인/반려).
 - **정책**: 1건 = 1점. 귀속 팬덤은 인증 시 선택. dedup_key 유니크로 중복 차단. 성지당 쿨다운(1일 1회 등).
 - **경계**: 인증은 "행위 로그"이지 팬 증명이 아니다. 결제가 없으면(무료 방문) 인증 불가(MVP 결제형).
 - **MVP**: OCR 자동 + 초기엔 수동검수 위주. 4겹 방어는 5장.
-<page url="https://app.notion.com/p/3a0b01d7344081ab9076ce392328c40b">인증(Verification) 상세 정책</page>
-<empty-block/>
+- 📄 **세부 정책**: [fandom_인증_상세정책_v1.0_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/fandom_인증_상세정책_v1.0_20260722.md)
+
 ### 팬덤 (Fandom)
 - **정의**: 어느 팀 팬인지 + 지도를 물들이는 색.
 - **주요 속성**: 이름(IP), 컬러.
 - **정책**: 점령·랭킹의 집계 단위. MVP는 그룹(팀) 단위로만.
 - **경계**: 팬덤 ≠ 개별 멤버. 뉴진스=팬덤, 하니=멤버(지금은 성지 이벤트명에만 표기). 멤버 단위 점령은 추후 확장.
 - **MVP**: 소수 1\~2개 팬덤군.
-<page url="https://app.notion.com/p/3a0b01d73440814eb5f8fc7a646ebb7d">팬덤(Fandom) 상세 정책</page>
-<empty-block/>
+- 📄 **세부 정책**: [fandom_팬덤_상세정책_v1.0_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/fandom_팬덤_상세정책_v1.0_20260722.md)
+
 ### 땅/영역 (Territory)
 - **정의**: 인증이 쌓여 팬덤 색으로 칠해지는 면(구 단위). 뺏고 뺏기는 점령지.
 - **주요 속성**(파생값, 저장 안 함): 구, 팬덤별 점유 점수, 현재 1위 팬덤, 상태(점령/경합/중립).
 - **정책**: 성지 점유가 구로 집계(2레벨). 40% 이상 1위면 점령 컬러링. 감쇠 반영해 실시간 유동(뺏김 가능).
 - **경계**: 땅은 점령의 "결과물"이지 유저가 직접 만드는 대상이 아니다 — 성지(총알)의 집계. 행정동까지 쪼개지 않음.
 - **MVP**: 성지 밀집 1\~2개 구.
-<page url="https://app.notion.com/p/3a0b01d73440815c8784e4bfd0e8dc5c">땅(영역) 상세 정책</page>
+- 📄 **세부 정책**: [fandom_땅_상세정책_v1.0_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/fandom_땅_상세정책_v1.0_20260722.md)
 <empty-block/>
 # 4. 점유·감쇠·점령 로직 (게임의 심장)
 ## 4.1 성지 단위
