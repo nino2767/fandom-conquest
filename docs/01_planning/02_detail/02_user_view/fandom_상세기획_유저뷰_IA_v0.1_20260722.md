@@ -35,10 +35,10 @@ User View App
 │   └── 4.3 My Territory Contribution Detail [UV-RANK-02]
 │
 └── 5.0 My Page & Settings (마이페이지 및 설정)
-    ├── 5.1 My Profile Main [UV-MY-01]
+    ├── 5.1 My Profile Main [UV-MY-01]               # 📄 [fandom_상세기획_마이페이지_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/02_user_view/fandom_상세기획_마이페이지_v0.1_20260722.md)
     ├── 5.2 Edit Fandom Preferences [UV-MY-02]
     ├── 5.3 Verification Log History [UV-MY-03]
-    ├── 5.4 Notification Center [UV-NOTIF-01]        # ✨ (신규) 알림 센터
+    ├── 5.4 Notification Center [UV-NOTIF-01]
     └── 5.5 App Settings & i18n [UV-MY-05]
 ```
 
