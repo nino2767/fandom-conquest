@@ -12,7 +12,8 @@ Admin Portal
 ├── 1.0 Dashboard (전황 & 운영 대시보드) [ADM-DASH-01]
 ├── 2.0 Spot Master (거점 & 성지 관리)
 │   ├── 2.1 Place Management (장소 가맹점 관리) [ADM-SPOT-01]
-│   └── 2.2 Spot Management (성지 핀 이벤트 관리) [ADM-SPOT-02]
+│   ├── 2.2 Spot Management (성지 핀 이벤트 관리) [ADM-SPOT-02]
+│   └── 2.3 User Spot Proposal Queue (유저 제보 성지 승인 큐) [ADM-SPOT-03]  # ✨ (신규)
 ├── 3.0 Verification OMS (영수증 인증 검수 관리)
 │   ├── 3.1 Verification Data Table (전체 내역) [ADM-VERIF-01]
 │   ├── 3.2 Manual Review Queue (수동 검수 큐) [ADM-VERIF-02]

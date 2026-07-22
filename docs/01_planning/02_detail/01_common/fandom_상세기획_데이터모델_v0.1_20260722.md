@@ -132,6 +132,31 @@ erDiagram
 | `name` | `VARCHAR(50)` | NO | **Unique**, 팬덤 IP 이름 (예: NewJeans, IVE) |
 | `color_hex` | `VARCHAR(7)` | NO | 대표 고유 컬러 Hex 코드 (예: `#1E88E5`) |
 
+### 2.7 `notifications` (알림 이력)  -- ✨ (신규 추가)
+| 필드명 | 타입 | Null | 제약조건 / 설명 |
+| :--- | :--- | :--- | :--- |
+| `id` | `BIGINT` | NO | **PK**, Auto Increment |
+| `user_id` | `UUID` | NO | **FK** ➔ `users.id` |
+| `title` | `VARCHAR(100)` | NO | 알림 제목 (예: ⚠️ 마포구가 위태로워요!) |
+| `body` | `VARCHAR(255)` | NO | 알림 내용 카피 |
+| `type` | `VARCHAR(30)` | NO | Enum: `FLIP_OVER` (뒤집힘), `DEFENSE` (위태로움), `VERIF_RESULT` (인증결과) |
+| `target_url` | `VARCHAR(255)` | YES | 딥링크 URL (클릭 시 이동할 구/성지) |
+| `is_read` | `BOOLEAN` | NO | Default: `FALSE`, 읽음 여부 |
+| `created_at` | `TIMESTAMP` | NO | 알림 생성 일시 |
+
+### 2.8 `spot_proposals` (유저 성지 제보)  -- ✨ (신규 추가)
+| 필드명 | 타입 | Null | 제약조건 / 설명 |
+| :--- | :--- | :--- | :--- |
+| `id` | `UUID` | NO | **PK**, 기본키 |
+| `user_id` | `UUID` | NO | **FK** ➔ `users.id` |
+| `place_name` | `VARCHAR(100)` | NO | 상호명 |
+| `address` | `VARCHAR(255)` | NO | 도로명 주소 |
+| `spot_title` | `VARCHAR(100)` | NO | 이벤트/성지명 |
+| `fandom_id` | `UUID` | NO | **FK** ➔ `fandoms.id` |
+| `poster_img` | `VARCHAR(512)` | YES | 포스터/인증샷 URL |
+| `status` | `VARCHAR(20)` | NO | Default: `'PENDING'`, Enum: `PENDING`, `APPROVED`, `REJECTED` |
+| `created_at` | `TIMESTAMP` | NO | 제보 제출 일시 |
+
 ---
 
 ## 3. 주요 데이터베이스 인덱스 설계 (Indexes)
