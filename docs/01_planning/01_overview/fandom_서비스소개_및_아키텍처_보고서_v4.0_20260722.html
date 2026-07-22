@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>팬덤 땅따먹기 (Fandom Conquest) - 서비스 소개 및 사업·기술 방향성 보고서</title>
+<title>팬덤 땅따먹기 (Fandom Conquest) - 서비스 소개 및 아키텍처 명세서</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; padding: 0; background: #f2f2f3; color: #1d1f20; font-family: Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.6; min-height: 100vh; }
@@ -93,7 +93,7 @@
   <!-- Sidebar Navigation -->
   <aside>
     <div class="brand-logo">AFTERGLOW</div>
-    <div class="brand-sub">팬덤 땅따먹기 (Fandom Conquest)<br>상위 보고용 Executive Report v4.0</div>
+    <div class="brand-sub">팬덤 땅따먹기 (Fandom Conquest)<br>서비스 소개 및 아키텍처 v4.0</div>
     
     <nav class="nav-menu" id="sideNav">
       <a href="#sec-01" class="nav-item active"><span class="nav-num">01</span>기획 개요 & 핵심 가치</a>
@@ -105,9 +105,9 @@
     </nav>
     
     <div class="meta-info">
-      <strong>문서 버전</strong>: v4.0 (Executive)<br>
+      <strong>문서 버전</strong>: v4.0<br>
       <strong>작성일자</strong>: 2026년 7월<br>
-      <strong>보고대상</strong>: 서비스 리더십 & 경영진<br>
+      <strong>문서 구분</strong>: 기획 및 아키텍처 명세<br>
       <strong>프로젝트 트랙</strong>: 퀵 실험형 (MVP 검증)
     </div>
   </aside>
@@ -116,10 +116,10 @@
   <main>
     <!-- Executive Header -->
     <header class="doc-header">
-      <div class="doc-badge">Executive Strategy Report</div>
+      <div class="doc-badge">Service & Architecture Overview</div>
       <h1 class="doc-title">IP 팬덤 기반 "팬덤 땅따먹기" 서비스 소개 및 사업·기술 방향성</h1>
       <p class="doc-desc">
-        본 보고서는 엔터테인먼트 IP 팬덤의 오프라인 이벤트 방문 행위를 <strong>AI OCR 기술</strong>과 <strong>위치기반(LBS) 게이미피케이션</strong>으로 결합하여 지도 점령 놀이로 승화시키는 신규 서비스 <strong>'팬덤 땅따먹기(Fandom Conquest)'</strong>의 전략, 메커니즘, 구조 및 로드맵을 상위 리더십에게 보고하기 위해 작성되었습니다.
+        본 문서는 엔터테인먼트 IP 팬덤의 오프라인 이벤트 방문 행위를 <strong>AI OCR 기술</strong>과 <strong>위치기반(LBS) 게이미피케이션</strong>으로 결합하여 지도 점령 놀이로 승화시키는 신규 서비스 <strong>'팬덤 땅따먹기(Fandom Conquest)'</strong>의 핵심 전략, 메커니즘, 구조 및 방향성을 정리한 명세서입니다.
       </p>
     </header>
 
@@ -348,26 +348,28 @@
 
       <div class="grid-2">
         <div>
-          <h3 style="font-family:'Arial Narrow', sans-serif; font-size:18px; color:#1d2d3d; margin-top:0;">5.1 AI 영수증 OCR 파이프라인</h3>
-          <p style="font-size:14px; color:#4a4a4d;">
-            현장 스태프의 수동 도장 확인을 AI 비전 기술로 대체하여 인건비를 100% 절감하고 방문 쾌감을 극대화합니다.
+          <h3 style="font-family:'Arial Narrow', sans-serif; font-size:18px; color:#1d2d3d; margin-top:0; margin-bottom:10px;">5.1 AI 영수증 OCR 파이프라인</h3>
+          <p style="font-size:14px; color:#4a4a4d; margin-bottom:16px; line-height:1.5;">
+            현장 스태프의 수동 도장 확인을 AI 비전 기술로 대체하여 인건비를 100% 절감하고 즉각적인 점령 쾌감을 극대화합니다.
           </p>
-          <ul class="custom-list">
-            <li><strong>추출 필드</strong>: 사업자등록번호, 결제일시, 결제금액, 승인번호</li>
-            <li><strong>대조 로직</strong>: 성지 기준 데이터(사업자번호)와 100% 일치 시 자동 승인</li>
-            <li><strong>개인정보 처리</strong>: 이미지 판독 후 필요 데이터만 저장, 원본 영수증 이미지는 마스킹 후 자동 파기</li>
-          </ul>
+          <div style="background:#eef2f5; padding:16px; border-radius:4px; font-size:13px; border-left:3px solid #416180; line-height:1.65;">
+            <strong style="color:#1d2d3d; display:block; margin-bottom:8px;">[OCR 기술 주요 파이프라인]</strong>
+            <div style="margin-bottom:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">• <code>[스캔]</code> ➔ AI 비전 스캔 ➔ <code>[4개 필드]</code> (사업자번호·일시·금액·승인번호) 추출</div>
+            <div style="margin-bottom:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">• <code>[대조]</code> ➔ 성지 등록 사업자번호와 <code>[100% 일치]</code> 시 즉시 자동 승인</div>
+            <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">• <code>[보호]</code> ➔ 텍스트만 추출 저장 후 원본 이미지 <code>[마스킹 & 파기]</code></div>
+          </div>
         </div>
         
         <div>
-          <h3 style="font-family:'Arial Narrow', sans-serif; font-size:18px; color:#1d2d3d; margin-top:0;">5.2 어드민 OMS 차용 워크플로우</h3>
-          <p style="font-size:14px; color:#4a4a4d;">
-            인증 관리 어드민은 주문관리(OMS) 상태값을 차용하여 검수 리소스를 최소화합니다.
+          <h3 style="font-family:'Arial Narrow', sans-serif; font-size:18px; color:#1d2d3d; margin-top:0; margin-bottom:10px;">5.2 어드민 인증 관리 워크플로우</h3>
+          <p style="font-size:14px; color:#4a4a4d; margin-bottom:16px; line-height:1.5;">
+            인증 상태 체계를 단계별로 가공·자동화하여 검수 리소스를 최소화하고 효율적인 관리 환경을 제공합니다.
           </p>
-          <div style="background:#eef2f5; padding:16px; border-radius:4px; font-size:13.5px; border-left:3px solid #416180;">
-            <strong style="color:#1d2d3d;">[인증 상태값 워크플로우]</strong><br>
-            <code>[대기]</code> ➔ AI 인식률 95% 이상 ➔ <code>[자동 승인]</code> (운영 리소스 0%)<br>
-            <code>[대기]</code> ➔ 구겨짐/GPS 이상 ➔ <code>[수동 검수]</code> ➔ 관리자 확인 ➔ <code>[최종 승인]</code> or <code>[반려 (알림)]</code>
+          <div style="background:#eef2f5; padding:16px; border-radius:4px; font-size:13px; border-left:3px solid #416180; line-height:1.65;">
+            <strong style="color:#1d2d3d; display:block; margin-bottom:8px;">[인증 상태 단계별 처리 절차]</strong>
+            <div style="margin-bottom:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">• <code>[자동승인]</code> ➔ <code>[대기]</code> ➔ AI 인식률 95% 이상 ➔ 즉시 승인 (리소스 0%)</div>
+            <div style="margin-bottom:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">• <code>[수동검수]</code> ➔ <code>[대기]</code> ➔ 구겨짐/GPS 플래그 ➔ 관리자 확인 후 최종 승인</div>
+            <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">• <code>[반려처리]</code> ➔ 사유 선택 시 유저 <code>[푸시 알림]</code> 발송 및 재시도 안내</div>
           </div>
         </div>
       </div>
@@ -428,10 +430,7 @@
         </tbody>
       </table>
 
-      <!-- Executive Sign-off Box -->
-      <div style="margin-top:40px; padding:20px; background:#eef2f5; border:1px solid rgba(29,31,32,.16); border-radius:4px; text-align:center; font-size:13px; color:#5d5d60;">
-        본 문서는 '팬덤 땅따먹기(Fandom Conquest)' 상위 리더십 보고서 v4.0 규격에 맞춰 제작되었습니다.
-      </div>
+
     </section>
   </main>
 </div>
