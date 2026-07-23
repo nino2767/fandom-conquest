@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  body{margin:0;background:#e9e6df;font-family:"Pretendard",system-ui,sans-serif}
+  a{color:#2a78d6}a:hover{color:#1c5fb0}
+  .dv-turn{padding:44px 48px 40px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
+  .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+  .dv-tname{font:700 14px/1.2 "Pretendard",system-ui;color:#1a1a1a}
+  .dv-sub{margin:0 0 26px;max-width:720px;font:400 12.5px/1.6 "Pretendard",system-ui;color:rgba(0,0,0,.55)}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:38px;align-items:flex-start}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+  .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+  .dv-olabel{display:flex;align-items:baseline;gap:9px;font:600 12px/1.35 "Pretendard",system-ui;color:rgba(0,0,0,.68)}
+  .dv-olabel small{font-weight:400;color:rgba(0,0,0,.45)}
+  .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+  .dv-next{margin:26px 0 0;font:12.5px/1.6 "Pretendard",system-ui;color:rgba(0,0,0,.5)}
+  /* phone shell */
+  .ph{position:relative;width:336px;height:712px;border-radius:46px;background:#0c0c0d;padding:11px;box-shadow:0 28px 60px -22px rgba(0,0,0,.45),0 4px 14px rgba(0,0,0,.18)}
+  .ph-scr{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden}
+  .ph-notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:104px;height:26px;background:#0c0c0d;border-radius:16px;z-index:40}
+  .sbar{position:absolute;top:0;left:0;right:0;height:50px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 6px;font:600 13px "Pretendard";z-index:35}
+</style>
+</helmet>
+
+<section class="dv-turn" id="u3">
+  <div class="dv-thd"><a class="dv-tid" href="#u3">1</a><span class="dv-tname">리소 약도 · 메인 지도 & 성지 거점 (UV-MAIN-01~04 · UV-SPOT-04)</span></div>
+  <p class="dv-sub">팬덤 땅따먹기 전체 화면 · 확정 컨셉(리소 약도) 기준. 주요 5화면 먼저, 이후 화면은 아래로 추가됩니다. 팬덤 컬러: 뉴진스 블루 · 아이브 앰버 · 에스파 핑크.</p>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="c1">
+      <div class="dv-olabel"><a class="dv-oid" href="#c1">c1</a> UV-MAIN-01 · 메인 성지 지도</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <svg viewBox="0 0 336 712" style="position:absolute;inset:0;width:100%;height:100%">
+            <rect width="336" height="712" fill="#fbfaf7"></rect>
+            <path d="M-10,80 C40,190 20,300 60,410 C90,500 70,620 40,712 L-20,712 L-20,80 Z" fill="#dcebff"></path>
+            <path d="M-10,80 C40,190 20,300 60,410 C90,500 70,620 40,712" fill="none" stroke="#a9cdf5" stroke-width="1.5"></path>
+            <path d="M84,430 Q125,412 165,430 Q178,485 158,555 Q115,575 82,548 Q72,490 84,430 Z" fill="#e4f0d8" stroke="#bcd79a" stroke-width="1.5"></path>
+            <rect x="118" y="170" width="100" height="115" rx="3" fill="#2f6bff" fill-opacity=".16" stroke="#2f6bff" stroke-width="1.4"></rect>
+            <rect x="228" y="180" width="88" height="118" rx="3" fill="#f59f00" fill-opacity=".2" stroke="#f59f00" stroke-width="1.4"></rect>
+            <rect x="230" y="316" width="84" height="112" rx="3" fill="#e64980" fill-opacity=".12" stroke="#e6a0bd" stroke-width="1.2"></rect>
+            <rect x="196" y="450" width="102" height="110" rx="3" fill="#e64980" fill-opacity=".18" stroke="#e64980" stroke-width="1.2"></rect>
+            <g stroke="#efe9dc" stroke-width="12" stroke-linecap="round" fill="none"><path d="M96,110 L110,712"></path><path d="M40,300 L336,282"></path><path d="M40,440 L336,432"></path><path d="M218,110 L234,712"></path></g>
+            <g stroke="#e5ddca" stroke-width="1" fill="none"><path d="M96,110 L110,712"></path><path d="M40,300 L336,282"></path><path d="M40,440 L336,432"></path><path d="M218,110 L234,712"></path></g>
+            <path d="M20,226 L332,204" stroke="#22201c" stroke-width="2.4" stroke-dasharray="9 5"></path>
+            <circle cx="152" cy="215" r="4.5" fill="#fff" stroke="#22201c" stroke-width="2.2"></circle>
+            <text x="150" y="150" font-family="Pretendard" font-size="10" font-weight="700" fill="#5a6b8a">중랑천</text>
+            <text x="112" y="500" font-family="Pretendard" font-size="10.5" font-weight="700" fill="#7c9a52">서울숲</text>
+            <text x="162" y="203" font-family="Pretendard" font-size="9.5" font-weight="700" fill="#22201c">뚝섬역</text>
+          </svg>
+          <div style="position:absolute;top:52px;left:14px;right:14px;display:flex;align-items:center;gap:8px;z-index:30">
+            <div style="flex:1;display:flex;align-items:center;gap:7px;height:42px;padding:0 13px;border-radius:11px;background:#fff;border:2px solid #22201c">
+              <span style="width:9px;height:9px;border-radius:50%;background:#2f6bff"></span>
+              <span style="font:800 12.5px 'Pretendard';color:#22201c">뉴진스 · 버니즈</span>
+              <span style="font:700 10.5px 'Pretendard';color:#8a8272;margin-left:auto">IP 필터 ▾</span>
+            </div>
+            <div style="width:42px;height:42px;border-radius:11px;background:#fff;border:2px solid #22201c;display:flex;align-items:center;justify-content:center;font-size:15px;position:relative">🔔<span style="position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:#c0492f"></span></div>
+          </div>
+          <div style="position:absolute;left:80%;top:34%;transform:translate(-50%,-100%);z-index:20;text-align:center">
+            <div style="padding:4px 8px;background:#f59f00;border:2px solid #22201c;font:800 10.5px 'Pretendard';color:#fff">D-2</div>
+            <div style="width:2px;height:11px;background:#22201c;margin:0 auto"></div>
+          </div>
+          <div style="position:absolute;left:50%;top:33%;transform:translate(-50%,-100%);z-index:20"><div style="width:14px;height:14px;border-radius:50%;background:#2f6bff;border:2px solid #22201c"></div><div style="width:2px;height:10px;background:#22201c;margin:0 auto"></div></div>
+          <div style="position:absolute;left:72%;top:70%;transform:translate(-50%,-100%);z-index:20"><div style="width:14px;height:14px;border-radius:50%;background:#e64980;border:2px solid #22201c"></div><div style="width:2px;height:10px;background:#22201c;margin:0 auto"></div></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;z-index:30">
+            <div style="margin:0 42px 12px;height:52px;border-radius:13px;background:#22201c;display:flex;align-items:center;justify-content:center;gap:7px;font:800 14.5px 'Pretendard';color:#fff;box-shadow:4px 4px 0 rgba(34,32,28,.18)">📸 땅 뺏어오기</div>
+            <div style="background:#fff;border-top:2px solid #22201c;padding:10px 18px 14px">
+              <div style="width:38px;height:4px;border-radius:3px;background:#22201c;opacity:.25;margin:0 auto 9px"></div>
+              <div style="display:flex;justify-content:space-between"><span style="font:800 13px 'Pretendard';color:#22201c">주변 성지 <b style="color:#c0492f">6</b></span><span style="font:700 11px 'Pretendard';color:#8a8272">스와이프하여 열기 ↑</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="c2">
+      <div class="dv-olabel"><a class="dv-oid" href="#c2">c2</a> UV-MAIN-02 · 성지 상세 모달</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:44px;left:14px;right:14px;height:160px;border:2px solid #22201c;border-radius:12px;background:repeating-linear-gradient(135deg,#fff4dd,#fff4dd 6px,#fde8c2 6px,#fde8c2 12px);overflow:hidden">
+            <div style="position:absolute;top:9px;left:9px;width:32px;height:32px;border-radius:9px;background:#fff;border:2px solid #22201c;display:flex;align-items:center;justify-content:center;font-size:13px">✕</div>
+            <div style="position:absolute;top:9px;right:9px;width:32px;height:32px;border-radius:9px;background:#fff;border:2px solid #22201c;display:flex;align-items:center;justify-content:center;font-size:13px">🔍</div>
+            <div style="position:absolute;bottom:9px;left:0;right:0;display:flex;justify-content:center;gap:5px"><span style="width:15px;height:5px;background:#22201c"></span><span style="width:5px;height:5px;background:#fff;border:1.5px solid #22201c"></span><span style="width:5px;height:5px;background:#fff;border:1.5px solid #22201c"></span></div>
+          </div>
+          <div style="position:absolute;top:218px;left:14px;right:14px;bottom:88px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:7px"><span style="padding:3px 8px;background:#f59f00;border:2px solid #22201c;font:800 10px 'Pretendard';color:#fff">D-2</span><span style="font:600 10.5px 'Pretendard';color:#8a8272">생일카페 · 성수동1가</span></div>
+            <div style="font:900 19px 'Pretendard';color:#22201c;letter-spacing:-.02em;margin-top:7px">어반소스 × 안유진 생일카페</div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px;margin-top:11px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font:800 12px 'Pretendard';color:#22201c">실시간 점유율</span><span style="font:700 10px 'Pretendard';color:#c0492f">경합</span></div>
+              <div style="display:flex;height:18px;border:1.5px solid #22201c;border-radius:5px;overflow:hidden;font:800 9.5px 'Pretendard'">
+                <div style="width:60%;background:#2f6bff;color:#fff;display:flex;align-items:center;padding-left:7px">뉴진스 60%</div>
+                <div style="width:40%;background:#f59f00;color:#fff;display:flex;align-items:center;justify-content:flex-end;padding-right:7px">40% 아이브</div>
+              </div>
+            </div>
+            <div style="display:flex;margin-top:11px;border:2px solid #22201c;border-radius:10px;overflow:hidden">
+              <div style="flex:1;text-align:center;padding:7px 0;background:#22201c;color:#fff;font:800 11px 'Pretendard'">팬덤 기여 현황</div>
+              <div style="flex:1;text-align:center;padding:7px 0;font:700 11px 'Pretendard';color:#22201c;border-left:2px solid #22201c">과거 장소 이력</div>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px;margin-top:10px">
+              <div style="display:flex;align-items:center;gap:8px;padding-bottom:9px;border-bottom:1.5px solid #ececec"><span style="font-size:15px">👑</span><div style="flex:1"><div style="font:800 12px 'Pretendard';color:#22201c">이 성지의 수호신</div><div style="font:600 10px 'Pretendard';color:#8a8272">기여 1위</div></div><span style="font:800 12px 'Pretendard';color:#c98a00">덕질마스터 · 15점</span></div>
+              <div style="display:flex;align-items:flex-end;justify-content:center;gap:10px;margin-top:11px">
+                <div style="text-align:center"><div style="font:700 10px 'Pretendard';color:#8a8272;margin-bottom:4px">🥈 럭키팬</div><div style="width:58px;height:38px;border:2px solid #22201c;border-bottom:none;display:flex;align-items:center;justify-content:center;font:800 11px 'Pretendard';color:#22201c;background:#f3f0e8">10점</div></div>
+                <div style="text-align:center"><div style="font:700 10px 'Pretendard';color:#c98a00;margin-bottom:4px">🥇 덕질마스터</div><div style="width:62px;height:54px;border:2px solid #22201c;border-bottom:none;display:flex;align-items:center;justify-content:center;font:900 12px 'Pretendard';color:#22201c;background:#ffe14d">15점</div></div>
+                <div style="text-align:center"><div style="font:700 10px 'Pretendard';color:#a5714f;margin-bottom:4px">🥉 핀아</div><div style="width:58px;height:28px;border:2px solid #22201c;border-bottom:none;display:flex;align-items:center;justify-content:center;font:800 11px 'Pretendard';color:#22201c;background:#f0dcc8">8점</div></div>
+              </div>
+              <div style="border-top:2px solid #22201c;margin-top:0"></div>
+              <div style="font:600 10px 'Pretendard';color:#8a8272;margin-top:8px;text-align:center">최근: [덕질마스터] +1점 기여 · 10분 전</div>
+            </div>
+          </div>
+          <div style="position:absolute;left:14px;right:14px;bottom:24px"><div style="height:50px;border-radius:13px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13.5px 'Pretendard';color:#fff;box-shadow:4px 4px 0 rgba(34,32,28,.18)">📸 이 성지에 내 팬덤 기여하기</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="c3">
+      <div class="dv-olabel"><a class="dv-oid" href="#c3">c3</a> UV-MAIN-03 · 주변 성지 바텀시트</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:0;left:0;right:0;height:38%;opacity:.45">
+            <svg viewBox="0 0 336 270" style="width:100%;height:100%"><g fill="none" stroke-width="1.5"><g stroke="#f59f00"><circle cx="230" cy="110" r="18"></circle><circle cx="230" cy="110" r="36"></circle><circle cx="230" cy="110" r="55"></circle></g><g stroke="#2f6bff"><circle cx="90" cy="160" r="16"></circle><circle cx="90" cy="160" r="32"></circle><circle cx="90" cy="160" r="50"></circle></g></g></svg>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;top:34%;background:#fff;border-top:2px solid #22201c;padding:10px 16px 0">
+            <div style="width:38px;height:4px;background:#22201c;opacity:.25;border-radius:3px;margin:0 auto 6px"></div>
+            <div style="display:flex;justify-content:center;gap:4px;margin-bottom:10px"><span style="width:5px;height:5px;border:1.5px solid #22201c;border-radius:50%"></span><span style="width:14px;height:5px;background:#22201c;border-radius:3px"></span><span style="width:5px;height:5px;border:1.5px solid #22201c;border-radius:50%"></span></div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px"><div style="font:800 15px 'Pretendard';color:#22201c">반경 200m 성지 <span style="color:#c0492f">6</span></div><div style="font:700 11px 'Pretendard';color:#8a8272">거리순 ▾</div></div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:10px 12px;margin-bottom:9px;display:flex;gap:11px;align-items:center">
+              <div style="width:44px;height:44px;border:2px solid #22201c;background:#f59f00;flex:none;display:flex;align-items:center;justify-content:center;font:800 9px 'Pretendard';color:#fff">IVE</div>
+              <div style="flex:1;min-width:0"><div style="font:800 12.5px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">어반소스 × 안유진 생일카페</div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">80m · 생일카페 · <span style="color:#c0492f">D-2</span></div></div>
+              <span style="padding:3px 8px;border:1.5px solid #22201c;font:800 10px 'Pretendard';color:#22201c;background:#fff4dd">60%</span>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:10px 12px;margin-bottom:9px;display:flex;gap:11px;align-items:center">
+              <div style="width:44px;height:44px;border:2px solid #22201c;background:#2f6bff;flex:none;display:flex;align-items:center;justify-content:center;font:800 12px 'Pretendard';color:#fff">N</div>
+              <div style="flex:1;min-width:0"><div style="font:800 12.5px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">언더스탠드 카페</div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">140m · 상설 성지</div></div>
+              <span style="padding:3px 8px;border:1.5px solid #22201c;font:800 10px 'Pretendard';color:#22201c;background:#e8effc">74%</span>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:10px 12px;display:flex;gap:11px;align-items:center">
+              <div style="width:44px;height:44px;border:2px solid #22201c;background:#e64980;flex:none;display:flex;align-items:center;justify-content:center;font:800 10px 'Pretendard';color:#fff">ae</div>
+              <div style="flex:1;min-width:0"><div style="font:800 12.5px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">성수 연방극장 팝업</div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">190m · 팝업스토어 · D-6</div></div>
+              <span style="padding:3px 8px;border:1.5px solid #22201c;font:800 10px 'Pretendard';color:#22201c;background:#fdeef4">52%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="c4">
+      <div class="dv-olabel"><a class="dv-oid" href="#c4">c4</a> UV-MAIN-04 · IP 팬덤 필터 시트</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;inset:0;background:rgba(34,32,28,.25)"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;top:22%;background:#fff;border-top:2px solid #22201c;padding:12px 16px 0">
+            <div style="width:38px;height:4px;background:#22201c;opacity:.25;border-radius:3px;margin:0 auto 12px"></div>
+            <div style="font:900 16px 'Pretendard';color:#22201c">IP 팬덤 필터</div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:12px 0 8px">내 선호 IP</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <span style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:2px solid #22201c;background:#22201c;color:#fff;font:800 12px 'Pretendard';border-radius:10px"><span style="width:8px;height:8px;border-radius:50%;background:#2f6bff"></span>뉴진스 ✓</span>
+              <span style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:2px solid #22201c;color:#22201c;font:700 12px 'Pretendard';border-radius:10px"><span style="width:8px;height:8px;border-radius:50%;background:#e64980"></span>에스파</span>
+              <span style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:2px solid #22201c;color:#22201c;font:700 12px 'Pretendard';border-radius:10px"><span style="width:8px;height:8px;border-radius:50%;background:#f59f00"></span>아이브</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px;margin-top:13px"><span style="font-size:13px;opacity:.55">🔍</span><span style="font:600 12px 'Pretendard';color:#b3ad9d">팬덤/아티스트 검색</span></div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:15px 0 6px">인기 팬덤 순위</div>
+            <div style="display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1.5px solid #ececec"><span style="font:900 13px 'Pretendard';color:#22201c;width:14px">1</span><span style="width:30px;height:30px;border:2px solid #22201c;border-radius:8px;background:#2f6bff;display:flex;align-items:center;justify-content:center;font:800 11px 'Pretendard';color:#fff">N</span><div style="flex:1"><div style="font:800 12.5px 'Pretendard';color:#22201c">뉴진스 · 버니즈</div><div style="font:600 10px 'Pretendard';color:#8a8272">점령 8구 · 성지 42</div></div><span style="font:700 10px 'Pretendard';color:#2e7d46">▲1</span></div>
+            <div style="display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1.5px solid #ececec"><span style="font:900 13px 'Pretendard';color:#22201c;width:14px">2</span><span style="width:30px;height:30px;border:2px solid #22201c;border-radius:8px;background:#e64980;display:flex;align-items:center;justify-content:center;font:800 10px 'Pretendard';color:#fff">ae</span><div style="flex:1"><div style="font:800 12.5px 'Pretendard';color:#22201c">에스파 · 마이</div><div style="font:600 10px 'Pretendard';color:#8a8272">점령 7구 · 성지 38</div></div><span style="font:700 10px 'Pretendard';color:#c0492f">▼1</span></div>
+            <div style="display:flex;align-items:center;gap:11px;padding:9px 0"><span style="font:900 13px 'Pretendard';color:#22201c;width:14px">3</span><span style="width:30px;height:30px;border:2px solid #22201c;border-radius:8px;background:#f59f00;display:flex;align-items:center;justify-content:center;font:800 9px 'Pretendard';color:#4a3708">IVE</span><div style="flex:1"><div style="font:800 12.5px 'Pretendard';color:#22201c">아이브 · 다이브</div><div style="font:600 10px 'Pretendard';color:#8a8272">점령 5구 · 성지 29</div></div><span style="font:700 10px 'Pretendard';color:#b3ad9d">–</span></div>
+            <div style="position:absolute;left:16px;right:16px;bottom:22px"><div style="height:48px;border-radius:12px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13px 'Pretendard';color:#fff">이 팬덤만 지도에 표시</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="c5">
+      <div class="dv-olabel"><a class="dv-oid" href="#c5">c5</a> UV-SPOT-04 · 성지 제보 모달</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:52px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between"><div style="font:900 17px 'Pretendard';color:#22201c">새 성지 제보</div><div style="width:34px;height:34px;border:2px solid #22201c;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#22201c">✕</div></div>
+          <div style="position:absolute;top:102px;left:16px;right:16px;bottom:88px;overflow:hidden">
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin-bottom:7px">장소 유형</div>
+            <div style="display:flex;border:2px solid #22201c;border-radius:10px;overflow:hidden"><span style="flex:1;text-align:center;padding:8px 0;background:#22201c;color:#fff;font:800 11.5px 'Pretendard'">팝업스토어</span><span style="flex:1;text-align:center;padding:8px 0;font:700 11.5px 'Pretendard';color:#22201c;border-left:2px solid #22201c">생일카페</span><span style="flex:1;text-align:center;padding:8px 0;font:700 11.5px 'Pretendard';color:#22201c;border-left:2px solid #22201c">이벤트</span></div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:12px 0 7px">귀속 팬덤</div>
+            <div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px"><span style="width:9px;height:9px;border-radius:50%;background:#2f6bff"></span><span style="font:700 12.5px 'Pretendard';color:#22201c">뉴진스 (NewJeans)</span><span style="margin-left:auto;font:700 11px 'Pretendard';color:#8a8272">변경 ▾</span></div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:12px 0 7px">상호명</div>
+            <div style="display:flex;align-items:center;height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px"><span style="font:700 12.5px 'Pretendard';color:#22201c">어반소스 성수점</span></div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:12px 0 7px">주소</div>
+            <div style="display:flex;gap:8px">
+              <div style="flex:1;display:flex;align-items:center;height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px"><span style="font:600 12px 'Pretendard';color:#b3ad9d">주소 검색으로 입력</span></div>
+              <div style="height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px;background:#fae100;display:flex;align-items:center;font:800 11.5px 'Pretendard';color:#3c1e1e">카카오 검색</div>
+            </div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:12px 0 7px">운영 기간</div>
+            <div style="display:flex;align-items:center;gap:9px;height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px"><span style="font-size:13px">📅</span><span style="font:700 12.5px 'Pretendard';color:#22201c">07.20 (월) ~ 07.27 (월)</span></div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:12px 0 7px">증빙 자료</div>
+            <div style="display:flex;gap:9px">
+              <div style="flex:1;height:66px;border:2px dashed #22201c;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><span style="font-size:16px">🧾</span><span style="font:700 10px 'Pretendard';color:#8a8272">영수증 첨부</span></div>
+              <div style="flex:1;height:66px;border:2px dashed #22201c;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><span style="font-size:16px">📷</span><span style="font:700 10px 'Pretendard';color:#8a8272">현장 사진</span></div>
+            </div>
+          </div>
+          <div style="position:absolute;left:16px;right:16px;bottom:24px"><div style="height:50px;border-radius:12px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13.5px 'Pretendard';color:#fff;box-shadow:4px 4px 0 rgba(34,32,28,.18)">제보 제출하기</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+</body>
+</html>

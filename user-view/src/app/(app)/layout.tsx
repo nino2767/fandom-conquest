@@ -3,42 +3,28 @@ import React from "react";
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
-      minHeight: "100vh",
-      background: "#EBEDF2",
+      width: "100%",
+      height: "100dvh",
+      background: "#f5f4ef",
       display: "flex",
       justifyContent: "center",
-      alignItems: "flex-start",
-      padding: "24px 12px",
+      alignItems: "center",
+      overflow: "hidden",
+      overscrollBehavior: "none",
+      touchAction: "manipulation",
       fontFamily: "'Pretendard', -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif"
     }}>
-      {/* 폰 프레임 */}
       <div style={{
-        width: 390,
-        maxWidth: "100%",
-        height: 820,
+        width: "100%",
+        maxWidth: "480px",
+        height: "100dvh",
         background: "#FFFFFF",
-        borderRadius: 40,
-        border: "1px solid #E2E5EC",
-        boxShadow: "0 20px 50px rgba(30,34,60,.14)",
-        overflow: "hidden",
         position: "relative",
+        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        color: "#1B1D26"
+        overscrollBehavior: "none"
       }}>
-        {/* 노치 */}
-        <div style={{
-          position: "absolute",
-          top: 10,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: 120,
-          height: 26,
-          background: "#000",
-          borderRadius: 20,
-          zIndex: 60
-        }} />
-
         {children}
       </div>
     </div>

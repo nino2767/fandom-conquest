@@ -1,88 +1,75 @@
-"use client";
+'use client';
 
-import React from "react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { Map as MapIcon, Swords, Camera, Trophy, Star } from "lucide-react";
-
-const C = {
-  line: "#E2E5EC",
-  frame: "#FFFFFF",
-  sub: "#6C7180",
-};
-
-const MY_FANDOM = "nj";
-const FAND_COLOR = "#4C8DFF";
+import React from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  const isTabActive = (path: string) => {
-    return pathname === path;
-  };
+  const navItems = [
+    { href: '/map', label: '지도' },
+    { href: '/war', label: '전황' },
+    { href: '/verify', label: '인증', isPrimary: true },
+    { href: '/ranking', label: '랭킹' },
+    { href: '/my', label: 'MY' },
+  ];
 
   return (
-    <>
-      {children}
-
-      {/* 하단 탭 */}
-      <div style={{
-        flexShrink: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-around",
-        padding: "10px 16px 22px",
-        borderTop: `1px solid ${C.line}`,
-        background: C.frame
-      }}>
-        <TabBtn href="/map" icon={<MapIcon size={21} />} label="지도" active={isTabActive("/map")} />
-        <TabBtn href="/war" icon={<Swords size={21} />} label="전황" active={isTabActive("/war")} />
-        
-        <Link href="/verify" style={{ textDecoration: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-          <span style={{
-            width: 46,
-            height: 46,
-            marginTop: -20,
-            borderRadius: 16,
-            background: FAND_COLOR,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: `0 8px 20px ${FAND_COLOR}66`,
-            border: `3px solid ${C.frame}`
-          }}>
-            <Camera size={22} color="#06122B" />
-          </span>
-          <span style={{ fontSize: 10.5, fontWeight: 700, color: C.sub }}>인증</span>
-        </Link>
-
-        <TabBtn href="/ranking" icon={<Trophy size={21} />} label="랭킹" active={isTabActive("/ranking")} />
-        <TabBtn href="/my" icon={<Star size={21} />} label="MY" active={isTabActive("/my")} />
+    <div style={{ position: 'relative', width: '100%', height: '100vh', minHeight: '100dvh', background: '#fff', overflow: 'hidden' }}>
+      {/* Page Content */}
+      <div style={{ position: 'relative', width: '100%', height: 'calc(100% - 58px)', overflow: 'hidden' }}>
+        {children}
       </div>
-    </>
-  );
-}
 
-interface TabBtnProps {
-  href: string;
-  icon: React.ReactNode;
-  label: string;
-  active: boolean;
-}
-
-function TabBtn({ href, icon, label, active }: TabBtnProps) {
-  return (
-    <Link href={href} style={{
-      textDecoration: "none",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: 4,
-      color: active ? "#1B1D26" : "#9AA0B8",
-      cursor: "pointer"
-    }}>
-      {icon}
-      <span style={{ fontSize: 10.5, fontWeight: active ? 700 : 500 }}>{label}</span>
-    </Link>
+        {/* Bottom Fixed Tab Navigation */}
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: '58px',
+            background: '#fff',
+            borderTop: '2px solid #22201c',
+            display: 'flex',
+            alignItems: 'center',
+            font: "700 11px 'Pretendard', system-ui, sans-serif",
+            textAlign: 'center',
+            zIndex: 40,
+          }}
+        >
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+            if (item.isPrimary) {
+              return (
+                <Link key={item.href} href={item.href} style={{ flex: 1, textDecoration: 'none' }} className="tapzone">
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ font: "800 10.5px 'Pretendard'", color: '#22201c', background: '#ffe14d', border: '1.5px solid #22201c', padding: '2px 8px', borderRadius: '8px' }}>
+                      📸 인증
+                    </span>
+                  </div>
+                </Link>
+              );
+            }
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="tapzone"
+                style={{
+                  flex: 1,
+                  textDecoration: 'none',
+                  color: isActive ? '#22201c' : '#b3ad9d',
+                  fontWeight: isActive ? 900 : 700,
+                  fontSize: isActive ? '12px' : '11px',
+                }}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </div>
+    </div>
   );
 }

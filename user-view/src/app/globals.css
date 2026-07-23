@@ -1,19 +1,20 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
 
 :root {
-  --nj: #4C8DFF;
-  --ive: #FF4D62;
-  --aes: #C25CFF;
+  --nj: #2f6bff;
+  --ive: #f59f00;
+  --aes: #e64980;
   --lsf: #22D3B7;
-  --ink: #16171F;
+  --ink: #22201c;
   --ink2: #5B5E6B;
-  --line: #E2E5EC;
-  --sub: #6C7180;
-  --txt: #1B1D26;
+  --line: #22201c;
+  --sub: #8a8272;
+  --txt: #22201c;
   --frame: #FFFFFF;
-  --panel: #F4F5F8;
-  --panel2: #EAECF1;
-  --amber: #E08A00;
+  --panel: #fbfaf7;
+  --panel2: #efe9dc;
+  --amber: #f59f00;
+  --yellow: #ffe14d;
 }
 
 * {
@@ -22,10 +23,33 @@
   padding: 0;
 }
 
+html,
 body {
-  font-family: 'Pretendard', -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #f5f4ef;
+  font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
+@media (max-width: 480px) {
+  html, body {
+    background: #fff;
+  }
+}
+
+a {
+  color: #2a78d6;
+  text-decoration: none;
+}
+a:hover {
+  color: #1c5fb0;
 }
 
 .mono {
@@ -33,19 +57,19 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-@keyframes softpulse {
-  0%, 100% { opacity: .35; }
-  50% { opacity: .9; }
+/* Reset legacy phone mockup classes */
+.ph, .ph-scr {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
 }
 
-@keyframes ringpulse {
-  0% { transform: scale(1); opacity: .7; }
-  100% { transform: scale(2.4); opacity: 0; }
-}
-
-@keyframes livedot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .25; }
+.ph-notch, .sbar {
+  display: none !important;
 }
 
 @keyframes rise {
@@ -57,16 +81,6 @@ body {
   0% { transform: scale(.6); opacity: 0; }
   60% { transform: scale(1.12); }
   100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes confetti {
-  0% { transform: translateY(-10px) rotate(0); opacity: 1; }
-  100% { transform: translateY(420px) rotate(320deg); opacity: 0; }
-}
-
-@keyframes shutterpulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(76, 141, 255, .5); }
-  50% { box-shadow: 0 0 0 12px rgba(76, 141, 255, 0); }
 }
 
 @keyframes scanline {
@@ -87,12 +101,7 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.scroll::-webkit-scrollbar {
+.scroll-none::-webkit-scrollbar {
   display: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hotglow, .heroring, .livedot, .scanline, .shutter, .conf, .bar {
-    animation: none !important;
-  }
-}
