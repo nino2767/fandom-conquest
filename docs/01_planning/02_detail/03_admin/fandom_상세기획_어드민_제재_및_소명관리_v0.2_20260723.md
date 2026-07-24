@@ -1,11 +1,12 @@
-# 팬덤 땅따먹기 상세기획 — 어드민 제재 유저 & 소명 관리 (v0.3)
+# 팬덤 땅따먹기 상세기획 — 어드민 제재 유저 & 소명 관리 (v0.2)
 
-> **문서 버전**: v0.3  
-> **최종 수정일**: 2026-07-24  
+> **문서 버전**: v0.2  
+> **최종 수정일**: 2026-07-23  
 > **문서 상태**: Approved Spec  
 > **관련 화면 ID**: `ADM-SANCTION-01` (제재 유저 목록 & 몰수 관리), `ADM-SANCTION-02` (유저 인앱 소명 심사 큐)  
 > **관련 User View**: `UV-VERIF-05` (반려/정지 모달), `UV-USER-APPEAL` (유저 인앱 소명 신청)  
 > **개발 API 참조**: [`docs/03_dev/api/admin_user_abuse_api_v0.1_20260724.md`](file:///Users/jmk/develop/fandom-conquest/docs/03_dev/api/admin_user_abuse_api_v0.1_20260724.md)
+
 
 ---
 

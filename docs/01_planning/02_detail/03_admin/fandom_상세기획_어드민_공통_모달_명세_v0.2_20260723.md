@@ -1,10 +1,11 @@
-# 팬덤 땅따먹기 상세기획 — 어드민 전역 공통 모달 명세 (v0.3)
+# 팬덤 땅따먹기 상세기획 — 어드민 전역 공통 모달 명세 (v0.2)
 
-> **문서 버전**: v0.3  
-> **최종 수정일**: 2026-07-24  
+> **문서 버전**: v0.2  
+> **최종 수정일**: 2026-07-23  
 > **문서 상태**: Approved Spec  
 > **관련 영역**: 어드민 전역 모듈 (`ADM-USER`, `ADM-ABUSE`, `ADM-SANCTION`, `ADM-VERIF` 등) 공통 호출  
 > **개발 API 참조**: [`docs/03_dev/api/admin_user_abuse_api_v0.1_20260724.md`](file:///Users/jmk/develop/fandom-conquest/docs/03_dev/api/admin_user_abuse_api_v0.1_20260724.md)
+
 
 ---
 

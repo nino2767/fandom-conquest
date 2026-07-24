@@ -1,11 +1,12 @@
-# 팬덤 땅따먹기 상세기획 — 어드민 어뷰징 탐지 모니터링 (v0.3)
+# 팬덤 땅따먹기 상세기획 — 어드민 어뷰징 탐지 모니터링 (v0.2)
 
-> **문서 버전**: v0.3  
-> **최종 수정일**: 2026-07-24  
+> **문서 버전**: v0.2  
+> **최종 수정일**: 2026-07-23  
 > **문서 상태**: Approved Spec  
 > **관련 화면 ID**: `ADM-ABUSE-01` (실시간 이상 징후 대시보드)  
 > **관련 정책**: 4겹 어뷰징 방어 규칙 (`fandom_핵심정책_v0.1_20260722.md` #5)  
 > **개발 API 참조**: [`docs/03_dev/api/admin_user_abuse_api_v0.1_20260724.md`](file:///Users/jmk/develop/fandom-conquest/docs/03_dev/api/admin_user_abuse_api_v0.1_20260724.md)
+
 
 ---
 
@@ -139,5 +140,6 @@
 어드민 시스템 전체에서 중복 개발 없이 공통으로 재사용되는 **4대 전역 공통 모달(`MODAL-COMM-01` ~ `04`)의 정밀 UI/UX 및 데이터 명세**는 별도의 공통 문서로 분리되어 관리됩니다:
 
 - 📄 **어드민 공통 모달 정밀 상세기획서**:  
-  [`docs/01_planning/02_detail/03_admin/fandom_상세기획_어드민_공통_모달_명세_v0.3_20260724.md`](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/03_admin/fandom_상세기획_어드민_공통_모달_명세_v0.3_20260724.md)
+  [`docs/01_planning/02_detail/03_admin/fandom_상세기획_어드민_공통_모달_명세_v0.2_20260723.md`](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/03_admin/fandom_상세기획_어드민_공통_모달_명세_v0.2_20260723.md)
+
 

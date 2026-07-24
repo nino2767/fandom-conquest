@@ -1,11 +1,12 @@
-# 팬덤 땅따먹기 상세기획 — 어드민 유저 관리 (v0.3)
+# 팬덤 땅따먹기 상세기획 — 어드민 유저 관리 (v0.2)
 
-> **문서 버전**: v0.3  
-> **최종 수정일**: 2026-07-24  
+> **문서 버전**: v0.2  
+> **최종 수정일**: 2026-07-23  
 > **문서 상태**: Approved Spec  
 > **관련 화면 ID**: `ADM-USER-01` (유저 목록 & 회원 상세), `ADM-USER-02` (프로필 캐릭터/아바타 관리)  
 > **관련 User View**: `UV-MY-01` (프로필), `UV-ONBOARDING` (온보딩 프로필 세팅)  
 > **개발 API 참조**: [`docs/03_dev/api/admin_user_abuse_api_v0.1_20260724.md`](file:///Users/jmk/develop/fandom-conquest/docs/03_dev/api/admin_user_abuse_api_v0.1_20260724.md)
+
 
 ---
 
