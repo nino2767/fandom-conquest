@@ -50,20 +50,29 @@ Fandom Conquest System
 └── 🛡️ PART 2. Admin Back-Office (백오피스 어드민)
     ├── 6.0 Auth (어드민 인증) [ADM-SYS-03] (어드민 보안 로그인 `/login`)
     ├── 7.0 Dashboard (전황 & 운영 대시보드) [ADM-DASH-01]
-    ├── 8.0 Spot Master (거점 & 성지 관리)
-    │   ├── 8.1 장소 가맹점 관리 (Place Management) [ADM-SPOT-01]
-    │   ├── 8.2 성지 핀 이벤트 관리 (Spot Management) [ADM-SPOT-02]
-    │   └── 8.3 유저 제보 성지 승인 큐 (User Spot Proposal Queue) [ADM-SPOT-03]
-    ├── 9.0 Verification OMS (영수증 인증 검수 관리)
-    │   ├── 9.1 인증 내역 테이블 (Verification Data Table) [ADM-VERIF-01]
-    │   ├── 9.2 수동 검수 큐 (Manual Review Queue) [ADM-VERIF-02]
-    │   └── 9.3 반려 사유 관리 (Rejection Preset Management) [ADM-VERIF-03]
-    ├── 10.0 Anti-Abuse & Users (어뷰징 탐지 & 유저 관리)
-    │   ├── 10.1 이상 탐지 모니터링 (Anomaly Monitoring) [ADM-ABUSE-01]
-    │   ├── 10.2 유저 목록 & 수동 제재 (User Management) [ADM-USER-01]
-    │   └── 10.3 자동 임시정지 검수 큐 (Auto-Suspension Review Queue) [ADM-USER-02]
-    ├── 11.0 Fandom IP Master (팬덤 IP & 브랜드 마스터) [ADM-IP-01]
-    └── 12.0 System IAM (시스템 계정 & IAM 권한 관리) [ADM-SYS-02]
+    ├── 8.0 Fandom IP & Brand Master (팬덤 IP & 대표 컬러 브랜드 관리)
+    │   ├── 8.1 팬덤 IP 브랜드 마스터 (3계층/장르/HEX컬러) [ADM-IP-01]
+    │   └── 8.2 유저 신규 팬덤 신청 전용 심사 수신함 [ADM-IP-REQUEST-01]
+    ├── 9.0 Spot Master (거점 & 성지 관리)
+    │   ├── 9.1 장소 가맹점 관리 (Place Management) [ADM-SPOT-01]
+    │   ├── 9.2 성지 핀 이벤트 관리 (Spot Management) [ADM-SPOT-02]
+    │   └── 9.3 유저 제보 성지 승인 큐 (User Spot Proposal Queue) [ADM-SPOT-03]
+    ├── 10.0 Verification OMS (영수증 인증 검수 관리)
+    │   ├── 10.1 인증 내역 테이블 (Verification Data Table) [ADM-VERIF-01]
+    │   ├── 10.2 수동 검수 큐 (Manual Review Queue) [ADM-VERIF-02]
+    │   └── 10.3 반려 사유 관리 (Rejection Preset Management) [ADM-VERIF-03]
+    ├── 11.0 User & Abuse Monitoring (유저 관리 및 어뷰징 모니터링)
+    │   ├── 11.1 유저 목록 & PII 마스킹 관리 (User Management) [ADM-USER-01]
+    │   ├── 11.2 디폴트 캐릭터/아바타 관리 [ADM-USER-02]
+    │   ├── 11.3 실시간 어뷰징 탐지 모니터링 대시보드 [ADM-ABUSE-01]
+    │   ├── 11.4 제재 유저 목록 & 몰수 관리 [ADM-SANCTION-01]
+    │   └── 11.5 유저 인앱 소명 심사 큐 [ADM-SANCTION-02]
+    ├── 12.0 Push & Notification (푸시 및 알림 관리)
+    │   ├── 12.1 푸시 발송 & 템플릿 관리 [ADM-PUSH-01]
+    │   └── 12.2 발송 이력 및 수신 통계 [ADM-PUSH-02]
+    └── 13.0 System & Global Settings (시스템 설정)
+        ├── 13.1 공통 금칙어 관리 [ADM-SYSTEM-01]
+        └── 13.2 어드민 계정 & 권한 관리 [ADM-SYS-02]
 ```
 
 ---

@@ -55,9 +55,24 @@ erDiagram
     }
     FANDOMS {
         uuid id PK
+        string fandom_code
         string name
-        string color_hex
+        string en_name
+        string aliases
+        string ip_type
+        uuid parent_fandom_id FK
+        uuid root_group_id FK
+        string region_type
+        string genre_category
+        string primary_color_hex
+        decimal weight_mult
+        string sns_instagram
+        string sns_youtube
+        string sns_twitter
+        string sns_community
+        datetime created_at
     }
+
 ```
 
 ---
