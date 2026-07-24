@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&family=Black+Han+Sans&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#e9e6df;font-family:"Pretendard",system-ui,sans-serif}
+  a{color:#2a78d6}a:hover{color:#1c5fb0}
+  .dv-turn{padding:44px 48px 40px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
+  .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+  .dv-tname{font:700 14px/1.2 "Pretendard",system-ui;color:#1a1a1a}
+  .dv-sub{margin:0 0 26px;max-width:720px;font:400 12.5px/1.6 "Pretendard",system-ui;color:rgba(0,0,0,.55)}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:38px;align-items:flex-start}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+  .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+  .dv-olabel{display:flex;align-items:baseline;gap:9px;font:600 12px/1.35 "Pretendard",system-ui;color:rgba(0,0,0,.68)}
+  .dv-olabel small{font-weight:400;color:rgba(0,0,0,.45)}
+  .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+  .dv-next{margin:26px 0 0;font:12.5px/1.6 "Pretendard",system-ui;color:rgba(0,0,0,.5)}
+  /* phone shell */
+  .ph{position:relative;width:336px;height:712px;border-radius:46px;background:#0c0c0d;padding:11px;box-shadow:0 28px 60px -22px rgba(0,0,0,.45),0 4px 14px rgba(0,0,0,.18)}
+  .ph-scr{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden}
+  .ph-notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:104px;height:26px;background:#0c0c0d;border-radius:16px;z-index:40}
+  .sbar{position:absolute;top:0;left:0;right:0;height:50px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 6px;font:600 13px "Pretendard";z-index:35}
+</style>
+</helmet>
+
+<section class="dv-turn" id="sp2" style="background:#f3f1ec">
+  <div class="dv-thd"><a class="dv-tid" href="#sp2">SP2</a><span class="dv-tname">스플래시 · 깃발 꽂기 모티프</span></div>
+  <p class="dv-sub">"땅에 깃발을 꽂는다"는 핵심 행동을 스플래시로. 커스텀 깃발 심볼 · 샤프 모노크롬 · 팬덤색 1점.</p>
+  <div class="dv-opts">
+
+    <div class="dv-opt">
+      <div class="dv-olabel">SP-D · 지면에 꽂힌 깃발 <small>· 핀+깃발</small></div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#111"><span style="font-family:Pretendard">9:41</span><span style="font-size:11px;font-family:'IBM Plex Mono'">5G</span></div>
+          <div style="position:absolute;top:0;bottom:0;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <svg width="120" height="130" viewBox="0 0 120 130" fill="none">
+              <line x1="60" y1="16" x2="60" y2="104" stroke="#111" stroke-width="3"/>
+              <path d="M60 20h40l-8 11 8 11H60z" fill="#111"/>
+              <rect x="70" y="24" width="9" height="9" fill="#2f6bff"/>
+              <ellipse cx="60" cy="106" rx="34" ry="8" fill="none" stroke="#111" stroke-width="1.5"/>
+              <path d="M44 106c0-4 32-4 32 0" stroke="#111" stroke-width="1.5" fill="none"/>
+            </svg>
+            <div style="font:600 26px 'Pretendard';color:#111;letter-spacing:-.03em;margin-top:26px">팬덤 땅따먹기</div>
+            <div style="font:400 9px 'IBM Plex Mono';color:#999;letter-spacing:.16em;margin-top:8px">PLANT YOUR FLAG</div>
+          </div>
+          <div style="position:absolute;bottom:30px;left:0;right:0;display:flex;justify-content:center"><div style="width:22px;height:22px;border:1.5px solid #e0e0e0;border-top-color:#111;border-radius:50%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt">
+      <div class="dv-olabel">SP-F · 지도 위 깃발 <small>· 다크 · 클러스터</small></div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#111">
+          <div class="sbar" style="color:#fff"><span style="font-family:Pretendard">9:41</span><span style="font-size:11px;font-family:'IBM Plex Mono'">5G</span></div>
+          <svg viewBox="0 0 336 712" style="position:absolute;inset:0;width:100%;height:100%"><g stroke="rgba(255,255,255,.1)" stroke-width="1"><path d="M0,220 H336 M0,340 H336 M0,460 H336 M84,140 V560 M168,140 V560 M252,140 V560"/></g></svg>
+          <div style="position:absolute;top:0;bottom:0;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <div style="position:relative;width:150px;height:110px">
+              <svg width="34" height="40" viewBox="0 0 34 40" fill="none" style="position:absolute;left:8px;top:34px"><line x1="4" y1="4" x2="4" y2="38" stroke="#fff" stroke-width="2"/><path d="M4 6h22l-5 6 5 6H4z" fill="#fff"/></svg>
+              <svg width="42" height="50" viewBox="0 0 42 50" fill="none" style="position:absolute;left:56px;top:6px"><line x1="4" y1="4" x2="4" y2="48" stroke="#fff" stroke-width="2.5"/><path d="M4 6h28l-6 8 6 8H4z" fill="#fff"/><rect x="12" y="9" width="8" height="8" fill="#2f6bff"/></svg>
+              <svg width="30" height="36" viewBox="0 0 30 36" fill="none" style="position:absolute;left:112px;top:40px"><line x1="4" y1="4" x2="4" y2="34" stroke="rgba(255,255,255,.55)" stroke-width="2"/><path d="M4 6h18l-4 5 4 5H4z" fill="rgba(255,255,255,.55)"/></svg>
+            </div>
+            <div style="font:600 25px 'Pretendard';color:#fff;letter-spacing:-.03em;margin-top:30px">팬덤 땅따먹기</div>
+            <div style="font:400 9px 'IBM Plex Mono';color:rgba(255,255,255,.5);letter-spacing:.16em;margin-top:8px">OUR TERRITORY, OUR COLOR</div>
+          </div>
+          <div style="position:absolute;bottom:30px;left:0;right:0;text-align:center;font:400 9px 'IBM Plex Mono';color:rgba(255,255,255,.4)">v0.1.0</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<section class="dv-turn" id="sp" style="background:#f3f1ec">
+  <div class="dv-thd"><a class="dv-tid" href="#sp">SP</a><span class="dv-tname">UV-AUTH-00 스플래시 · 방향 탐색</span></div>
+  <p class="dv-sub">스플래시를 세 방향으로. 샤프 모노크롬 톤 유지, 팬덤색은 최소 1점만. 고르시면 온보딩(<a href="#v4">4</a>)의 스플래시를 교체합니다.</p>
+  <div class="dv-opts">
+
+    <div class="dv-opt">
+      <div class="dv-olabel">SP-B · 영토 그리드 <small>· 물들어가는 땅</small></div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#111"><span style="font-family:Pretendard">9:41</span><span style="font-size:11px;font-family:'IBM Plex Mono'">5G</span></div>
+          <svg viewBox="0 0 336 712" style="position:absolute;inset:0;width:100%;height:100%"><rect width="336" height="712" fill="#fff"/><g stroke="#eee" stroke-width="1"><path d="M0,180 H336 M0,300 H336 M0,420 H336 M0,540 H336 M84,120 V620 M168,120 V620 M252,120 V620"/></g><rect x="84" y="300" width="84" height="120" fill="#2f6bff" fill-opacity=".12"/><rect x="84" y="300" width="84" height="120" fill="none" stroke="#111" stroke-width="1.5"/><rect x="168" y="300" width="84" height="120" fill="#111"/><circle cx="94" cy="310" r="3.5" fill="#2f6bff"/></svg>
+          <div style="position:absolute;top:0;bottom:0;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2">
+            <div style="font:600 30px 'Pretendard';color:#111;letter-spacing:-.03em;background:#fff;padding:0 10px">팬덤 땅따먹기</div>
+            <div style="font:400 10px 'IBM Plex Mono';color:#999;letter-spacing:.14em;margin-top:10px;background:#fff;padding:2px 8px">OUR TERRITORY, OUR COLOR</div>
+          </div>
+          <div style="position:absolute;bottom:36px;left:0;right:0;display:flex;justify-content:center"><div style="width:22px;height:22px;border:1.5px solid #e0e0e0;border-top-color:#111;border-radius:50%"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+</body>
+</html>

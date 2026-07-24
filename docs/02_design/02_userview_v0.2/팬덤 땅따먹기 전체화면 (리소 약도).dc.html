@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  body{margin:0;background:#e9e6df;font-family:"Pretendard",system-ui,sans-serif}
+  a{color:#2a78d6}a:hover{color:#1c5fb0}
+  .dv-turn{padding:44px 48px 40px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
+  .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+  .dv-tname{font:700 14px/1.2 "Pretendard",system-ui;color:#1a1a1a}
+  .dv-sub{margin:0 0 26px;max-width:720px;font:400 12.5px/1.6 "Pretendard",system-ui;color:rgba(0,0,0,.55)}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:38px;align-items:flex-start}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+  .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+  .dv-olabel{display:flex;align-items:baseline;gap:9px;font:600 12px/1.35 "Pretendard",system-ui;color:rgba(0,0,0,.68)}
+  .dv-olabel small{font-weight:400;color:rgba(0,0,0,.45)}
+  .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+  .dv-next{margin:26px 0 0;font:12.5px/1.6 "Pretendard",system-ui;color:rgba(0,0,0,.5)}
+  /* phone shell */
+  .ph{position:relative;width:336px;height:712px;border-radius:46px;background:#0c0c0d;padding:11px;box-shadow:0 28px 60px -22px rgba(0,0,0,.45),0 4px 14px rgba(0,0,0,.18)}
+  .ph-scr{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden}
+  .ph-notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:104px;height:26px;background:#0c0c0d;border-radius:16px;z-index:40}
+  .sbar{position:absolute;top:0;left:0;right:0;height:50px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 6px;font:600 13px "Pretendard";z-index:35}
+</style>
+</helmet>
+
+<section class="dv-turn" id="u3">
+  <div class="dv-thd"><a class="dv-tid" href="#u3">1</a><span class="dv-tname">리소 약도 · 메인 지도 & 성지 거점 (UV-MAIN-01~04 · UV-SPOT-04)</span></div>
+  <p class="dv-sub">팬덤 땅따먹기 전체 화면 · 확정 컨셉(리소 약도) 기준. 주요 5화면 먼저, 이후 화면은 아래로 추가됩니다. 팬덤 컬러: 뉴진스 블루 · 아이브 앰버 · 에스파 핑크.</p>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="c1">
+      <div class="dv-olabel"><a class="dv-oid" href="#c1">c1</a> UV-MAIN-01 · 메인 성지 지도</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <svg viewBox="0 0 336 712" style="position:absolute;inset:0;width:100%;height:100%">
+            <rect width="336" height="712" fill="#fbfaf7"></rect>
+            <path d="M-10,80 C40,190 20,300 60,410 C90,500 70,620 40,712 L-20,712 L-20,80 Z" fill="#dcebff"></path>
+            <path d="M-10,80 C40,190 20,300 60,410 C90,500 70,620 40,712" fill="none" stroke="#a9cdf5" stroke-width="1.5"></path>
+            <path d="M84,430 Q125,412 165,430 Q178,485 158,555 Q115,575 82,548 Q72,490 84,430 Z" fill="#e4f0d8" stroke="#bcd79a" stroke-width="1.5"></path>
+            <rect x="118" y="170" width="100" height="115" rx="3" fill="#2f6bff" fill-opacity=".16" stroke="#2f6bff" stroke-width="1.4"></rect>
+            <rect x="228" y="180" width="88" height="118" rx="3" fill="#f59f00" fill-opacity=".2" stroke="#f59f00" stroke-width="1.4"></rect>
+            <rect x="230" y="316" width="84" height="112" rx="3" fill="#e64980" fill-opacity=".12" stroke="#e6a0bd" stroke-width="1.2"></rect>
+            <rect x="196" y="450" width="102" height="110" rx="3" fill="#e64980" fill-opacity=".18" stroke="#e64980" stroke-width="1.2"></rect>
+            <g stroke="#efe9dc" stroke-width="12" stroke-linecap="round" fill="none"><path d="M96,110 L110,712"></path><path d="M40,300 L336,282"></path><path d="M40,440 L336,432"></path><path d="M218,110 L234,712"></path></g>
+            <g stroke="#e5ddca" stroke-width="1" fill="none"><path d="M96,110 L110,712"></path><path d="M40,300 L336,282"></path><path d="M40,440 L336,432"></path><path d="M218,110 L234,712"></path></g>
+            <path d="M20,226 L332,204" stroke="#22201c" stroke-width="2.4" stroke-dasharray="9 5"></path>
+            <circle cx="152" cy="215" r="4.5" fill="#fff" stroke="#22201c" stroke-width="2.2"></circle>
+            <text x="150" y="150" font-family="Pretendard" font-size="10" font-weight="700" fill="#5a6b8a">중랑천</text>
+            <text x="112" y="500" font-family="Pretendard" font-size="10.5" font-weight="700" fill="#7c9a52">서울숲</text>
+            <text x="162" y="203" font-family="Pretendard" font-size="9.5" font-weight="700" fill="#22201c">뚝섬역</text>
+          </svg>
+          <div style="position:absolute;top:52px;left:14px;right:14px;display:flex;align-items:center;gap:8px;z-index:30">
+            <div style="flex:1;display:flex;align-items:center;gap:7px;height:42px;padding:0 13px;border-radius:11px;background:#fff;border:2px solid #22201c">
+              <span style="width:9px;height:9px;border-radius:50%;background:#2f6bff"></span>
+              <span style="font:800 12.5px 'Pretendard';color:#22201c">뉴진스 · 버니즈</span>
+              <span style="font:700 10.5px 'Pretendard';color:#8a8272;margin-left:auto">IP 필터 ▾</span>
+            </div>
+            <div style="width:42px;height:42px;border-radius:11px;background:#fff;border:2px solid #22201c;display:flex;align-items:center;justify-content:center;font-size:15px;position:relative">🔔<span style="position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:#c0492f"></span></div>
+          </div>
+          <div style="position:absolute;left:80%;top:34%;transform:translate(-50%,-100%);z-index:20;text-align:center">
+            <div style="padding:4px 8px;background:#f59f00;border:2px solid #22201c;font:800 10.5px 'Pretendard';color:#fff">D-2</div>
+            <div style="width:2px;height:11px;background:#22201c;margin:0 auto"></div>
+          </div>
+          <div style="position:absolute;left:50%;top:33%;transform:translate(-50%,-100%);z-index:20"><div style="width:14px;height:14px;border-radius:50%;background:#2f6bff;border:2px solid #22201c"></div><div style="width:2px;height:10px;background:#22201c;margin:0 auto"></div></div>
+          <div style="position:absolute;left:72%;top:70%;transform:translate(-50%,-100%);z-index:20"><div style="width:14px;height:14px;border-radius:50%;background:#e64980;border:2px solid #22201c"></div><div style="width:2px;height:10px;background:#22201c;margin:0 auto"></div></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;z-index:30">
+            <div style="margin:0 42px 12px;height:52px;border-radius:13px;background:#22201c;display:flex;align-items:center;justify-content:center;gap:7px;font:800 14.5px 'Pretendard';color:#fff;box-shadow:4px 4px 0 rgba(34,32,28,.18)">📸 땅 뺏어오기</div>
+            <div style="background:#fff;border-top:2px solid #22201c;padding:10px 18px 14px">
+              <div style="width:38px;height:4px;border-radius:3px;background:#22201c;opacity:.25;margin:0 auto 9px"></div>
+              <div style="display:flex;justify-content:space-between"><span style="font:800 13px 'Pretendard';color:#22201c">주변 성지 <b style="color:#c0492f">6</b></span><span style="font:700 11px 'Pretendard';color:#8a8272">스와이프하여 열기 ↑</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="c2">
+      <div class="dv-olabel"><a class="dv-oid" href="#c2">c2</a> UV-MAIN-02 · 성지 상세 모달</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:44px;left:14px;right:14px;height:160px;border:2px solid #22201c;border-radius:12px;background:repeating-linear-gradient(135deg,#fff4dd,#fff4dd 6px,#fde8c2 6px,#fde8c2 12px);overflow:hidden">
+            <div style="position:absolute;top:9px;left:9px;width:32px;height:32px;border-radius:9px;background:#fff;border:2px solid #22201c;display:flex;align-items:center;justify-content:center;font-size:13px">✕</div>
+            <div style="position:absolute;top:9px;right:9px;width:32px;height:32px;border-radius:9px;background:#fff;border:2px solid #22201c;display:flex;align-items:center;justify-content:center;font-size:13px">🔍</div>
+            <div style="position:absolute;bottom:9px;left:0;right:0;display:flex;justify-content:center;gap:5px"><span style="width:15px;height:5px;background:#22201c"></span><span style="width:5px;height:5px;background:#fff;border:1.5px solid #22201c"></span><span style="width:5px;height:5px;background:#fff;border:1.5px solid #22201c"></span></div>
+          </div>
+          <div style="position:absolute;top:218px;left:14px;right:14px;bottom:88px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:7px"><span style="padding:3px 8px;background:#f59f00;border:2px solid #22201c;font:800 10px 'Pretendard';color:#fff">D-2</span><span style="font:600 10.5px 'Pretendard';color:#8a8272">생일카페 · 성수동1가</span></div>
+            <div style="font:900 19px 'Pretendard';color:#22201c;letter-spacing:-.02em;margin-top:7px">어반소스 × 안유진 생일카페</div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px;margin-top:11px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font:800 12px 'Pretendard';color:#22201c">실시간 점유율</span><span style="font:700 10px 'Pretendard';color:#c0492f">경합</span></div>
+              <div style="display:flex;height:18px;border:1.5px solid #22201c;border-radius:5px;overflow:hidden;font:800 9.5px 'Pretendard'">
+                <div style="width:60%;background:#2f6bff;color:#fff;display:flex;align-items:center;padding-left:7px">뉴진스 60%</div>
+                <div style="width:40%;background:#f59f00;color:#fff;display:flex;align-items:center;justify-content:flex-end;padding-right:7px">40% 아이브</div>
+              </div>
+            </div>
+            <div style="display:flex;margin-top:11px;border:2px solid #22201c;border-radius:10px;overflow:hidden">
+              <div style="flex:1;text-align:center;padding:7px 0;background:#22201c;color:#fff;font:800 11px 'Pretendard'">팬덤 기여 현황</div>
+              <div style="flex:1;text-align:center;padding:7px 0;font:700 11px 'Pretendard';color:#22201c;border-left:2px solid #22201c">과거 장소 이력</div>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px;margin-top:10px">
+              <div style="display:flex;align-items:center;gap:8px;padding-bottom:9px;border-bottom:1.5px solid #ececec"><span style="font-size:15px">👑</span><div style="flex:1"><div style="font:800 12px 'Pretendard';color:#22201c">이 성지의 수호신</div><div style="font:600 10px 'Pretendard';color:#8a8272">기여 1위</div></div><span style="font:800 12px 'Pretendard';color:#c98a00">덕질마스터 · 15점</span></div>
+              <div style="display:flex;align-items:flex-end;justify-content:center;gap:10px;margin-top:11px">
+                <div style="text-align:center"><div style="font:700 10px 'Pretendard';color:#8a8272;margin-bottom:4px">🥈 럭키팬</div><div style="width:58px;height:38px;border:2px solid #22201c;border-bottom:none;display:flex;align-items:center;justify-content:center;font:800 11px 'Pretendard';color:#22201c;background:#f3f0e8">10점</div></div>
+                <div style="text-align:center"><div style="font:700 10px 'Pretendard';color:#c98a00;margin-bottom:4px">🥇 덕질마스터</div><div style="width:62px;height:54px;border:2px solid #22201c;border-bottom:none;display:flex;align-items:center;justify-content:center;font:900 12px 'Pretendard';color:#22201c;background:#ffe14d">15점</div></div>
+                <div style="text-align:center"><div style="font:700 10px 'Pretendard';color:#a5714f;margin-bottom:4px">🥉 핀아</div><div style="width:58px;height:28px;border:2px solid #22201c;border-bottom:none;display:flex;align-items:center;justify-content:center;font:800 11px 'Pretendard';color:#22201c;background:#f0dcc8">8점</div></div>
+              </div>
+              <div style="border-top:2px solid #22201c;margin-top:0"></div>
+              <div style="font:600 10px 'Pretendard';color:#8a8272;margin-top:8px;text-align:center">최근: [덕질마스터] +1점 기여 · 10분 전</div>
+            </div>
+          </div>
+          <div style="position:absolute;left:14px;right:14px;bottom:24px"><div style="height:50px;border-radius:13px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13.5px 'Pretendard';color:#fff;box-shadow:4px 4px 0 rgba(34,32,28,.18)">📸 이 성지에 내 팬덤 기여하기</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="c3">
+      <div class="dv-olabel"><a class="dv-oid" href="#c3">c3</a> UV-MAIN-03 · 주변 성지 바텀시트</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:0;left:0;right:0;height:38%;opacity:.55">
+            <svg viewBox="0 0 336 270" style="width:100%;height:100%"><rect width="336" height="270" fill="#fbfaf7"></rect><path d="M-10,20 C30,80 20,140 50,200 C70,240 60,260 50,270 L-20,270 L-20,20 Z" fill="#dcebff"></path><rect x="110" y="50" width="90" height="80" rx="3" fill="#2f6bff" fill-opacity=".16" stroke="#2f6bff" stroke-width="1.4"></rect><rect x="212" y="58" width="80" height="82" rx="3" fill="#f59f00" fill-opacity=".2" stroke="#f59f00" stroke-width="1.4"></rect><rect x="190" y="160" width="94" height="80" rx="3" fill="#e64980" fill-opacity=".14" stroke="#e6a0bd" stroke-width="1.2"></rect><g stroke="#efe9dc" stroke-width="10" stroke-linecap="round" fill="none"><path d="M90,20 L100,270"></path><path d="M40,150 L336,138"></path></g><g stroke="#e5ddca" stroke-width="1" fill="none"><path d="M90,20 L100,270"></path><path d="M40,150 L336,138"></path></g><path d="M20,90 L332,72" stroke="#22201c" stroke-width="2.2" stroke-dasharray="8 5"></path><circle cx="150" cy="82" r="4" fill="#fff" stroke="#22201c" stroke-width="2"></circle></svg>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;top:34%;background:#fff;border-top:2px solid #22201c;padding:10px 16px 0">
+            <div style="width:38px;height:4px;background:#22201c;opacity:.25;border-radius:3px;margin:0 auto 6px"></div>
+            <div style="display:flex;justify-content:center;gap:4px;margin-bottom:10px"><span style="width:5px;height:5px;border:1.5px solid #22201c;border-radius:50%"></span><span style="width:14px;height:5px;background:#22201c;border-radius:3px"></span><span style="width:5px;height:5px;border:1.5px solid #22201c;border-radius:50%"></span></div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px"><div style="font:800 15px 'Pretendard';color:#22201c">반경 200m 성지 <span style="color:#c0492f">6</span></div><div style="font:700 11px 'Pretendard';color:#8a8272">거리순 ▾</div></div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:10px 12px;margin-bottom:9px;display:flex;gap:11px;align-items:center">
+              <div style="width:44px;height:44px;border:2px solid #22201c;background:#f59f00;flex:none;display:flex;align-items:center;justify-content:center;font:800 9px 'Pretendard';color:#fff">IVE</div>
+              <div style="flex:1;min-width:0"><div style="font:800 12.5px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">어반소스 × 안유진 생일카페</div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">80m · 생일카페 · <span style="color:#c0492f">D-2</span></div></div>
+              <span style="padding:3px 8px;border:1.5px solid #22201c;font:800 10px 'Pretendard';color:#22201c;background:#fff4dd">60%</span>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:10px 12px;margin-bottom:9px;display:flex;gap:11px;align-items:center">
+              <div style="width:44px;height:44px;border:2px solid #22201c;background:#2f6bff;flex:none;display:flex;align-items:center;justify-content:center;font:800 12px 'Pretendard';color:#fff">N</div>
+              <div style="flex:1;min-width:0"><div style="font:800 12.5px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">언더스탠드 카페</div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">140m · 상설 성지</div></div>
+              <span style="padding:3px 8px;border:1.5px solid #22201c;font:800 10px 'Pretendard';color:#22201c;background:#e8effc">74%</span>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:10px 12px;display:flex;gap:11px;align-items:center">
+              <div style="width:44px;height:44px;border:2px solid #22201c;background:#e64980;flex:none;display:flex;align-items:center;justify-content:center;font:800 10px 'Pretendard';color:#fff">ae</div>
+              <div style="flex:1;min-width:0"><div style="font:800 12.5px 'Pretendard';color:#22201c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">성수 연방극장 팝업</div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">190m · 팝업스토어 · D-6</div></div>
+              <span style="padding:3px 8px;border:1.5px solid #22201c;font:800 10px 'Pretendard';color:#22201c;background:#fdeef4">52%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="c4">
+      <div class="dv-olabel"><a class="dv-oid" href="#c4">c4</a> UV-MAIN-04 · IP 팬덤 필터 시트</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;inset:0;background:rgba(34,32,28,.25)"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;top:22%;background:#fff;border-top:2px solid #22201c;padding:12px 16px 0">
+            <div style="width:38px;height:4px;background:#22201c;opacity:.25;border-radius:3px;margin:0 auto 12px"></div>
+            <div style="font:900 16px 'Pretendard';color:#22201c">IP 팬덤 필터</div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:12px 0 8px">내 선호 IP</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <span style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:2px solid #22201c;background:#22201c;color:#fff;font:800 12px 'Pretendard';border-radius:10px"><span style="width:8px;height:8px;border-radius:50%;background:#2f6bff"></span>뉴진스 ✓</span>
+              <span style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:2px solid #22201c;color:#22201c;font:700 12px 'Pretendard';border-radius:10px"><span style="width:8px;height:8px;border-radius:50%;background:#e64980"></span>에스파</span>
+              <span style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:2px solid #22201c;color:#22201c;font:700 12px 'Pretendard';border-radius:10px"><span style="width:8px;height:8px;border-radius:50%;background:#f59f00"></span>아이브</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px;margin-top:13px"><span style="font-size:13px;opacity:.55">🔍</span><span style="font:600 12px 'Pretendard';color:#b3ad9d">팬덤/아티스트 검색</span></div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:15px 0 6px">인기 팬덤 순위</div>
+            <div style="display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1.5px solid #ececec"><span style="font:900 13px 'Pretendard';color:#22201c;width:14px">1</span><span style="width:30px;height:30px;border:2px solid #22201c;border-radius:8px;background:#2f6bff;display:flex;align-items:center;justify-content:center;font:800 11px 'Pretendard';color:#fff">N</span><div style="flex:1"><div style="font:800 12.5px 'Pretendard';color:#22201c">뉴진스 · 버니즈</div><div style="font:600 10px 'Pretendard';color:#8a8272">점령 8구 · 성지 42</div></div><span style="font:700 10px 'Pretendard';color:#2e7d46">▲1</span></div>
+            <div style="display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1.5px solid #ececec"><span style="font:900 13px 'Pretendard';color:#22201c;width:14px">2</span><span style="width:30px;height:30px;border:2px solid #22201c;border-radius:8px;background:#e64980;display:flex;align-items:center;justify-content:center;font:800 10px 'Pretendard';color:#fff">ae</span><div style="flex:1"><div style="font:800 12.5px 'Pretendard';color:#22201c">에스파 · 마이</div><div style="font:600 10px 'Pretendard';color:#8a8272">점령 7구 · 성지 38</div></div><span style="font:700 10px 'Pretendard';color:#c0492f">▼1</span></div>
+            <div style="display:flex;align-items:center;gap:11px;padding:9px 0"><span style="font:900 13px 'Pretendard';color:#22201c;width:14px">3</span><span style="width:30px;height:30px;border:2px solid #22201c;border-radius:8px;background:#f59f00;display:flex;align-items:center;justify-content:center;font:800 9px 'Pretendard';color:#4a3708">IVE</span><div style="flex:1"><div style="font:800 12.5px 'Pretendard';color:#22201c">아이브 · 다이브</div><div style="font:600 10px 'Pretendard';color:#8a8272">점령 5구 · 성지 29</div></div><span style="font:700 10px 'Pretendard';color:#b3ad9d">–</span></div>
+            <div style="position:absolute;left:16px;right:16px;bottom:22px"><div style="height:48px;border-radius:12px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13px 'Pretendard';color:#fff">이 팬덤만 지도에 표시</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="c5">
+      <div class="dv-olabel"><a class="dv-oid" href="#c5">c5</a> UV-SPOT-04 · 성지 제보 모달</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:52px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between"><div style="font:900 17px 'Pretendard';color:#22201c">새 성지 제보</div><div style="width:34px;height:34px;border:2px solid #22201c;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#22201c">✕</div></div>
+          <div style="position:absolute;top:102px;left:16px;right:16px;bottom:88px;overflow:hidden">
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin-bottom:7px">장소 유형</div>
+            <div style="display:flex;border:2px solid #22201c;border-radius:10px;overflow:hidden"><span style="flex:1;text-align:center;padding:8px 0;background:#22201c;color:#fff;font:800 11.5px 'Pretendard'">팝업스토어</span><span style="flex:1;text-align:center;padding:8px 0;font:700 11.5px 'Pretendard';color:#22201c;border-left:2px solid #22201c">생일카페</span><span style="flex:1;text-align:center;padding:8px 0;font:700 11.5px 'Pretendard';color:#22201c;border-left:2px solid #22201c">이벤트</span></div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:12px 0 7px">귀속 팬덤</div>
+            <div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px"><span style="width:9px;height:9px;border-radius:50%;background:#2f6bff"></span><span style="font:700 12.5px 'Pretendard';color:#22201c">뉴진스 (NewJeans)</span><span style="margin-left:auto;font:700 11px 'Pretendard';color:#8a8272">변경 ▾</span></div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:12px 0 7px">상호명</div>
+            <div style="display:flex;align-items:center;height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px"><span style="font:700 12.5px 'Pretendard';color:#22201c">어반소스 성수점</span></div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:12px 0 7px">주소</div>
+            <div style="display:flex;gap:8px">
+              <div style="flex:1;display:flex;align-items:center;height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px"><span style="font:600 12px 'Pretendard';color:#b3ad9d">주소 검색으로 입력</span></div>
+              <div style="height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px;background:#fae100;display:flex;align-items:center;font:800 11.5px 'Pretendard';color:#3c1e1e">카카오 검색</div>
+            </div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:12px 0 7px">운영 기간</div>
+            <div style="display:flex;align-items:center;gap:9px;height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px"><span style="font-size:13px">📅</span><span style="font:700 12.5px 'Pretendard';color:#22201c">07.20 (월) ~ 07.27 (월)</span></div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:12px 0 7px">증빙 자료</div>
+            <div style="display:flex;gap:9px">
+              <div style="flex:1;height:66px;border:2px dashed #22201c;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><span style="font-size:16px">🧾</span><span style="font:700 10px 'Pretendard';color:#8a8272">영수증 첨부</span></div>
+              <div style="flex:1;height:66px;border:2px dashed #22201c;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><span style="font-size:16px">📷</span><span style="font:700 10px 'Pretendard';color:#8a8272">현장 사진</span></div>
+            </div>
+          </div>
+          <div style="position:absolute;left:16px;right:16px;bottom:24px"><div style="height:50px;border-radius:12px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13.5px 'Pretendard';color:#fff;box-shadow:4px 4px 0 rgba(34,32,28,.18)">제보 제출하기</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<section class="dv-turn" id="v1">
+  <div class="dv-thd"><a class="dv-tid" href="#v1">2</a><span class="dv-tname">영수증 AI 인증 & 결과/공유 (UV-VERIF-01~05 · UV-SHARE-01)</span></div>
+  <p class="dv-sub">촬영 → AI 스캐닝 → 성공/검수대기/반려 분기 → 9:16 승리 공유 카드. 리소 시스템 위에 스캐닝·폭죽 피드백을 얹었습니다.</p>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="v1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#v1a">v1a</a> UV-VERIF-01 · 영수증 촬영</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#22201c">
+          <div class="sbar" style="color:#fff"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:52px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between;z-index:30">
+            <div style="width:34px;height:34px;border:2px solid #fff;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff">✕</div>
+            <div style="font:800 14px 'Pretendard';color:#fff">영수증 인증</div>
+            <div style="width:34px;height:34px;border:2px solid #fff;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px">⚡</div>
+          </div>
+          <div style="position:absolute;top:110px;left:36px;right:36px;bottom:220px;z-index:20">
+            <div style="position:absolute;inset:0;background:rgba(255,255,255,.06);border-radius:10px"></div>
+            <div style="position:absolute;top:-2px;left:-2px;width:34px;height:34px;border-top:3.5px solid #ffe14d;border-left:3.5px solid #ffe14d;border-radius:10px 0 0 0"></div>
+            <div style="position:absolute;top:-2px;right:-2px;width:34px;height:34px;border-top:3.5px solid #ffe14d;border-right:3.5px solid #ffe14d;border-radius:0 10px 0 0"></div>
+            <div style="position:absolute;bottom:-2px;left:-2px;width:34px;height:34px;border-bottom:3.5px solid #ffe14d;border-left:3.5px solid #ffe14d;border-radius:0 0 0 10px"></div>
+            <div style="position:absolute;bottom:-2px;right:-2px;width:34px;height:34px;border-bottom:3.5px solid #ffe14d;border-right:3.5px solid #ffe14d;border-radius:0 0 10px 0"></div>
+            <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64%;height:78%;background:repeating-linear-gradient(0deg,#f7f4ec,#f7f4ec 9px,#efe9dc 9px,#efe9dc 11px);border-radius:5px;opacity:.9;box-shadow:0 10px 30px rgba(0,0,0,.4)"></div>
+            <div style="position:absolute;left:0;right:0;bottom:-40px;text-align:center;font:700 12px 'Pretendard';color:#ffe14d">영수증을 프레임 안에 맞춰주세요</div>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:18px 24px 30px;background:rgba(34,32,28,.9);border-top:2px solid #fff;z-index:30">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="text-align:center"><div style="width:50px;height:50px;border:2px solid #fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px">🖼️</div><div style="font:700 10px 'Pretendard';color:#c9c2b2;margin-top:5px">갤러리</div></div>
+              <div style="width:78px;height:78px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center"><div style="width:60px;height:60px;border-radius:50%;background:#ffe14d;border:2.5px solid #22201c"></div></div>
+              <div style="text-align:center"><div style="width:50px;height:50px;border:2px solid #6b6558;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;opacity:.6">🔦</div><div style="font:700 10px 'Pretendard';color:#6b6558;margin-top:5px">플래시 OFF</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="v1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#v1b">v1b</a> UV-VERIF-02 · AI OCR 스캐닝</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:56px;left:0;right:0;text-align:center"><div style="font:900 17px 'Pretendard';color:#22201c">AI가 영수증을 읽고 있어요</div><div style="font:600 11px 'Pretendard';color:#8a8272;margin-top:4px">평균 6초 · 자리를 떠나도 괜찮아요</div></div>
+          <div style="position:absolute;top:120px;left:60px;right:60px;height:250px;border:2px solid #22201c;border-radius:10px;background:repeating-linear-gradient(0deg,#fdfcf9,#fdfcf9 10px,#f4f0e6 10px,#f4f0e6 12px);overflow:hidden">
+            <div style="position:absolute;left:0;right:0;top:38%;height:3px;background:#00b8a0;box-shadow:0 0 14px rgba(0,184,160,.8),0 0 4px rgba(0,184,160,1)"></div>
+            <div style="position:absolute;left:0;right:0;top:0;height:38%;background:rgba(0,184,160,.08)"></div>
+            <div style="position:absolute;top:10px;left:12px;right:12px;display:flex;flex-direction:column;gap:7px">
+              <div style="height:8px;width:60%;background:#22201c;opacity:.75;border-radius:2px"></div>
+              <div style="height:6px;width:44%;background:#22201c;opacity:.35;border-radius:2px"></div>
+              <div style="height:6px;width:52%;background:#22201c;opacity:.35;border-radius:2px"></div>
+            </div>
+          </div>
+          <div style="position:absolute;top:396px;left:16px;right:16px;border:2px solid #22201c;border-radius:12px;padding:12px 14px">
+            <div style="font:800 10.5px 'Pretendard';color:#00806f;letter-spacing:.1em;margin-bottom:9px">추출 파이프라인</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1.5px solid #ececec"><span style="font:700 12px 'Pretendard';color:#22201c">사업자번호</span><span style="font:800 11px 'Pretendard';color:#00806f">✓ 211-88-*****</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1.5px solid #ececec"><span style="font:700 12px 'Pretendard';color:#22201c">결제 일시</span><span style="font:800 11px 'Pretendard';color:#00806f">✓ 07.22 14:03</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1.5px solid #ececec"><span style="font:700 12px 'Pretendard';color:#22201c">결제 금액</span><span style="display:flex;align-items:center;gap:5px;font:800 11px 'Pretendard';color:#c98a00"><span style="width:9px;height:9px;border:2px solid #c98a00;border-top-color:transparent;border-radius:50%"></span>읽는 중…</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0"><span style="font:700 12px 'Pretendard';color:#b3ad9d">승인번호</span><span style="font:700 11px 'Pretendard';color:#b3ad9d">대기</span></div>
+          </div>
+          <div style="position:absolute;left:16px;right:16px;bottom:26px"><div style="height:8px;border:1.5px solid #22201c;border-radius:5px;overflow:hidden"><div style="width:58%;height:100%;background:#00b8a0"></div></div><div style="font:700 10.5px 'Pretendard';color:#8a8272;text-align:center;margin-top:8px">2/4 필드 추출 완료 · 58%</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="v1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#v1c">v1c</a> UV-VERIF-03 · 인증 성공 피드백</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <svg viewBox="0 0 336 240" style="position:absolute;top:30px;left:0;width:100%">
+            <g transform="rotate(-15 60 60)"><rect x="56" y="52" width="8" height="14" fill="#e64980"></rect></g>
+            <g transform="rotate(20 280 50)"><rect x="276" y="42" width="8" height="14" fill="#2f6bff"></rect></g>
+            <g transform="rotate(40 120 30)"><rect x="116" y="24" width="7" height="12" fill="#ffe14d"></rect></g>
+            <g transform="rotate(-30 220 90)"><rect x="216" y="84" width="7" height="12" fill="#f59f00"></rect></g>
+            <g transform="rotate(10 40 140)"><rect x="36" y="134" width="7" height="12" fill="#00b8a0"></rect></g>
+            <g transform="rotate(-25 300 130)"><rect x="296" y="124" width="8" height="13" fill="#e64980"></rect></g>
+            <circle cx="90" cy="100" r="4" fill="#2f6bff"></circle><circle cx="250" cy="140" r="4" fill="#ffe14d" stroke="#22201c" stroke-width="1.5"></circle><circle cx="170" cy="40" r="3.5" fill="#f59f00"></circle>
+          </svg>
+          <div style="position:absolute;top:112px;left:0;right:0;text-align:center">
+            <div style="width:84px;height:84px;border-radius:50%;border:3px solid #22201c;background:#ffe14d;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:4px 4px 0 rgba(34,32,28,.15)">🎉</div>
+            <div style="font:900 23px 'Pretendard';color:#22201c;margin-top:16px;letter-spacing:-.02em">인증 완료!</div>
+            <div style="font:600 12.5px/1.55 'Pretendard';color:#4a4438;margin-top:7px">마포구 <b style="color:#2f6bff">뉴진스</b> 점유율이<br><b style="color:#00806f">+0.4%</b> 상승했습니다!</div>
+          </div>
+          <div style="position:absolute;top:330px;left:16px;right:16px;border:2px solid #22201c;border-radius:13px;padding:12px 14px;background:#fffbe8">
+            <div style="display:flex;align-items:center;gap:11px">
+              <div style="width:46px;height:46px;border:2px solid #22201c;border-radius:50%;background:#ffe14d;display:flex;align-items:center;justify-content:center;font-size:21px;flex:none">👑</div>
+              <div style="flex:1"><div style="font:800 12.5px 'Pretendard';color:#22201c">새 뱃지 획득 · 마포구 수호신</div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">이번 주 마포구 인증 1위를 지키고 있어요</div></div>
+            </div>
+            <div style="display:flex;height:8px;border:1.5px solid #22201c;border-radius:5px;overflow:hidden;margin-top:11px"><div style="width:63%;background:#2f6bff"></div><div style="width:37%;background:#f59f00"></div></div>
+            <div style="display:flex;justify-content:space-between;font:700 10px 'Pretendard';margin-top:5px"><span style="color:#2f6bff">뉴진스 62.6 → 63.0%</span><span style="color:#c98a00">아이브 37.0%</span></div>
+          </div>
+          <div style="position:absolute;left:16px;right:16px;bottom:26px;display:flex;flex-direction:column;gap:9px">
+            <div style="height:50px;border-radius:12px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13.5px 'Pretendard';color:#fff;box-shadow:4px 4px 0 rgba(34,32,28,.18)">🗺️ 지도에서 내 땅 확인</div>
+            <div style="height:48px;border-radius:12px;border:2px solid #22201c;display:flex;align-items:center;justify-content:center;font:800 13px 'Pretendard';color:#22201c">📤 승리 카드 공유</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="v1d">
+      <div class="dv-olabel"><a class="dv-oid" href="#v1d">v1d</a> UV-VERIF-04 · 수동 검수 대기</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;inset:0;background:rgba(34,32,28,.3)"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:2px solid #22201c;border-radius:20px 20px 0 0;padding:14px 20px 30px">
+            <div style="width:38px;height:4px;background:#22201c;opacity:.25;border-radius:3px;margin:0 auto 18px"></div>
+            <div style="width:80px;height:80px;border-radius:50%;border:3px solid #22201c;background:#eef4ff;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:36px">⏳</div>
+            <div style="font:900 19px 'Pretendard';color:#22201c;text-align:center;margin-top:14px">꼼꼼히 확인하고 있어요</div>
+            <div style="font:600 12px/1.6 'Pretendard';color:#4a4438;text-align:center;margin-top:7px">AI가 판단하기 어려운 영수증이라<br><b>10분 내로 관리자 확인 후 반영</b>됩니다</div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px;margin-top:16px">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font:700 11.5px 'Pretendard';color:#22201c">검수 대기열</span><span style="font:800 11.5px 'Pretendard';color:#2f6bff">내 앞에 3건</span></div>
+              <div style="display:flex;height:7px;border:1.5px solid #22201c;border-radius:4px;overflow:hidden;margin-top:9px"><div style="width:35%;background:#2f6bff"></div></div>
+              <div style="font:600 10px 'Pretendard';color:#8a8272;margin-top:7px">결과는 🔔 푸시로 알려드려요 · 승인 시 점유율 자동 반영</div>
+            </div>
+            <div style="height:48px;border-radius:12px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13px 'Pretendard';color:#fff;margin-top:16px">확인했어요</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="v1e">
+      <div class="dv-olabel"><a class="dv-oid" href="#v1e">v1e</a> UV-VERIF-05 · 인증 반려 모달</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;inset:0;background:rgba(34,32,28,.4)"></div>
+          <div style="position:absolute;left:22px;right:22px;top:50%;transform:translateY(-50%);background:#fff;border:2px solid #22201c;border-radius:16px;padding:22px 18px 18px;box-shadow:6px 6px 0 rgba(34,32,28,.2)">
+            <div style="width:70px;height:70px;border-radius:50%;border:3px solid #c0492f;background:#fdeee9;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:32px">⚠️</div>
+            <div style="font:900 18px 'Pretendard';color:#22201c;text-align:center;margin-top:12px">인증이 반려됐어요</div>
+            <div style="border:2px solid #c0492f;border-radius:11px;padding:10px 12px;margin-top:14px;background:#fdf6f4">
+              <div style="font:800 10.5px 'Pretendard';color:#c0492f;letter-spacing:.06em;margin-bottom:6px">반려 사유</div>
+              <div style="font:700 12px/1.5 'Pretendard';color:#22201c">영수증 최신성 만료 — 결제일이 7일을 초과했어요 (07.11 결제)</div>
+            </div>
+            <div style="font:600 10.5px/1.6 'Pretendard';color:#8a8272;margin-top:10px">· 방문 후 7일 이내 영수증만 인정돼요<br>· 같은 영수증은 한 번만 사용할 수 있어요</div>
+            <div style="height:48px;border-radius:12px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13px 'Pretendard';color:#fff;margin-top:14px">📸 다시 촬영하기</div>
+            <div style="text-align:center;font:700 11.5px 'Pretendard';color:#8a8272;margin-top:11px">이의 신청하기</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="v1f">
+      <div class="dv-olabel"><a class="dv-oid" href="#v1f">v1f</a> UV-SHARE-01 · 승리 공유 카드 <small>· 9:16 인스타 스토리/X</small></div>
+      <div style="width:280px;height:498px;border-radius:14px;overflow:hidden;position:relative;background:#fff;border:2px solid #22201c;box-shadow:0 20px 44px -18px rgba(0,0,0,.4)">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,#2f6bff 2px,transparent 2px);background-size:12px 12px;opacity:.14"></div>
+        <div style="position:absolute;top:18px;left:20px;right:20px;display:flex;justify-content:space-between;align-items:center">
+          <div style="font:800 10px 'Pretendard';color:#c0492f;letter-spacing:.2em">FANDOM CONQUEST</div>
+          <div style="font:700 9.5px 'Pretendard';color:#8a8272">2026.07.22</div>
+        </div>
+        <div style="position:absolute;top:52px;left:20px;right:20px">
+          <div style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:2px solid #22201c;border-radius:9px;background:#ffe14d;font:900 10.5px 'Pretendard';color:#22201c;white-space:nowrap">🔥 역전의 주역</div>
+          <div style="font:900 34px/1.12 'Pretendard';color:#22201c;letter-spacing:-.03em;margin-top:12px">마포구를<br><span style="color:#2f6bff">뉴진스</span>가<br>탈환했다!</div>
+          <div style="font:700 11.5px 'Pretendard';color:#4a4438;margin-top:10px">덕질마스터의 인증 1건으로 뒤집힘</div>
+        </div>
+        <div style="position:absolute;top:262px;left:20px;right:20px;border:2px solid #22201c;border-radius:12px;padding:13px 14px;background:#fff">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:800 11px 'Pretendard';color:#22201c">마포구 점유율</span><span style="font:900 13px 'Pretendard';color:#00806f">▲ +0.4%</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-top:5px"><span style="font:800 14px 'Pretendard';color:#8a8272">49.8%</span><span style="font-size:12px;color:#22201c">→</span><span style="font:900 24px 'Pretendard';color:#2f6bff">50.2%</span></div>
+          <div style="display:flex;height:10px;border:2px solid #22201c;border-radius:6px;overflow:hidden;margin-top:9px"><div style="width:50.2%;background:#2f6bff"></div><div style="width:49.8%;background:#f59f00"></div></div>
+          <div style="display:flex;justify-content:space-between;font:700 9.5px 'Pretendard';margin-top:5px"><span style="color:#2f6bff">뉴진스 50.2</span><span style="color:#c98a00">아이브 49.8</span></div>
+        </div>
+        <div style="position:absolute;bottom:52px;left:20px;right:20px;display:flex;align-items:center;gap:10px">
+          <div style="width:42px;height:42px;border-radius:50%;border:2px solid #22201c;background:#2f6bff;display:flex;align-items:center;justify-content:center;font:900 13px 'Pretendard';color:#fff">덕</div>
+          <div style="flex:1"><div style="font:800 12px 'Pretendard';color:#22201c">덕질마스터</div><div style="font:600 9.5px 'Pretendard';color:#8a8272">👑 마포구 수호신 · 인증 43건</div></div>
+          <div style="width:34px;height:34px;border:2px solid #22201c;border-radius:9px;background:#2f6bff;display:flex;align-items:center;justify-content:center;font:900 12px 'Pretendard';color:#fff">N</div>
+        </div>
+        <div style="position:absolute;bottom:16px;left:20px;right:20px;border-top:2px solid #22201c;padding-top:9px;display:flex;justify-content:space-between;font:700 9px 'Pretendard';color:#8a8272"><span>#팬덤땅따먹기 #마포구탈환</span><span>fandom.app</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<section class="dv-turn" id="w1">
+  <div class="dv-thd"><a class="dv-tid" href="#w1">3</a><span class="dv-tname">영토 전황 & 랭킹 (UV-WAR-01 · UV-RANK-01~02)</span></div>
+  <p class="dv-sub">서울 25개 구 카토그램 전황 보드, 랭킹 포디움, 개인 기여도 상세.</p>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="w1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#w1a">w1a</a> UV-WAR-01 · 영토 전황 보드</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:50px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:baseline"><div style="font:900 20px 'Pretendard';color:#22201c;letter-spacing:-.02em">전황 보드</div><div style="font:700 10px 'Pretendard';color:#c0492f">● LIVE 잠정</div></div>
+          <div style="position:absolute;top:92px;left:16px;right:16px;display:flex;flex-direction:column;gap:5px">
+            <div style="display:flex;gap:5px;justify-content:center">
+              <div style="width:52px;height:52px;border:2px solid #22201c;background:#a9c4ff;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 13px 'Pretendard';color:#22201c">52</span><span style="font:700 7.5px 'Pretendard';color:#33436a">은평</span></div>
+              <div style="width:52px;height:52px;border:2px solid #22201c;background:#2f6bff;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 13px 'Pretendard';color:#fff">58</span><span style="font:700 7.5px 'Pretendard';color:#dbe6ff">강북</span></div>
+              <div style="width:52px;height:52px;border:2px solid #22201c;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 13px 'Pretendard';color:#c98a00">49</span><span style="font:700 7.5px 'Pretendard';color:#8a8272">노원⚔️</span></div>
+              <div style="width:52px;height:52px;border:2px solid #22201c;background:#f59f00;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 13px 'Pretendard';color:#fff">53</span><span style="font:700 7.5px 'Pretendard';color:#fff3da">중랑</span></div>
+            </div>
+            <div style="display:flex;gap:5px;justify-content:center">
+              <div style="width:52px;height:52px;border:2px solid #22201c;background:#2f6bff;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 13px 'Pretendard';color:#fff">63</span><span style="font:700 7.5px 'Pretendard';color:#dbe6ff">마포</span></div>
+              <div style="width:52px;height:52px;border:2px solid #22201c;background:#e64980;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 13px 'Pretendard';color:#fff">55</span><span style="font:700 7.5px 'Pretendard';color:#fbdce8">성북</span></div>
+              <div style="width:52px;height:52px;border:3px solid #c0492f;background:#2f6bff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:3px 3px 0 rgba(192,73,47,.3)"><span style="font:900 14px 'Pretendard';color:#fff">67</span><span style="font:700 7.5px 'Pretendard';color:#dbe6ff">성동🔥</span></div>
+              <div style="width:52px;height:52px;border:2px solid #22201c;background:#ffd6e6;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 13px 'Pretendard';color:#8a2b57">51</span><span style="font:700 7.5px 'Pretendard';color:#8a2b57">광진</span></div>
+            </div>
+            <div style="display:flex;gap:5px;justify-content:center">
+              <div style="width:52px;height:52px;border:2px solid #22201c;background:#f59f00;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 13px 'Pretendard';color:#fff">51</span><span style="font:700 7.5px 'Pretendard';color:#fff3da">강서</span></div>
+              <div style="width:52px;height:52px;border:2px solid #22201c;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 13px 'Pretendard';color:#2456c8">50</span><span style="font:700 7.5px 'Pretendard';color:#8a8272">관악⚔️</span></div>
+              <div style="width:52px;height:52px;border:2px solid #22201c;background:#e64980;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 13px 'Pretendard';color:#fff">61</span><span style="font:700 7.5px 'Pretendard';color:#fbdce8">강남</span></div>
+              <div style="width:52px;height:52px;border:2px solid #22201c;background:#eceadf;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:900 13px 'Pretendard';color:#8a8272">–</span><span style="font:700 7.5px 'Pretendard';color:#8a8272">중립</span></div>
+            </div>
+            <div style="display:flex;gap:12px;justify-content:center;margin-top:6px;font:700 9.5px 'Pretendard';color:#4a4438"><span><span style="display:inline-block;width:9px;height:9px;background:#2f6bff;border:1.5px solid #22201c;vertical-align:-1px"></span> 뉴진스 8구</span><span><span style="display:inline-block;width:9px;height:9px;background:#e64980;border:1.5px solid #22201c;vertical-align:-1px"></span> 에스파 7구</span><span><span style="display:inline-block;width:9px;height:9px;background:#f59f00;border:1.5px solid #22201c;vertical-align:-1px"></span> 아이브 5구</span></div>
+          </div>
+          <div style="position:absolute;top:330px;left:16px;right:16px;bottom:58px;overflow:hidden">
+            <div style="font:800 12px 'Pretendard';color:#22201c;margin-bottom:7px">⚔️ 치열한 경합구 Top 3</div>
+            <div style="display:flex;gap:7px;margin-bottom:12px">
+              <div style="flex:1;border:2px solid #22201c;border-radius:10px;padding:8px 9px"><div style="font:800 11px 'Pretendard';color:#22201c">노원구</div><div style="font:700 9px 'Pretendard';color:#c0492f;margin-top:2px">격차 0.8%p</div></div>
+              <div style="flex:1;border:2px solid #22201c;border-radius:10px;padding:8px 9px"><div style="font:800 11px 'Pretendard';color:#22201c">관악구</div><div style="font:700 9px 'Pretendard';color:#c0492f;margin-top:2px">격차 1.2%p</div></div>
+              <div style="flex:1;border:2px solid #22201c;border-radius:10px;padding:8px 9px"><div style="font:800 11px 'Pretendard';color:#22201c">광진구</div><div style="font:700 9px 'Pretendard';color:#c0492f;margin-top:2px">격차 2.1%p</div></div>
+            </div>
+            <div style="font:800 12px 'Pretendard';color:#22201c;margin-bottom:7px">실시간 뒤집힘 타임라인</div>
+            <div style="border-left:2px solid #22201c;margin-left:5px;padding-left:12px;display:flex;flex-direction:column;gap:9px">
+              <div><div style="font:700 11.5px 'Pretendard';color:#22201c">성동구 → <b style="color:#2f6bff">뉴진스</b> 탈환</div><div style="font:600 9.5px 'Pretendard';color:#8a8272">덕질마스터 인증 1건으로 역전 · 2분 전</div></div>
+              <div><div style="font:700 11.5px 'Pretendard';color:#22201c">노원구 → <b style="color:#c98a00">아이브</b> 우세 전환</div><div style="font:600 9.5px 'Pretendard';color:#8a8272">경합 진입 · 14분 전</div></div>
+              <div><div style="font:700 11.5px 'Pretendard';color:#22201c">마포구 → <b style="color:#2f6bff">뉴진스</b> 수성</div><div style="font:600 9.5px 'Pretendard';color:#8a8272">격차 13.4%p로 확대 · 1시간 전</div></div>
+            </div>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;height:58px;background:#fff;border-top:2px solid #22201c;display:flex;align-items:center;font:700 9.5px 'Pretendard';color:#b3ad9d;text-align:center">
+            <div style="flex:1">지도</div><div style="flex:1;color:#22201c">전황</div><div style="flex:1">인증</div><div style="flex:1">랭킹</div><div style="flex:1">MY</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="w1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#w1b">w1b</a> UV-RANK-01 · 랭킹 보드</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:50px;left:16px;right:16px">
+            <div style="font:900 20px 'Pretendard';color:#22201c;letter-spacing:-.02em">랭킹</div>
+            <div style="display:flex;margin-top:11px;border:2px solid #22201c;border-radius:10px;overflow:hidden">
+              <div style="flex:1;text-align:center;padding:7px 0;background:#22201c;color:#fff;font:800 11.5px 'Pretendard'">누적 개인 랭킹</div>
+              <div style="flex:1;text-align:center;padding:7px 0;font:700 11.5px 'Pretendard';color:#22201c;border-left:2px solid #22201c">팬덤 영토 랭킹</div>
+            </div>
+          </div>
+          <div style="position:absolute;top:140px;left:16px;right:16px;display:flex;align-items:flex-end;justify-content:center;gap:12px">
+            <div style="text-align:center;flex:1">
+              <div style="width:48px;height:48px;border:2px solid #22201c;border-radius:50%;background:#e64980;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;font:900 15px 'Pretendard';color:#fff">럭</div>
+              <div style="font:800 11px 'Pretendard';color:#22201c">럭키팬</div><div style="font:700 9.5px 'Pretendard';color:#8a8272">인증 38건</div>
+              <div style="height:52px;border:2px solid #22201c;border-bottom:none;background:#f3f0e8;margin-top:6px;display:flex;align-items:center;justify-content:center;font:900 16px 'Pretendard';color:#8a8272">2</div>
+            </div>
+            <div style="text-align:center;flex:1">
+              <div style="font-size:16px;margin-bottom:2px">👑</div>
+              <div style="width:56px;height:56px;border:2.5px solid #22201c;border-radius:50%;background:#2f6bff;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;font:900 17px 'Pretendard';color:#fff;box-shadow:3px 3px 0 rgba(34,32,28,.2)">덕</div>
+              <div style="font:800 12px 'Pretendard';color:#22201c">덕질마스터</div><div style="font:700 9.5px 'Pretendard';color:#8a8272">인증 43건</div>
+              <div style="height:72px;border:2px solid #22201c;border-bottom:none;background:#ffe14d;margin-top:6px;display:flex;align-items:center;justify-content:center;font:900 19px 'Pretendard';color:#22201c">1</div>
+            </div>
+            <div style="text-align:center;flex:1">
+              <div style="width:48px;height:48px;border:2px solid #22201c;border-radius:50%;background:#f59f00;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;font:900 15px 'Pretendard';color:#fff">핀</div>
+              <div style="font:800 11px 'Pretendard';color:#22201c">핀아</div><div style="font:700 9.5px 'Pretendard';color:#8a8272">인증 31건</div>
+              <div style="height:38px;border:2px solid #22201c;border-bottom:none;background:#f0dcc8;margin-top:6px;display:flex;align-items:center;justify-content:center;font:900 15px 'Pretendard';color:#a5714f">3</div>
+            </div>
+          </div>
+          <div style="position:absolute;top:392px;left:16px;right:16px;bottom:58px;border-top:2px solid #22201c;padding-top:10px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1.5px solid #ececec"><span style="font:900 12px 'Pretendard';color:#22201c;width:22px">4</span><span style="width:28px;height:28px;border:2px solid #22201c;border-radius:50%;background:#e64980;display:flex;align-items:center;justify-content:center;font:900 10px 'Pretendard';color:#fff">모</span><div style="flex:1"><div style="font:800 12px 'Pretendard';color:#22201c">모찌언니</div></div><span style="font:700 11px 'Pretendard';color:#8a8272">29건</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1.5px solid #ececec"><span style="font:900 12px 'Pretendard';color:#22201c;width:22px">5</span><span style="width:28px;height:28px;border:2px solid #22201c;border-radius:50%;background:#2f6bff;display:flex;align-items:center;justify-content:center;font:900 10px 'Pretendard';color:#fff">토</span><div style="flex:1"><div style="font:800 12px 'Pretendard';color:#22201c">토끼굴지기</div></div><span style="font:700 11px 'Pretendard';color:#8a8272">27건</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;margin-top:6px;background:#22201c;border-radius:11px"><span style="font:900 12px 'Pretendard';color:#e6a0bd;width:26px">#12</span><span style="width:28px;height:28px;border:2px solid #fff;border-radius:50%;background:#2f6bff;display:flex;align-items:center;justify-content:center;font:900 10px 'Pretendard';color:#fff">나</span><div style="flex:1"><div style="font:800 12px 'Pretendard';color:#fff">나 · 버니즈덕후</div><div style="font:600 9px 'Pretendard';color:#c9c2b2">상위 4% · 이번 주 ▲3</div></div><span style="font:800 11px 'Pretendard';color:#fff">24건</span></div>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;height:58px;background:#fff;border-top:2px solid #22201c;display:flex;align-items:center;font:700 9.5px 'Pretendard';color:#b3ad9d;text-align:center">
+            <div style="flex:1">지도</div><div style="flex:1">전황</div><div style="flex:1">인증</div><div style="flex:1;color:#22201c">랭킹</div><div style="flex:1">MY</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="w1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#w1c">w1c</a> UV-RANK-02 · 개인 기여도 상세</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:50px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between"><div style="width:34px;height:34px;border:2px solid #22201c;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#22201c">‹</div><div style="font:800 14px 'Pretendard';color:#22201c">개인 기여도 상세</div><div style="width:34px"></div></div>
+          <div style="position:absolute;top:100px;left:16px;right:16px;border:2px solid #22201c;border-radius:13px;padding:13px 14px">
+            <div style="display:flex;align-items:center;gap:11px">
+              <div style="width:50px;height:50px;border:2.5px solid #22201c;border-radius:50%;background:#2f6bff;display:flex;align-items:center;justify-content:center;font:900 16px 'Pretendard';color:#fff;flex:none">덕</div>
+              <div style="flex:1"><div style="font:900 15px 'Pretendard';color:#22201c">덕질마스터 <span style="font-size:11px">👑</span></div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">💙 메인 팬덤: 뉴진스 · 가입 D+45일</div></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <div style="flex:1;border:2px solid #22201c;border-radius:10px;padding:8px;text-align:center"><div style="font:900 16px 'Pretendard';color:#22201c">42</div><div style="font:700 9px 'Pretendard';color:#8a8272">누적 인증</div></div>
+              <div style="flex:1;border:2px solid #22201c;border-radius:10px;padding:8px;text-align:center"><div style="font:900 16px 'Pretendard';color:#22201c">#12</div><div style="font:700 9px 'Pretendard';color:#8a8272">개인 랭킹</div></div>
+              <div style="flex:1;border:2px solid #22201c;border-radius:10px;padding:8px;text-align:center"><div style="font:900 16px 'Pretendard';color:#22201c">2</div><div style="font:700 9px 'Pretendard';color:#8a8272">수호신 칭호</div></div>
+            </div>
+          </div>
+          <div style="position:absolute;top:268px;left:16px;right:16px">
+            <div style="font:800 12px 'Pretendard';color:#22201c;margin-bottom:8px">🗺️ 주요 구별 우리 팬덤 기여 지분율</div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px">
+              <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font:700 11px 'Pretendard'"><span style="color:#22201c">마포구</span><span style="color:#2f6bff">내 지분 18.2%</span></div><div style="display:flex;height:8px;border:1.5px solid #22201c;border-radius:4px;overflow:hidden;margin-top:5px"><div style="width:18.2%;background:#2f6bff"></div><div style="flex:1;background:#e8effc"></div></div></div>
+              <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font:700 11px 'Pretendard'"><span style="color:#22201c">성동구</span><span style="color:#2f6bff">내 지분 11.6%</span></div><div style="display:flex;height:8px;border:1.5px solid #22201c;border-radius:4px;overflow:hidden;margin-top:5px"><div style="width:11.6%;background:#2f6bff"></div><div style="flex:1;background:#e8effc"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font:700 11px 'Pretendard'"><span style="color:#22201c">서대문구</span><span style="color:#2f6bff">내 지분 6.4%</span></div><div style="display:flex;height:8px;border:1.5px solid #22201c;border-radius:4px;overflow:hidden;margin-top:5px"><div style="width:6.4%;background:#2f6bff"></div><div style="flex:1;background:#e8effc"></div></div></div>
+            </div>
+          </div>
+          <div style="position:absolute;top:472px;left:16px;right:16px;bottom:24px;overflow:hidden">
+            <div style="font:800 12px 'Pretendard';color:#22201c;margin-bottom:8px">🏆 수호신 뱃지 수집함 (4/5)</div>
+            <div style="display:flex;gap:8px">
+              <div style="flex:1;border:2px solid #22201c;border-radius:11px;padding:9px 4px;text-align:center;background:#fffbe8"><div style="font-size:19px">👑</div><div style="font:700 8.5px 'Pretendard';color:#22201c;margin-top:3px">마포구 수호신</div></div>
+              <div style="flex:1;border:2px solid #22201c;border-radius:11px;padding:9px 4px;text-align:center"><div style="font-size:19px">🛡️</div><div style="font:700 8.5px 'Pretendard';color:#22201c;margin-top:3px">영토 개척자</div></div>
+              <div style="flex:1;border:2px solid #22201c;border-radius:11px;padding:9px 4px;text-align:center"><div style="font-size:19px">🔥</div><div style="font:700 8.5px 'Pretendard';color:#22201c;margin-top:3px">역전의 주역</div></div>
+              <div style="flex:1;border:2px solid #22201c;border-radius:11px;padding:9px 4px;text-align:center"><div style="font-size:19px">📍</div><div style="font:700 8.5px 'Pretendard';color:#22201c;margin-top:3px">순례자</div></div>
+              <div style="flex:1;border:2px dashed #b3ad9d;border-radius:11px;padding:9px 4px;text-align:center;opacity:.55"><div style="font-size:19px;filter:grayscale(1)">🏰</div><div style="font:700 8.5px 'Pretendard';color:#8a8272;margin-top:3px">???</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<section class="dv-turn" id="a1">
+  <div class="dv-thd"><a class="dv-tid" href="#a1">4</a><span class="dv-tname">온보딩 (UV-AUTH-00~05)</span></div>
+  <p class="dv-sub">스플래시 → 소셜 로그인 → 약관 → 프로필 → 선호 팬덤 → 웰컴.</p>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="a1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#a1a">a1a</a> UV-AUTH-00 · 스플래시</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 32%,#fdeef4 0%,#fff 55%)"></div>
+          <div style="position:absolute;top:36%;left:0;right:0;text-align:center;transform:translateY(-50%)">
+            <div style="width:96px;height:96px;border:3px solid #22201c;border-radius:26px;background:#ffe14d;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:44px;box-shadow:5px 5px 0 rgba(34,32,28,.16)">🚩</div>
+            <div style="font:900 26px 'Pretendard';color:#22201c;letter-spacing:-.03em;margin-top:20px">팬덤 땅따먹기</div>
+            <div style="font:700 12px 'Pretendard';color:#8a8272;margin-top:6px">우리들의 성지, 우리의 색으로</div>
+          </div>
+          <div style="position:absolute;bottom:70px;left:0;right:0;display:flex;justify-content:center"><div style="width:26px;height:26px;border:3px solid #22201c;border-top-color:#ffe14d;border-radius:50%"></div></div>
+          <div style="position:absolute;bottom:30px;left:0;right:0;text-align:center;font:600 10px 'Pretendard';color:#b3ad9d">v0.1.0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="a1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#a1b">a1b</a> UV-AUTH-01 · 소셜 로그인</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;inset:0;background:rgba(34,32,28,.35)"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:2px solid #22201c;border-radius:20px 20px 0 0;padding:14px 20px 30px">
+            <div style="width:38px;height:4px;background:#22201c;opacity:.25;border-radius:3px;margin:0 auto 18px"></div>
+            <div style="font:900 19px 'Pretendard';color:#22201c;text-align:center">3초 만에 시작하기</div>
+            <div style="font:600 11.5px 'Pretendard';color:#8a8272;text-align:center;margin-top:6px">내 팬덤의 땅을 넓히러 가볼까요?</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:20px">
+              <div style="height:50px;border:2px solid #22201c;border-radius:12px;background:#fae100;display:flex;align-items:center;justify-content:center;gap:8px;font:800 13px 'Pretendard';color:#3c1e1e">💬 카카오로 계속하기</div>
+              <div style="height:50px;border:2px solid #22201c;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font:800 13px 'Pretendard';color:#22201c"><span style="font:900 14px 'Pretendard';color:#4285F4">G</span> 구글로 계속하기</div>
+              <div style="height:50px;border:2px solid #22201c;border-radius:12px;background:#22201c;display:flex;align-items:center;justify-content:center;gap:8px;font:800 13px 'Pretendard';color:#fff"> 애플로 계속하기</div>
+            </div>
+            <div style="text-align:center;font:600 10px 'Pretendard';color:#b3ad9d;margin-top:16px">로그인 시 서비스 약관에 동의하게 됩니다</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="a1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#a1c">a1c</a> UV-AUTH-02 · 약관 동의</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:56px;left:16px;right:16px">
+            <div style="font:900 20px/1.3 'Pretendard';color:#22201c;letter-spacing:-.02em">서비스 이용을 위해<br>동의가 필요해요</div>
+            <div style="display:flex;align-items:center;gap:10px;height:54px;padding:0 14px;border:2px solid #22201c;border-radius:12px;background:#fffbe8;margin-top:20px">
+              <span style="width:22px;height:22px;border:2px solid #22201c;border-radius:6px;background:#ffe14d;display:flex;align-items:center;justify-content:center;font:900 12px 'Pretendard';color:#22201c">✓</span>
+              <span style="font:800 13.5px 'Pretendard';color:#22201c">전체 동의</span>
+            </div>
+            <div style="display:flex;flex-direction:column;margin-top:8px">
+              <div style="display:flex;align-items:center;gap:10px;padding:13px 14px;border-bottom:1.5px solid #ececec"><span style="width:20px;height:20px;border:2px solid #22201c;border-radius:6px;background:#ffe14d;display:flex;align-items:center;justify-content:center;font:900 11px 'Pretendard'">✓</span><span style="flex:1;font:600 12.5px 'Pretendard';color:#22201c">[필수] 서비스 이용 약관</span><span style="font:700 11px 'Pretendard';color:#8a8272">›</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:13px 14px;border-bottom:1.5px solid #ececec"><span style="width:20px;height:20px;border:2px solid #22201c;border-radius:6px;background:#ffe14d;display:flex;align-items:center;justify-content:center;font:900 11px 'Pretendard'">✓</span><span style="flex:1;font:600 12.5px 'Pretendard';color:#22201c">[필수] 위치 기반 서비스 약관</span><span style="font:700 11px 'Pretendard';color:#8a8272">›</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:13px 14px;border-bottom:1.5px solid #ececec"><span style="width:20px;height:20px;border:2px solid #22201c;border-radius:6px;background:#ffe14d;display:flex;align-items:center;justify-content:center;font:900 11px 'Pretendard'">✓</span><span style="flex:1;font:600 12.5px 'Pretendard';color:#22201c">[필수] 개인정보 처리 방침</span><span style="font:700 11px 'Pretendard';color:#8a8272">›</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:13px 14px"><span style="width:20px;height:20px;border:2px solid #b3ad9d;border-radius:6px"></span><span style="flex:1;font:600 12.5px 'Pretendard';color:#8a8272">[선택] 이벤트 & 혜택 알림 수신</span><span style="font:700 11px 'Pretendard';color:#8a8272">›</span></div>
+            </div>
+          </div>
+          <div style="position:absolute;left:16px;right:16px;bottom:26px"><div style="height:50px;border-radius:12px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13.5px 'Pretendard';color:#fff;box-shadow:4px 4px 0 rgba(34,32,28,.18)">동의하고 계속하기</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="a1d">
+      <div class="dv-olabel"><a class="dv-oid" href="#a1d">a1d</a> UV-AUTH-03 · 프로필 설정</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:56px;left:16px;right:16px">
+            <div style="display:flex;gap:5px"><span style="flex:1;height:4px;background:#22201c;border-radius:2px"></span><span style="flex:1;height:4px;background:#22201c;border-radius:2px"></span><span style="flex:1;height:4px;background:#ececec;border-radius:2px"></span></div>
+            <div style="font:900 20px/1.3 'Pretendard';color:#22201c;letter-spacing:-.02em;margin-top:18px">어떻게 불러드릴까요?</div>
+            <div style="font:600 10.5px 'Pretendard';color:#8a8272;margin:18px 0 7px">닉네임</div>
+            <div style="display:flex;gap:8px">
+              <div style="flex:1;display:flex;align-items:center;height:48px;padding:0 14px;border:2px solid #22201c;border-radius:12px"><span style="font:800 13px 'Pretendard';color:#22201c">버니즈덕후</span><span style="width:2px;height:16px;background:#2f6bff;margin-left:2px"></span></div>
+              <div style="height:48px;padding:0 14px;border:2px solid #22201c;border-radius:12px;background:#f3f0e8;display:flex;align-items:center;font:800 12px 'Pretendard';color:#22201c">중복 확인</div>
+            </div>
+            <div style="font:700 11px 'Pretendard';color:#00806f;margin-top:7px">✓ 사용할 수 있는 닉네임이에요</div>
+            <div style="font:600 10.5px 'Pretendard';color:#8a8272;margin:20px 0 9px">기본 프로필 캐릭터</div>
+            <div style="display:flex;gap:10px">
+              <div style="width:64px;height:64px;border:3px solid #22201c;border-radius:50%;background:#2f6bff;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:3px 3px 0 rgba(34,32,28,.2)">🐰</div>
+              <div style="width:64px;height:64px;border:2px solid #d8d1c0;border-radius:50%;background:#fdeef4;display:flex;align-items:center;justify-content:center;font-size:26px;opacity:.7">🦋</div>
+              <div style="width:64px;height:64px;border:2px solid #d8d1c0;border-radius:50%;background:#fff4dd;display:flex;align-items:center;justify-content:center;font-size:26px;opacity:.7">🐥</div>
+              <div style="width:64px;height:64px;border:2px solid #d8d1c0;border-radius:50%;background:#e8f4e2;display:flex;align-items:center;justify-content:center;font-size:26px;opacity:.7">🐢</div>
+            </div>
+          </div>
+          <div style="position:absolute;left:16px;right:16px;bottom:26px"><div style="height:50px;border-radius:12px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13.5px 'Pretendard';color:#fff;box-shadow:4px 4px 0 rgba(34,32,28,.18)">다음</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="a1e">
+      <div class="dv-olabel"><a class="dv-oid" href="#a1e">a1e</a> UV-AUTH-04 · 선호 팬덤 선택</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:56px;left:16px;right:16px">
+            <div style="display:flex;gap:5px"><span style="flex:1;height:4px;background:#22201c;border-radius:2px"></span><span style="flex:1;height:4px;background:#22201c;border-radius:2px"></span><span style="flex:1;height:4px;background:#22201c;border-radius:2px"></span></div>
+            <div style="font:900 20px/1.3 'Pretendard';color:#22201c;letter-spacing:-.02em;margin-top:18px">어느 팬덤으로<br>싸우시겠어요?</div>
+            <div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px;margin-top:14px"><span style="font-size:13px;opacity:.55">🔍</span><span style="font:600 12px 'Pretendard';color:#b3ad9d">팬덤/아티스트 검색</span></div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+              <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;border:2.5px solid #2f6bff;border-radius:12px;background:#f4f8ff">
+                <span style="width:34px;height:34px;border:2px solid #22201c;border-radius:9px;background:#2f6bff;display:flex;align-items:center;justify-content:center;font:900 12px 'Pretendard';color:#fff">N</span>
+                <div style="flex:1"><div style="font:800 13px 'Pretendard';color:#22201c">뉴진스 · 버니즈</div><div style="font:600 10px 'Pretendard';color:#2456c8">메인 팬덤 ◉</div></div>
+                <span style="padding:4px 9px;border:2px solid #22201c;border-radius:8px;background:#ffe14d;font:800 9.5px 'Pretendard';color:#22201c">대표</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;border:2px solid #22201c;border-radius:12px">
+                <span style="width:34px;height:34px;border:2px solid #22201c;border-radius:9px;background:#e64980;display:flex;align-items:center;justify-content:center;font:900 11px 'Pretendard';color:#fff">ae</span>
+                <div style="flex:1"><div style="font:800 13px 'Pretendard';color:#22201c">에스파 · 마이</div><div style="font:600 10px 'Pretendard';color:#8a8272">응원 팬덤 ☑</div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;border:2px solid #d8d1c0;border-radius:12px;opacity:.75">
+                <span style="width:34px;height:34px;border:2px solid #22201c;border-radius:9px;background:#f59f00;display:flex;align-items:center;justify-content:center;font:900 9px 'Pretendard';color:#4a3708">IVE</span>
+                <div style="flex:1"><div style="font:800 13px 'Pretendard';color:#22201c">아이브 · 다이브</div><div style="font:600 10px 'Pretendard';color:#8a8272">응원 팬덤 ☐</div></div>
+              </div>
+            </div>
+            <div style="text-align:center;font:700 11px 'Pretendard';color:#8a8272;margin-top:12px;text-decoration:underline">찾는 IP가 없나요? 직접 신청하기</div>
+          </div>
+          <div style="position:absolute;left:16px;right:16px;bottom:26px"><div style="height:50px;border-radius:12px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13.5px 'Pretendard';color:#fff;box-shadow:4px 4px 0 rgba(34,32,28,.18)">이 팬덤으로 시작하기</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="a1f">
+      <div class="dv-olabel"><a class="dv-oid" href="#a1f">a1f</a> UV-AUTH-05 · 웰컴 모달</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <svg viewBox="0 0 336 200" style="position:absolute;top:30px;left:0;width:100%">
+            <g transform="rotate(-15 60 60)"><rect x="56" y="52" width="8" height="14" fill="#e64980"></rect></g>
+            <g transform="rotate(20 280 50)"><rect x="276" y="42" width="8" height="14" fill="#2f6bff"></rect></g>
+            <g transform="rotate(40 120 30)"><rect x="116" y="24" width="7" height="12" fill="#ffe14d"></rect></g>
+            <g transform="rotate(-30 220 90)"><rect x="216" y="84" width="7" height="12" fill="#f59f00"></rect></g>
+            <circle cx="90" cy="110" r="4" fill="#2f6bff"></circle><circle cx="250" cy="130" r="4" fill="#ffe14d" stroke="#22201c" stroke-width="1.5"></circle>
+          </svg>
+          <div style="position:absolute;top:120px;left:0;right:0;text-align:center">
+            <div style="font-size:44px">🎉</div>
+            <div style="font:900 22px 'Pretendard';color:#22201c;margin-top:10px;letter-spacing:-.02em">입덕 완료!</div>
+          </div>
+          <div style="position:absolute;top:236px;left:24px;right:24px;border:2.5px solid #22201c;border-radius:16px;padding:16px;background:#f4f8ff;box-shadow:5px 5px 0 rgba(34,32,28,.15)">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:52px;height:52px;border:3px solid #22201c;border-radius:50%;background:#2f6bff;display:flex;align-items:center;justify-content:center;font-size:23px;flex:none">🐰</div>
+              <div><div style="font:900 15px 'Pretendard';color:#22201c">버니즈덕후</div><div style="font:700 11px 'Pretendard';color:#2456c8;margin-top:2px">💙 뉴진스 · 버니즈 소속</div></div>
+            </div>
+          </div>
+          <div style="position:absolute;top:352px;left:24px;right:24px;display:flex;flex-direction:column;gap:9px">
+            <div style="display:flex;align-items:center;gap:10px"><span style="width:24px;height:24px;border:2px solid #22201c;border-radius:50%;background:#ffe14d;display:flex;align-items:center;justify-content:center;font:900 11px 'Pretendard';flex:none">1</span><span style="font:600 11.5px 'Pretendard';color:#4a4438">지도에서 우리 팬덤 성지를 찾고</span></div>
+            <div style="display:flex;align-items:center;gap:10px"><span style="width:24px;height:24px;border:2px solid #22201c;border-radius:50%;background:#ffe14d;display:flex;align-items:center;justify-content:center;font:900 11px 'Pretendard';flex:none">2</span><span style="font:600 11.5px 'Pretendard';color:#4a4438">방문 영수증으로 📸 인증하면</span></div>
+            <div style="display:flex;align-items:center;gap:10px"><span style="width:24px;height:24px;border:2px solid #22201c;border-radius:50%;background:#ffe14d;display:flex;align-items:center;justify-content:center;font:900 11px 'Pretendard';flex:none">3</span><span style="font:600 11.5px 'Pretendard';color:#4a4438">그 땅이 우리 팬덤 색으로 물들어요</span></div>
+          </div>
+          <div style="position:absolute;left:16px;right:16px;bottom:26px"><div style="height:50px;border-radius:12px;background:#22201c;display:flex;align-items:center;justify-content:center;font:800 13.5px 'Pretendard';color:#fff;box-shadow:4px 4px 0 rgba(34,32,28,.18)">🗺️ 지도 진입하기</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<section class="dv-turn" id="m1">
+  <div class="dv-thd"><a class="dv-tid" href="#m1">5</a><span class="dv-tname">마이페이지 & 알림 (UV-MY-01~03 · 05 · 06 · UV-NOTIF-01)</span></div>
+  <p class="dv-sub">프로필 · 선호 팬덤 관리(7일 쿨다운) · 인증 내역 · 알림 센터 · 설정 · 푸시 세부 설정.</p>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="m1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#m1a">m1a</a> UV-MY-01 · 마이 프로필</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:50px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:center"><div style="font:900 20px 'Pretendard';color:#22201c">MY</div><div style="width:34px;height:34px;border:2px solid #22201c;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px">⚙️</div></div>
+          <div style="position:absolute;top:98px;left:16px;right:16px;border:2px solid #22201c;border-radius:13px;padding:13px 14px">
+            <div style="display:flex;align-items:center;gap:11px">
+              <div style="width:52px;height:52px;border:3px solid #22201c;border-radius:50%;background:#2f6bff;display:flex;align-items:center;justify-content:center;font-size:23px;flex:none">🐰</div>
+              <div style="flex:1"><div style="font:900 15px 'Pretendard';color:#22201c">버니즈덕후 <span style="font-size:11px">👑</span></div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">💙 뉴진스 · 가입 D+45일</div></div>
+              <span style="font:700 11px 'Pretendard';color:#8a8272">편집 ›</span>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <div style="flex:1;border:2px solid #22201c;border-radius:10px;padding:8px;text-align:center"><div style="font:900 15px 'Pretendard';color:#22201c">42</div><div style="font:700 9px 'Pretendard';color:#8a8272">인증 성공</div></div>
+              <div style="flex:1;border:2px solid #22201c;border-radius:10px;padding:8px;text-align:center"><div style="font:900 15px 'Pretendard';color:#22201c">4</div><div style="font:700 9px 'Pretendard';color:#8a8272">획득 뱃지</div></div>
+              <div style="flex:1;border:2px solid #22201c;border-radius:10px;padding:8px;text-align:center"><div style="font:900 15px 'Pretendard';color:#22201c">3곳</div><div style="font:700 9px 'Pretendard';color:#8a8272">점령 기여</div></div>
+            </div>
+          </div>
+          <div style="position:absolute;top:266px;left:16px;right:16px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><span style="font:800 12px 'Pretendard';color:#22201c">🏆 수호신 뱃지 수집함</span><span style="font:800 11px 'Pretendard';color:#c98a00">4/5</span></div>
+            <div style="display:flex;gap:8px">
+              <div style="flex:1;border:2px solid #22201c;border-radius:11px;padding:8px 3px;text-align:center;background:#fffbe8"><div style="font-size:17px">👑</div><div style="font:700 8px 'Pretendard';color:#22201c;margin-top:2px">마포 수호신</div></div>
+              <div style="flex:1;border:2px solid #22201c;border-radius:11px;padding:8px 3px;text-align:center"><div style="font-size:17px">🛡️</div><div style="font:700 8px 'Pretendard';color:#22201c;margin-top:2px">개척자</div></div>
+              <div style="flex:1;border:2px solid #22201c;border-radius:11px;padding:8px 3px;text-align:center"><div style="font-size:17px">🔥</div><div style="font:700 8px 'Pretendard';color:#22201c;margin-top:2px">역전의주역</div></div>
+              <div style="flex:1;border:2px solid #22201c;border-radius:11px;padding:8px 3px;text-align:center"><div style="font-size:17px">📍</div><div style="font:700 8px 'Pretendard';color:#22201c;margin-top:2px">순례자</div></div>
+              <div style="flex:1;border:2px dashed #b3ad9d;border-radius:11px;padding:8px 3px;text-align:center;opacity:.5"><div style="font-size:17px;filter:grayscale(1)">🏰</div><div style="font:700 8px 'Pretendard';color:#8a8272;margin-top:2px">???</div></div>
+            </div>
+          </div>
+          <div style="position:absolute;top:394px;left:16px;right:16px;bottom:58px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px;border-bottom:1.5px solid #ececec"><span style="font:700 12.5px 'Pretendard';color:#22201c">💗 선호 팬덤 관리</span><span style="font:700 12px 'Pretendard';color:#8a8272">›</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px;border-bottom:1.5px solid #ececec"><span style="font:700 12.5px 'Pretendard';color:#22201c">🧾 인증 내역 히스토리</span><span style="font:700 12px 'Pretendard';color:#8a8272">›</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px;border-bottom:1.5px solid #ececec"><span style="font:700 12.5px 'Pretendard';color:#22201c">🔔 알림 설정</span><span style="font:700 12px 'Pretendard';color:#8a8272">›</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px"><span style="font:700 12.5px 'Pretendard';color:#22201c">📢 공지사항 · 문의</span><span style="font:700 12px 'Pretendard';color:#8a8272">›</span></div>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;height:58px;background:#fff;border-top:2px solid #22201c;display:flex;align-items:center;font:700 9.5px 'Pretendard';color:#b3ad9d;text-align:center">
+            <div style="flex:1">지도</div><div style="flex:1">전황</div><div style="flex:1">인증</div><div style="flex:1">랭킹</div><div style="flex:1;color:#22201c">MY</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="m1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#m1b">m1b</a> UV-MY-02 · 선호 팬덤 관리</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:50px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between"><div style="width:34px;height:34px;border:2px solid #22201c;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#22201c">‹</div><div style="font:800 14px 'Pretendard';color:#22201c">선호 팬덤 관리</div><div style="width:34px"></div></div>
+          <div style="position:absolute;top:100px;left:16px;right:16px;border:2px solid #c0492f;border-radius:12px;padding:11px 13px;background:#fdf6f4">
+            <div style="display:flex;gap:9px;align-items:flex-start"><span style="font-size:15px">⏳</span><div><div style="font:800 11.5px 'Pretendard';color:#c0492f">메인 팬덤은 7일에 한 번만 변경할 수 있어요</div><div style="font:600 10px 'Pretendard';color:#a06;margin-top:3px">최근 변경: 07.10 · 다음 변경 가능일 <b>07.24</b></div></div></div>
+          </div>
+          <div style="position:absolute;top:186px;left:16px;right:16px">
+            <div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 13px;border:2px solid #22201c;border-radius:11px"><span style="font-size:13px;opacity:.55">🔍</span><span style="font:600 12px 'Pretendard';color:#b3ad9d">팬덤/아티스트 검색</span></div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:14px 0 8px">대표 메인 팬덤 (1개)</div>
+            <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;border:2.5px solid #2f6bff;border-radius:12px;background:#f4f8ff">
+              <span style="width:20px;height:20px;border:2px solid #22201c;border-radius:50%;background:#2f6bff;box-shadow:inset 0 0 0 3px #fff"></span>
+              <span style="width:32px;height:32px;border:2px solid #22201c;border-radius:9px;background:#2f6bff;display:flex;align-items:center;justify-content:center;font:900 11px 'Pretendard';color:#fff">N</span>
+              <div style="flex:1"><div style="font:800 12.5px 'Pretendard';color:#22201c">뉴진스 · 버니즈</div></div>
+              <span style="padding:3px 8px;border:2px solid #22201c;border-radius:8px;background:#ffe14d;font:800 9px 'Pretendard'">대표</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;border:2px solid #22201c;border-radius:12px;margin-top:8px;opacity:.85">
+              <span style="width:20px;height:20px;border:2px solid #b3ad9d;border-radius:50%"></span>
+              <span style="width:32px;height:32px;border:2px solid #22201c;border-radius:9px;background:#e64980;display:flex;align-items:center;justify-content:center;font:900 10px 'Pretendard';color:#fff">ae</span>
+              <div style="flex:1"><div style="font:800 12.5px 'Pretendard';color:#22201c">에스파 · 마이</div></div>
+            </div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:14px 0 8px">응원 팬덤 (다중 선택)</div>
+            <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;border:2px solid #22201c;border-radius:12px">
+              <span style="width:20px;height:20px;border:2px solid #22201c;border-radius:6px;background:#ffe14d;display:flex;align-items:center;justify-content:center;font:900 11px 'Pretendard'">✓</span>
+              <span style="width:32px;height:32px;border:2px solid #22201c;border-radius:9px;background:#f59f00;display:flex;align-items:center;justify-content:center;font:900 8.5px 'Pretendard';color:#4a3708">IVE</span>
+              <div style="flex:1"><div style="font:800 12.5px 'Pretendard';color:#22201c">아이브 · 다이브</div></div>
+            </div>
+          </div>
+          <div style="position:absolute;left:16px;right:16px;bottom:26px"><div style="height:50px;border-radius:12px;background:#e8e5dc;display:flex;align-items:center;justify-content:center;font:800 13.5px 'Pretendard';color:#a29b8a">07.24부터 변경 가능</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="m1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#m1c">m1c</a> UV-MY-03 · 인증 내역</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:50px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between"><div style="width:34px;height:34px;border:2px solid #22201c;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#22201c">‹</div><div style="font:800 14px 'Pretendard';color:#22201c">인증 내역</div><div style="width:34px"></div></div>
+          <div style="position:absolute;top:100px;left:16px;right:16px;display:flex;gap:7px">
+            <span style="padding:7px 12px;border:2px solid #22201c;border-radius:10px;background:#22201c;color:#fff;font:800 11px 'Pretendard'">전체 42</span>
+            <span style="padding:7px 12px;border:2px solid #22201c;border-radius:10px;font:700 11px 'Pretendard';color:#22201c">승인 38</span>
+            <span style="padding:7px 12px;border:2px solid #22201c;border-radius:10px;font:700 11px 'Pretendard';color:#22201c">대기 1</span>
+            <span style="padding:7px 12px;border:2px solid #22201c;border-radius:10px;font:700 11px 'Pretendard';color:#c0492f">반려 3</span>
+          </div>
+          <div style="position:absolute;top:152px;left:16px;right:16px;bottom:24px;overflow:hidden;display:flex;flex-direction:column;gap:9px">
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font:800 12.5px 'Pretendard';color:#22201c">어반소스 × 안유진 생일카페</span><span style="padding:3px 8px;border:1.5px solid #00806f;border-radius:7px;font:800 9.5px 'Pretendard';color:#00806f">승인</span></div>
+              <div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:4px">07.22 14:03 · 성동구 · 기여 <b style="color:#00806f">+0.4%</b></div>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px;background:#f8faff">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font:800 12.5px 'Pretendard';color:#22201c">언더스탠드 카페</span><span style="padding:3px 8px;border:1.5px solid #2456c8;border-radius:7px;font:800 9.5px 'Pretendard';color:#2456c8">검수 대기</span></div>
+              <div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:4px">07.22 11:20 · 성동구 · 10분 내 결과 예정</div>
+            </div>
+            <div style="border:2px solid #c0492f;border-radius:12px;padding:11px 13px;background:#fdf6f4">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font:800 12.5px 'Pretendard';color:#22201c">성수 연방극장 팝업</span><span style="padding:3px 8px;border:1.5px solid #c0492f;border-radius:7px;font:800 9.5px 'Pretendard';color:#c0492f">반려</span></div>
+              <div style="font:600 10.5px 'Pretendard';color:#c0492f;margin-top:4px">사유: 영수증 최신성 만료 (7일 초과)</div>
+              <div style="display:inline-flex;margin-top:7px;padding:6px 11px;border:2px solid #22201c;border-radius:9px;font:800 10.5px 'Pretendard';color:#22201c">📸 다시 인증하기</div>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font:800 12.5px 'Pretendard';color:#22201c">무신사 테라스 팝업</span><span style="padding:3px 8px;border:1.5px solid #00806f;border-radius:7px;font:800 9.5px 'Pretendard';color:#00806f">승인</span></div>
+              <div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:4px">07.19 16:44 · 마포구 · 기여 <b style="color:#00806f">+0.4%</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="m1d">
+      <div class="dv-olabel"><a class="dv-oid" href="#m1d">m1d</a> UV-NOTIF-01 · 알림 센터</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:50px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between"><div style="font:900 20px 'Pretendard';color:#22201c">알림</div><span style="font:700 11px 'Pretendard';color:#8a8272">모두 읽음</span></div>
+          <div style="position:absolute;top:100px;left:16px;right:16px;bottom:24px;overflow:hidden;display:flex;flex-direction:column;gap:9px">
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px;background:#fdf6f4">
+              <div style="display:flex;gap:9px"><span style="font-size:16px">⚡</span><div style="flex:1"><div style="font:800 12px 'Pretendard';color:#22201c">성동구 점령지가 역전당했어요!</div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">에스파가 1위를 가져갔어요 · 방금</div></div><span style="width:8px;height:8px;border-radius:50%;background:#c0492f;flex:none;margin-top:4px"></span></div>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px;background:#fffbe8">
+              <div style="display:flex;gap:9px"><span style="font-size:16px">🛡️</span><div style="flex:1"><div style="font:800 12px 'Pretendard';color:#22201c">언더스탠드 카페 거점이 위태로워요!</div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">2위와 격차 4.2%p · 12분 전</div></div><span style="width:8px;height:8px;border-radius:50%;background:#c0492f;flex:none;margin-top:4px"></span></div>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px">
+              <div style="display:flex;gap:9px"><span style="font-size:16px">👑</span><div style="flex:1"><div style="font:800 12px 'Pretendard';color:#22201c">수호신 칭호가 위협받고 있어요!</div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">럭키팬이 1건 차이로 추격 중 · 1시간 전</div></div></div>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px">
+              <div style="display:flex;gap:9px"><span style="font-size:16px">🎉</span><div style="flex:1"><div style="font:800 12px 'Pretendard';color:#22201c">영수증 인증 승인 (+0.4% 기여)</div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">어반소스 × 안유진 생일카페 · 3시간 전</div></div></div>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px">
+              <div style="display:flex;gap:9px"><span style="font-size:16px">📢</span><div style="flex:1"><div style="font:800 12px 'Pretendard';color:#22201c">[신규 성지] 새로운 거점 오픈!</div><div style="font:600 10.5px 'Pretendard';color:#8a8272;margin-top:2px">뉴진스 팝업이 성수에 등록됐어요 · 어제</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="m1e">
+      <div class="dv-olabel"><a class="dv-oid" href="#m1e">m1e</a> UV-MY-05 · 서비스 설정</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:50px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between"><div style="width:34px;height:34px;border:2px solid #22201c;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#22201c">‹</div><div style="font:800 14px 'Pretendard';color:#22201c">설정</div><div style="width:34px"></div></div>
+          <div style="position:absolute;top:104px;left:16px;right:16px">
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin-bottom:6px">계정</div>
+            <div style="border:2px solid #22201c;border-radius:12px;overflow:hidden">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 14px;border-bottom:1.5px solid #ececec"><span style="font:700 12.5px 'Pretendard';color:#22201c">연결된 계정</span><span style="font:600 11px 'Pretendard';color:#8a8272">카카오 ›</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 14px"><span style="font:700 12.5px 'Pretendard';color:#22201c">프로필 관리</span><span style="font:700 12px 'Pretendard';color:#8a8272">›</span></div>
+            </div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:14px 0 6px">서비스</div>
+            <div style="border:2px solid #22201c;border-radius:12px;overflow:hidden">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 14px;border-bottom:1.5px solid #ececec"><span style="font:700 12.5px 'Pretendard';color:#22201c">푸시 알림 세부 설정</span><span style="font:700 12px 'Pretendard';color:#8a8272">›</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 14px;border-bottom:1.5px solid #ececec"><span style="font:700 12.5px 'Pretendard';color:#22201c">위치 서비스</span><span style="width:42px;height:24px;border:2px solid #22201c;border-radius:14px;background:#ffe14d;position:relative"><span style="position:absolute;right:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#22201c"></span></span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 14px"><span style="font:700 12.5px 'Pretendard';color:#22201c">언어</span><span style="font:600 11px 'Pretendard';color:#8a8272">한국어 ›</span></div>
+            </div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:14px 0 6px">기타</div>
+            <div style="border:2px solid #22201c;border-radius:12px;overflow:hidden">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 14px;border-bottom:1.5px solid #ececec"><span style="font:700 12.5px 'Pretendard';color:#22201c">공지사항</span><span style="font:700 12px 'Pretendard';color:#8a8272">›</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 14px;border-bottom:1.5px solid #ececec"><span style="font:700 12.5px 'Pretendard';color:#22201c">버전 정보</span><span style="font:600 11px 'Pretendard';color:#8a8272">v0.1.0</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 14px"><span style="font:700 12.5px 'Pretendard';color:#c0492f">로그아웃</span><span style="font:700 12px 'Pretendard';color:#8a8272">›</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="m1f">
+      <div class="dv-olabel"><a class="dv-oid" href="#m1f">m1f</a> UV-MY-06 · 푸시 세부 설정</div>
+      <div class="ph"><div class="ph-notch"></div>
+        <div class="ph-scr" style="background:#fff">
+          <div class="sbar" style="color:#22201c"><span>9:41</span><span style="font-size:11px">◗◗◗ 5G ▚▚</span></div>
+          <div style="position:absolute;top:50px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between"><div style="width:34px;height:34px;border:2px solid #22201c;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#22201c">‹</div><div style="font:800 14px 'Pretendard';color:#22201c">푸시 알림 설정</div><div style="width:34px"></div></div>
+          <div style="position:absolute;top:104px;left:16px;right:16px">
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin-bottom:6px">영토전 게임 알림</div>
+            <div style="border:2px solid #22201c;border-radius:12px;overflow:hidden">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1.5px solid #ececec"><div><div style="font:700 12.5px 'Pretendard';color:#22201c">영토 뒤집힘 알림</div><div style="font:600 9.5px 'Pretendard';color:#8a8272;margin-top:2px">내 점령 구 역전 시 · 30분 쿨다운</div></div><span style="width:42px;height:24px;border:2px solid #22201c;border-radius:14px;background:#ffe14d;position:relative;flex:none"><span style="position:absolute;right:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#22201c"></span></span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px"><div><div style="font:700 12.5px 'Pretendard';color:#22201c">성지 방어 & 수호신 알림</div><div style="font:600 9.5px 'Pretendard';color:#8a8272;margin-top:2px">격차 5%p 이하 · 칭호 추격 시</div></div><span style="width:42px;height:24px;border:2px solid #22201c;border-radius:14px;background:#ffe14d;position:relative;flex:none"><span style="position:absolute;right:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#22201c"></span></span></div>
+            </div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:14px 0 6px">인증 & 활동 알림</div>
+            <div style="border:2px solid #22201c;border-radius:12px;overflow:hidden">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px"><div><div style="font:700 12.5px 'Pretendard';color:#22201c">영수증 검수 결과 알림</div><div style="font:600 9.5px 'Pretendard';color:#8a8272;margin-top:2px">수동 검수 승인/반려 판정 시</div></div><span style="width:42px;height:24px;border:2px solid #22201c;border-radius:14px;background:#ffe14d;position:relative;flex:none"><span style="position:absolute;right:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#22201c"></span></span></div>
+            </div>
+            <div style="font:700 10.5px 'Pretendard';color:#8a8272;margin:14px 0 6px">혜택 & 마케팅 알림</div>
+            <div style="border:2px solid #22201c;border-radius:12px;overflow:hidden">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px"><div><div style="font:700 12.5px 'Pretendard';color:#22201c">신규 성지 & 이벤트 소식</div><div style="font:600 9.5px 'Pretendard';color:#8a8272;margin-top:2px">마케팅 수신동의 연동 · 야간 미발송</div></div><span style="width:42px;height:24px;border:2px solid #b3ad9d;border-radius:14px;background:#fff;position:relative;flex:none"><span style="position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#b3ad9d"></span></span></div>
+            </div>
+            <div style="border:2px solid #22201c;border-radius:12px;padding:11px 13px;margin-top:14px;background:#f8faff">
+              <div style="font:600 10px/1.6 'Pretendard';color:#4a4438">🌙 야간(21시~08시)에는 마케팅 푸시가 발송되지 않아요. 게임 알림은 실시간으로 전달됩니다.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+</body>
+</html>
