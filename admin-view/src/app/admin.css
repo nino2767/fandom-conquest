@@ -1,5 +1,8 @@
+@import "tailwindcss";
+
 /* Fandom Conquest Admin Console Styles */
 :root {
+
   --admin-bg: #ecebe8;
   --admin-card-bg: #ffffff;
   --admin-border: #e7e7e7;
