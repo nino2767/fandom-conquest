@@ -57,7 +57,8 @@ Fandom Conquest System
     │   ├── 9.1 장소 가맹점 관리 (Place Management) [ADM-SPOT-01]
     │   ├── 9.2 성지 핀 이벤트 관리 (Spot Management) [ADM-SPOT-02]
     │   └── 9.3 유저 제보 성지 승인 큐 (User Spot Proposal Queue) [ADM-SPOT-03]
-    ├── 10.0 Verification OMS (영수증 인증 검수 관리)
+    ├── 10.0 Verification Management (영수증 인증 검수 관리)
+
     │   ├── 10.1 인증 내역 테이블 (Verification Data Table) [ADM-VERIF-01]
     │   ├── 10.2 수동 검수 큐 (Manual Review Queue) [ADM-VERIF-02]
     │   └── 10.3 반려 사유 관리 (Rejection Preset Management) [ADM-VERIF-03]
@@ -92,7 +93,8 @@ Fandom Conquest System
 | **`ADM-SPOT-01`** | 장소 가맹점 관리 | `2.1 Spot Master` | 사업자등록번호(10자리), 상호명, 주소 API, 좌표 지오코딩 | 가맹점 등록/수정, 폐업 매장 변경 시 인증 하드 차단 |
 | **`ADM-SPOT-02`** | 성지 핀 이벤트 관리 | `2.2 Spot Master` | 연동 장소, 귀속 팬덤, 이벤트 타이틀, 운영 기간 픽커 | 지도 성지 마커 생성/수정, 자정 후 자동 `ARCHIVED` |
 | **`ADM-SPOT-03`** | 유저 제보 승인 큐 | `2.3 Spot Master` | 좌/우 2분할 뷰 (좌: 제보 폼 / 우: 지오코딩 & 사업자번호 대조) | 유저 제보 검토 후 `[정식 핀 승인]` 또는 `[제보 반려]` |
-| **`ADM-VERIF-01`** | 인증 내역 OMS 테이블 | `3.1 Verification` | 탭 4종(전체/자동승인/수동검수/최종반려), 엑셀/CSV 추출 | 전체 영수증 인증 로그 조회 및 엑셀 다운로드 |
+| **`ADM-VERIF-01`** | 인증 내역 데이터 테이블 | `3.1 Verification` | 탭 4종(전체/자동승인/수동검수/최종반려), 엑셀/CSV 추출 | 전체 영수증 인증 로그 조회 및 엑셀 다운로드 |
+
 | **`ADM-VERIF-02`** | 수동 검수 큐 | `3.2 Verification` | 좌/우 2분할 뷰 (좌: 원본 영수증 캡처 / 우: AI OCR 판정값) | 단축키(`Space`/`R`)로 `[승인 (+0.4%)]` 또는 `[반려]` 처리 |
 | **`ADM-VERIF-03`** | 반려 사유 프리셋 | `3.3 Verification` | 반려 사유 코드(`REJ-01`~`05`) 및 유저 알림 템플릿 | 영수증 반려 사유 템플릿 등록 및 수정 |
 | **`ADM-ABUSE-01`** | 이상 탐지 모니터링 | `4.1 Anti-Abuse` | 10분간 인증 급증 핫스팟 경고, 동일 IP 다계정 탐지 | 실시간 어뷰징 징후 탐지 및 자동 임시정지 감시 |

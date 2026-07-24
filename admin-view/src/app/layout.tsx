@@ -17,7 +17,8 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { name: "대시보드", href: "/" },
-  { name: "인증 내역 OMS", href: "/verification-history" },
+  { name: "인증 내역 통합 데이터", href: "/verification-history" },
+
   {
     name: "영수증 검수 큐",
     href: "/verification",

@@ -92,7 +92,8 @@ export default function VerificationHistoryPage() {
       {/* Top Bar */}
       <div className="admin-topbar">
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div className="admin-title">인증 내역 OMS 데이터 테이블</div>
+          <div className="admin-title">인증 내역 통합 데이터 테이블</div>
+
           <span style={{ font: "400 10.5px 'Pretendard'", color: "#9a9a9a" }}>
             총 {INITIAL_HISTORY.length}건 접수
           </span>
