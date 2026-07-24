@@ -91,6 +91,18 @@ flowchart TD
 | `sns_twitter` | **X (트위터) URL** | String (URL) | `https://x.com/pledis_17` |
 | `sns_community` | **공식 커뮤니티 / 위버스 URL**| String (URL) | `https://weverse.io/seventeen/feed` |
 
+### 3.4 점수 이중 집계 & 단방향 상향 상속 백엔드 계산 룰 (Upward Roll-up Score Engine)
+
+- **단방향 상향 상속 (Upward Roll-up Only)**:
+  - 개인 멤버 (`FANDOM-04-M1` 승관) 또는 유닛 (`FANDOM-04-U1` 부석순)으로 인증 성공 시:
+    1. 개인/유닛 DB 스코어 `score = score + 1` 반영 (개인/솔로 랭킹 반영)
+    2. 직속 상위 유닛 및 `root_group_id` 최상위 단체 그룹 (`FANDOM-04` 세븐틴) 스코어 `score = score + 1` **자동 상향 상속 합산** (통합 그룹 랭킹 반영)
+- **하향 분배 금지 (No Downward Distribution)**:
+  - 유저가 단체 그룹 (`FANDOM-04` 세븐틴)으로 인증한 경우, 단체 그룹 스코어만 `+1`점 상승하며 **하위 개인 멤버 레코드에는 점수를 일절 분배하지 않음**.
+- **지도 표기 롤 분담**:
+  - 성지 핀 마커: 유저가 응원한 **개인 최애의 시그니처 컬러 및 엠블럼** 표기
+  - 25구 영토 채색: **최상위 루트 그룹 합산 점수** 기준 채색
+
 ---
 
 ## 4. 정밀 모달 & 전용 심사 툴 명세 (Modal & Tool Specs)
