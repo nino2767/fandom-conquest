@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/spot-approval/layout,_N_T_/spot-approval/page,_N_T_/spot-approval"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/spot-approval/__PAGE__",
+    "/spot-approval",
+    "/_index",
+    "/_head"
+  ]
+}

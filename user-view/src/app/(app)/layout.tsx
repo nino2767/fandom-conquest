@@ -5,7 +5,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <div style={{
       width: "100%",
       height: "100dvh",
-      background: "#f5f4ef",
+      background: "#fff",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -18,7 +18,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         width: "100%",
         maxWidth: "480px",
         height: "100dvh",
-        background: "#FFFFFF",
+        background: "#fff",
         position: "relative",
         overflow: "hidden",
         display: "flex",

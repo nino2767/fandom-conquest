@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/spot-master/layout,_N_T_/spot-master/page,_N_T_/spot-master"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/spot-master/__PAGE__",
+    "/spot-master",
+    "/_index",
+    "/_head"
+  ]
+}

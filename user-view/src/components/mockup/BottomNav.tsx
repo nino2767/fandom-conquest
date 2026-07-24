@@ -25,12 +25,11 @@ export default function BottomNav({ currentTab, onSelectTab }: BottomNavProps) {
         left: 0,
         right: 0,
         bottom: 0,
-        height: '58px',
+        height: '50px',
         background: '#fff',
-        borderTop: '2px solid #22201c',
+        borderTop: '1px solid #111',
         display: 'flex',
         alignItems: 'center',
-        font: "700 11px 'Pretendard', system-ui, sans-serif",
         textAlign: 'center',
         zIndex: 35,
       }}
@@ -44,9 +43,10 @@ export default function BottomNav({ currentTab, onSelectTab }: BottomNavProps) {
             className="tapzone"
             style={{
               flex: 1,
-              color: isActive ? '#22201c' : '#b3ad9d',
-              fontWeight: isActive ? 900 : 700,
-              fontSize: isActive ? '12px' : '11px',
+              color: isActive ? '#111' : '#999',
+              font: isActive
+                ? "600 11.5px 'Pretendard', system-ui, sans-serif"
+                : "400 11px 'Pretendard', system-ui, sans-serif",
               userSelect: 'none',
             }}
           >

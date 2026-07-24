@@ -1,0 +1,18 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/abuse-detection/page": "/abuse-detection",
+  "/admin-accounts/page": "/admin-accounts",
+  "/fandom-ip/page": "/fandom-ip",
+  "/login/page": "/login",
+  "/page": "/",
+  "/place-master/page": "/place-master",
+  "/policy/page": "/policy",
+  "/spot-approval/page": "/spot-approval",
+  "/spot-events/page": "/spot-events",
+  "/spot-master/page": "/spot-master",
+  "/user-sanction/page": "/user-sanction",
+  "/verification-history/page": "/verification-history",
+  "/verification-presets/page": "/verification-presets",
+  "/verification/page": "/verification"
+}

@@ -1,0 +1,236 @@
+/* Fandom Conquest Admin Console Styles */
+:root {
+  --admin-bg: #ecebe8;
+  --admin-card-bg: #ffffff;
+  --admin-border: #e7e7e7;
+  --admin-border-dark: #111111;
+  --admin-text-main: #111111;
+  --admin-text-sub: #8a8a8a;
+  --admin-text-muted: #9a9a9a;
+  --admin-danger: #d64545;
+  --admin-warning: #e08a00;
+  --admin-success: #1fa16b;
+  --admin-accent-blue: #2f6bff;
+  --admin-accent-pink: #e64980;
+  --admin-accent-yellow: #f59f00;
+}
+
+.admin-body {
+  margin: 0;
+  background-color: var(--admin-bg);
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  color: var(--admin-text-main);
+  min-height: 100vh;
+}
+
+.admin-container {
+  display: flex;
+  width: 100%;
+  max-width: 1440px;
+  height: 840px;
+  margin: 20px auto;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  box-shadow: 0 24px 56px -26px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .admin-container {
+    height: auto;
+    min-height: 100vh;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    flex-direction: column;
+  }
+}
+
+/* Sidebar */
+.admin-sidebar {
+  width: 210px;
+  flex: none;
+  background: #ffffff;
+  border-right: 1px solid var(--admin-border);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+}
+
+@media (max-width: 1024px) {
+  .admin-sidebar {
+    display: none;
+  }
+  .admin-sidebar.mobile-open {
+    display: flex;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    width: 100%;
+  }
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 4px 8px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 12px;
+}
+
+.admin-brand-icon {
+  width: 28px;
+  height: 28px;
+  background: #111;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.admin-brand-text {
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #111;
+}
+
+.admin-brand-sub {
+  font-size: 9px;
+  font-weight: 400;
+  color: #9a9a9a;
+}
+
+/* Nav Item */
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #777;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  margin-bottom: 2px;
+}
+
+.admin-nav-item:hover {
+  background: #f5f5f5;
+  color: #111;
+}
+
+.admin-nav-item.active {
+  background: #ececec;
+  color: #111;
+  font-weight: 700;
+}
+
+.admin-badge-black {
+  margin-left: auto;
+  padding: 1px 7px;
+  background: #111;
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 600;
+  border-radius: 2px;
+}
+
+.admin-badge-gray {
+  margin-left: auto;
+  padding: 1px 7px;
+  background: #eee;
+  color: #777;
+  font-size: 9.5px;
+  font-weight: 600;
+  border-radius: 2px;
+}
+
+.admin-dot-red {
+  margin-left: auto;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--admin-danger);
+}
+
+/* Main Layout */
+.admin-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+.admin-topbar {
+  height: 52px;
+  flex: none;
+  background: #fff;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.admin-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+}
+
+.admin-card {
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 2px;
+}
+
+.admin-card-header {
+  font-size: 10px;
+  font-weight: 500;
+  color: #9a9a9a;
+  letter-spacing: 0.06em;
+}
+
+.admin-card-num {
+  font-size: 23px;
+  font-weight: 600;
+  color: #111;
+  margin-top: 4px;
+}
+
+.admin-card-sub {
+  font-size: 10px;
+  font-weight: 400;
+  color: #8a8a8a;
+  margin-top: 2px;
+}
+
+/* Mobile top header */
+.admin-mobile-header {
+  display: none;
+  height: 50px;
+  background: #fff;
+  border-bottom: 1px solid var(--admin-border);
+  padding: 0 14px;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+@media (max-width: 1024px) {
+  .admin-mobile-header {
+    display: flex;
+  }
+}
