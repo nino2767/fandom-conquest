@@ -4,7 +4,9 @@
 > **최종 수정일**: 2026-07-23  
 > **문서 상태**: Approved Spec  
 > **관련 화면 ID**: `ADM-VERIF-01` (인증 내역 데이터 테이블), `ADM-VERIF-02` (수동 검수 큐), `ADM-VERIF-03` (반려 사유 프리셋 관리)  
-> **관련 User View**: `UV-VERIF-01` (촬영), `UV-VERIF-02` (AI OCR), `UV-VERIF-04` (수동대기), `UV-VERIF-05` (반려모달)
+> **관련 User View**: `UV-VERIF-01` (촬영), `UV-VERIF-02` (AI OCR), `UV-VERIF-04` (수동대기), `UV-VERIF-05` (반려모달)  
+> **관련 공통 모달**: [`docs/01_planning/02_detail/03_admin/fandom_상세기획_어드민_공통_모달_명세_v0.2_20260723.md`](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/03_admin/fandom_상세기획_어드민_공통_모달_명세_v0.2_20260723.md)
+
 
 ---
 
@@ -88,9 +90,16 @@ AI OCR 파싱 판정 룰을 통과하지 못한 건을 **좌/우 2분할 대조 
 
 ### 3.1 수동 검수 큐 항목 승인 처리 API
 - **Endpoint**: `POST /api/v1/admin/verifications/{verification_id}/approve`
+- **점수 상속 트랜잭션 (Upward Roll-up Engine)**:
+  - 인증 성공 처리 시 제출된 팬덤 ID(`fandom_id`)가 개인/유닛일 경우, 개인 DB `score = score + 1` 반영과 동시에 `root_group_id` 최상위 단체 그룹 스코어 `score = score + 1` **자동 상향 상속 트랜잭션** 실행.
 
-### 3.2 수동 검수 큐 항목 반려 처리 API
+### 3.2 수동 검수 큐 항목 보류 이관 API
+- **Endpoint**: `POST /api/v1/admin/verifications/{verification_id}/hold`
+- **공통 모달 연동**: `MODAL-COMM-02` (수동 검수 보류 확정 공통 모달) 호출 후 점수 반영 일시 유예 및 `ADM-SANCTION-02` 심사 큐로 이관.
+
+### 3.3 수동 검수 큐 항목 반려 처리 API
 - **Endpoint**: `POST /api/v1/admin/verifications/{verification_id}/reject`
+
 
 ---
 

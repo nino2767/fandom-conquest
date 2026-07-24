@@ -5,7 +5,9 @@
 > **문서 상태**: Approved Spec  
 > **관련 화면 ID**: `ADM-USER-01` (유저 목록 & 회원 상세), `ADM-USER-02` (프로필 캐릭터/아바타 관리)  
 > **관련 User View**: `UV-MY-01` (프로필), `UV-ONBOARDING` (온보딩 프로필 세팅)  
+> **관련 공통 모달**: [`docs/01_planning/02_detail/03_admin/fandom_상세기획_어드민_공통_모달_명세_v0.2_20260723.md`](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/03_admin/fandom_상세기획_어드민_공통_모달_명세_v0.2_20260723.md)  
 > **개발 API 참조**: [`docs/03_dev/api/admin_user_abuse_api_v0.1_20260724.md`](file:///Users/jmk/develop/fandom-conquest/docs/03_dev/api/admin_user_abuse_api_v0.1_20260724.md)
+
 
 
 ---
