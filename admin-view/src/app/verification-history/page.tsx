@@ -62,8 +62,8 @@ const INITIAL_HISTORY: VerificationHistoryRow[] = [
 ];
 
 export default function VerificationHistoryPage() {
-  const [activeTab, setActiveTab] = useState<"전체" | "자동승인" | "수동검수대기" | "최종반려">("전체");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [historyList] = useState<VerificationHistoryRow[]>(INITIAL_HISTORY);
+  const [filterType, setFilterType] = useState<string>("ALL");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -73,154 +73,139 @@ export default function VerificationHistoryPage() {
     }, 2500);
   };
 
-  const filteredHistory = INITIAL_HISTORY.filter((item) => {
-    if (activeTab !== "전체" && item.type !== activeTab) return false;
-    if (
-      searchTerm &&
-      !item.user.includes(searchTerm) &&
-      !item.store.includes(searchTerm) &&
-      !item.bizNum.includes(searchTerm) &&
-      !item.id.includes(searchTerm)
-    ) {
-      return false;
-    }
-    return true;
+  const filteredData = historyList.filter((row) => {
+    if (filterType === "ALL") return true;
+    return row.type === filterType;
   });
 
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
-      {/* Top Bar */}
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      {/* Top Header Bar */}
       <div className="admin-topbar">
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div className="admin-title">인증 내역 통합 데이터 테이블</div>
-
-          <span style={{ font: "400 10.5px 'Pretendard'", color: "#9a9a9a" }}>
-            총 {INITIAL_HISTORY.length}건 접수
+          <span style={{ font: "700 14px 'Pretendard'", color: "#111" }}>
+            인증 내역 통합 데이터 (ADM-HISTORY-01)
+          </span>
+          <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
+            전체 {historyList.length}건 기록
           </span>
         </div>
-        <button
-          onClick={() => showToast("📥 인증 내역 엑셀(CSV) 추출이 완료되었습니다.")}
-          style={{
-            padding: "6px 14px",
-            background: "#111",
-            color: "#fff",
-            border: "none",
-            font: "700 11px 'Pretendard'",
-            cursor: "pointer",
-          }}
-        >
-          엑셀 / CSV 내보내기
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div className="fld" style={{ padding: "5px 10px", fontSize: 11 }}>
+            상태 필터: {filterType} ▾
+          </div>
+        </div>
       </div>
 
       {/* Main Content Area */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "16px 20px", gap: 12, overflowY: "auto" }}>
+      <div
+        style={{
+          flex: 1,
+          padding: "16px 20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 14,
+          overflowY: "auto",
+        }}
+      >
+        {/* KPI Cards */}
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div className="admin-card" style={{ flex: 1, minWidth: 140, padding: "12px 16px" }}>
+            <div className="th">누적 인증 건수</div>
+            <div className="num">142,910</div>
+            <div className="sub9">승인율 93.5%</div>
+          </div>
+          <div className="admin-card" style={{ flex: 1, minWidth: 140, padding: "12px 16px" }}>
+            <div className="th">자동 승인 비율</div>
+            <div className="num">92.8%</div>
+            <div className="sub9">인공지능 비전 OCR</div>
+          </div>
+          <div className="admin-card" style={{ flex: 1, minWidth: 140, padding: "12px 16px" }}>
+            <div className="th">수동 검수 이관</div>
+            <div className="num">7.2%</div>
+            <div className="sub9">평균 처리 4분 이내</div>
+          </div>
+        </div>
+
         {/* Filter Tabs */}
-        <div style={{ display: "flex", gap: 8, borderBottom: "1px solid #e7e7e7", paddingBottom: 10 }}>
-          {(["전체", "자동승인", "수동검수대기", "최종반려"] as const).map((tab) => (
+        <div style={{ display: "flex", gap: 6 }}>
+          {["ALL", "자동승인", "수동승인", "수동검수대기", "최종반려"].map((t) => (
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
+              key={t}
+              onClick={() => setFilterType(t)}
               style={{
-                padding: "6px 14px",
-                border: activeTab === tab ? "1.5px solid #111" : "1px solid #ddd",
-                background: activeTab === tab ? "#111" : "#fff",
-                color: activeTab === tab ? "#fff" : "#555",
-                font: "600 11.5px 'Pretendard'",
+                padding: "5px 12px",
+                background: filterType === t ? "#111" : "#eee",
+                color: filterType === t ? "#fff" : "#555",
+                border: "none",
+                font: "600 10.5px 'Pretendard'",
                 cursor: "pointer",
               }}
             >
-              {tab}
+              {t === "ALL" ? "전체 보기" : t}
             </button>
           ))}
         </div>
 
-        {/* Search Bar */}
-        <div style={{ display: "flex", gap: 8 }}>
-          <input
-            type="text"
-            placeholder="🔍 유저 닉네임 · 승인ID · 사업자번호 · 성지 상호명 검색"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            style={{
-              flex: 1,
-              padding: "8px 12px",
-              border: "1px solid #ddd",
-              font: "400 11px 'Pretendard'",
-              outline: "none",
-            }}
-          />
-        </div>
-
         {/* Data Table */}
         <div className="admin-card" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <div
-            style={{
-              display: "flex",
-              padding: "8px 16px",
-              borderBottom: "1px solid #f0f0f0",
-              font: "500 10px 'Pretendard'",
-              color: "#9a9a9a",
-              background: "#fafafa",
-            }}
-          >
-            <span style={{ width: 130 }}>인증 승인ID</span>
-            <span style={{ width: 90 }}>유저</span>
-            <span style={{ flex: 1 }}>성지 상호명</span>
-            <span style={{ width: 120 }}>사업자번호</span>
+          <div className="thr">
+            <span style={{ width: 140 }}>인증 ID</span>
+            <span style={{ width: 100 }}>유저 ID</span>
+            <span style={{ flex: 1 }}>매장명 / 상호</span>
+            <span style={{ width: 120 }}>사업자 번호</span>
             <span style={{ width: 110 }}>귀속 팬덤</span>
-            <span style={{ width: 90 }}>인증 유형</span>
+            <span style={{ width: 100 }}>인증 상태</span>
             <span style={{ width: 90 }}>금액</span>
             <span style={{ width: 140 }}>일시</span>
           </div>
 
-          {filteredHistory.map((row) => (
-            <div
-              key={row.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                padding: "11px 16px",
-                borderBottom: "1px solid #f0f0f0",
-              }}
-            >
-              <span style={{ width: 130, font: "400 10.5px 'Pretendard'", color: "#8a8a8a" }}>
-                {row.id}
-              </span>
-              <span style={{ width: 90, font: "600 11.5px 'Pretendard'", color: "#111" }}>
-                {row.user}
-              </span>
-              <span style={{ flex: 1, font: "500 11.5px 'Pretendard'", color: "#111" }}>
-                {row.store}
-              </span>
-              <span style={{ width: 120, font: "400 11px 'Pretendard'", color: "#555" }}>
-                {row.bizNum}
-              </span>
-              <span style={{ width: 110, font: "500 11px 'Pretendard'", color: "#111" }}>
-                <span style={{ color: row.fandomColor }}>●</span> {row.fandom}
-              </span>
-              <span
-                style={{
-                  width: 90,
-                  font: "600 10px 'Pretendard'",
-                  color:
-                    row.type === "자동승인" || row.type === "수동승인"
-                      ? "#1fa16b"
-                      : row.type === "수동검수대기"
-                      ? "#e08a00"
-                      : "#d64545",
-                }}
+          <div style={{ flex: 1, overflowY: "auto" }}>
+            {filteredData.map((row) => (
+              <div
+                key={row.id}
+                className="tr"
+                onClick={() => showToast(`📋 [${row.id}] ${row.store} 상세 내역 클릭`)}
+                style={{ cursor: "pointer" }}
               >
-                {row.type}
-              </span>
-              <span style={{ width: 90, font: "600 11px 'Pretendard'", color: "#111" }}>
-                {row.amount}
-              </span>
-              <span style={{ width: 140, font: "400 10.5px 'Pretendard'", color: "#8a8a8a" }}>
-                {row.timestamp}
-              </span>
-            </div>
-          ))}
+                <span style={{ width: 140, font: "600 11px 'Pretendard'", color: "#111" }}>
+                  {row.id}
+                </span>
+                <span style={{ width: 100, color: "#8a8a8a" }}>{row.user}</span>
+                <span style={{ flex: 1, font: "500 11.5px 'Pretendard'", color: "#111" }}>
+                  {row.store}
+                </span>
+                <span style={{ width: 120, fontFamily: "monospace", color: "#8a8a8a" }}>
+                  {row.bizNum}
+                </span>
+                <span style={{ width: 110, display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ width: 6, height: 6, background: row.fandomColor }} />
+                  <span style={{ font: "500 11px 'Pretendard'", color: "#111" }}>
+                    {row.fandom}
+                  </span>
+                </span>
+                <span style={{ width: 100 }}>
+                  <span
+                    className="pill"
+                    style={{
+                      color:
+                        row.type === "자동승인" || row.type === "수동승인"
+                          ? "#1fa16b"
+                          : row.type === "최종반려"
+                          ? "#d64545"
+                          : "#e08a00",
+                    }}
+                  >
+                    ● {row.type}
+                  </span>
+                </span>
+                <span style={{ width: 90, font: "600 11px 'Pretendard'", color: "#111" }}>
+                  {row.amount}
+                </span>
+                <span style={{ width: 140, color: "#8a8a8a" }}>{row.timestamp}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -229,14 +214,14 @@ export default function VerificationHistoryPage() {
           style={{
             position: "fixed",
             bottom: 24,
-            right: 24,
+            left: "50%",
+            transform: "translateX(-50%)",
             background: "#111",
             color: "#fff",
             padding: "10px 18px",
-            fontSize: 12,
-            fontWeight: 500,
-            boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
-            zIndex: 1000,
+            font: "600 12px 'Pretendard'",
+            boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
+            zIndex: 9999,
           }}
         >
           {toastMessage}
