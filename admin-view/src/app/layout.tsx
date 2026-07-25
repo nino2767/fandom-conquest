@@ -156,10 +156,8 @@ export default function RootLayout({
                 }}
               >
                 {navItems.map((item) => {
-                  const isActive =
-                    item.href === "/"
-                      ? pathname === "/"
-                      : pathname.startsWith(item.href);
+                  // Exact match pathname check to prevent sub-path overlap (e.g. /verification vs /verification-history)
+                  const isActive = pathname === item.href;
 
                   return (
                     <React.Fragment key={item.href}>
