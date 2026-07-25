@@ -40,5 +40,16 @@
 * **묶음 실행 및 배치 작업 룰 (Batch Execution)**:
   * 파일 수정 시 한 도구 호출로 묶어 처리하고, `git status`, `git log`, `npm run lint` 등 확인성 명령은 연쇄 명령(`&&`)으로 합쳐 실행합니다.
 
+## 6. 프론트엔드 퍼블리싱 UI/UX 정합성 절대 수칙 (Publishing & Design Alignment Rules)
+* **HTML 퍼블리싱 스펙 1:1 보존 (Publishing Spec Strict Alignment)**:
+  * 제공된 HTML 퍼블리싱 가이드/디자인 스펙 파일(`docs/02_design/`)의 클래스명(`brand`, `lg`, `bt`, `nav`, `on`, `b-d`, `b-g`, `card`, `th`, `num`, `sub9` 등)과 픽셀 레벨 수치(크기, 폰트, 패딩, 강조 테두리)를 임의로 개조하거나 구버전 클래스와 혼용하는 것을 엄격히 금지합니다.
+* **데이터 테이블 셀 flex-basis 고정 (Table Flex-Basis Lock)**:
+  * 인라인 `<span>` 태그의 flex 축소로 인한 글자 겹침을 방지하기 위해, 모든 데이터 테이블 컬럼 셀에는 명시적으로 `flex: 0 0 XXXpx` 및 `minWidth`를 부여하고 CSS상 `display: inline-block`과 `flex-shrink: 0`을 보장해야 합니다.
+* **사이드바 Active 상태 Exact Match (Exact Route Matching)**:
+  * 사이드바 네비게이션 active 판단 시 `startsWith` 대신 `pathname === item.href` 조건문을 사용하여 유사 경로 간 중복 선택 현상을 원천 차단합니다.
+* **데스크톱 사이드바 고정 노출 (Desktop Always-Visible Sidebar)**:
+  * 어드민 뷰의 196px 사이드바가 태블릿/노트북 화면 크기(1024px)에서 모바일 드로어로 숨겨지지 않도록 모바일 반응형 브레이크포인트를 `max-width: 640px` (스마트폰 전용)로 한정합니다.
+
+
 
 
