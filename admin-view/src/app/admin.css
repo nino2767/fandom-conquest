@@ -1,17 +1,18 @@
-/* admin.css - Sharp Monochrome v0.2 Design System Core */
+/* admin.css - Sharp Monochrome v0.2 Design System Exact Spec */
 
 @import "tailwindcss";
 
 /* ----------------------------------------------------
- * Root Application Container & Flex Layout Specs
+ * HTML v0.2 Publishing Specification Standard CSS
  * ---------------------------------------------------- */
+
 html, body {
   margin: 0;
   padding: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #fafafa;
+  background: #ecebe8;
   font-family: "Pretendard", system-ui, -apple-system, sans-serif;
   color: #111111;
   -webkit-font-smoothing: antialiased;
@@ -36,7 +37,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #fafafa;
+  background: #ecebe8;
 }
 
 .admin-container {
@@ -46,9 +47,10 @@ a:hover {
   min-height: 0;
   width: 100%;
   overflow: hidden;
+  background: #fafafa;
 }
 
-/* Sidebar Navigation (.dk-side spec: 196px Fixed Always Visible on Desktop) */
+/* Sidebar Navigation (.dk-side spec: 196px Fixed Always Visible) */
 .admin-sidebar {
   width: 196px;
   flex: 0 0 196px;
@@ -62,15 +64,15 @@ a:hover {
   z-index: 10;
 }
 
-/* Sidebar Branding & Links */
-.brand, .admin-brand {
+/* Sidebar Branding & Links (Exact HTML Spec) */
+.brand {
   display: flex;
   align-items: center;
   gap: 9px;
   padding: 4px 8px 14px;
 }
 
-.lg, .admin-brand-icon {
+.lg {
   width: 28px;
   height: 28px;
   flex: none;
@@ -80,18 +82,19 @@ a:hover {
   justify-content: center;
 }
 
-.bt, .admin-brand-text {
+.bt {
   font: 700 12.5px/1.15 "Pretendard", sans-serif;
   color: #111111;
   display: flex;
   flex-direction: column;
 }
 
-.bt b, .admin-brand-sub {
+.bt b {
   font: 400 8.5px "Pretendard", sans-serif;
   color: #9a9a9a;
   letter-spacing: 0.08em;
   margin-top: 2px;
+  font-weight: normal;
 }
 
 .nav {
@@ -132,6 +135,7 @@ a:hover {
   background: #111111;
   color: #ffffff;
   font: 600 9px "Pretendard", sans-serif;
+  line-height: 1.2;
 }
 
 .b-g {
@@ -140,6 +144,7 @@ a:hover {
   background: #eee;
   color: #888888;
   font: 600 9px "Pretendard", sans-serif;
+  line-height: 1.2;
 }
 
 .dot {
@@ -174,11 +179,12 @@ a:hover {
   box-sizing: border-box;
 }
 
-/* Cards & Text Tokens */
+/* Cards & Text Tokens (Exact HTML Spec) */
 .card, .admin-card {
   background: #ffffff;
   border: 1px solid #e2e2e2;
   border-radius: 0px;
+  box-sizing: border-box;
 }
 
 .th {
@@ -191,6 +197,7 @@ a:hover {
   font: 600 23px "Pretendard", sans-serif;
   color: #111111;
   margin-top: 5px;
+  line-height: 1.1;
 }
 
 .sub9 {
