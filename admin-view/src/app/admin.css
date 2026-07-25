@@ -3,14 +3,22 @@
 @import "tailwindcss";
 
 /* ----------------------------------------------------
- * HTML v0.2 Publishing Specification Standard CSS
+ * Root Application Container & Flex Layout Specs
  * ---------------------------------------------------- */
-
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   background: #fafafa;
   font-family: "Pretendard", system-ui, -apple-system, sans-serif;
   color: #111111;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 a {
@@ -22,19 +30,47 @@ a:hover {
   color: #555555;
 }
 
-* {
-  box-sizing: border-box;
+.admin-body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fafafa;
 }
 
-/* Sidebar Branding & Navigation */
-.brand {
+.admin-container {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Sidebar Navigation (.dk-side spec: 196px) */
+.admin-sidebar {
+  width: 196px;
+  flex: none;
+  background: #ffffff;
+  border-right: 1px solid #e7e7e7;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 12px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+/* Sidebar Branding & Links */
+.brand, .admin-brand {
   display: flex;
   align-items: center;
   gap: 9px;
   padding: 4px 8px 14px;
 }
 
-.lg {
+.lg, .admin-brand-icon {
   width: 28px;
   height: 28px;
   flex: none;
@@ -44,14 +80,14 @@ a:hover {
   justify-content: center;
 }
 
-.bt {
+.bt, .admin-brand-text {
   font: 700 12.5px/1.15 "Pretendard", sans-serif;
   color: #111111;
   display: flex;
   flex-direction: column;
 }
 
-.bt b {
+.bt b, .admin-brand-sub {
   font: 400 8.5px "Pretendard", sans-serif;
   color: #9a9a9a;
   letter-spacing: 0.08em;
@@ -68,6 +104,7 @@ a:hover {
   cursor: pointer;
   border-radius: 0px;
   user-select: none;
+  white-space: nowrap;
 }
 
 .nav:hover {
@@ -109,6 +146,30 @@ a:hover {
   height: 6px;
   border-radius: 50%;
   background: #d64545;
+}
+
+/* Main Workspace View Engine */
+.admin-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fafafa;
+  padding: 0px;
+}
+
+.admin-topbar {
+  min-height: 52px;
+  flex: none;
+  background: #ffffff;
+  border-bottom: 1px solid #e7e7e7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  gap: 12px;
+  box-sizing: border-box;
 }
 
 /* Cards & Text Tokens */
@@ -155,7 +216,7 @@ a:hover {
   justify-content: center;
 }
 
-/* Form Inputs & Fields */
+/* Form Controls & Badges */
 .fl {
   font: 400 9.5px "Pretendard", sans-serif;
   color: #9a9a9a;
@@ -239,9 +300,7 @@ a:hover {
   white-space: nowrap;
 }
 
-/* ----------------------------------------------------
- * Data Tables CSS Grid/Flex System Standard
- * ---------------------------------------------------- */
+/* Data Tables Row/Column Alignment Engine */
 .thr {
   display: flex;
   align-items: center;
@@ -277,7 +336,6 @@ a:hover {
   color: #111111;
 }
 
-/* Crucial Fix: Ensure span elements in thr/tr have block formatting & flex behavior */
 .thr > span,
 .tr > span {
   display: inline-block;
@@ -288,51 +346,25 @@ a:hover {
   vertical-align: middle;
 }
 
-/* Main App Layout Structures */
-.admin-layout-root {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background: #fafafa;
-}
-
-.admin-sidebar {
-  width: 196px;
-  flex: none;
-  background: #ffffff;
-  border-right: 1px solid #e7e7e7;
-  display: flex;
-  flex-direction: column;
-  padding: 14px 12px;
-  box-sizing: border-box;
-}
-
-.admin-main {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background: #fafafa;
-  padding: 0px;
-}
-
-.admin-topbar {
-  min-height: 52px;
-  flex: none;
+/* Mobile top bar (hidden on desktop) */
+.admin-mobile-header {
+  display: none;
+  height: 50px;
   background: #ffffff;
   border-bottom: 1px solid #e7e7e7;
-  display: flex;
+  padding: 0 14px;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  gap: 12px;
-  box-sizing: border-box;
+  flex: none;
+  z-index: 100;
 }
 
-/* Responsive Utilities & Drawers */
+/* Responsive Breakpoints */
 @media (max-width: 1024px) {
+  .admin-mobile-header {
+    display: flex;
+  }
+
   .admin-sidebar {
     position: fixed;
     top: 0;
