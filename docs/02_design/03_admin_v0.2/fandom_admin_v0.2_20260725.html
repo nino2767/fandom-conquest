@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  body{margin:0;background:#ecebe8;font-family:"Pretendard",system-ui,sans-serif}
+  a{color:#111}a:hover{color:#555}
+  *{box-sizing:border-box}
+  .dv-turn{padding:44px 48px 40px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
+  .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#111;color:#fff;text-decoration:none}
+  .dv-tname{font:700 14px/1.2 "Pretendard",system-ui;color:#111}
+  .dv-sub{margin:0 0 26px;max-width:820px;font:400 12.5px/1.6 "Pretendard",system-ui;color:rgba(0,0,0,.55)}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:38px;align-items:flex-start}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+  .dv-olabel{display:flex;align-items:baseline;gap:9px;font:600 12px/1.35 "Pretendard",system-ui;color:rgba(0,0,0,.68)}
+  .dv-olabel small{font-weight:400;color:rgba(0,0,0,.45)}
+  .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#111;text-decoration:none}
+  /* frames */
+  .dk{width:1180px;height:720px;background:#fafafa;border:1px solid #ddd;box-shadow:0 24px 56px -26px rgba(0,0,0,.3);overflow:hidden;display:flex}
+  .dk-side{width:196px;flex:none;background:#fff;border-right:1px solid #e7e7e7;display:flex;flex-direction:column;padding:14px 12px}
+  .dk-main{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+  .dk-top{min-height:52px;flex:none;background:#fff;border-bottom:1px solid #e7e7e7;display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:12px}
+  .mb{width:336px;height:720px;background:#fafafa;border:1px solid #ddd;box-shadow:0 24px 56px -26px rgba(0,0,0,.3);overflow:hidden;position:relative}
+  .mtop{position:absolute;top:0;left:0;right:0;height:50px;background:#fff;border-bottom:1px solid #e7e7e7;display:flex;align-items:center;justify-content:space-between;padding:0 14px;z-index:10}
+  /* sidebar */
+  .brand{display:flex;align-items:center;gap:9px;padding:4px 8px 14px}
+  .lg{width:28px;height:28px;flex:none;background:#111;display:flex;align-items:center;justify-content:center}
+  .bt{font:700 12.5px/1.15 "Pretendard";color:#111;display:flex;flex-direction:column}
+  .bt b{font:400 8.5px "Pretendard";color:#9a9a9a;letter-spacing:.08em;margin-top:2px}
+  .nav{display:flex;align-items:center;gap:8px;padding:6.5px 10px;font:500 11.5px "Pretendard";color:#8a8a8a}
+  .nav.on{background:#ececec;color:#111;font-weight:600}
+  .divider{height:1px;background:#e7e7e7;margin:8px 6px}
+  .b-d{margin-left:auto;padding:1px 6px;background:#111;color:#fff;font:600 9px "Pretendard"}
+  .b-g{margin-left:auto;padding:1px 6px;background:#eee;color:#888;font:600 9px "Pretendard"}
+  .dot{margin-left:auto;width:6px;height:6px;border-radius:50%;background:#d64545}
+  /* cards / text */
+  .card{background:#fff;border:1px solid #e2e2e2}
+  .th{font:500 10px "Pretendard";color:#9a9a9a;letter-spacing:.04em}
+  .num{font:600 23px "Pretendard";color:#111;margin-top:5px}
+  .sub9{font:400 10px "Pretendard";color:#8a8a8a;margin-top:2px}
+  .h2{font:700 12px "Pretendard";color:#111}
+  .hint{font:400 9.5px "Pretendard";color:#9a9a9a}
+  .tile{width:64px;height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  /* form */
+  .fl{font:400 9.5px "Pretendard";color:#9a9a9a;margin-bottom:4px}
+  .fld{padding:9px 11px;border:1px solid #ddd;font:500 11.5px "Pretendard";color:#111;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .tag{display:inline-flex;align-items:center;padding:2px 6px;border:1px solid #ccc;font:600 8.5px "Pretendard";color:#555;letter-spacing:.03em}
+  .col{width:14px;height:14px;flex:none;border:1px solid rgba(0,0,0,.15)}
+  .btn-d{background:#111;color:#fff;display:flex;align-items:center;justify-content:center;font:600 12px "Pretendard"}
+  .btn-l{border:1px solid #ddd;color:#555;display:flex;align-items:center;justify-content:center;font:500 11.5px "Pretendard";background:#fff}
+  .btn-r{border:1px solid #d64545;color:#d64545;display:flex;align-items:center;justify-content:center;font:600 12px "Pretendard";background:#fff}
+  .pill{display:inline-flex;align-items:center;gap:5px;font:500 10px "Pretendard"}
+  /* tables */
+  .thr{display:flex;padding:8px 16px;border-bottom:1px solid #f0f0f0;font:500 10px "Pretendard";color:#9a9a9a}
+  .tr{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid #f0f0f0;font:400 10.5px "Pretendard";color:#555}
+  .tr.sel{background:#f5f5f5}
+  .tr .nm{font:500 11.5px "Pretendard";color:#111}
+</style>
+</helmet>
+
+<section class="dv-turn" id="g0">
+  <div class="dv-thd"><span class="dv-tname">팬덤 땅따먹기 · 어드민 콘솔 (v0.2)</span></div>
+  <p class="dv-sub">화이트/블랙 샤프 모노크롬 — 라운드 0, 볼드는 타이틀만, 1px 헤어라인. 컬러는 <b style="font-weight:600;color:#111">데이터에만</b> (팬덤 시그니처 컬러·그래프·위험도 배지). 사이드바 IA는 v0.2 확장본(13항목: 검수·운영 7 + 거점·시스템 6)으로 전 화면 통일. 데스크톱 1180px · 전 화면 모바일 페어 동봉. 화면 참조: <a class="dv-oid" href="#g1">g1</a>~<a class="dv-oid" href="#g11">g11</a>. (사이드바 <b style="font-weight:600;color:#111">장소 마스터·성지 핀 관리</b>는 성지 제보 승인 g3·성지 핀 이벤트 g8에 기능 포함.)</p>
+</section>
+
+<section class="dv-turn" id="g11">
+  <div class="dv-thd"><a class="dv-tid" href="#g11">11</a><span class="dv-tname">ADM-ABUSE-02 · 유저 제재 & 소명 관리</span></div>
+  <p class="dv-sub">이상 탐지에서 넘어온 계정의 제재 처리와 유저 소명(이의제기) 검토. 단계적 제재(1차 경고 → 2차 7일 정지 → 영구정지 & 기여분 몰수). 영구정지·몰수는 SUPER_ADMIN 전용. 좌: 제재 대상 큐 / 우: 계정 상세 · 제재 이력 · 소명.</p>
+  <div class="dv-opts">
+    <div class="dv-opt" id="g11a">
+      <div class="dv-olabel"><a class="dv-oid" href="#g11a">g11a</a> 데스크톱 · 제재 처리</div>
+      <div class="dk">
+        <div class="dk-side">
+          <div class="brand"><span class="lg"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/></svg></span><span class="bt">팬덤 땅따먹기<b>ADMIN CONSOLE</b></span></div>
+          <div class="nav">대시보드</div>
+          <div class="nav">인증 내역 통합 데이터</div>
+          <div class="nav">영수증 검수 큐 <span class="b-d">24</span></div>
+          <div class="nav">반려 사유 프리셋</div>
+          <div class="nav">성지 제보 승인 <span class="b-g">7</span></div>
+          <div class="nav">이상 탐지 <span class="dot"></span></div>
+          <div class="nav on">유저 제재 & 소명 <span class="b-g">3</span></div>
+          <div class="divider"></div>
+          <div class="nav">장소 마스터</div>
+          <div class="nav">성지 핀 관리</div>
+          <div class="nav">성지 핀 이벤트</div>
+          <div class="nav">팬덤 IP 관리</div>
+          <div class="nav">어드민 계정 관리</div>
+          <div class="nav">운영 정책</div>
+        </div>
+        <div class="dk-main">
+          <div class="dk-top">
+            <div style="display:flex;align-items:center;gap:10px"><span style="font:700 14px 'Pretendard';color:#111">유저 제재 & 소명</span><span class="hint">제재 대기 6 · 소명 접수 3</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span class="fld" style="padding:5px 10px">상태: 전체 ▾</span><span class="fld" style="padding:5px 10px">소명 여부 ▾</span></div>
+          </div>
+          <div style="flex:1;display:flex;min-height:0">
+            <div style="flex:1;display:flex;flex-direction:column;border-right:1px solid #e7e7e7;min-width:0">
+              <div class="thr"><span style="flex:1.4">계정 / 닉네임</span><span style="width:100px">현재 상태</span><span style="width:90px">Risk</span><span style="width:70px">소명</span></div>
+              <div class="tr sel"><span style="flex:1.4"><span class="nm">bunny_01</span><br><span class="hint">뉴진스팬덕 · user_82fd</span></span><span style="width:100px"><span class="pill" style="color:#e08a00">◐ 1차 경고</span></span><span style="width:90px"><span class="pill" style="background:#d64545;color:#fff;padding:3px 8px;font-weight:600">85</span></span><span style="width:70px"><span class="pill" style="color:#111">● 접수</span></span></div>
+              <div class="tr"><span style="flex:1.4"><span class="nm">dive_yj</span><br><span class="hint">안유진짱 · user_5c2a</span></span><span style="width:100px"><span class="pill" style="color:#e08a00">◐ 1차 경고</span></span><span style="width:90px"><span class="pill" style="border:1px solid #e08a00;color:#e08a00;padding:3px 8px;font-weight:600">62</span></span><span style="width:70px"><span class="hint">—</span></span></div>
+              <div class="tr"><span style="flex:1.4"><span class="nm">luv_dup_a</span><br><span class="hint">다계정 의심 · user_991a</span></span><span style="width:100px"><span class="pill" style="color:#d64545">● 2차 정지</span></span><span style="width:90px"><span class="pill" style="background:#d64545;color:#fff;padding:3px 8px;font-weight:600">91</span></span><span style="width:70px"><span class="pill" style="color:#111">● 접수</span></span></div>
+              <div class="tr"><span style="flex:1.4"><span class="nm" style="color:#9a9a9a">fake_gps_7</span><br><span class="hint">GPS 스푸핑 · user_44cd</span></span><span style="width:100px"><span class="pill" style="color:#111">■ 영구정지</span></span><span style="width:90px"><span class="pill" style="background:#111;color:#fff;padding:3px 8px;font-weight:600">98</span></span><span style="width:70px"><span class="pill" style="color:#111">● 접수</span></span></div>
+              <div class="tr"><span style="flex:1.4"><span class="nm">newbie_23</span><br><span class="hint">오탐 의심 · user_7b0e</span></span><span style="width:100px"><span class="pill" style="color:#1fa16b">● 정상</span></span><span style="width:90px"><span class="pill" style="border:1px solid #1fa16b;color:#1fa16b;padding:3px 8px;font-weight:600">34</span></span><span style="width:70px"><span class="hint">—</span></span></div>
+            </div>
+            <div style="width:436px;flex:none;padding:16px 20px;display:flex;flex-direction:column;min-width:0">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px"><span class="h2">bunny_01 · 계정 상세</span><span class="pill" style="color:#e08a00;font-weight:600">◐ 현재 1차 경고</span></div>
+              <div style="display:flex;gap:8px;margin-bottom:12px">
+                <div class="card" style="flex:1;padding:10px 12px"><div class="th">누적 제재</div><div style="font:600 17px 'Pretendard';color:#111;margin-top:3px">2회</div></div>
+                <div class="card" style="flex:1;padding:10px 12px"><div class="th">보유 기여분</div><div style="font:600 17px 'Pretendard';color:#111;margin-top:3px">1,240</div></div>
+                <div class="card" style="flex:1;padding:10px 12px"><div class="th">연관 계정</div><div style="font:600 17px 'Pretendard';color:#d64545;margin-top:3px">6</div></div>
+              </div>
+              <div class="h2" style="font-size:11px;margin-bottom:8px">제재 이력</div>
+              <div style="border:1px solid #e2e2e2;margin-bottom:12px">
+                <div style="display:flex;gap:10px;padding:9px 12px;border-bottom:1px solid #f0f0f0"><span style="width:4px;background:#e08a00;flex:none"></span><div style="flex:1"><div style="font:500 11px 'Pretendard';color:#111">1차 경고 — 동일 IP 다계정 정황</div><div class="hint">admin_02 · 2026.07.24 14:32 · 자동 탐지 연동</div></div></div>
+                <div style="display:flex;gap:10px;padding:9px 12px"><span style="width:4px;background:#dcdcdc;flex:none"></span><div style="flex:1"><div style="font:500 11px 'Pretendard';color:#555">GPS 반경 밖 인증 플래그 3건</div><div class="hint">시스템 · 2026.07.20</div></div></div>
+              </div>
+              <div class="h2" style="font-size:11px;margin-bottom:8px">유저 소명 (이의제기)</div>
+              <div style="padding:11px 13px;background:#f5f5f5;border:1px solid #e7e7e7;font:400 10.5px/1.7 'Pretendard';color:#555;margin-bottom:14px">"집과 회사 두 기기로 로그인해서 IP가 겹친 것 같아요. 다계정 아닙니다. 인증은 모두 실제 방문입니다." <span class="hint" style="display:block;margin-top:6px">2026.07.24 16:10 접수</span></div>
+              <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;gap:8px">
+                  <div class="btn-l" style="flex:1;height:42px">소명 인용 · 경고 해제</div>
+                  <div class="btn-l" style="flex:1;height:42px;color:#e08a00;border-color:#e08a00;font-weight:600">2차 7일 정지</div>
+                </div>
+                <div class="btn-l" style="height:44px;color:#d64545;border-color:#d64545;font-weight:600">영구정지 & 기여분 몰수 (SUPER_ADMIN)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="g11b">
+      <div class="dv-olabel"><a class="dv-oid" href="#g11b">g11b</a> 모바일 <small>· 계정 상세 → 소명 · 하단 제재 바</small></div>
+      <div class="mb">
+        <div class="mtop"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">‹</span><span style="font:700 12.5px 'Pretendard';color:#111">제재 · bunny_01</span></div><span class="pill" style="color:#e08a00;font-weight:500">◐ 1차 경고</span></div>
+        <div style="position:absolute;top:50px;bottom:112px;left:0;right:0;overflow:hidden;padding:12px">
+          <div style="display:flex;gap:7px;margin-bottom:10px">
+            <div class="card" style="flex:1;padding:9px 10px"><div class="th">누적 제재</div><div style="font:600 15px 'Pretendard';color:#111;margin-top:2px">2회</div></div>
+            <div class="card" style="flex:1;padding:9px 10px"><div class="th">기여분</div><div style="font:600 15px 'Pretendard';color:#111;margin-top:2px">1,240</div></div>
+            <div class="card" style="flex:1;padding:9px 10px"><div class="th">연관</div><div style="font:600 15px 'Pretendard';color:#d64545;margin-top:2px">6</div></div>
+          </div>
+          <div class="h2" style="font-size:11px;margin-bottom:7px">제재 이력</div>
+          <div style="border:1px solid #e2e2e2;margin-bottom:11px">
+            <div style="display:flex;gap:9px;padding:8px 11px;border-bottom:1px solid #f0f0f0"><span style="width:4px;background:#e08a00;flex:none"></span><div style="flex:1"><div style="font:500 10.5px 'Pretendard';color:#111">1차 경고 — 다계정 정황</div><div class="hint">07.24 14:32</div></div></div>
+            <div style="display:flex;gap:9px;padding:8px 11px"><span style="width:4px;background:#dcdcdc;flex:none"></span><div style="flex:1"><div style="font:500 10.5px 'Pretendard';color:#555">GPS 반경 밖 3건</div><div class="hint">07.20</div></div></div>
+          </div>
+          <div class="h2" style="font-size:11px;margin-bottom:7px">유저 소명</div>
+          <div style="padding:10px 12px;background:#f5f5f5;border:1px solid #e7e7e7;font:400 10px/1.6 'Pretendard';color:#555">"집과 회사 두 기기 로그인이라 IP가 겹친 것 같아요. 다계정 아닙니다."<span class="hint" style="display:block;margin-top:5px">07.24 16:10 접수</span></div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e7e7e7;padding:10px 12px 14px;display:flex;flex-direction:column;gap:7px">
+          <div style="display:flex;gap:7px"><div class="btn-l" style="flex:1;height:42px">경고 해제</div><div class="btn-l" style="flex:1;height:42px;color:#e08a00;border-color:#e08a00;font-weight:600">7일 정지</div></div>
+          <div class="btn-l" style="height:42px;color:#d64545;border-color:#d64545;font-weight:600;font-size:11px">영구정지 & 몰수</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dv-turn" id="g10">
+  <div class="dv-thd"><a class="dv-tid" href="#g10">10</a><span class="dv-tname">ADM-SYS-04 / ADM-SYSTEM-01 · 운영 정책 & 공통 금칙어 관리</span></div>
+  <p class="dv-sub">좌: 영수증 OCR 검수 임계값(유효기간·최소금액·자동승인 신뢰도). 우: 서비스 전역 공통 금칙어 정규식 엔진 — Scope(전체/닉네임/커뮤니티)·차단방식(하드/마스킹) 태그, 실시간 검증 테스터, CSV 일괄 업로드. 임계값 변경은 SUPER_ADMIN 전용.</p>
+  <div class="dv-opts">
+    <div class="dv-opt" id="g10a">
+      <div class="dv-olabel"><a class="dv-oid" href="#g10a">g10a</a> 데스크톱</div>
+      <div class="dk">
+        <div class="dk-side">
+          <div class="brand"><span class="lg"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/></svg></span><span class="bt">팬덤 땅따먹기<b>ADMIN CONSOLE</b></span></div>
+          <div class="nav">대시보드</div>
+          <div class="nav">인증 내역 통합 데이터</div>
+          <div class="nav">영수증 검수 큐 <span class="b-d">24</span></div>
+          <div class="nav">반려 사유 프리셋</div>
+          <div class="nav">성지 제보 승인 <span class="b-g">7</span></div>
+          <div class="nav">이상 탐지 <span class="dot"></span></div>
+          <div class="nav">유저 제재 & 소명 <span class="b-g">3</span></div>
+          <div class="divider"></div>
+          <div class="nav">장소 마스터</div>
+          <div class="nav">성지 핀 관리</div>
+          <div class="nav">성지 핀 이벤트</div>
+          <div class="nav">팬덤 IP 관리</div>
+          <div class="nav">어드민 계정 관리</div>
+          <div class="nav on">운영 정책</div>
+        </div>
+        <div class="dk-main">
+          <div class="dk-top">
+            <div style="display:flex;align-items:center;gap:10px"><span style="font:700 14px 'Pretendard';color:#111">운영 정책 & 공통 금칙어</span><span class="tag" style="border-color:#111;color:#111">ADM-SYSTEM-01</span></div>
+            <span class="hint">최종 수정 admin_01 · 2026.07.23 · <span style="color:#d64545">SUPER_ADMIN 전용</span></span>
+          </div>
+          <div style="flex:1;display:flex;min-height:0">
+            <div style="flex:1;border-right:1px solid #e7e7e7;padding:18px 20px;display:flex;flex-direction:column;min-width:0">
+              <div class="h2" style="margin-bottom:3px">영수증 OCR 검수 임계값</div>
+              <div class="hint" style="margin-bottom:14px">인증 판정 4겹 방어의 1차 파라미터. 저장 시 전역 즉시 반영.</div>
+              <div style="display:flex;flex-direction:column;gap:13px">
+                <div><div class="fl">영수증 인정 유효 기간 — 상설형(시간)</div><div class="fld">168 <span class="hint">이벤트형은 72시간 · 성지 유형별 자동 적용</span></div></div>
+                <div><div class="fl">인정 최소 결제 금액(원)</div><div class="fld">3,000 <span class="hint">0원·소액 펌핑 방지</span></div></div>
+                <div><div class="fl">AI OCR 자동 승인 임계 신뢰도(%)</div><div class="fld">95 <span class="hint">미만은 수동 검수 큐로 자동 이관</span></div></div>
+                <div><div class="fl">GPS 인증 반경(m)</div><div class="fld">200 <span class="hint">반경 밖은 하드 차단 아닌 플래그 → 검수</span></div></div>
+                <div style="display:flex;gap:10px">
+                  <div style="flex:1"><div class="fl">10분당 인증 급증 자동정지 임계(건)</div><div class="fld">5</div></div>
+                  <div style="flex:1"><div class="fl">14일 롤링 감쇠</div><div class="fld">ON ▾</div></div>
+                </div>
+              </div>
+              <div style="margin-top:auto;padding-top:16px;display:flex;gap:8px">
+                <div class="btn-l" style="flex:1;height:44px">기본값 복원</div>
+                <div class="btn-d" style="flex:1.6;height:44px">검수 임계값 저장 확정</div>
+              </div>
+            </div>
+            <div style="width:520px;flex:none;padding:18px 20px;display:flex;flex-direction:column;min-width:0">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px"><span class="h2">공통 금칙어 정규식 엔진</span><span class="hint">등록 42건</span></div>
+              <div class="hint" style="margin-bottom:12px">닉네임·댓글·커뮤니티·1:1 문의 전역 입력 유효성 검증에 재사용.</div>
+              <div style="display:flex;gap:8px;margin-bottom:8px">
+                <span style="flex:1;padding:9px 11px;border:1px solid #ddd;font:400 11px ui-monospace,monospace;color:#9a9a9a;background:#fff">금칙어 정규식 패턴 (예: 운영자|사칭.*)</span>
+                <span class="btn-d" style="width:66px;height:36px">+ 등록</span>
+              </div>
+              <div style="display:flex;gap:8px;margin-bottom:12px">
+                <span style="flex:1;padding:8px 11px;border:1px solid #eee;font:400 10.5px 'Pretendard';color:#9a9a9a;background:#fff">설명 / 사유 (선택)</span>
+                <span class="fld" style="width:120px;padding:8px 10px">전체(ALL) ▾</span>
+                <span class="fld" style="width:110px;padding:8px 10px">하드 차단 ▾</span>
+              </div>
+              <div style="border:1px solid #e2e2e2;background:#fbfbfb;padding:11px 13px;margin-bottom:12px">
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:7px"><span class="h2" style="font-size:11px">실시간 금칙어 검증 테스터</span></div>
+                <div style="display:flex;gap:8px"><span style="flex:1;padding:8px 11px;border:1px solid #ddd;font:400 10.5px 'Pretendard';color:#111;background:#fff">운영자_뉴진스</span><span class="pill" style="padding:6px 11px;border:1px solid #d64545;color:#d64545;background:#fef4f4;font-weight:600">✕ 차단 — "운영자" 사칭 패턴 일치</span></div>
+              </div>
+              <div class="thr" style="padding:7px 12px"><span style="flex:1">패턴 / 사유</span><span style="width:150px">Scope · 방식</span><span style="width:44px;text-align:right">삭제</span></div>
+              <div style="display:flex;align-items:center;padding:10px 12px;border-bottom:1px solid #f0f0f0;background:#f5f5f5"><span style="flex:1;min-width:0"><span style="font:600 11px ui-monospace,monospace;color:#111">운영자|어드민|admin|system</span><br><span class="hint">어드민·시스템 사칭 닉네임 차단</span></span><span style="width:150px;display:flex;gap:4px;flex-wrap:wrap"><span class="tag">ALL</span><span class="tag" style="border-color:#111;color:#111">하드</span></span><span style="width:44px;text-align:right"><span style="font:500 10px 'Pretendard';color:#d64545">삭제</span></span></div>
+              <div style="display:flex;align-items:center;padding:10px 12px;border-bottom:1px solid #f0f0f0"><span style="flex:1;min-width:0"><span style="font:600 11px ui-monospace,monospace;color:#111">비속어1|비속어2|욕설.*</span><br><span class="hint">전역 공통 심한 비속어·욕설 차단</span></span><span style="width:150px;display:flex;gap:4px;flex-wrap:wrap"><span class="tag">ALL</span><span class="tag" style="border-color:#111;color:#111">하드</span></span><span style="width:44px;text-align:right"><span style="font:500 10px 'Pretendard';color:#d64545">삭제</span></span></div>
+              <div style="display:flex;align-items:center;padding:10px 12px;border-bottom:1px solid #f0f0f0"><span style="flex:1;min-width:0"><span style="font:600 11px ui-monospace,monospace;color:#111">.*씨발.*|.*ㅅㅂ.*</span><br><span class="hint">커뮤니티 노출 시 별표 마스킹</span></span><span style="width:150px;display:flex;gap:4px;flex-wrap:wrap"><span class="tag">COMMUNITY</span><span class="tag">마스킹</span></span><span style="width:44px;text-align:right"><span style="font:500 10px 'Pretendard';color:#d64545">삭제</span></span></div>
+              <div style="margin-top:auto;padding-top:12px;display:flex;justify-content:space-between;align-items:center"><span class="hint">규칙 위반 시 백엔드 입력 유효성 검증 단계에서 스캔</span><span class="btn-l" style="padding:7px 12px">CSV 일괄 업로드</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="g10b">
+      <div class="dv-olabel"><a class="dv-oid" href="#g10b">g10b</a> 모바일 <small>· 임계값 폼 → 금칙어 엔진 세로 스택</small></div>
+      <div class="mb">
+        <div class="mtop"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">☰</span><span style="font:700 12.5px 'Pretendard';color:#111">운영 정책</span></div><span class="tag" style="border-color:#111;color:#111">SYS-01</span></div>
+        <div style="position:absolute;top:50px;bottom:0;left:0;right:0;overflow:hidden;padding:12px">
+          <div class="h2" style="margin-bottom:9px">OCR 검수 임계값</div>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <div><div class="fl">유효 기간(상설, 시간)</div><div class="fld" style="padding:8px 10px">168</div></div>
+            <div style="display:flex;gap:8px"><div style="flex:1"><div class="fl">최소 결제(원)</div><div class="fld" style="padding:8px 10px">3,000</div></div><div style="flex:1"><div class="fl">자동승인(%)</div><div class="fld" style="padding:8px 10px">95</div></div></div>
+          </div>
+          <div class="btn-d" style="height:42px;margin-top:11px">임계값 저장</div>
+          <div class="h2" style="margin:16px 0 9px">공통 금칙어 엔진 <span class="hint" style="font-weight:400">· 42건</span></div>
+          <div style="display:flex;gap:7px;margin-bottom:9px"><span style="flex:1;padding:8px 10px;border:1px solid #ddd;font:400 10px ui-monospace,monospace;color:#9a9a9a;background:#fff">운영자|사칭.*</span><span class="btn-d" style="width:52px;height:34px">등록</span></div>
+          <div style="border:1px solid #f0f0f0;padding:9px 11px;margin-bottom:8px"><span style="font:600 10.5px ui-monospace,monospace;color:#111">운영자|어드민|admin</span><div style="display:flex;gap:4px;margin-top:5px"><span class="tag">ALL</span><span class="tag" style="border-color:#111;color:#111">하드</span></div></div>
+          <div style="border:1px solid #f0f0f0;padding:9px 11px"><span style="font:600 10.5px ui-monospace,monospace;color:#111">.*씨발.*|.*ㅅㅂ.*</span><div style="display:flex;gap:4px;margin-top:5px"><span class="tag">COMMUNITY</span><span class="tag">마스킹</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dv-turn" id="g9">
+  <div class="dv-thd"><a class="dv-tid" href="#g9">9</a><span class="dv-tname">ADM-SYS-02 · 어드민 계정 & 권한 관리 (RBAC) / ADM-SYS-03 · 보안 로그인</span></div>
+  <p class="dv-sub">최고 관리자가 운영자 계정을 발급하고 RBAC 역할(SUPER_ADMIN / OPERATOR / READ_ONLY)을 지정. 2FA(TOTP), 세션 60분, 5회 실패 시 15분 잠금. 권한 매트릭스로 메뉴별 접근을 한눈에.</p>
+  <div class="dv-opts">
+    <div class="dv-opt" id="g9a">
+      <div class="dv-olabel"><a class="dv-oid" href="#g9a">g9a</a> 계정 목록 + 권한 매트릭스</div>
+      <div class="dk">
+        <div class="dk-side">
+          <div class="brand"><span class="lg"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/></svg></span><span class="bt">팬덤 땅따먹기<b>ADMIN CONSOLE</b></span></div>
+          <div class="nav">대시보드</div>
+          <div class="nav">인증 내역 통합 데이터</div>
+          <div class="nav">영수증 검수 큐 <span class="b-d">24</span></div>
+          <div class="nav">반려 사유 프리셋</div>
+          <div class="nav">성지 제보 승인 <span class="b-g">7</span></div>
+          <div class="nav">이상 탐지 <span class="dot"></span></div>
+          <div class="nav">유저 제재 & 소명 <span class="b-g">3</span></div>
+          <div class="divider"></div>
+          <div class="nav">장소 마스터</div>
+          <div class="nav">성지 핀 관리</div>
+          <div class="nav">성지 핀 이벤트</div>
+          <div class="nav">팬덤 IP 관리</div>
+          <div class="nav on">어드민 계정 관리</div>
+          <div class="nav">운영 정책</div>
+        </div>
+        <div class="dk-main">
+          <div class="dk-top">
+            <div style="display:flex;align-items:center;gap:10px"><span style="font:700 14px 'Pretendard';color:#111">어드민 계정 관리</span><span class="hint">운영자 6명 · 활성 5</span></div>
+            <span class="btn-d" style="padding:7px 14px">+ 신규 운영자 발급</span>
+          </div>
+          <div style="flex:1;display:flex;min-height:0">
+            <div style="flex:1.5;display:flex;flex-direction:column;border-right:1px solid #e7e7e7;min-width:0">
+              <div class="thr"><span style="flex:1.4">담당자 / 이메일</span><span style="width:120px">역할</span><span style="width:70px">2FA</span><span style="width:130px">마지막 접속</span><span style="width:70px">상태</span></div>
+              <div class="tr sel"><span style="flex:1.4"><span class="nm">김운영</span><br><span class="hint">ops@fandom.app</span></span><span style="width:120px"><span class="tag" style="border-color:#111;color:#111">SUPER_ADMIN</span></span><span style="width:70px;color:#1fa16b;font-weight:500">ON</span><span style="width:130px">2026-07-24 19:10</span><span style="width:70px"><span class="pill" style="color:#1fa16b">● 정상</span></span></div>
+              <div class="tr"><span style="flex:1.4"><span class="nm">박검수</span><br><span class="hint">verify1@fandom.app</span></span><span style="width:120px"><span class="tag">OPERATOR</span></span><span style="width:70px;color:#1fa16b;font-weight:500">ON</span><span style="width:130px">2026-07-24 18:42</span><span style="width:70px"><span class="pill" style="color:#1fa16b">● 정상</span></span></div>
+              <div class="tr"><span style="flex:1.4"><span class="nm">이심사</span><br><span class="hint">verify2@fandom.app</span></span><span style="width:120px"><span class="tag">OPERATOR</span></span><span style="width:70px;color:#9a9a9a">OFF</span><span style="width:130px">2026-07-24 14:03</span><span style="width:70px"><span class="pill" style="color:#1fa16b">● 정상</span></span></div>
+              <div class="tr"><span style="flex:1.4"><span class="nm">최뷰어</span><br><span class="hint">view@fandom.app</span></span><span style="width:120px"><span class="tag">READ_ONLY</span></span><span style="width:70px;color:#9a9a9a">OFF</span><span style="width:130px">2026-07-23 11:20</span><span style="width:70px"><span class="pill" style="color:#1fa16b">● 정상</span></span></div>
+              <div class="tr" style="background:#fafafa"><span style="flex:1.4"><span class="nm" style="color:#9a9a9a">정휴면</span><br><span class="hint">old@fandom.app</span></span><span style="width:120px"><span class="tag">OPERATOR</span></span><span style="width:70px;color:#9a9a9a">OFF</span><span style="width:130px">2026-06-30 09:11</span><span style="width:70px"><span class="pill" style="color:#9a9a9a">정지</span></span></div>
+              <div style="margin-top:auto;padding:12px 16px;border-top:1px solid #f0f0f0;display:flex;gap:8px"><span class="btn-l" style="padding:7px 12px">임시 비밀번호 재설정</span><span class="btn-l" style="padding:7px 12px">계정 비활성화</span></div>
+            </div>
+            <div style="width:400px;flex:none;padding:16px 18px;display:flex;flex-direction:column;min-width:0">
+              <div class="h2" style="margin-bottom:10px">역할 기반 권한 매트릭스</div>
+              <div class="thr" style="padding:7px 0"><span style="flex:1">메뉴 / 권한</span><span style="width:44px;text-align:center">SUP</span><span style="width:44px;text-align:center">OPR</span><span style="width:44px;text-align:center">R-O</span></div>
+              <div style="display:flex;padding:9px 0;border-bottom:1px solid #f0f0f0;font:400 10.5px 'Pretendard';color:#555"><span style="flex:1">영수증 수동 승인 / 반려</span><span style="width:44px;text-align:center;color:#111;font-weight:600">O</span><span style="width:44px;text-align:center;color:#111;font-weight:600">O</span><span style="width:44px;text-align:center;color:#c9c9c9">✕</span></div>
+              <div style="display:flex;padding:9px 0;border-bottom:1px solid #f0f0f0;font:400 10.5px 'Pretendard';color:#555"><span style="flex:1">인증 내역 CSV Export</span><span style="width:44px;text-align:center;color:#111;font-weight:600">O</span><span style="width:44px;text-align:center;color:#111;font-weight:600">O</span><span style="width:44px;text-align:center;color:#111;font-weight:600">O</span></div>
+              <div style="display:flex;padding:9px 0;border-bottom:1px solid #f0f0f0;font:400 10.5px 'Pretendard';color:#555"><span style="flex:1">유저 제재 (1차/2차)</span><span style="width:44px;text-align:center;color:#111;font-weight:600">O</span><span style="width:44px;text-align:center;color:#111;font-weight:600">O</span><span style="width:44px;text-align:center;color:#c9c9c9">✕</span></div>
+              <div style="display:flex;padding:9px 0;border-bottom:1px solid #f0f0f0;font:400 10.5px 'Pretendard';color:#555"><span style="flex:1">영구정지 & 기여분 몰수</span><span style="width:44px;text-align:center;color:#111;font-weight:600">O</span><span style="width:44px;text-align:center;color:#c9c9c9">✕</span><span style="width:44px;text-align:center;color:#c9c9c9">✕</span></div>
+              <div style="display:flex;padding:9px 0;border-bottom:1px solid #f0f0f0;font:400 10.5px 'Pretendard';color:#555"><span style="flex:1">반려 사유 템플릿 수정</span><span style="width:44px;text-align:center;color:#111;font-weight:600">O</span><span style="width:44px;text-align:center;color:#c9c9c9">✕</span><span style="width:44px;text-align:center;color:#c9c9c9">✕</span></div>
+              <div style="display:flex;padding:9px 0;border-bottom:1px solid #f0f0f0;font:400 10.5px 'Pretendard';color:#555"><span style="flex:1">신규 어드민 계정 발급</span><span style="width:44px;text-align:center;color:#111;font-weight:600">O</span><span style="width:44px;text-align:center;color:#c9c9c9">✕</span><span style="width:44px;text-align:center;color:#c9c9c9">✕</span></div>
+              <div style="display:flex;padding:9px 0;font:400 10.5px 'Pretendard';color:#555"><span style="flex:1">운영 정책 임계값 변경</span><span style="width:44px;text-align:center;color:#111;font-weight:600">O</span><span style="width:44px;text-align:center;color:#c9c9c9">✕</span><span style="width:44px;text-align:center;color:#c9c9c9">✕</span></div>
+              <div style="margin-top:auto;padding-top:12px;background:#fafafa;border:1px solid #e7e7e7;padding:10px 12px"><span class="hint" style="line-height:1.6">SUP=SUPER_ADMIN · OPR=OPERATOR · R-O=READ_ONLY · 발급/정책/영구정지는 최고 관리자 전용, 감사로그 자동 기록</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="g9b">
+      <div class="dv-olabel"><a class="dv-oid" href="#g9b">g9b</a> ADM-SYS-03 · 보안 로그인 (PC) <small>· 2FA OTP</small></div>
+      <div style="width:1180px;height:720px;background:#fafafa;border:1px solid #ddd;box-shadow:0 24px 56px -26px rgba(0,0,0,.3);overflow:hidden;display:flex">
+        <div style="width:560px;flex:none;background:#111;color:#fff;padding:56px 52px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-80px;top:-40px;width:340px;height:340px;border:1px solid rgba(255,255,255,.08)"></div>
+          <div style="position:absolute;right:20px;bottom:60px;width:220px;height:220px;border:1px solid rgba(255,255,255,.06)"></div>
+          <div style="display:flex;align-items:center;gap:11px;position:relative">
+            <span style="width:34px;height:34px;flex:none;background:#fff;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#111" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#111"/></svg></span>
+            <div style="display:flex;flex-direction:column"><span style="font:700 14px 'Pretendard';color:#fff">팬덤 땅따먹기</span><span style="font:400 9px 'Pretendard';color:rgba(255,255,255,.5);letter-spacing:.12em;margin-top:2px">ADMIN CONSOLE</span></div>
+          </div>
+          <div style="position:relative">
+            <div style="font:700 26px/1.4 'Pretendard';color:#fff">백오피스<br>보안 로그인</div>
+            <div style="font:400 12.5px/1.7 'Pretendard';color:rgba(255,255,255,.6);margin-top:16px;max-width:340px">인증 검수 · 이상 탐지 · 팬덤 IP 관리 콘솔. 접근 권한은 RBAC 역할에 따라 제한되며 모든 활동은 감사 로그에 기록됩니다.</div>
+          </div>
+          <div style="position:relative;display:flex;gap:22px">
+            <div><div style="font:600 18px 'Pretendard';color:#fff">2FA</div><div style="font:400 10px 'Pretendard';color:rgba(255,255,255,.5);margin-top:2px">TOTP 필수</div></div>
+            <div><div style="font:600 18px 'Pretendard';color:#fff">60분</div><div style="font:400 10px 'Pretendard';color:rgba(255,255,255,.5);margin-top:2px">세션 만료</div></div>
+            <div><div style="font:600 18px 'Pretendard';color:#fff">5회</div><div style="font:400 10px 'Pretendard';color:rgba(255,255,255,.5);margin-top:2px">실패 시 15분 잠금</div></div>
+          </div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 64px;min-width:0">
+        <div style="width:380px;max-width:100%;display:flex;flex-direction:column;align-items:center">
+        <div style="font:700 17px 'Pretendard';color:#111;align-self:flex-start">로그인</div>
+        <div class="hint" style="margin-top:5px;align-self:flex-start">등록된 운영자 계정으로 접속하세요.</div>
+        <div style="width:100%;margin-top:26px;display:flex;flex-direction:column;gap:11px">
+          <div><div class="fl">이메일 아이디</div><div class="fld">ops@fandom.app</div></div>
+          <div><div class="fl">비밀번호</div><div class="fld" style="color:#9a9a9a">••••••••••••</div></div>
+          <div><div class="fl">2FA OTP (Google Authenticator)</div><div style="display:flex;gap:6px">
+            <span class="fld" style="flex:1;justify-content:center;font:600 15px ui-monospace,monospace">4</span>
+            <span class="fld" style="flex:1;justify-content:center;font:600 15px ui-monospace,monospace">8</span>
+            <span class="fld" style="flex:1;justify-content:center;font:600 15px ui-monospace,monospace">2</span>
+            <span class="fld" style="flex:1;justify-content:center;font:600 15px ui-monospace,monospace;color:#c9c9c9">–</span>
+            <span class="fld" style="flex:1;justify-content:center;font:600 15px ui-monospace,monospace;color:#c9c9c9">–</span>
+            <span class="fld" style="flex:1;justify-content:center;font:600 15px ui-monospace,monospace;color:#c9c9c9">–</span>
+          </div></div>
+        </div>
+        <div class="btn-d" style="width:100%;height:46px;margin-top:20px">로그인 (Sign In)</div>
+        <div style="width:100%;margin-top:16px;padding:11px 13px;background:#f5f5f5;border:1px solid #e7e7e7"><span class="hint" style="line-height:1.6">세션 60분 자동 만료 · 비밀번호 5회 실패 시 15분 잠금 · 최고 관리자 2FA 필수</span></div>
+        <div class="hint" style="margin-top:14px;align-self:flex-start">💡 데모: ops@fandom.app / admin1234</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="g9d">
+      <div class="dv-olabel"><a class="dv-oid" href="#g9d">g9d</a> 보안 로그인 (모바일)</div>
+      <div class="mb" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 26px">
+        <div style="width:52px;height:52px;background:#111;display:flex;align-items:center;justify-content:center;margin-bottom:16px"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/></svg></div>
+        <div style="font:700 15px 'Pretendard';color:#111">팬덤 땅따먹기</div>
+        <div class="hint" style="letter-spacing:.08em;margin-top:4px">ADMIN CONSOLE · 보안 로그인</div>
+        <div style="width:100%;margin-top:26px;display:flex;flex-direction:column;gap:10px">
+          <div><div class="fl">이메일 아이디</div><div class="fld" style="padding:9px 11px">ops@fandom.app</div></div>
+          <div><div class="fl">비밀번호</div><div class="fld" style="padding:9px 11px;color:#9a9a9a">••••••••••••</div></div>
+          <div><div class="fl">2FA OTP</div><div style="display:flex;gap:5px">
+            <span class="fld" style="flex:1;justify-content:center;padding:9px 0;font:600 14px ui-monospace,monospace">4</span>
+            <span class="fld" style="flex:1;justify-content:center;padding:9px 0;font:600 14px ui-monospace,monospace">8</span>
+            <span class="fld" style="flex:1;justify-content:center;padding:9px 0;font:600 14px ui-monospace,monospace">2</span>
+            <span class="fld" style="flex:1;justify-content:center;padding:9px 0;font:600 14px ui-monospace,monospace;color:#c9c9c9">–</span>
+            <span class="fld" style="flex:1;justify-content:center;padding:9px 0;font:600 14px ui-monospace,monospace;color:#c9c9c9">–</span>
+            <span class="fld" style="flex:1;justify-content:center;padding:9px 0;font:600 14px ui-monospace,monospace;color:#c9c9c9">–</span>
+          </div></div>
+        </div>
+        <div class="btn-d" style="width:100%;height:44px;margin-top:18px">로그인</div>
+        <div style="width:100%;margin-top:14px;padding:10px 12px;background:#f5f5f5;border:1px solid #e7e7e7"><span class="hint" style="line-height:1.6">세션 60분 · 5회 실패 시 15분 잠금 · 2FA 필수</span></div>
+      </div>
+    </div>
+    <div class="dv-opt" id="g9c">
+      <div class="dv-olabel"><a class="dv-oid" href="#g9c">g9c</a> 모바일 <small>· 계정 카드 · 역할 태그</small></div>
+      <div class="mb">
+        <div class="mtop"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">☰</span><span style="font:700 12.5px 'Pretendard';color:#111">어드민 계정</span></div><span class="btn-d" style="padding:6px 10px;font-size:10.5px">+ 발급</span></div>
+        <div style="position:absolute;top:50px;bottom:0;left:0;right:0;overflow:hidden;padding:12px">
+          <div class="hint" style="margin-bottom:9px">운영자 6명 · 활성 5</div>
+          <div class="card" style="padding:11px 13px;margin-bottom:8px;border:1.5px solid #111">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="nm">김운영</span><span class="tag" style="border-color:#111;color:#111">SUPER_ADMIN</span></div>
+            <div class="hint" style="margin-top:4px">ops@fandom.app</div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px"><span class="pill" style="color:#1fa16b">● 정상 · 2FA ON</span><span class="hint">19:10 접속</span></div>
+          </div>
+          <div class="card" style="padding:11px 13px;margin-bottom:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="nm">박검수</span><span class="tag">OPERATOR</span></div>
+            <div class="hint" style="margin-top:4px">verify1@fandom.app</div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px"><span class="pill" style="color:#1fa16b">● 정상 · 2FA ON</span><span class="hint">18:42 접속</span></div>
+          </div>
+          <div class="card" style="padding:11px 13px;margin-bottom:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="nm">최뷰어</span><span class="tag">READ_ONLY</span></div>
+            <div class="hint" style="margin-top:4px">view@fandom.app</div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px"><span class="pill" style="color:#9a9a9a">● 정상 · 2FA OFF</span><span class="hint">07-23 접속</span></div>
+          </div>
+          <div style="margin-top:10px;padding:10px 12px;background:#fafafa;border:1px solid #e7e7e7"><span class="hint" style="line-height:1.6">발급 · 정책 · 영구정지는 SUPER_ADMIN 전용, 감사로그 자동 기록. 권한 매트릭스는 데스크톱에서 상세 확인.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dv-turn" id="g8">
+  <div class="dv-thd"><a class="dv-tid" href="#g8">8</a><span class="dv-tname">ADM-SPOT-02 · 성지 핀 이벤트 관리</span></div>
+  <p class="dv-sub">등록된 장소(place_id) 위에 팬덤 IP 마커 핀을 꽂고 이벤트를 스케줄링. 유형(이벤트형 EVENT / 상설형 PERMANENT), 운영 기간 픽커, 자정 스케줄러로 마감 시 자동 ARCHIVED. 좌: 핀 목록 / 우: 핀 등록·편집.</p>
+  <div class="dv-opts">
+    <div class="dv-opt" id="g8a">
+      <div class="dk">
+        <div class="dk-side">
+          <div class="brand"><span class="lg"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/></svg></span><span class="bt">팬덤 땅따먹기<b>ADMIN CONSOLE</b></span></div>
+          <div class="nav">대시보드</div>
+          <div class="nav">인증 내역 통합 데이터</div>
+          <div class="nav">영수증 검수 큐 <span class="b-d">24</span></div>
+          <div class="nav">반려 사유 프리셋</div>
+          <div class="nav">성지 제보 승인 <span class="b-g">7</span></div>
+          <div class="nav">이상 탐지 <span class="dot"></span></div>
+          <div class="nav">유저 제재 & 소명 <span class="b-g">3</span></div>
+          <div class="divider"></div>
+          <div class="nav">장소 마스터</div>
+          <div class="nav">성지 핀 관리</div>
+          <div class="nav on">성지 핀 이벤트</div>
+          <div class="nav">팬덤 IP 관리</div>
+          <div class="nav">어드민 계정 관리</div>
+          <div class="nav">운영 정책</div>
+        </div>
+        <div class="dk-main">
+          <div class="dk-top">
+            <div style="display:flex;align-items:center;gap:10px"><span style="font:700 14px 'Pretendard';color:#111">성지 핀 이벤트</span><span class="hint">활성 핀 38 · 오늘 마감 예정 3</span></div>
+            <span class="btn-d" style="padding:7px 14px">+ 이벤트 핀 등록</span>
+          </div>
+          <div style="flex:1;display:flex;min-height:0">
+            <div style="flex:1;display:flex;flex-direction:column;border-right:1px solid #e7e7e7;min-width:0">
+              <div class="thr"><span style="flex:1.6">이벤트 성지 / 연동 장소</span><span style="width:88px">귀속 팬덤</span><span style="width:72px">유형</span><span style="width:120px">운영 기간</span><span style="width:74px">마커</span></div>
+              <div class="tr sel"><span style="flex:1.6"><span class="nm">안유진 생일카페</span><br><span class="hint">카페 므므흐스 성수 · 성동구</span></span><span style="width:88px"><span class="pill"><span class="col" style="background:#F59F00"></span>아이브</span></span><span style="width:72px"><span class="tag">EVENT</span></span><span style="width:120px">07.28~08.03</span><span style="width:74px;color:#1fa16b;font-weight:500">ON</span></div>
+              <div class="tr"><span style="flex:1.6"><span class="nm">어반소스 × 안유진</span><br><span class="hint">어반소스 성수점 · 성동구</span></span><span style="width:88px"><span class="pill"><span class="col" style="background:#F59F00"></span>아이브</span></span><span style="width:72px"><span class="tag">EVENT</span></span><span style="width:120px">07.18~07.24</span><span style="width:74px;color:#e08a00;font-weight:500">D-0</span></div>
+              <div class="tr"><span style="flex:1.6"><span class="nm">언더스탠드 카페</span><br><span class="hint">상설 성지 · 성동구</span></span><span style="width:88px"><span class="pill"><span class="col" style="background:#2F6BFF"></span>뉴진스</span></span><span style="width:72px"><span class="tag" style="border-color:#111;color:#111">PERM</span></span><span style="width:120px">상시</span><span style="width:74px;color:#1fa16b;font-weight:500">ON</span></div>
+              <div class="tr"><span style="flex:1.6"><span class="nm">성수 연방극장 팝업</span><br><span class="hint">연방극장 · 성동구</span></span><span style="width:88px"><span class="pill"><span class="col" style="background:#9C36B5"></span>변우석</span></span><span style="width:72px"><span class="tag">EVENT</span></span><span style="width:120px">07.20~07.28</span><span style="width:74px;color:#1fa16b;font-weight:500">ON</span></div>
+              <div class="tr"><span style="flex:1.6"><span class="nm" style="color:#9a9a9a">무신사 테라스 팝업</span><br><span class="hint">무신사 테라스 · 마포구</span></span><span style="width:88px"><span class="pill"><span class="col" style="background:#2F6BFF"></span>뉴진스</span></span><span style="width:72px"><span class="tag">EVENT</span></span><span style="width:120px">07.11~07.18</span><span style="width:74px;color:#9a9a9a">ARCHIVED</span></div>
+            </div>
+            <div style="width:388px;flex:none;padding:16px 18px;display:flex;flex-direction:column;min-width:0">
+              <div class="h2" style="margin-bottom:10px">핀 편집 — 안유진 생일카페</div>
+              <div style="height:150px;background:#eef1ec;border:1px solid #e2e2e2;position:relative;overflow:hidden;margin-bottom:12px">
+                <div style="position:absolute;left:0;right:0;top:64px;height:8px;background:#fff;opacity:.8"></div>
+                <div style="position:absolute;top:0;bottom:0;left:150px;width:8px;background:#fff;opacity:.8"></div>
+                <div style="position:absolute;left:44%;top:40%;width:16px;height:16px;background:#F59F00;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3)"></div>
+                <div style="position:absolute;left:52%;top:26%;padding:3px 8px;background:#fff;border:1px solid #ddd;font:500 9px 'Pretendard';color:#111">연무장길 47 · 마커 프리뷰</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:9px">
+                <div><div class="fl">연동 장소 (place_id)</div><div class="fld">카페 므므흐스 성수 ▾</div></div>
+                <div><div class="fl">귀속 팬덤 IP</div><div class="fld"><span class="pill"><span class="col" style="background:#F59F00"></span>아이브 (안유진)</span> ▾</div></div>
+                <div><div class="fl">이벤트 타이틀</div><div class="fld">안유진 생일카페</div></div>
+                <div style="display:flex;gap:8px"><div style="flex:1"><div class="fl">유형</div><div class="fld">EVENT ▾</div></div><div style="flex:1.4"><div class="fl">운영 기간</div><div class="fld">07.28 ~ 08.03</div></div></div>
+              </div>
+              <div style="margin-top:auto;padding-top:14px;display:flex;gap:8px"><div class="btn-r" style="flex:1;height:42px">핀 내리기</div><div class="btn-d" style="flex:1.5;height:42px">핀 생성 / 저장</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dv-opt" id="g8b">
+      <div class="dv-olabel"><a class="dv-oid" href="#g8b">g8b</a> 모바일 <small>· 핀 목록 · 유형/기간</small></div>
+      <div class="mb">
+        <div class="mtop"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">☰</span><span style="font:700 12.5px 'Pretendard';color:#111">성지 핀 이벤트</span></div><span class="btn-d" style="padding:6px 10px;font-size:10.5px">+ 핀</span></div>
+        <div style="position:absolute;top:50px;bottom:0;left:0;right:0;overflow:hidden;padding:12px">
+          <div class="hint" style="margin-bottom:9px">활성 핀 38 · 오늘 마감 3</div>
+          <div class="card" style="padding:11px 13px;margin-bottom:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="nm">안유진 생일카페</span><span class="tag">EVENT</span></div>
+            <div class="hint" style="margin-top:4px">카페 므므흐스 성수 · 성동구</div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px"><span class="pill"><span class="col" style="background:#F59F00"></span>아이브</span><span class="pill" style="color:#1fa16b">07.28~08.03 · ON</span></div>
+          </div>
+          <div class="card" style="padding:11px 13px;margin-bottom:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="nm">어반소스 × 안유진</span><span class="tag">EVENT</span></div>
+            <div class="hint" style="margin-top:4px">어반소스 성수점 · 성동구</div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px"><span class="pill"><span class="col" style="background:#F59F00"></span>아이브</span><span class="pill" style="color:#e08a00">07.18~07.24 · D-0</span></div>
+          </div>
+          <div class="card" style="padding:11px 13px;margin-bottom:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="nm">언더스탠드 카페</span><span class="tag" style="border-color:#111;color:#111">PERM</span></div>
+            <div class="hint" style="margin-top:4px">상설 성지 · 성동구</div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px"><span class="pill"><span class="col" style="background:#2F6BFF"></span>뉴진스</span><span class="pill" style="color:#1fa16b">상시 · ON</span></div>
+          </div>
+          <div class="card" style="padding:11px 13px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="nm" style="color:#9a9a9a">무신사 테라스 팝업</span><span class="tag">EVENT</span></div>
+            <div class="hint" style="margin-top:4px">무신사 테라스 · 마포구</div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px"><span class="pill"><span class="col" style="background:#2F6BFF"></span>뉴진스</span><span class="hint">ARCHIVED</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dv-turn" id="g7">
+  <div class="dv-thd"><a class="dv-tid" href="#g7">7</a><span class="dv-tname">ADM-VERIF-03 · 반려 사유 프리셋 관리</span></div>
+  <p class="dv-sub">반려 처리 시 유저에게 전송될 알림 푸시 + 인앱 모달(UV-VERIF-05) 표준 템플릿을 카드로 관리. 사유 코드·유저 노출 문구·연동 액션. 템플릿 수정은 SUPER_ADMIN 전용(OPERATOR는 열람).</p>
+  <div class="dv-opts">
+    <div class="dv-opt" id="g7a">
+      <div class="dk">
+        <div class="dk-side">
+          <div class="brand"><span class="lg"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/></svg></span><span class="bt">팬덤 땅따먹기<b>ADMIN CONSOLE</b></span></div>
+          <div class="nav">대시보드</div>
+          <div class="nav">인증 내역 통합 데이터</div>
+          <div class="nav">영수증 검수 큐 <span class="b-d">24</span></div>
+          <div class="nav on">반려 사유 프리셋</div>
+          <div class="nav">성지 제보 승인 <span class="b-g">7</span></div>
+          <div class="nav">이상 탐지 <span class="dot"></span></div>
+          <div class="nav">유저 제재 & 소명 <span class="b-g">3</span></div>
+          <div class="divider"></div>
+          <div class="nav">장소 마스터</div>
+          <div class="nav">성지 핀 관리</div>
+          <div class="nav">성지 핀 이벤트</div>
+          <div class="nav">팬덤 IP 관리</div>
+          <div class="nav">어드민 계정 관리</div>
+          <div class="nav">운영 정책</div>
+        </div>
+        <div class="dk-main">
+          <div class="dk-top">
+            <div style="display:flex;align-items:center;gap:10px"><span style="font:700 14px 'Pretendard';color:#111">반려 사유 프리셋</span><span class="hint">템플릿 6종 · 검수 큐 [R] 반려에 연동</span></div>
+            <span class="btn-d" style="padding:7px 14px">+ 사유 템플릿 추가</span>
+          </div>
+          <div style="flex:1;padding:18px 20px;overflow:hidden">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div class="card" style="padding:14px 16px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="tag" style="border-color:#111;color:#111">R-EXPIRE</span><span class="hint">사용 41% · 최다</span></div>
+                <div style="font:600 12.5px 'Pretendard';color:#111;margin-bottom:5px">최신성 만료 (기간 초과)</div>
+                <div style="font:400 10.5px/1.6 'Pretendard';color:#666;background:#fafafa;border:1px solid #f0f0f0;padding:8px 10px">"제출하신 영수증의 결제일시가 인정 기간을 초과했어요. 최근 방문 영수증으로 다시 인증해 주세요."</div>
+                <div style="display:flex;justify-content:space-between;margin-top:10px"><span class="hint">푸시 + 인앱 모달</span><span style="font:500 10px 'Pretendard';color:#111">수정</span></div>
+              </div>
+              <div class="card" style="padding:14px 16px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="tag" style="border-color:#111;color:#111">R-DUP</span><span class="hint">사용 28%</span></div>
+                <div style="font:600 12.5px 'Pretendard';color:#111;margin-bottom:5px">중복 영수증 (승인번호 재사용)</div>
+                <div style="font:400 10.5px/1.6 'Pretendard';color:#666;background:#fafafa;border:1px solid #f0f0f0;padding:8px 10px">"이미 인증에 사용된 영수증이에요. 동일 결제 건은 한 번만 인정됩니다."</div>
+                <div style="display:flex;justify-content:space-between;margin-top:10px"><span class="hint">푸시 + 인앱 모달</span><span style="font:500 10px 'Pretendard';color:#111">수정</span></div>
+              </div>
+              <div class="card" style="padding:14px 16px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="tag" style="border-color:#111;color:#111">R-OCR</span><span class="hint">사용 18%</span></div>
+                <div style="font:600 12.5px 'Pretendard';color:#111;margin-bottom:5px">금액/항목 판독 불가</div>
+                <div style="font:400 10.5px/1.6 'Pretendard';color:#666;background:#fafafa;border:1px solid #f0f0f0;padding:8px 10px">"영수증 글씨가 흐려 금액을 확인하지 못했어요. 전체가 선명하게 보이도록 다시 촬영해 주세요."</div>
+                <div style="display:flex;justify-content:space-between;margin-top:10px"><span class="hint">푸시 + 인앱 모달</span><span style="font:500 10px 'Pretendard';color:#111">수정</span></div>
+              </div>
+              <div class="card" style="padding:14px 16px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="tag" style="border-color:#111;color:#111">R-STORE</span><span class="hint">사용 9%</span></div>
+                <div style="font:600 12.5px 'Pretendard';color:#111;margin-bottom:5px">매장 불일치 (사업자번호 상이)</div>
+                <div style="font:400 10.5px/1.6 'Pretendard';color:#666;background:#fafafa;border:1px solid #f0f0f0;padding:8px 10px">"인증하려는 성지와 영수증 매장이 달라요. 해당 성지에서 결제한 영수증으로 인증해 주세요."</div>
+                <div style="display:flex;justify-content:space-between;margin-top:10px"><span class="hint">푸시 + 인앱 모달</span><span style="font:500 10px 'Pretendard';color:#111">수정</span></div>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding:12px 14px;background:#fafafa;border:1px solid #e7e7e7;display:flex;justify-content:space-between;align-items:center"><span class="hint" style="line-height:1.6">템플릿의 <b style="font-weight:600;color:#111">{성지명}·{기간}</b> 변수는 반려 시점 데이터로 자동 치환됩니다. 코드 삭제 시 과거 반려 이력의 문구는 보존됩니다.</span><span class="tag" style="border-color:#d64545;color:#d64545">수정 권한: SUPER_ADMIN</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dv-opt" id="g7b">
+      <div class="dv-olabel"><a class="dv-oid" href="#g7b">g7b</a> 모바일 <small>· 사유 템플릿 카드</small></div>
+      <div class="mb">
+        <div class="mtop"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">☰</span><span style="font:700 12.5px 'Pretendard';color:#111">반려 사유 프리셋</span></div><span class="btn-d" style="padding:6px 10px;font-size:10.5px">+ 추가</span></div>
+        <div style="position:absolute;top:50px;bottom:0;left:0;right:0;overflow:hidden;padding:12px">
+          <div class="hint" style="margin-bottom:9px">템플릿 6종 · 검수 [R] 반려 연동</div>
+          <div class="card" style="padding:12px 13px;margin-bottom:9px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px"><span class="tag" style="border-color:#111;color:#111">R-EXPIRE</span><span class="hint">41% 최다</span></div>
+            <div style="font:600 12px 'Pretendard';color:#111;margin-bottom:5px">최신성 만료 (기간 초과)</div>
+            <div style="font:400 10px/1.6 'Pretendard';color:#666;background:#fafafa;border:1px solid #f0f0f0;padding:7px 9px">"결제일시가 인정 기간을 초과했어요. 최근 방문 영수증으로 다시 인증해 주세요."</div>
+          </div>
+          <div class="card" style="padding:12px 13px;margin-bottom:9px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px"><span class="tag" style="border-color:#111;color:#111">R-DUP</span><span class="hint">28%</span></div>
+            <div style="font:600 12px 'Pretendard';color:#111;margin-bottom:5px">중복 영수증 (승인번호 재사용)</div>
+            <div style="font:400 10px/1.6 'Pretendard';color:#666;background:#fafafa;border:1px solid #f0f0f0;padding:7px 9px">"이미 인증에 사용된 영수증이에요. 동일 결제 건은 한 번만 인정됩니다."</div>
+          </div>
+          <div class="card" style="padding:12px 13px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px"><span class="tag" style="border-color:#111;color:#111">R-OCR</span><span class="hint">18%</span></div>
+            <div style="font:600 12px 'Pretendard';color:#111;margin-bottom:5px">금액/항목 판독 불가</div>
+            <div style="font:400 10px/1.6 'Pretendard';color:#666;background:#fafafa;border:1px solid #f0f0f0;padding:7px 9px">"글씨가 흐려 금액을 확인하지 못했어요. 선명하게 다시 촬영해 주세요."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dv-turn" id="g6">
+  <div class="dv-thd"><a class="dv-tid" href="#g6">6</a><span class="dv-tname">ADM-VERIF-01 · 인증 내역 통합 데이터 테이블</span></div>
+  <p class="dv-sub">접수된 모든 영수증 인증 시도를 OMS 상태값(대기 → 자동승인/수동검수 → 최종승인/반려)으로 통합 조회. 탭 4종·영수증 텍스트 검색·상태 필터·CSV Export. 자동 승인 건은 운영 리소스 제로.</p>
+  <div class="dv-opts">
+    <div class="dv-opt" id="g6a">
+      <div class="dk">
+        <div class="dk-side">
+          <div class="brand"><span class="lg"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/></svg></span><span class="bt">팬덤 땅따먹기<b>ADMIN CONSOLE</b></span></div>
+          <div class="nav">대시보드</div>
+          <div class="nav on">인증 내역 통합 데이터</div>
+          <div class="nav">영수증 검수 큐 <span class="b-d">24</span></div>
+          <div class="nav">반려 사유 프리셋</div>
+          <div class="nav">성지 제보 승인 <span class="b-g">7</span></div>
+          <div class="nav">이상 탐지 <span class="dot"></span></div>
+          <div class="nav">유저 제재 & 소명 <span class="b-g">3</span></div>
+          <div class="divider"></div>
+          <div class="nav">장소 마스터</div>
+          <div class="nav">성지 핀 관리</div>
+          <div class="nav">성지 핀 이벤트</div>
+          <div class="nav">팬덤 IP 관리</div>
+          <div class="nav">어드민 계정 관리</div>
+          <div class="nav">운영 정책</div>
+        </div>
+        <div class="dk-main">
+          <div class="dk-top">
+            <div style="display:flex;align-items:center;gap:10px"><span style="font:700 14px 'Pretendard';color:#111">인증 내역 통합 데이터</span><span class="hint">오늘 접수 3,214건</span></div>
+            <div style="display:flex;gap:8px"><span class="btn-l" style="padding:7px 12px">CSV Export</span><span class="hint" style="align-self:center">2026.07.22</span></div>
+          </div>
+          <div style="display:flex;gap:0;padding:0 20px;border-bottom:1px solid #e7e7e7">
+            <div style="padding:12px 14px;font:600 12px 'Pretendard';color:#111;border-bottom:2px solid #111">전체 <span class="hint" style="font-weight:400">3,214</span></div>
+            <div style="padding:12px 14px;font:500 12px 'Pretendard';color:#9a9a9a">자동 승인 <span class="hint">2,981</span></div>
+            <div style="padding:12px 14px;font:500 12px 'Pretendard';color:#9a9a9a">수동 검수 <span class="hint">24</span></div>
+            <div style="padding:12px 14px;font:500 12px 'Pretendard';color:#9a9a9a">최종 반려 <span class="hint">209</span></div>
+          </div>
+          <div style="display:flex;gap:8px;padding:12px 20px;border-bottom:1px solid #f0f0f0">
+            <span style="flex:1;padding:7px 11px;border:1px solid #ddd;font:400 11px 'Pretendard';color:#9a9a9a;background:#fff">영수증 텍스트 · 상호 · 유저 검색</span>
+            <span class="fld" style="width:120px;padding:7px 10px">상태: 전체 ▾</span>
+            <span class="fld" style="width:110px;padding:7px 10px">구: 전체 ▾</span>
+            <span class="fld" style="width:130px;padding:7px 10px">팬덤: 전체 ▾</span>
+          </div>
+          <div style="flex:1;overflow:hidden">
+            <div class="thr"><span style="width:150px">접수 ID / 시각</span><span style="flex:1.4">성지 / 매장</span><span style="width:96px">팬덤</span><span style="width:96px">금액</span><span style="width:80px">신뢰도</span><span style="width:110px">상태</span></div>
+            <div class="tr"><span style="width:150px"><span style="font:500 10.5px ui-monospace,monospace;color:#111">0722-0847</span><br><span class="hint">14:15</span></span><span style="flex:1.4"><span class="nm">투썸플레이스 성수역점</span><br><span class="hint">성동구 성수동2가</span></span><span style="width:96px"><span class="pill"><span class="col" style="background:#FF8E53"></span>승관</span></span><span style="width:96px">14,500원</span><span style="width:80px;color:#1fa16b;font-weight:500">98.4%</span><span style="width:110px"><span class="pill" style="color:#1fa16b">● 자동승인</span></span></div>
+            <div class="tr"><span style="width:150px"><span style="font:500 10.5px ui-monospace,monospace;color:#111">0722-0846</span><br><span class="hint">14:12</span></span><span style="flex:1.4"><span class="nm">어반소스 성수점</span><br><span class="hint">성동구 · 안유진 생카</span></span><span style="width:96px"><span class="pill"><span class="col" style="background:#F59F00"></span>아이브</span></span><span style="width:96px">12,000원</span><span style="width:80px;color:#d64545;font-weight:500">71%</span><span style="width:110px"><span class="pill" style="color:#e08a00">◐ 수동검수</span></span></div>
+            <div class="tr"><span style="width:150px"><span style="font:500 10.5px ui-monospace,monospace;color:#111">0722-0845</span><br><span class="hint">14:09</span></span><span style="flex:1.4"><span class="nm">언더스탠드 카페</span><br><span class="hint">성동구</span></span><span style="width:96px"><span class="pill"><span class="col" style="background:#2F6BFF"></span>뉴진스</span></span><span style="width:96px">6,800원</span><span style="width:80px;color:#1fa16b;font-weight:500">96.2%</span><span style="width:110px"><span class="pill" style="color:#1fa16b">● 자동승인</span></span></div>
+            <div class="tr"><span style="width:150px"><span style="font:500 10.5px ui-monospace,monospace;color:#111">0722-0844</span><br><span class="hint">14:03</span></span><span style="flex:1.4"><span class="nm">GS25 성수점</span><br><span class="hint">성동구 · 매장 불일치</span></span><span style="width:96px"><span class="pill"><span class="col" style="background:#2F6BFF"></span>뉴진스</span></span><span style="width:96px">1,500원</span><span style="width:80px;color:#9a9a9a">—</span><span style="width:110px"><span class="pill" style="color:#d64545">✕ 반려 R-STORE</span></span></div>
+            <div class="tr"><span style="width:150px"><span style="font:500 10.5px ui-monospace,monospace;color:#111">0722-0843</span><br><span class="hint">13:58</span></span><span style="flex:1.4"><span class="nm">성수 연방극장 팝업</span><br><span class="hint">성동구 · 변우석 팝업</span></span><span style="width:96px"><span class="pill"><span class="col" style="background:#9C36B5"></span>변우석</span></span><span style="width:96px">22,000원</span><span style="width:80px;color:#1fa16b;font-weight:500">97.1%</span><span style="width:110px"><span class="pill" style="color:#1fa16b">● 자동승인</span></span></div>
+            <div class="tr"><span style="width:150px"><span style="font:500 10.5px ui-monospace,monospace;color:#111">0722-0842</span><br><span class="hint">13:51</span></span><span style="flex:1.4"><span class="nm">무신사 테라스</span><br><span class="hint">마포구 · 다계정 플래그</span></span><span style="width:96px"><span class="pill"><span class="col" style="background:#2F6BFF"></span>뉴진스</span></span><span style="width:96px">9,000원</span><span style="width:80px;color:#e08a00;font-weight:500">88%</span><span style="width:110px"><span class="pill" style="color:#e08a00">◐ 수동검수</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dv-opt" id="g6b">
+      <div class="dv-olabel"><a class="dv-oid" href="#g6b">g6b</a> 모바일 <small>· 탭 · 인증 건 카드</small></div>
+      <div class="mb">
+        <div class="mtop"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">☰</span><span style="font:700 12.5px 'Pretendard';color:#111">인증 내역</span></div><span class="btn-l" style="padding:6px 10px;font-size:10px">CSV</span></div>
+        <div style="position:absolute;top:50px;bottom:0;left:0;right:0;overflow:hidden;padding:0">
+          <div style="display:flex;gap:0;padding:0 12px;border-bottom:1px solid #e7e7e7">
+            <div style="padding:10px 8px;font:600 10.5px 'Pretendard';color:#111;border-bottom:2px solid #111">전체 3,214</div>
+            <div style="padding:10px 8px;font:500 10.5px 'Pretendard';color:#9a9a9a">자동 2,981</div>
+            <div style="padding:10px 8px;font:500 10.5px 'Pretendard';color:#9a9a9a">수동 24</div>
+            <div style="padding:10px 8px;font:500 10.5px 'Pretendard';color:#9a9a9a">반려 209</div>
+          </div>
+          <div style="padding:10px 12px;border-bottom:1px solid #f0f0f0"><span style="display:block;padding:7px 10px;border:1px solid #ddd;font:400 10.5px 'Pretendard';color:#9a9a9a;background:#fff">영수증 · 상호 · 유저 검색</span></div>
+          <div style="overflow:hidden;padding:0 12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #f0f0f0"><div style="min-width:0"><div class="nm">투썸플레이스 성수역점</div><div class="hint"><span class="col" style="background:#FF8E53;display:inline-block;vertical-align:-2px"></span> 승관 · 14,500원 · 14:15</div></div><span class="pill" style="color:#1fa16b;white-space:nowrap">● 자동승인</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #f0f0f0"><div style="min-width:0"><div class="nm">어반소스 성수점</div><div class="hint"><span class="col" style="background:#F59F00;display:inline-block;vertical-align:-2px"></span> 아이브 · 12,000원 · 71%</div></div><span class="pill" style="color:#e08a00;white-space:nowrap">◐ 수동검수</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #f0f0f0"><div style="min-width:0"><div class="nm">언더스탠드 카페</div><div class="hint"><span class="col" style="background:#2F6BFF;display:inline-block;vertical-align:-2px"></span> 뉴진스 · 6,800원 · 96%</div></div><span class="pill" style="color:#1fa16b;white-space:nowrap">● 자동승인</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #f0f0f0"><div style="min-width:0"><div class="nm">GS25 성수점</div><div class="hint"><span class="col" style="background:#2F6BFF;display:inline-block;vertical-align:-2px"></span> 뉴진스 · 1,500원</div></div><span class="pill" style="color:#d64545;white-space:nowrap">✕ 반려</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0"><div style="min-width:0"><div class="nm">성수 연방극장 팝업</div><div class="hint"><span class="col" style="background:#9C36B5;display:inline-block;vertical-align:-2px"></span> 변우석 · 22,000원 · 97%</div></div><span class="pill" style="color:#1fa16b;white-space:nowrap">● 자동승인</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dv-turn" id="g5">
+  <div class="dv-thd"><a class="dv-tid" href="#g5">5</a><span class="dv-tname">ADM-SYS-01 · 팬덤 IP & 브랜드 마스터 v0.2</span></div>
+  <p class="dv-sub">그룹 ↔ 유닛 ↔ 개인(SOLO) 3계층 아키텍처. 지역(국내/해외) × 장르 2차원 분류, 시그니처 컬러(WCAG AA 검수), 공식 SNS 4종, 점령 가중치 배율(1.00x~2.00x). 점수는 개인→상위 <b style="font-weight:600;color:#111">단방향 상향 상속(Upward Roll-up)</b>, 하향 분배 없음.</p>
+  <div class="dv-opts">
+    <div class="dv-opt" id="g5a">
+      <div class="dv-olabel"><a class="dv-oid" href="#g5a">g5a</a> 3계층 마스터 테이블</div>
+      <div class="dk">
+        <div class="dk-side">
+          <div class="brand"><span class="lg"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/></svg></span><span class="bt">팬덤 땅따먹기<b>ADMIN CONSOLE</b></span></div>
+          <div class="nav">대시보드</div>
+          <div class="nav">인증 내역 통합 데이터</div>
+          <div class="nav">영수증 검수 큐 <span class="b-d">24</span></div>
+          <div class="nav">반려 사유 프리셋</div>
+          <div class="nav">성지 제보 승인 <span class="b-g">7</span></div>
+          <div class="nav">이상 탐지 <span class="dot"></span></div>
+          <div class="nav">유저 제재 & 소명 <span class="b-g">3</span></div>
+          <div class="divider"></div>
+          <div class="nav">장소 마스터</div>
+          <div class="nav">성지 핀 관리</div>
+          <div class="nav">성지 핀 이벤트</div>
+          <div class="nav on">팬덤 IP 관리</div>
+          <div class="nav">어드민 계정 관리</div>
+          <div class="nav">운영 정책</div>
+        </div>
+        <div class="dk-main">
+          <div class="dk-top">
+            <div style="display:flex;align-items:center;gap:10px"><span style="font:700 14px 'Pretendard';color:#111">팬덤 IP & 브랜드 마스터</span><span class="tag" style="border-color:#111;color:#111">v0.2</span></div>
+            <div style="display:flex;gap:8px"><span class="btn-l" style="padding:7px 12px">신규 팬덤 신청 큐 (5)</span><span class="btn-d" style="padding:7px 14px">+ IP 신규 등록</span></div>
+          </div>
+          <div style="display:flex;gap:8px;padding:12px 20px;border-bottom:1px solid #f0f0f0">
+            <span class="fld" style="width:130px;padding:7px 10px">지역: 전체 ▾</span>
+            <span class="fld" style="width:130px;padding:7px 10px">장르: 전체 ▾</span>
+            <span class="fld" style="width:150px;padding:7px 10px">유형: 전체 ▾</span>
+            <span style="flex:1;padding:7px 11px;border:1px solid #ddd;font:400 11px 'Pretendard';color:#9a9a9a;background:#fff">팬덤 / 아티스트 / 별칭 검색</span>
+          </div>
+          <div style="flex:1;overflow:hidden">
+            <div class="thr"><span style="width:74px">유형</span><span style="flex:1.5">팬덤 IP (영문/별칭)</span><span style="width:150px">장르 / 지역</span><span style="width:140px">3계층 상하위 매핑</span><span style="width:104px">시그니처</span><span style="width:56px">가중치</span><span style="width:84px">귀속 유저</span><span style="width:56px">액션</span></div>
+            <div class="tr"><span style="width:74px"><span class="tag" style="border-color:#7b61c9;color:#7b61c9">GROUP</span></span><span style="flex:1.5"><span class="nm">세븐틴 (SEVENTEEN)</span><br><span class="hint">세븐틴, SVT, 17</span></span><span style="width:150px"><span class="hint">DOMESTIC · IDOL_GROUP</span></span><span style="width:140px"><span class="hint">유닛 3 · 멤버 13 연결</span></span><span style="width:104px"><span class="pill"><span class="col" style="background:#A9C4FF"></span><span style="font:500 10px ui-monospace,monospace">#A9C4FF</span></span></span><span style="width:56px;color:#111;font-weight:600">1.1x</span><span style="width:84px">24,500</span><span style="width:56px"><span style="font:500 10px 'Pretendard';color:#111">상세</span></span></div>
+            <div class="tr"><span style="width:74px"><span class="tag" style="border-color:#e0a020;color:#c98a10">UNIT</span></span><span style="flex:1.5"><span class="nm">부석순 (BSS)</span><br><span class="hint">부석순, BSS, 파이팅해야지</span></span><span style="width:150px"><span class="hint">DOMESTIC · IDOL_GROUP</span></span><span style="width:140px"><span style="font:500 10px 'Pretendard';color:#c98a10">↳ 상위: 세븐틴</span></span><span style="width:104px"><span class="pill"><span class="col" style="background:#FF6B6B"></span><span style="font:500 10px ui-monospace,monospace">#FF6B6B</span></span></span><span style="width:56px;color:#111;font-weight:600">1.0x</span><span style="width:84px">8,900</span><span style="width:56px"><span style="font:500 10px 'Pretendard';color:#111">상세</span></span></div>
+            <div class="tr"><span style="width:74px"><span class="tag" style="border-color:#1fa16b;color:#1fa16b">SOLO</span></span><span style="flex:1.5"><span class="nm">승관 (Seungkwan)</span><br><span class="hint">승관, 부승관, Seungkwan</span></span><span style="width:150px"><span class="hint">DOMESTIC · SINGER_SOLO</span></span><span style="width:140px"><span style="font:500 10px 'Pretendard';color:#c98a10">↳ 상위: 부석순</span></span><span style="width:104px"><span class="pill"><span class="col" style="background:#FF8E53"></span><span style="font:500 10px ui-monospace,monospace">#FF8E53</span></span></span><span style="width:56px;color:#111;font-weight:600">1.0x</span><span style="width:84px">4,200</span><span style="width:56px"><span style="font:500 10px 'Pretendard';color:#111">상세</span></span></div>
+            <div class="tr"><span style="width:74px"><span class="tag" style="border-color:#7b61c9;color:#7b61c9">GROUP</span></span><span style="flex:1.5"><span class="nm">뉴진스 (NewJeans)</span><br><span class="hint">뉴진스, NJ, 버니즈</span></span><span style="width:150px"><span class="hint">DOMESTIC · IDOL_GROUP</span></span><span style="width:140px"><span class="hint">멤버 5 연결</span></span><span style="width:104px"><span class="pill"><span class="col" style="background:#2F6BFF"></span><span style="font:500 10px ui-monospace,monospace">#2F6BFF</span></span></span><span style="width:56px;color:#111;font-weight:600">1.2x</span><span style="width:84px">31,000</span><span style="width:56px"><span style="font:500 10px 'Pretendard';color:#111">상세</span></span></div>
+            <div class="tr"><span style="width:74px"><span class="tag" style="border-color:#1fa16b;color:#1fa16b">SOLO</span></span><span style="flex:1.5"><span class="nm">변우석 (Byeon Woo-seok)</span><br><span class="hint">변우석, 선재, 통통이</span></span><span style="width:150px"><span class="hint">DOMESTIC · ACTOR</span></span><span style="width:140px"><span class="hint">소속: VARO엔터 (독립)</span></span><span style="width:104px"><span class="pill"><span class="col" style="background:#9C36B5"></span><span style="font:500 10px ui-monospace,monospace">#9C36B5</span></span></span><span style="width:56px;color:#111;font-weight:600">1.1x</span><span style="width:84px">19,800</span><span style="width:56px"><span style="font:500 10px 'Pretendard';color:#111">상세</span></span></div>
+            <div style="padding:12px 16px;background:#fafafa;border-top:1px solid #f0f0f0"><span class="hint" style="line-height:1.6"><b style="font-weight:600;color:#111">상향 상속:</b> 승관(SOLO)으로 인증 → 승관 +1, 동시에 부석순(UNIT)·세븐틴(GROUP root) +1 자동 합산. 지도 핀 마커는 최애 시그니처 컬러, 25구 영토 채색은 최상위 그룹 합산 점수 기준.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="g5b">
+      <div class="dv-olabel"><a class="dv-oid" href="#g5b">g5b</a> IP 등록 / 수정 모달 <small>· 3계층 · 컬러 WCAG 검수 · 가중치</small></div>
+      <div style="width:520px;background:#fff;border:1px solid #ddd;box-shadow:0 24px 56px -26px rgba(0,0,0,.3);padding:22px 24px;display:flex;flex-direction:column;gap:0">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px"><span style="font:700 15px 'Pretendard';color:#111">팬덤 IP 등록 / 수정</span><span class="hint">MODAL-IP-EDIT</span></div>
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          <div style="flex:1"><div class="fl">국가/지역</div><div class="fld" style="padding:8px 10px">DOMESTIC (국내) ▾</div></div>
+          <div style="flex:1"><div class="fl">장르</div><div class="fld" style="padding:8px 10px">IDOL_GROUP ▾</div></div>
+        </div>
+        <div style="margin-bottom:12px"><div class="fl">IP 구분 유형</div><div style="display:flex;gap:6px">
+          <span style="flex:1;padding:8px 0;text-align:center;border:1px solid #ddd;font:500 11px 'Pretendard';color:#9a9a9a">GROUP</span>
+          <span style="flex:1;padding:8px 0;text-align:center;border:1.5px solid #111;font:600 11px 'Pretendard';color:#111;background:#f5f5f5">UNIT</span>
+          <span style="flex:1;padding:8px 0;text-align:center;border:1px solid #ddd;font:500 11px 'Pretendard';color:#9a9a9a">SOLO</span>
+        </div></div>
+        <div style="margin-bottom:12px"><div class="fl">직속 상위 IP 연결 (parent_fandom_id)</div><div class="fld" style="padding:8px 10px">FANDOM-04 (세븐틴) — 루트 자동 매핑 ▾</div></div>
+        <div style="display:flex;gap:8px;margin-bottom:12px"><div style="flex:1"><div class="fl">팬덤 정식명</div><div class="fld" style="padding:8px 10px">부석순</div></div><div style="flex:1"><div class="fl">영문 공식명</div><div class="fld" style="padding:8px 10px">BSS</div></div></div>
+        <div style="margin-bottom:14px"><div class="fl">공식 SNS (인스타 · 유튜브 · X · 위버스)</div><div style="display:flex;gap:6px">
+          <span style="flex:1;padding:8px 10px;border:1px solid #ddd;font:400 10px ui-monospace,monospace;color:#111;background:#fff">instagram</span>
+          <span style="flex:1;padding:8px 10px;border:1px solid #ddd;font:400 10px ui-monospace,monospace;color:#111;background:#fff">youtube</span>
+          <span style="flex:1;padding:8px 10px;border:1px solid #ddd;font:400 10px ui-monospace,monospace;color:#111;background:#fff">x.com</span>
+          <span style="flex:1;padding:8px 10px;border:1px solid #ddd;font:400 10px ui-monospace,monospace;color:#111;background:#fff">weverse</span>
+        </div></div>
+        <div style="display:flex;gap:12px;margin-bottom:14px;padding:12px 14px;border:1px solid #e7e7e7;background:#fafafa">
+          <div style="width:52px"><div class="fl">엠블럼</div><div style="width:52px;height:52px;border:1px dashed #ccc;display:flex;align-items:center;justify-content:center;background:#fff"><span class="hint">SVG</span></div></div>
+          <div style="flex:1"><div class="fl">대표 식별 컬러 (HEX Token)</div><div style="display:flex;gap:8px;align-items:center"><span style="width:34px;height:34px;background:#FF6B6B;flex:none"></span><span class="fld" style="flex:1;padding:8px 10px;font:500 11.5px ui-monospace,monospace">#FF6B6B</span></div>
+            <div style="margin-top:7px;display:flex;align-items:center;gap:6px"><span class="pill" style="color:#1fa16b;font-weight:600">✓ WCAG AA 통과</span><span class="hint">대비 4.9:1 · 지도 채색 정상</span></div>
+          </div>
+        </div>
+        <div style="margin-bottom:16px"><div class="fl">점령 가중치 배율 (weight_mult) · 1.00x ~ 2.00x</div>
+          <div style="display:flex;align-items:center;gap:12px"><div style="flex:1;height:4px;background:#e7e7e7;position:relative"><div style="position:absolute;left:0;top:0;bottom:0;width:0%;background:#111"></div><div style="position:absolute;left:0%;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;background:#111"></div></div><span style="font:600 13px 'Pretendard';color:#111">1.00x</span></div>
+        </div>
+        <div style="display:flex;gap:8px"><div class="btn-l" style="flex:1;height:44px">취소</div><div class="btn-d" style="flex:1.6;height:44px">저장 확정</div></div>
+      </div>
+    </div>
+    <div class="dv-opt" id="g5c">
+      <div class="dv-olabel"><a class="dv-oid" href="#g5c">g5c</a> 모바일 <small>· IP 카드 · 3계층 태그</small></div>
+      <div class="mb">
+        <div class="mtop"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">☰</span><span style="font:700 12.5px 'Pretendard';color:#111">팬덤 IP</span></div><span class="btn-d" style="padding:6px 10px;font-size:10.5px">+ 등록</span></div>
+        <div style="position:absolute;top:50px;bottom:0;left:0;right:0;overflow:hidden;padding:12px">
+          <div style="display:flex;gap:6px;margin-bottom:10px"><span class="fld" style="flex:1;padding:7px 9px;font-size:10.5px">지역 ▾</span><span class="fld" style="flex:1;padding:7px 9px;font-size:10.5px">장르 ▾</span><span class="fld" style="flex:1;padding:7px 9px;font-size:10.5px">유형 ▾</span></div>
+          <div class="card" style="padding:11px 13px;margin-bottom:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill"><span class="col" style="background:#A9C4FF"></span><span class="nm">세븐틴 (SEVENTEEN)</span></span><span class="tag" style="border-color:#7b61c9;color:#7b61c9">GROUP</span></div>
+            <div style="display:flex;justify-content:space-between;margin-top:7px"><span class="hint">DOMESTIC · 유닛3·멤버13</span><span class="hint">1.1x · 24,500</span></div>
+          </div>
+          <div class="card" style="padding:11px 13px;margin-bottom:8px;margin-left:14px;border-left:2px solid #e0a020">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill"><span class="col" style="background:#FF6B6B"></span><span class="nm">부석순 (BSS)</span></span><span class="tag" style="border-color:#e0a020;color:#c98a10">UNIT</span></div>
+            <div style="display:flex;justify-content:space-between;margin-top:7px"><span class="hint" style="color:#c98a10">↳ 상위: 세븐틴</span><span class="hint">1.0x · 8,900</span></div>
+          </div>
+          <div class="card" style="padding:11px 13px;margin-bottom:8px;margin-left:28px;border-left:2px solid #1fa16b">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill"><span class="col" style="background:#FF8E53"></span><span class="nm">승관 (Seungkwan)</span></span><span class="tag" style="border-color:#1fa16b;color:#1fa16b">SOLO</span></div>
+            <div style="display:flex;justify-content:space-between;margin-top:7px"><span class="hint" style="color:#c98a10">↳ 상위: 부석순</span><span class="hint">1.0x · 4,200</span></div>
+          </div>
+          <div class="card" style="padding:11px 13px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill"><span class="col" style="background:#9C36B5"></span><span class="nm">변우석</span></span><span class="tag" style="border-color:#1fa16b;color:#1fa16b">SOLO</span></div>
+            <div style="display:flex;justify-content:space-between;margin-top:7px"><span class="hint">DOMESTIC · ACTOR · 독립</span><span class="hint">1.1x · 19,800</span></div>
+          </div>
+          <div style="margin-top:10px;padding:9px 11px;background:#f5f8ff;border:1px solid #cdd8f0"><span class="hint" style="line-height:1.6;color:#3a4a6b">개인 인증 → 상위 유닛·그룹 <b style="font-weight:600">단방향 상향 상속</b></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dv-turn" id="g4">
+  <div class="dv-thd"><a class="dv-tid" href="#g4">4</a><span class="dv-tname">ADM-ABUSE-01 · 실시간 이상 탐지 모니터링</span></div>
+  <p class="dv-sub">4겹 어뷰징 방어 규칙 엔진 — KPI 4종, 자동갱신 30초. 동일 IP/Device Fingerprint 다계정 탐지 테이블에 Risk Score(80+ CRITICAL) 정량 배지와 [차단]·[보류이관]·[상세] 액션. 급증 핫스팟 그래프.</p>
+  <div class="dv-opts">
+    <div class="dv-opt" id="g4a">
+      <div class="dv-olabel"><a class="dv-oid" href="#g4a">g4a</a> 데스크톱 · 모니터링</div>
+      <div class="dk">
+        <div class="dk-side">
+          <div class="brand"><span class="lg"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/></svg></span><span class="bt">팬덤 땅따먹기<b>ADMIN CONSOLE</b></span></div>
+          <div class="nav">대시보드</div>
+          <div class="nav">인증 내역 통합 데이터</div>
+          <div class="nav">영수증 검수 큐 <span class="b-d">24</span></div>
+          <div class="nav">반려 사유 프리셋</div>
+          <div class="nav">성지 제보 승인 <span class="b-g">7</span></div>
+          <div class="nav on">이상 탐지 <span class="dot"></span></div>
+          <div class="nav">유저 제재 & 소명 <span class="b-g">3</span></div>
+          <div class="divider"></div>
+          <div class="nav">장소 마스터</div>
+          <div class="nav">성지 핀 관리</div>
+          <div class="nav">성지 핀 이벤트</div>
+          <div class="nav">팬덤 IP 관리</div>
+          <div class="nav">어드민 계정 관리</div>
+          <div class="nav">운영 정책</div>
+        </div>
+        <div class="dk-main">
+          <div class="dk-top">
+            <div style="display:flex;align-items:center;gap:10px"><span style="font:700 14px 'Pretendard';color:#111">실시간 이상 탐지 모니터링</span><span class="tag" style="border-color:#d64545;color:#d64545">ADM-ABUSE-01</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span class="fld" style="padding:5px 10px">위험도: HIGH·MEDIUM ▾</span><span class="fld" style="padding:5px 10px">자동갱신 30s ▾</span></div>
+          </div>
+          <div style="flex:1;padding:16px 20px;display:flex;flex-direction:column;gap:13px;overflow:hidden">
+            <div style="display:flex;gap:12px">
+              <div class="card" style="flex:1;padding:13px 15px"><div class="th">1시간 핫스팟 발생 성지</div><div class="num">12 <span style="font:500 10px 'Pretendard';color:#d64545">▲3</span></div><div class="sub9">성수동 · 서교동</div></div>
+              <div class="card" style="flex:1;padding:13px 15px;border:1.5px solid #111"><div class="th" style="color:#111">동일 IP 다계정 감지</div><div class="num">6 <span style="font:500 10px 'Pretendard';color:#d64545">▲1</span></div><div class="sub9">그룹 · Risk≥80 필터</div></div>
+              <div class="card" style="flex:1;padding:13px 15px"><div class="th">GPS 반경 밖 플래그</div><div class="num">28 <span style="font:500 10px 'Pretendard';color:#1fa16b">▼2</span></div><div class="sub9">건 · 수동검수 이관</div></div>
+              <div class="card" style="flex:1;padding:13px 15px"><div class="th">오늘 자동정지 전환</div><div class="num">4</div><div class="sub9">계정 · 전일 동일</div></div>
+            </div>
+            <div style="display:flex;gap:12px;height:120px;flex:none">
+              <div class="card" style="flex:1.3;padding:13px 16px;display:flex;flex-direction:column">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><span class="h2">10분 단위 인증 급증 (성동구)</span><span style="font:500 9.5px 'Pretendard';color:#d64545">▲ 핫스팟 경고 14:20~14:30</span></div>
+                <div style="flex:1;display:flex;align-items:flex-end;gap:5px">
+                  <div style="flex:1;background:#dcdcdc;height:32%"></div><div style="flex:1;background:#dcdcdc;height:26%"></div><div style="flex:1;background:#dcdcdc;height:38%"></div><div style="flex:1;background:#dcdcdc;height:28%"></div><div style="flex:1;background:#dcdcdc;height:34%"></div><div style="flex:1;background:#dcdcdc;height:44%"></div><div style="flex:1;background:#e08a00;height:66%"></div><div style="flex:1;background:#d64545;height:100%;position:relative"><span style="position:absolute;top:-15px;left:50%;transform:translateX(-50%);font:600 9px 'Pretendard';color:#d64545">47</span></div><div style="flex:1;background:#e08a00;height:58%"></div><div style="flex:1;background:#dcdcdc;height:32%"></div>
+                </div>
+              </div>
+              <div class="card" style="flex:1;padding:13px 16px;display:flex;flex-direction:column;justify-content:center">
+                <div class="h2" style="margin-bottom:8px">평균 위험점수 (Risk Score)</div>
+                <div style="display:flex;align-items:baseline;gap:8px"><span style="font:600 30px 'Pretendard';color:#d64545">82</span><span class="hint">점 · CRITICAL 구간</span></div>
+                <div style="margin-top:9px;height:6px;background:#eee;position:relative"><div style="position:absolute;left:0;top:0;bottom:0;width:82%;background:#d64545"></div><div style="position:absolute;left:80%;top:-3px;bottom:-3px;width:1.5px;background:#111"></div></div>
+                <div class="hint" style="margin-top:6px">80점 이상 즉시 제재 대상 (수직선)</div>
+              </div>
+            </div>
+            <div class="card" style="flex:1;display:flex;flex-direction:column;min-height:0">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid #e7e7e7"><span class="h2">동일 IP / Device Fingerprint 다계정 탐지</span><span class="hint">자동 갱신 30초 주기</span></div>
+              <div class="thr"><span style="width:170px">IP / Device</span><span style="width:80px">연관계정</span><span style="flex:1">주요 연관 계정 · 성지</span><span style="width:110px">Risk Score</span><span style="width:200px">관리 액션</span></div>
+              <div class="tr" style="background:#fef7f7"><span style="width:170px"><span class="nm" style="font:500 11px ui-monospace,monospace">192.168.***.***</span><br><span class="hint">dev_89a7f1··· · Galaxy S24</span></span><span style="width:80px;color:#d64545;font-weight:600;font-size:12px">6 명</span><span style="flex:1"><span style="color:#111">bunny_01 (뉴진스팬덕)</span> 외 5 · 강남역 11번출구</span><span style="width:110px"><span class="pill" style="background:#d64545;color:#fff;padding:3px 8px;font-weight:600">85 CRITICAL</span></span><span style="width:200px;display:flex;gap:5px"><span style="padding:5px 9px;background:#d64545;color:#fff;font:600 10px 'Pretendard'">차단</span><span style="padding:5px 9px;border:1px solid #111;color:#111;font:600 10px 'Pretendard'">보류이관</span><span style="padding:5px 9px;border:1px solid #ddd;color:#555;font:500 10px 'Pretendard'">상세</span></span></div>
+              <div class="tr"><span style="width:170px"><span class="nm" style="font:500 11px ui-monospace,monospace">61.84.22.***</span><br><span class="hint">dev_4b1c·· · iPhone 15 · 공용망</span></span><span style="width:80px;color:#e08a00;font-weight:600;font-size:12px">3 명</span><span style="flex:1"><span style="color:#111">dive_yj (안유진짱)</span> 외 2 · 성수동 카페</span><span style="width:110px"><span class="pill" style="background:#e08a00;color:#fff;padding:3px 8px;font-weight:600">62 MEDIUM</span></span><span style="width:200px;display:flex;gap:5px"><span style="padding:5px 9px;background:#d64545;color:#fff;font:600 10px 'Pretendard'">차단</span><span style="padding:5px 9px;border:1px solid #111;color:#111;font:600 10px 'Pretendard'">보류이관</span><span style="padding:5px 9px;border:1px solid #ddd;color:#555;font:500 10px 'Pretendard'">상세</span></span></div>
+              <div class="tr"><span style="width:170px"><span class="nm" style="font:500 11px ui-monospace,monospace">118.235.7.***</span><br><span class="hint">dev_77aa·· · Pixel 9</span></span><span style="width:80px;color:#111;font-weight:600;font-size:12px">2 명</span><span style="flex:1"><span style="color:#111">luv_112</span> · luv_112b · 마포구</span><span style="width:110px"><span class="pill" style="border:1px solid #1fa16b;color:#1fa16b;padding:3px 8px;font-weight:600">34 정상</span></span><span style="width:200px;display:flex;gap:5px"><span style="padding:5px 9px;border:1px solid #ddd;color:#bbb;font:600 10px 'Pretendard'">차단</span><span style="padding:5px 9px;border:1px solid #ddd;color:#555;font:600 10px 'Pretendard'">보류이관</span><span style="padding:5px 9px;border:1px solid #ddd;color:#555;font:500 10px 'Pretendard'">상세</span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="g4b">
+      <div class="dv-olabel"><a class="dv-oid" href="#g4b">g4b</a> 모바일 <small>· KPI 2열 · 탐지 카드 스택</small></div>
+      <div class="mb">
+        <div class="mtop"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">☰</span><span style="font:700 12.5px 'Pretendard';color:#111">이상 탐지</span></div><span class="pill" style="color:#d64545;font-weight:500">● 경고 2</span></div>
+        <div style="position:absolute;top:50px;bottom:0;left:0;right:0;overflow:hidden;padding:12px">
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <div class="card" style="width:calc(50% - 4px);padding:10px 12px"><div class="th">핫스팟</div><div style="font:600 18px 'Pretendard';color:#111;margin-top:3px">12<span style="font:500 9px;color:#d64545"> ▲3</span></div></div>
+            <div class="card" style="width:calc(50% - 4px);padding:10px 12px;border:1.5px solid #111"><div class="th" style="color:#111">다계정</div><div style="font:600 18px 'Pretendard';color:#111;margin-top:3px">6<span style="font:500 9px;color:#d64545"> ▲1</span></div></div>
+            <div class="card" style="width:calc(50% - 4px);padding:10px 12px"><div class="th">GPS 이탈</div><div style="font:600 18px 'Pretendard';color:#111;margin-top:3px">28</div></div>
+            <div class="card" style="width:calc(50% - 4px);padding:10px 12px"><div class="th">Risk 평균</div><div style="font:600 18px 'Pretendard';color:#d64545;margin-top:3px">82</div></div>
+          </div>
+          <div class="card" style="margin-top:10px;padding:11px 13px;border-left:3px solid #d64545">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font:600 11px 'Pretendard';color:#111">192.168.***.*** · S24</span><span class="pill" style="background:#d64545;color:#fff;padding:2px 7px;font-weight:600">85</span></div>
+            <div class="hint" style="margin-top:5px">bunny_01 외 5명 · 강남역 11번출구</div>
+            <div style="display:flex;gap:6px;margin-top:9px"><span style="flex:1;padding:8px 0;text-align:center;background:#d64545;color:#fff;font:600 10.5px 'Pretendard'">차단</span><span style="flex:1;padding:8px 0;text-align:center;border:1px solid #111;color:#111;font:600 10.5px 'Pretendard'">보류이관</span><span style="flex:1;padding:8px 0;text-align:center;border:1px solid #ddd;color:#555;font:500 10.5px 'Pretendard'">상세</span></div>
+          </div>
+          <div class="card" style="margin-top:10px;padding:11px 13px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font:600 11px 'Pretendard';color:#111">61.84.22.*** · iPhone15</span><span class="pill" style="background:#e08a00;color:#fff;padding:2px 7px;font-weight:600">62</span></div>
+            <div class="hint" style="margin-top:5px">dive_yj 외 2명 · 성수동 (공용망 추정)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dv-turn" id="g3">
+  <div class="dv-thd"><a class="dv-tid" href="#g3">3</a><span class="dv-tname">ADM-SPOT-03 · 유저 제보 성지 승인 큐</span></div>
+  <p class="dv-sub">좌: 유저 제보 폼 상세 / 우: 지오코딩 지도 + 사업자등록번호 정합성 대조. 승인 시 성지 핀 이벤트로 등록.</p>
+  <div class="dv-opts">
+    <div class="dv-opt" id="g3a">
+      <div class="dk">
+        <div class="dk-side">
+          <div class="brand"><span class="lg"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/></svg></span><span class="bt">팬덤 땅따먹기<b>ADMIN CONSOLE</b></span></div>
+          <div class="nav">대시보드</div>
+          <div class="nav">인증 내역 통합 데이터</div>
+          <div class="nav">영수증 검수 큐 <span class="b-d">24</span></div>
+          <div class="nav">반려 사유 프리셋</div>
+          <div class="nav on">성지 제보 승인 <span class="b-g">7</span></div>
+          <div class="nav">이상 탐지 <span class="dot"></span></div>
+          <div class="nav">유저 제재 & 소명 <span class="b-g">3</span></div>
+          <div class="divider"></div>
+          <div class="nav">장소 마스터</div>
+          <div class="nav">성지 핀 관리</div>
+          <div class="nav">성지 핀 이벤트</div>
+          <div class="nav">팬덤 IP 관리</div>
+          <div class="nav">어드민 계정 관리</div>
+          <div class="nav">운영 정책</div>
+        </div>
+        <div class="dk-main">
+          <div class="dk-top">
+            <div style="display:flex;align-items:center;gap:10px"><span style="font:700 14px 'Pretendard';color:#111">유저 제보 성지 승인</span><span class="hint">대기 7건</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span class="btn-l" style="padding:5px 12px">← 이전</span><span style="font:500 11px 'Pretendard';color:#111">1 / 7</span><span class="btn-l" style="padding:5px 12px">다음 →</span></div>
+          </div>
+          <div style="flex:1;display:flex;min-height:0">
+            <div style="width:430px;flex:none;border-right:1px solid #e7e7e7;padding:16px 20px;display:flex;flex-direction:column;overflow:hidden">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px"><span class="h2">제보 폼 상세</span><span class="hint">PROP-0722-031 · user_5c2a</span></div>
+              <div class="card">
+                <div style="display:flex;padding:10px 13px;border-bottom:1px solid #f0f0f0"><span style="width:90px;font:400 11px 'Pretendard';color:#777">장소 유형</span><span style="font:500 11.5px 'Pretendard';color:#111">생일카페</span></div>
+                <div style="display:flex;padding:10px 13px;border-bottom:1px solid #f0f0f0"><span style="width:90px;font:400 11px 'Pretendard';color:#777">귀속 팬덤</span><span style="font:500 11.5px 'Pretendard';color:#111"><span class="col" style="background:#F59F00;display:inline-block;vertical-align:-2px"></span> 아이브 (안유진)</span></div>
+                <div style="display:flex;padding:10px 13px;border-bottom:1px solid #f0f0f0"><span style="width:90px;font:400 11px 'Pretendard';color:#777">상호명</span><span style="font:500 11.5px 'Pretendard';color:#111">카페 므므흐스 성수</span></div>
+                <div style="display:flex;padding:10px 13px;border-bottom:1px solid #f0f0f0"><span style="width:90px;font:400 11px 'Pretendard';color:#777">주소</span><span style="font:500 11.5px/1.5 'Pretendard';color:#111">서울 성동구 연무장길 47 1층</span></div>
+                <div style="display:flex;padding:10px 13px"><span style="width:90px;font:400 11px 'Pretendard';color:#777">운영 기간</span><span style="font:500 11.5px 'Pretendard';color:#111">07.28 (화) ~ 08.03 (월)</span></div>
+              </div>
+              <div style="margin-top:12px;padding:10px 13px;background:#f5f5f5;border:1px solid #e7e7e7;font:400 10.5px/1.6 'Pretendard';color:#555">제보자 메모 — "안유진 생카 공식 트위터 공지 확인했습니다. 특전 배부는 28일부터예요."</div>
+            </div>
+            <div style="flex:1;padding:16px 20px;display:flex;flex-direction:column;min-width:0">
+              <div class="h2" style="margin-bottom:10px">정합성 대조</div>
+              <div style="height:180px;background:#eef1ec;border:1px solid #e2e2e2;position:relative;overflow:hidden">
+                <div style="position:absolute;left:0;right:0;top:70px;height:10px;background:#fff;opacity:.8"></div>
+                <div style="position:absolute;top:0;bottom:0;left:150px;width:10px;background:#fff;opacity:.8"></div>
+                <div style="position:absolute;left:46%;top:38%;width:14px;height:14px;background:#111;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3)"></div>
+                <div style="position:absolute;left:50%;top:22%;padding:4px 9px;background:#fff;border:1px solid #ddd;font:500 9.5px 'Pretendard';color:#111">카카오 지오코딩 ✓ 연무장길 47</div>
+                <div style="position:absolute;left:38%;top:60%;padding:4px 9px;background:#fff;border:1px solid #ddd;font:500 9.5px 'Pretendard';color:#555">구글 POI ✓ "Cafe MMHS"</div>
+                <div style="position:absolute;bottom:8px;left:10px;font:400 9px 'Pretendard';color:#9a9a9a">지오코딩 편차 4m — 정상 범위</div>
+              </div>
+              <div class="card" style="margin-top:12px">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 13px;border-bottom:1px solid #f0f0f0"><span style="font:400 11px 'Pretendard';color:#777">사업자등록번호</span><span style="font:500 11.5px 'Pretendard';color:#111">466-25-01942 <span style="font:500 9.5px 'Pretendard';color:#1fa16b">✓ 국세청 · 영업중</span></span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 13px;border-bottom:1px solid #f0f0f0"><span style="font:400 11px 'Pretendard';color:#777">상호 대조</span><span style="font:500 11.5px 'Pretendard';color:#111">"카페 므므흐스" <span style="font:500 9.5px 'Pretendard';color:#1fa16b">✓ 일치</span></span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 13px;border-bottom:1px solid #f0f0f0"><span style="font:400 11px 'Pretendard';color:#777">중복 성지</span><span style="font:500 11.5px 'Pretendard';color:#111">동일 주소 없음 <span style="font:500 9.5px 'Pretendard';color:#1fa16b">✓</span></span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 13px;background:#fffaf0"><span style="font:400 11px 'Pretendard';color:#777">공식 소스</span><span style="font:500 11.5px 'Pretendard';color:#111">트위터 공지 링크 <span style="font:500 9.5px 'Pretendard';color:#e08a00">△ 수동 확인</span></span></div>
+              </div>
+              <div style="margin-top:auto;display:flex;gap:8px;padding-top:14px">
+                <div class="btn-l" style="flex:1;height:46px">보류 · 정보 요청</div>
+                <div class="btn-r" style="flex:1;height:46px">반려</div>
+                <div class="btn-d" style="flex:1.6;height:46px">성지 등록 승인</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dv-opt" id="g3b">
+      <div class="dv-olabel"><a class="dv-oid" href="#g3b">g3b</a> 모바일 <small>· 제보 요약 → 대조 · 하단 판정 바</small></div>
+      <div class="mb">
+        <div class="mtop"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">‹</span><span style="font:700 12.5px 'Pretendard';color:#111">제보 승인</span></div><span class="hint">1 / 7</span></div>
+        <div style="position:absolute;top:50px;bottom:96px;left:0;right:0;overflow:hidden;padding:12px">
+          <div class="card">
+            <div style="display:flex;padding:9px 12px;border-bottom:1px solid #f0f0f0"><span style="width:74px;font:400 10.5px 'Pretendard';color:#777">유형</span><span style="font:500 10.5px 'Pretendard';color:#111">생일카페</span></div>
+            <div style="display:flex;padding:9px 12px;border-bottom:1px solid #f0f0f0"><span style="width:74px;font:400 10.5px 'Pretendard';color:#777">귀속</span><span style="font:500 10.5px 'Pretendard';color:#111"><span class="col" style="background:#F59F00;display:inline-block;vertical-align:-2px"></span> 아이브 (안유진)</span></div>
+            <div style="display:flex;padding:9px 12px;border-bottom:1px solid #f0f0f0"><span style="width:74px;font:400 10.5px 'Pretendard';color:#777">상호</span><span style="font:500 10.5px 'Pretendard';color:#111">카페 므므흐스 성수</span></div>
+            <div style="display:flex;padding:9px 12px"><span style="width:74px;font:400 10.5px 'Pretendard';color:#777">기간</span><span style="font:500 10.5px 'Pretendard';color:#111">07.28 ~ 08.03</span></div>
+          </div>
+          <div style="height:110px;background:#eef1ec;border:1px solid #e2e2e2;position:relative;overflow:hidden;margin-top:10px">
+            <div style="position:absolute;left:0;right:0;top:48px;height:7px;background:#fff;opacity:.8"></div>
+            <div style="position:absolute;top:0;bottom:0;left:130px;width:7px;background:#fff;opacity:.8"></div>
+            <div style="position:absolute;left:44%;top:38%;width:13px;height:13px;background:#111;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3)"></div>
+            <div style="position:absolute;bottom:6px;left:8px;font:400 8.5px 'Pretendard';color:#9a9a9a">지오코딩 편차 4m — 정상</div>
+          </div>
+          <div class="card" style="margin-top:10px">
+            <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:1px solid #f0f0f0"><span style="font:400 10.5px 'Pretendard';color:#777">사업자번호</span><span style="font:500 10.5px 'Pretendard';color:#1fa16b">✓ 영업중</span></div>
+            <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:1px solid #f0f0f0"><span style="font:400 10.5px 'Pretendard';color:#777">상호 · 중복</span><span style="font:500 10.5px 'Pretendard';color:#1fa16b">✓ 일치 · 없음</span></div>
+            <div style="display:flex;justify-content:space-between;padding:9px 12px;background:#fffaf0"><span style="font:400 10.5px 'Pretendard';color:#777">공식 소스</span><span style="font:500 10.5px 'Pretendard';color:#e08a00">△ 수동 확인</span></div>
+          </div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e7e7e7;padding:10px 12px 14px;display:flex;gap:7px">
+          <div class="btn-l" style="flex:1;height:44px">보류</div>
+          <div class="btn-l" style="flex:1;height:44px;color:#d64545;border-color:#d64545;font-weight:600">반려</div>
+          <div class="btn-d" style="flex:1.5;height:44px;font-size:12px">등록 승인</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dv-turn" id="g2">
+  <div class="dv-thd"><a class="dv-tid" href="#g2">2</a><span class="dv-tname">ADM-VERIF-02 · 영수증 수동 검수 큐 (점수 상속)</span></div>
+  <p class="dv-sub">좌: 원본 영수증 캡처 / 우: AI OCR 4개 필드 + 최신성·GPS 대조. 단축키 [Space] 승인 · [R] 반려 · [H] 보류(건당 5초 초고속). 승인 시 <b style="font-weight:600;color:#111">개인 +1 & 최상위 그룹 +1 단방향 상향 상속</b> 자동 반영.</p>
+  <div class="dv-opts">
+    <div class="dv-opt" id="g2a">
+      <div class="dv-olabel"><a class="dv-oid" href="#g2a">g2a</a> 데스크톱 · 2분할 검수</div>
+      <div class="dk">
+        <div class="dk-side">
+          <div class="brand"><span class="lg"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/></svg></span><span class="bt">팬덤 땅따먹기<b>ADMIN CONSOLE</b></span></div>
+          <div class="nav">대시보드</div>
+          <div class="nav">인증 내역 통합 데이터</div>
+          <div class="nav on">영수증 검수 큐 <span class="b-d">24</span></div>
+          <div class="nav">반려 사유 프리셋</div>
+          <div class="nav">성지 제보 승인 <span class="b-g">7</span></div>
+          <div class="nav">이상 탐지 <span class="dot"></span></div>
+          <div class="nav">유저 제재 & 소명 <span class="b-g">3</span></div>
+          <div class="divider"></div>
+          <div class="nav">장소 마스터</div>
+          <div class="nav">성지 핀 관리</div>
+          <div class="nav">성지 핀 이벤트</div>
+          <div class="nav">팬덤 IP 관리</div>
+          <div class="nav">어드민 계정 관리</div>
+          <div class="nav">운영 정책</div>
+        </div>
+        <div class="dk-main">
+          <div class="dk-top">
+            <div style="display:flex;align-items:center;gap:10px"><span style="font:700 14px 'Pretendard';color:#111">영수증 수동 검수</span><span class="hint">단축키 <b style="color:#1fa16b">[Space]</b> 승인 · <b style="color:#d64545">[R]</b> 반려 · <b style="color:#e08a00">[H]</b> 보류</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span class="btn-l" style="padding:5px 12px">← 이전</span><span style="font:500 11px 'Pretendard';color:#111">3 / 24</span><span class="btn-l" style="padding:5px 12px">다음 →</span></div>
+          </div>
+          <div style="flex:1;display:flex;min-height:0">
+            <div style="flex:1;border-right:1px solid #e7e7e7;padding:16px 20px;display:flex;flex-direction:column;min-width:0">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px"><span class="h2">원본 영수증 캡처</span><span class="hint">REQ-0722-0847 · 14:03 접수</span></div>
+              <div style="flex:1;background:#0f1720;border:1px solid #0f1720;position:relative;display:flex;align-items:center;justify-content:center;padding:20px">
+                <div style="font:400 12px/1.9 ui-monospace,Menlo,monospace;color:#57d98a">A TWO SOME PLACE<br>성수역점 (02-499-1234)<br>––––––––––––––––––––<br>아메리카노(R)&nbsp;&nbsp;4,500<br>조각케이크&nbsp;&nbsp;10,000<br>––––––––––––––––––––<br>합계&nbsp;&nbsp;14,500원<br>2026-07-22 14:15:20</div>
+                <span style="position:absolute;bottom:10px;right:12px;padding:4px 10px;background:rgba(255,255,255,.9);font:500 10px 'Pretendard';color:#555">확대 · 회전</span>
+              </div>
+            </div>
+            <div style="width:430px;flex:none;padding:16px 20px;display:flex;flex-direction:column;min-width:0">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px"><span class="h2">AI OCR 4개 필드 판정</span><span class="pill" style="color:#1fa16b;font-weight:600">신뢰도 98.4%</span></div>
+              <div class="card">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 13px;border-bottom:1px solid #f0f0f0"><span style="font:400 11px 'Pretendard';color:#777">인증 귀속 팬덤</span><span style="font:500 11.5px 'Pretendard';color:#111"><span class="col" style="background:#FF8E53;display:inline-block;vertical-align:-2px"></span> 승관 (Seungkwan / BSS)</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 13px;border-bottom:1px solid #f0f0f0"><span style="font:400 11px 'Pretendard';color:#777">매장명 / 상호</span><span style="font:500 11.5px 'Pretendard';color:#111">투썸플레이스 성수역점 <span style="color:#1fa16b;font:500 9.5px">✓</span></span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 13px;border-bottom:1px solid #f0f0f0"><span style="font:400 11px 'Pretendard';color:#777">결제 일시</span><span style="font:500 11.5px 'Pretendard';color:#111">2026.07.22 14:15 <span style="color:#1fa16b;font:500 9.5px">✓ 7일 이내</span></span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 13px;border-bottom:1px solid #f0f0f0"><span style="font:400 11px 'Pretendard';color:#777">인증 상권</span><span style="font:500 11.5px 'Pretendard';color:#111">성동구 성수동2가 <span style="color:#1fa16b;font:500 9.5px">✓ 38m</span></span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 13px"><span style="font:400 11px 'Pretendard';color:#777">결제 금액</span><span style="font:500 11.5px 'Pretendard';color:#111">14,500원 <span style="color:#1fa16b;font:500 9.5px">≥ 3,000원 OK</span></span></div>
+              </div>
+              <div style="margin-top:12px;padding:11px 13px;border:1px solid #cdd8f0;background:#f5f8ff;font:400 10.5px/1.6 'Pretendard';color:#3a4a6b"><b style="font-weight:600;color:#26365c">점수 상속 로직</b> — 승인 시 개인 멤버(승관) 스코어 +1과 동시에 최상위 단체 그룹(세븐틴) <span style="font:500 10px ui-monospace,monospace;color:#26365c">score = score + 1</span> 이 <b style="font-weight:600">단방향 상향 상속</b> 트랜잭션으로 자동 반영됩니다.</div>
+              <div style="margin-top:auto;padding-top:14px;display:flex;gap:8px">
+                <div class="btn-l" style="flex:1;height:48px;color:#d64545;border-color:#d64545;font-weight:600">[R] 반려 처리</div>
+                <div class="btn-d" style="flex:1.2;height:48px;font-size:12.5px">[Space] 승인 확정</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="g2b">
+      <div class="dv-olabel"><a class="dv-oid" href="#g2b">g2b</a> 모바일 <small>· 2분할 → 상하 스택 · 하단 고정 판정 바</small></div>
+      <div class="mb">
+        <div class="mtop"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">‹</span><span style="font:700 12.5px 'Pretendard';color:#111">영수증 검수</span></div><span class="hint">3 / 24</span></div>
+        <div style="position:absolute;top:50px;bottom:96px;left:0;right:0;overflow:hidden;padding:12px">
+          <div style="height:150px;background:#0f1720;position:relative;display:flex;align-items:center;justify-content:center;padding:14px">
+            <div style="font:400 9px/1.8 ui-monospace,monospace;color:#57d98a">A TWO SOME PLACE 성수역점<br>아메리카노(R) 4,500<br>조각케이크 10,000<br>합계 14,500원<br>2026-07-22 14:15:20</div>
+          </div>
+          <div class="card" style="margin-top:10px">
+            <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:1px solid #f0f0f0"><span style="font:400 10.5px 'Pretendard';color:#777">귀속 팬덤</span><span style="font:500 10.5px 'Pretendard';color:#111"><span class="col" style="background:#FF8E53;display:inline-block;vertical-align:-2px"></span> 승관/BSS</span></div>
+            <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:1px solid #f0f0f0"><span style="font:400 10.5px 'Pretendard';color:#777">매장 · 일시</span><span style="font:500 10.5px 'Pretendard';color:#1fa16b">✓ 7일 이내</span></div>
+            <div style="display:flex;justify-content:space-between;padding:9px 12px"><span style="font:400 10.5px 'Pretendard';color:#777">금액 · GPS</span><span style="font:500 10.5px 'Pretendard';color:#1fa16b">14,500원 · 38m ✓</span></div>
+          </div>
+          <div style="margin-top:10px;padding:9px 11px;border:1px solid #cdd8f0;background:#f5f8ff;font:400 9.5px/1.6 'Pretendard';color:#3a4a6b">승인 시 승관 +1 & 세븐틴 그룹 +1 <b style="font-weight:600">상향 상속</b> 자동 반영</div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e7e7e7;padding:10px 12px 14px;display:flex;gap:8px">
+          <div class="btn-l" style="flex:1;height:44px;color:#d64545;border-color:#d64545;font-weight:600">반려</div>
+          <div class="btn-d" style="flex:1.6;height:44px;font-size:12px">승인 확정</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dv-turn" id="g1">
+  <div class="dv-thd"><a class="dv-tid" href="#g1">1</a><span class="dv-tname">ADM-DASH-01 · 전황 & 운영 대시보드</span></div>
+  <p class="dv-sub">서울 25구 점령 카토그램(최상위 그룹 합산 점수 채색) · 실시간 뒤집힘 로그 · 7일 인증 추이. 컬러는 카토그램·그래프 데이터에만. 데스크톱 + 모바일(지표 2열·가로 스크롤·세로 스택).</p>
+  <div class="dv-opts">
+    <div class="dv-opt" id="g1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#g1a">g1a</a> 데스크톱</div>
+      <div class="dk">
+        <div class="dk-side">
+          <div class="brand"><span class="lg"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/></svg></span><span class="bt">팬덤 땅따먹기<b>ADMIN CONSOLE</b></span></div>
+          <div class="nav on">대시보드</div>
+          <div class="nav">인증 내역 통합 데이터</div>
+          <div class="nav">영수증 검수 큐 <span class="b-d">24</span></div>
+          <div class="nav">반려 사유 프리셋</div>
+          <div class="nav">성지 제보 승인 <span class="b-g">7</span></div>
+          <div class="nav">이상 탐지 <span class="dot"></span></div>
+          <div class="nav">유저 제재 & 소명 <span class="b-g">3</span></div>
+          <div class="divider"></div>
+          <div class="nav">장소 마스터</div>
+          <div class="nav">성지 핀 관리</div>
+          <div class="nav">성지 핀 이벤트</div>
+          <div class="nav">팬덤 IP 관리</div>
+          <div class="nav">어드민 계정 관리</div>
+          <div class="nav">운영 정책</div>
+        </div>
+        <div class="dk-main">
+          <div class="dk-top">
+            <div style="font:700 14px 'Pretendard';color:#111">전황 & 운영 대시보드</div>
+            <div style="display:flex;align-items:center;gap:12px"><span style="font:500 10.5px 'Pretendard';color:#111">● 실시간</span><span class="hint">2026.07.22 (수) 14:32 KST</span></div>
+          </div>
+          <div style="flex:1;padding:16px 20px;display:flex;flex-direction:column;gap:14px;overflow:hidden">
+            <div style="display:flex;gap:12px">
+              <div class="card" style="flex:1;padding:13px 16px"><div class="th">DAU</div><div class="num">12,480</div><div class="sub9">▲ 8.2% vs 어제</div></div>
+              <div class="card" style="flex:1;padding:13px 16px"><div class="th">오늘 인증 시도</div><div class="num">3,214</div><div class="sub9">▲ 12.4%</div></div>
+              <div class="card" style="flex:1;padding:13px 16px"><div class="th">자동 승인</div><div class="num">2,981</div><div class="sub9">92.8%</div></div>
+              <div class="card" style="flex:1;padding:13px 16px;border:1.5px solid #111"><div class="th" style="color:#111">수동 검수 대기</div><div class="num">24</div><div class="sub9">평균 처리 4.2분</div></div>
+              <div class="card" style="flex:1;padding:13px 16px"><div class="th">반려</div><div class="num">209 <span style="font:500 10px 'Pretendard';color:#d64545">6.5%</span></div><div class="sub9">중복 52% · 만료 31%</div></div>
+            </div>
+            <div style="flex:1;display:flex;gap:14px;min-height:0">
+              <div class="card" style="flex:1.35;padding:14px 16px;display:flex;flex-direction:column">
+                <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="h2">서울 25구 점령 카토그램</span><span style="font:400 9.5px 'Pretendard';color:#9a9a9a"><span style="color:#2f6bff">■</span> 뉴진스 8 <span style="color:#e64980">■</span> 에스파 7 <span style="color:#f59f00">■</span> 아이브 5 · 경합 3</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center;align-items:center">
+                  <div style="display:flex;gap:6px">
+                    <div class="tile" style="background:#a9c4ff"><span style="font:600 13px 'Pretendard';color:#1b2a4a">52</span><span style="font:400 8.5px 'Pretendard';color:#33436a">은평</span></div>
+                    <div class="tile" style="background:#6f9bff"><span style="font:600 13px 'Pretendard';color:#fff">58</span><span style="font:400 8.5px 'Pretendard';color:#e3ecff">강북</span></div>
+                    <div class="tile" style="background:#fff;border:1.5px dashed #111"><span style="font:600 13px 'Pretendard';color:#111">49</span><span style="font:400 8.5px 'Pretendard';color:#8a8a8a">노원</span></div>
+                    <div class="tile" style="background:#ffd88a"><span style="font:600 13px 'Pretendard';color:#5c430a">53</span><span style="font:400 8.5px 'Pretendard';color:#7a5a12">중랑</span></div>
+                  </div>
+                  <div style="display:flex;gap:6px">
+                    <div class="tile" style="background:#2f6bff"><span style="font:600 13px 'Pretendard';color:#fff">63</span><span style="font:400 8.5px 'Pretendard';color:#d7e2ff">마포</span></div>
+                    <div class="tile" style="background:#ff9dc0"><span style="font:600 13px 'Pretendard';color:#5c1636">55</span><span style="font:400 8.5px 'Pretendard';color:#8a2b57">성북</span></div>
+                    <div class="tile" style="background:#2f6bff;box-shadow:0 0 0 2px #111"><span style="font:600 14px 'Pretendard';color:#fff">67</span><span style="font:400 8.5px 'Pretendard';color:#d7e2ff">성동</span></div>
+                    <div class="tile" style="background:#ffd6e6"><span style="font:600 13px 'Pretendard';color:#8a2b57">51</span><span style="font:400 8.5px 'Pretendard';color:#8a2b57">광진</span></div>
+                  </div>
+                  <div style="display:flex;gap:6px">
+                    <div class="tile" style="background:#f59f00"><span style="font:600 13px 'Pretendard';color:#fff">51</span><span style="font:400 8.5px 'Pretendard';color:#fff3da">강서</span></div>
+                    <div class="tile" style="background:#fff;border:1.5px dashed #111"><span style="font:600 13px 'Pretendard';color:#111">50</span><span style="font:400 8.5px 'Pretendard';color:#8a8a8a">관악</span></div>
+                    <div class="tile" style="background:#e64980"><span style="font:600 13px 'Pretendard';color:#fff">61</span><span style="font:400 8.5px 'Pretendard';color:#ffd7e6">강남</span></div>
+                    <div class="tile" style="background:#f1f1f1;border:1px solid #e2e2e2"><span style="font:600 13px 'Pretendard';color:#b5b5b5">–</span><span style="font:400 8.5px 'Pretendard';color:#b5b5b5">중립</span></div>
+                  </div>
+                  <div style="font:400 9px 'Pretendard';color:#9a9a9a;margin-top:4px">채도 = 1위 점유율 격차 · 검정 테두리 = 금일 뒤집힘 · 점선 = 경합</div>
+                </div>
+              </div>
+              <div class="card" style="flex:1;padding:14px 16px;display:flex;flex-direction:column;min-width:0">
+                <div class="h2" style="margin-bottom:10px">실시간 뒤집힘 로그</div>
+                <div style="display:flex;flex-direction:column;gap:9px;overflow:hidden">
+                  <div style="display:flex;gap:9px;align-items:center"><span style="width:6px;height:6px;background:#2f6bff;flex:none"></span><div style="flex:1;min-width:0"><div style="font:500 11px 'Pretendard';color:#111">성동구 → 뉴진스 탈환</div><div class="hint">user_82fd · 인증 1건 역전 · 14:30</div></div></div>
+                  <div style="display:flex;gap:9px;align-items:center"><span style="width:6px;height:6px;background:#f59f00;flex:none"></span><div style="flex:1;min-width:0"><div style="font:500 11px 'Pretendard';color:#111">노원구 → 경합 진입 (Δ0.8%p)</div><div class="hint">아이브 추격 · 14:18</div></div></div>
+                  <div style="display:flex;gap:9px;align-items:center"><span style="width:6px;height:6px;background:#2f6bff;flex:none"></span><div style="flex:1;min-width:0"><div style="font:500 11px 'Pretendard';color:#111">마포구 → 뉴진스 수성 (Δ13.4%p)</div><div class="hint">13:52</div></div></div>
+                  <div style="display:flex;gap:9px;align-items:center"><span style="width:6px;height:6px;background:#e64980;flex:none"></span><div style="flex:1;min-width:0"><div style="font:500 11px 'Pretendard';color:#111">강남구 → 에스파 우세 확대</div><div class="hint">13:41</div></div></div>
+                </div>
+                <div style="margin-top:auto;border-top:1px solid #e7e7e7;padding-top:10px">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px"><span style="font:700 11px 'Pretendard';color:#111">최근 7일 인증 추이</span><span style="font:400 9px 'Pretendard';color:#9a9a9a"><span style="color:#2f6bff">■</span> 승인 <span style="color:#d64545">■</span> 반려</span></div>
+                  <div style="display:flex;align-items:flex-end;gap:7px;height:62px">
+                    <div style="flex:1;display:flex;flex-direction:column;gap:2px;justify-content:flex-end"><div style="height:30px;background:#2f6bff"></div><div style="height:4px;background:#d64545"></div></div>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:2px;justify-content:flex-end"><div style="height:38px;background:#2f6bff"></div><div style="height:5px;background:#d64545"></div></div>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:2px;justify-content:flex-end"><div style="height:26px;background:#2f6bff"></div><div style="height:3px;background:#d64545"></div></div>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:2px;justify-content:flex-end"><div style="height:44px;background:#2f6bff"></div><div style="height:6px;background:#d64545"></div></div>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:2px;justify-content:flex-end"><div style="height:40px;background:#2f6bff"></div><div style="height:5px;background:#d64545"></div></div>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:2px;justify-content:flex-end"><div style="height:52px;background:#2f6bff"></div><div style="height:6px;background:#d64545"></div></div>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:2px;justify-content:flex-end"><div style="height:58px;background:#2f6bff"></div><div style="height:7px;background:#d64545"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="g1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#g1b">g1b</a> 모바일 반응형</div>
+      <div class="mb">
+        <div class="mtop">
+          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">☰</span><span style="font:700 12.5px 'Pretendard';color:#111">대시보드</span></div>
+          <div style="display:flex;align-items:center;gap:8px"><span style="font:500 9.5px 'Pretendard';color:#111">● 실시간</span></div>
+        </div>
+        <div style="position:absolute;top:50px;bottom:0;left:0;right:0;overflow:hidden;padding:12px 12px 0">
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <div class="card" style="width:calc(50% - 4px);padding:10px 12px"><div class="th">DAU</div><div style="font:600 18px 'Pretendard';color:#111;margin-top:3px">12,480</div><div style="font:400 9px 'Pretendard';color:#8a8a8a">▲ 8.2%</div></div>
+            <div class="card" style="width:calc(50% - 4px);padding:10px 12px"><div class="th">인증 시도</div><div style="font:600 18px 'Pretendard';color:#111;margin-top:3px">3,214</div><div style="font:400 9px 'Pretendard';color:#8a8a8a">▲ 12.4%</div></div>
+            <div class="card" style="width:calc(50% - 4px);padding:10px 12px;border:1.5px solid #111"><div class="th" style="color:#111">검수 대기</div><div style="font:600 18px 'Pretendard';color:#111;margin-top:3px">24</div><div style="font:400 9px 'Pretendard';color:#8a8a8a">평균 4.2분</div></div>
+            <div class="card" style="width:calc(50% - 4px);padding:10px 12px"><div class="th">반려</div><div style="font:600 18px 'Pretendard';color:#111;margin-top:3px">209</div><div style="font:400 9px 'Pretendard';color:#d64545">6.5%</div></div>
+          </div>
+          <div class="card" style="margin-top:10px;padding:12px 13px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px"><span style="font:700 11.5px 'Pretendard';color:#111">점령 카토그램</span><span style="font:400 8.5px 'Pretendard';color:#9a9a9a">가로 스크롤 →</span></div>
+            <div style="display:flex;gap:5px;overflow:hidden">
+              <div style="width:52px;height:46px;background:#2f6bff;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:600 11px 'Pretendard';color:#fff">63</span><span style="font:400 7.5px 'Pretendard';color:#d7e2ff">마포</span></div>
+              <div style="width:52px;height:46px;background:#2f6bff;box-shadow:0 0 0 2px #111;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:600 11px 'Pretendard';color:#fff">67</span><span style="font:400 7.5px 'Pretendard';color:#d7e2ff">성동</span></div>
+              <div style="width:52px;height:46px;background:#e64980;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:600 11px 'Pretendard';color:#fff">61</span><span style="font:400 7.5px 'Pretendard';color:#ffd7e6">강남</span></div>
+              <div style="width:52px;height:46px;background:#fff;border:1.5px dashed #111;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:600 11px 'Pretendard';color:#111">49</span><span style="font:400 7.5px 'Pretendard';color:#8a8a8a">노원</span></div>
+              <div style="width:52px;height:46px;background:#ffd88a;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:600 11px 'Pretendard';color:#5c430a">53</span><span style="font:400 7.5px 'Pretendard';color:#7a5a12">중랑</span></div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:10px;padding:12px 13px">
+            <div style="font:700 11.5px 'Pretendard';color:#111;margin-bottom:8px">실시간 뒤집힘 로그</div>
+            <div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #f0f0f0"><span style="width:5px;height:5px;background:#2f6bff;flex:none"></span><div style="flex:1;min-width:0"><div style="font:500 10.5px 'Pretendard';color:#111">성동구 → 뉴진스 탈환</div><div style="font:400 8.5px 'Pretendard';color:#9a9a9a">14:30</div></div></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:6px 0"><span style="width:5px;height:5px;background:#f59f00;flex:none"></span><div style="flex:1;min-width:0"><div style="font:500 10.5px 'Pretendard';color:#111">노원구 → 경합 진입</div><div style="font:400 8.5px 'Pretendard';color:#9a9a9a">14:18</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</x-dc>
+</body>
+</html>
