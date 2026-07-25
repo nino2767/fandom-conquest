@@ -33,7 +33,7 @@ export default function AdminLoginPage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#ecebe8",
+        background: "#fafafa",
         fontFamily: "'Pretendard', sans-serif",
         padding: 20,
       }}
@@ -44,13 +44,20 @@ export default function AdminLoginPage() {
           maxWidth: 380,
           background: "#ffffff",
           border: "1px solid #111111",
-          boxShadow: "0 20px 48px rgba(0,0,0,0.15)",
+          boxShadow: "0 12px 32px rgba(0,0,0,0.08)",
           padding: 32,
           boxSizing: "border-box",
         }}
       >
         {/* Brand Header */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            marginBottom: 24,
+          }}
+        >
           <div
             style={{
               width: 32,
@@ -60,23 +67,40 @@ export default function AdminLoginPage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 15,
             }}
           >
-            🚩
+            <svg width="14" height="14" viewBox="0 0 24 24">
+              <path d="M6 2v20" stroke="#fff" strokeWidth="2.6" fill="none" />
+              <path d="M6 3h13l-3 4 3 4H6z" fill="#fff" />
+            </svg>
           </div>
           <div>
-            <div style={{ font: "700 15px 'Pretendard'", color: "#111", lineHeight: 1.2 }}>
+            <div
+              style={{
+                font: "700 15px 'Pretendard'",
+                color: "#111",
+                lineHeight: 1.2,
+              }}
+            >
               팬덤 땅따먹기
             </div>
-            <div style={{ font: "500 9.5px 'Pretendard'", color: "#8a8a8a", letterSpacing: "0.08em" }}>
-              ADMIN CONSOLE LOGIN
+            <div
+              style={{
+                font: "500 9.5px 'Pretendard'",
+                color: "#9a9a9a",
+                letterSpacing: "0.08em",
+              }}
+            >
+              ADMIN CONSOLE LOGIN (v0.2)
             </div>
           </div>
         </div>
 
         {/* Login Form */}
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: 14 }}
+        >
           <div>
             <label
               style={{
@@ -100,6 +124,8 @@ export default function AdminLoginPage() {
                 padding: "0 12px",
                 border: "1px solid #ddd",
                 font: "500 12px 'Pretendard'",
+                color: "#111",
+                background: "#fff",
                 boxSizing: "border-box",
                 outline: "none",
               }}
@@ -129,6 +155,8 @@ export default function AdminLoginPage() {
                 padding: "0 12px",
                 border: "1px solid #ddd",
                 font: "500 12px 'Pretendard'",
+                color: "#111",
+                background: "#fff",
                 boxSizing: "border-box",
                 outline: "none",
               }}
@@ -138,14 +166,14 @@ export default function AdminLoginPage() {
           {errorMsg && (
             <div
               style={{
-                padding: "8px 10px",
-                background: "#fef2f2",
-                border: "1px solid #f87171",
+                padding: "8px 12px",
+                background: "#fff0f0",
+                border: "1px solid #d64545",
                 color: "#d64545",
                 font: "500 11px 'Pretendard'",
               }}
             >
-              ⚠️ {errorMsg}
+              {errorMsg}
             </div>
           )}
 
@@ -154,32 +182,30 @@ export default function AdminLoginPage() {
             disabled={isLoading}
             style={{
               height: 44,
-              marginTop: 8,
-              background: "#111111",
-              color: "#ffffff",
+              background: "#111",
+              color: "#fff",
               border: "none",
-              font: "700 12.5px 'Pretendard'",
-              cursor: isLoading ? "wait" : "pointer",
+              font: "700 13px 'Pretendard'",
+              cursor: "pointer",
+              marginTop: 8,
+              opacity: isLoading ? 0.7 : 1,
             }}
           >
-            {isLoading ? "인증 중..." : "로그인 (Sign In)"}
+            {isLoading ? "인증 확인 중..." : "어드민 로그인"}
           </button>
         </form>
 
-        {/* Demo Account Guide */}
         <div
           style={{
-            marginTop: 20,
+            marginTop: 24,
             paddingTop: 16,
-            borderTop: "1px solid #f0f0f0",
-            font: "400 10px/1.6 'Pretendard'",
-            color: "#8a8a8a",
+            borderTop: "1px solid #eee",
+            textAlign: "center",
+            font: "400 10px 'Pretendard'",
+            color: "#9a9a9a",
           }}
         >
-          💡 <b>데모 테스트 계정:</b>
-          <br />
-          - 아이디: <code style={{ color: "#111" }}>ops@fandom.app</code>
-          <br />- 비밀번호: <code style={{ color: "#111" }}>admin1234</code>
+          테스트 로그인 계정: <b>ops@fandom.app</b> / <b>admin1234</b>
         </div>
       </div>
     </div>
