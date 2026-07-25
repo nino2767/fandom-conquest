@@ -1,9 +1,8 @@
 @import "tailwindcss";
 
-/* Fandom Conquest Admin Console Styles */
+/* Fandom Conquest Admin Console Styles (v0.2 Sharp Monochrome) */
 :root {
-
-  --admin-bg: #ecebe8;
+  --admin-bg: #fafafa;
   --admin-card-bg: #ffffff;
   --admin-border: #e7e7e7;
   --admin-border-dark: #111111;
@@ -20,9 +19,9 @@
 
 body {
   margin: 0;
-  background-color: #0b0f17;
+  background-color: #fafafa;
   font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  color: #f1f5f9;
+  color: #111111;
   min-height: 100vh;
 }
 
@@ -32,7 +31,7 @@ body {
   min-height: 100vh;
   margin: 0;
   max-width: 100%;
-  background: #0b0f17;
+  background: #fafafa;
   border: none;
   box-shadow: none;
   overflow: hidden;
@@ -51,15 +50,14 @@ body {
 
 /* Sidebar */
 .admin-sidebar {
-  width: 240px;
+  width: 196px;
   flex: none;
-  background: #0f172a;
-  border-right: 1px solid #1e293b;
+  background: #ffffff;
+  border-right: 1px solid #e7e7e7;
   display: flex;
   flex-direction: column;
-  padding: 20px 14px;
+  padding: 14px 12px;
 }
-
 
 @media (max-width: 1024px) {
   .admin-sidebar {
@@ -81,35 +79,36 @@ body {
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 4px 8px 16px;
-  border-bottom: 1px solid #1e293b;
-  margin-bottom: 12px;
+  padding: 4px 8px 14px;
 }
 
 .admin-brand-icon {
   width: 28px;
   height: 28px;
-  background: #2563eb;
+  background: #111111;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  font-weight: bold;
-  border-radius: 6px;
+  border-radius: 0px;
 }
 
 .admin-brand-text {
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 1.25;
-  color: #f8fafc;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #111111;
+  display: flex;
+  flex-direction: column;
 }
 
 .admin-brand-sub {
-  font-size: 9.5px;
-  font-weight: 600;
-  color: #64748b;
+  font-size: 8.5px;
+  font-weight: 400;
+  color: #9a9a9a;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
 }
 
 /* Nav Item */
@@ -117,54 +116,58 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 10px;
-  font-size: 12px;
+  padding: 6.5px 10px;
+  font-size: 11.5px;
   font-weight: 500;
-  color: #94a3b8;
+  color: #8a8a8a;
   text-decoration: none;
-  border-radius: 6px;
-  transition: all 0.15s ease;
-  margin-bottom: 2px;
+  border-radius: 0px;
+  transition: all 0.1s ease;
 }
 
 .admin-nav-item:hover {
-  background: #1e293b;
-  color: #f8fafc;
+  background: #f5f5f5;
+  color: #111111;
 }
 
 .admin-nav-item.active {
-  background: #334155;
-  color: #ffffff;
-  font-weight: 700;
+  background: #ececec;
+  color: #111111;
+  font-weight: 600;
 }
-
 
 .admin-badge-black {
   margin-left: auto;
-  padding: 1px 7px;
-  background: #111;
-  color: #fff;
-  font-size: 9.5px;
+  padding: 1px 6px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 9px;
   font-weight: 600;
-  border-radius: 2px;
+  border-radius: 0px;
 }
 
 .admin-badge-gray {
   margin-left: auto;
-  padding: 1px 7px;
+  padding: 1px 6px;
   background: #eee;
-  color: #777;
-  font-size: 9.5px;
+  color: #888;
+  font-size: 9px;
   font-weight: 600;
-  border-radius: 2px;
+  border-radius: 0px;
 }
 
 .admin-dot-red {
   margin-left: auto;
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--admin-danger);
+}
+
+.admin-divider {
+  height: 1px;
+  background: #e7e7e7;
+  margin: 8px 6px;
 }
 
 /* Main Layout */
@@ -174,63 +177,61 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #0b0f17;
-  padding: 24px;
+  background: #fafafa;
+  padding: 0px;
 }
 
 .admin-topbar {
-  height: 52px;
+  min-height: 52px;
   flex: none;
-  background: #0f172a;
-  border-bottom: 1px solid #1e293b;
+  background: #ffffff;
+  border-bottom: 1px solid #e7e7e7;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  border-radius: 8px;
-  margin-bottom: 16px;
+  gap: 12px;
 }
 
 .admin-title {
-  font-size: 15px;
-  font-weight: 800;
-  color: #f8fafc;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111111;
 }
 
 .admin-card {
-  background: #0f172a;
-  border: 1px solid #1e293b;
-  border-radius: 12px;
-  color: #f8fafc;
+  background: #ffffff;
+  border: 1px solid #e2e2e2;
+  border-radius: 0px;
+  color: #111111;
 }
 
 .admin-card-header {
-  font-size: 11px;
-  font-weight: 600;
-  color: #94a3b8;
-  letter-spacing: 0.06em;
+  font-size: 10px;
+  font-weight: 500;
+  color: #9a9a9a;
+  letter-spacing: 0.04em;
 }
 
 .admin-card-num {
-  font-size: 24px;
-  font-weight: 800;
-  color: #f8fafc;
-  margin-top: 4px;
+  font-size: 23px;
+  font-weight: 600;
+  color: #111111;
+  margin-top: 5px;
 }
 
 .admin-card-sub {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 400;
-  color: #64748b;
+  color: #8a8a8a;
   margin-top: 2px;
 }
-
 
 /* Mobile top header */
 .admin-mobile-header {
   display: none;
   height: 50px;
-  background: #fff;
+  background: #ffffff;
   border-bottom: 1px solid var(--admin-border);
   padding: 0 14px;
   align-items: center;
@@ -243,5 +244,53 @@ body {
 @media (max-width: 1024px) {
   .admin-mobile-header {
     display: flex;
+  }
+}
+
+/* Mobile Responsive Adjustments (max-width: 768px) */
+@media (max-width: 768px) {
+  .admin-main {
+    padding: 0px;
+  }
+  
+  .admin-topbar {
+    padding: 10px 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    min-height: auto;
+  }
+
+  /* Make 2-column split containers wrap into single column on mobile */
+  .mobile-stack {
+    flex-direction: column !important;
+  }
+  
+  /* Make sidebar cover full height when opened on mobile */
+  .admin-sidebar.mobile-open {
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: calc(100vh - 50px);
+    z-index: 999;
+  }
+
+  /* Table horizontal scroll wrapper for mobile */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Responsive card grids */
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .detail-panel-mobile {
+    width: 100% !important;
+    border-left: none !important;
+    border-top: 1px solid #e7e7e7 !important;
   }
 }

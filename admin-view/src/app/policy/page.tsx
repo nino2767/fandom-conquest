@@ -2,45 +2,36 @@
 
 import React, { useState } from "react";
 
-interface ForbiddenWord {
+interface WordChip {
   id: string;
-  pattern: string;
-  category: "NICKNAME" | "COMMENT" | "ALL";
-  action: "REJECT" | "MASK";
-  description: string;
-  createdAt: string;
+  word: string;
+  category: "NICKNAME" | "COMMENT";
 }
 
-const INITIAL_WORDS: ForbiddenWord[] = [
-  {
-    id: "FW-01",
-    pattern: "운영자|어드민|admin|system",
-    category: "NICKNAME",
-    action: "REJECT",
-    description: "어드민 및 시스템 사칭 닉네임 차단",
-    createdAt: "2026-07-22",
-  },
-  {
-    id: "FW-02",
-    pattern: "비속어1|비속어2|욕설.*",
-    category: "ALL",
-    action: "REJECT",
-    description: "전역 공통 심한 비속어 및 욕설 차단",
-    createdAt: "2026-07-22",
-  },
+const INITIAL_CHIPS: WordChip[] = [
+  { id: "c1", word: "어드민", category: "NICKNAME" },
+  { id: "c2", word: "운영자", category: "NICKNAME" },
+  { id: "c3", word: "admin", category: "NICKNAME" },
+  { id: "c4", word: "system", category: "NICKNAME" },
+  { id: "c5", word: "비속어1", category: "COMMENT" },
+  { id: "c6", word: "해킹", category: "COMMENT" },
+  { id: "c7", word: "주작", category: "COMMENT" },
+  { id: "c8", word: "매크로", category: "COMMENT" },
+  { id: "c9", word: "스푸핑", category: "COMMENT" },
+  { id: "c10", word: "포토샵", category: "COMMENT" },
 ];
 
 export default function AdminPolicyPage() {
-  const [receiptExpireHours, setReceiptExpireHours] = useState(24);
-  const [minAmount, setMinAmount] = useState(3000);
-  const [autoApproveThreshold, setAutoApproveThreshold] = useState(90);
+  const [chips, setChips] = useState<WordChip[]>(INITIAL_CHIPS);
+  const [newWord, setNewWord] = useState("");
+  const [newCat, setNewCat] = useState<"NICKNAME" | "COMMENT">("NICKNAME");
+  const [activeCategoryTab, setActiveCategoryTab] = useState<"ALL" | "NICKNAME" | "COMMENT">("ALL");
 
-  // ADM-SYSTEM-01 Forbidden words state
-  const [forbiddenWords, setForbiddenWords] = useState<ForbiddenWord[]>(INITIAL_WORDS);
-  const [newPattern, setNewPattern] = useState("");
-  const [newDesc, setNewDesc] = useState("");
-  const [testInput, setTestInput] = useState("");
-  const [testResult, setTestResult] = useState<{ matched: boolean; matchedPattern?: string } | null>(null);
+  // System parameters
+  const [expireHours, setExpireHours] = useState(24);
+  const [minAmount, setMinAmount] = useState(3000);
+  const [thresholdScore, setThresholdScore] = useState(90);
+  const [gpsRadius, setGpsRadius] = useState(150);
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -51,205 +42,352 @@ export default function AdminPolicyPage() {
     }, 2500);
   };
 
-  const handleSavePolicy = () => {
-    showToast("⚙️ 영수증 검수 임계값 및 운영 정책이 업데이트되었습니다.");
-  };
-
-  const handleAddForbiddenWord = (e: React.FormEvent) => {
+  const handleAddChip = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newPattern) return;
-    const newItem: ForbiddenWord = {
-      id: `FW-${String(forbiddenWords.length + 1).padStart(2, "0")}`,
-      pattern: newPattern,
-      category: "ALL",
-      action: "REJECT",
-      description: newDesc || "운영자 추가 금칙어",
-      createdAt: "2026-07-24",
+    if (!newWord.trim()) return;
+    const item: WordChip = {
+      id: `c_${Date.now()}`,
+      word: newWord.trim(),
+      category: newCat,
     };
-    setForbiddenWords([...forbiddenWords, newItem]);
-    setNewPattern("");
-    setNewDesc("");
-    showToast(`공통 금칙어 패턴 '${newItem.pattern}' 이 추가되었습니다.`);
+    setChips([...chips, item]);
+    setNewWord("");
+    showToast(`✅ 금칙어 '${item.word}' (이)가 추가되었습니다.`);
   };
 
-  const handleRemoveWord = (id: string) => {
-    setForbiddenWords(forbiddenWords.filter((w) => w.id !== id));
-    showToast("금칙어 패턴이 삭제되었습니다.");
+  const handleRemoveChip = (id: string) => {
+    setChips(chips.filter((c) => c.id !== id));
+    showToast("금칙어가 삭제되었습니다.");
   };
 
-  const handleRunTest = () => {
-    if (!testInput) {
-      setTestResult(null);
-      return;
-    }
-    let isMatched = false;
-    let matchedP = "";
-
-    for (const item of forbiddenWords) {
-      try {
-        const regex = new RegExp(item.pattern, "i");
-        if (regex.test(testInput)) {
-          isMatched = true;
-          matchedP = item.pattern;
-          break;
-        }
-      } catch {
-        // ignore invalid regex in test
-      }
-
-    }
-    setTestResult({ matched: isMatched, matchedPattern: matchedP });
-  };
+  const filteredChips = chips.filter((c) => {
+    if (activeCategoryTab === "ALL") return true;
+    return c.category === activeCategoryTab;
+  });
 
   return (
-    <div className="space-y-6">
-      {/* Toast Notification */}
-      {toastMessage && (
-        <div className="fixed top-6 right-6 z-50 rounded-lg bg-blue-600 px-4 py-3 text-xs font-bold text-white shadow-xl animate-bounce">
-          {toastMessage}
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      {/* Top Bar */}
+      <div className="admin-topbar">
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ font: "700 14px 'Pretendard'", color: "#111" }}>
+            금칙어 &amp; 시스템 설정 (ADM-SYSTEM-01)
+          </span>
+          <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
+            공통 금칙어 {chips.length}개 등록 · 시스템 자동 차단 가동 중
+          </span>
         </div>
-      )}
-
-      {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-800 pb-4">
-        <div>
-          <h1 className="text-2xl font-black tracking-tight text-white flex items-center gap-2">
-            <span>⚙️</span> 운영 정책 & 공통 금칙어 관리 <span className="text-xs font-semibold text-slate-400 bg-slate-800 px-2 py-0.5 rounded">ADM-SYSTEM-01</span>
-          </h1>
-          <p className="mt-1 text-xs text-slate-400">
-            영수증 OCR 판정 임계값 및 닉네임/댓글/커뮤니티 전역 공통 금칙어 정규식 엔진 관리
-          </p>
-        </div>
+        <button
+          onClick={() => showToast("⚙️ 시스템 설정 파라미터가 저장되었습니다.")}
+          style={{
+            padding: "6px 14px",
+            background: "#111",
+            color: "#fff",
+            border: "none",
+            font: "700 11px 'Pretendard'",
+            cursor: "pointer",
+          }}
+        >
+          설정 저장
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Section 1: Verification Threshold Settings */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-5 space-y-4">
-          <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2 border-b border-slate-800 pb-2">
-            <span>🧾</span> 영수증 OCR 검수 임계값 설정
-          </h3>
-
-          <div className="space-y-4 text-xs">
+      {/* Main Content Area */}
+      <div
+        style={{
+          flex: 1,
+          padding: "16px 20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 14,
+          overflowY: "auto",
+        }}
+      >
+        {/* Forbidden Words Chip Tag Section */}
+        <div className="admin-card" style={{ padding: "16px 20px" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 12,
+            }}
+          >
             <div>
-              <label className="block text-slate-300 font-semibold mb-1">영수증 인정 유효 기간 (시간)</label>
-              <input
-                type="number"
-                value={receiptExpireHours}
-                onChange={(e) => setReceiptExpireHours(Number(e.target.value))}
-                className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 text-slate-200 font-bold"
-              />
-              <span className="text-[10px] text-slate-500 mt-0.5 block">결제 일시로부터 N시간 이내 제출 건만 자동 인정</span>
-            </div>
-
-            <div>
-              <label className="block text-slate-300 font-semibold mb-1">인정 최소 결제 금액 (원)</label>
-              <input
-                type="number"
-                step="500"
-                value={minAmount}
-                onChange={(e) => setMinAmount(Number(e.target.value))}
-                className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 text-slate-200 font-bold text-emerald-400"
-              />
-            </div>
-
-            <div>
-              <label className="block text-slate-300 font-semibold mb-1">AI OCR 자동 승인 임계 신뢰도 (%)</label>
-              <input
-                type="number"
-                value={autoApproveThreshold}
-                onChange={(e) => setAutoApproveThreshold(Number(e.target.value))}
-                className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 text-slate-200 font-bold text-blue-400"
-              />
-              <span className="text-[10px] text-slate-500 mt-0.5 block">신뢰도 N% 이상 건만 수동 검수 없이 자동 승인</span>
-            </div>
-
-            <div className="pt-2">
-              <button
-                onClick={handleSavePolicy}
-                className="w-full rounded-lg bg-blue-600 py-2.5 text-xs font-bold text-white hover:bg-blue-500 shadow"
+              <span style={{ font: "700 12px 'Pretendard'", color: "#111" }}>
+                공통 금칙어 칩 관리
+              </span>
+              <span
+                style={{
+                  font: "400 9.5px 'Pretendard'",
+                  color: "#9a9a9a",
+                  marginLeft: 8,
+                }}
               >
-                검수 임계값 저장 확정
+                닉네임 생성 및 댓글/제보 사유 등록 시 즉시 필터링
+              </span>
+            </div>
+            <div style={{ display: "flex", gap: 6 }}>
+              <button
+                onClick={() => setActiveCategoryTab("ALL")}
+                style={{
+                  padding: "4px 9px",
+                  background: activeCategoryTab === "ALL" ? "#111" : "#eee",
+                  color: activeCategoryTab === "ALL" ? "#fff" : "#555",
+                  border: "none",
+                  font: "600 10px 'Pretendard'",
+                  cursor: "pointer",
+                }}
+              >
+                전체 ({chips.length})
+              </button>
+              <button
+                onClick={() => setActiveCategoryTab("NICKNAME")}
+                style={{
+                  padding: "4px 9px",
+                  background: activeCategoryTab === "NICKNAME" ? "#111" : "#eee",
+                  color: activeCategoryTab === "NICKNAME" ? "#fff" : "#555",
+                  border: "none",
+                  font: "600 10px 'Pretendard'",
+                  cursor: "pointer",
+                }}
+              >
+                닉네임 ({chips.filter((c) => c.category === "NICKNAME").length})
+              </button>
+              <button
+                onClick={() => setActiveCategoryTab("COMMENT")}
+                style={{
+                  padding: "4px 9px",
+                  background: activeCategoryTab === "COMMENT" ? "#111" : "#eee",
+                  color: activeCategoryTab === "COMMENT" ? "#fff" : "#555",
+                  border: "none",
+                  font: "600 10px 'Pretendard'",
+                  cursor: "pointer",
+                }}
+              >
+                댓글/제보 ({chips.filter((c) => c.category === "COMMENT").length})
               </button>
             </div>
           </div>
-        </div>
 
-        {/* Section 2: Shared Forbidden Words Management (ADM-SYSTEM-01) */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-5 space-y-4">
-          <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2 border-b border-slate-800 pb-2">
-            <span>🛑</span> 공통 금칙어 정규식 엔진 [ADM-SYSTEM-01]
-          </h3>
-
-          <form onSubmit={handleAddForbiddenWord} className="space-y-2">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={newPattern}
-                onChange={(e) => setNewPattern(e.target.value)}
-                placeholder="금칙어 정규식 패턴 (예: 운영자|사칭.*)"
-                className="flex-1 rounded-lg border border-slate-700 bg-slate-800 p-2 text-xs text-slate-200 font-mono"
-              />
-              <button
-                type="submit"
-                className="rounded-lg bg-amber-600 px-4 py-2 text-xs font-bold text-white hover:bg-amber-500 shadow"
-              >
-                + 등록
-              </button>
-            </div>
+          {/* Add New Word Form */}
+          <form
+            onSubmit={handleAddChip}
+            style={{
+              display: "flex",
+              gap: 8,
+              alignItems: "center",
+              marginBottom: 14,
+              padding: "10px 12px",
+              background: "#fafafa",
+              border: "1px solid #e7e7e7",
+            }}
+          >
+            <span style={{ font: "600 11px 'Pretendard'", color: "#111" }}>
+              + 신규 금칙어:
+            </span>
             <input
               type="text"
-              value={newDesc}
-              onChange={(e) => setNewDesc(e.target.value)}
-              placeholder="설명 / 사유 (선택)"
-              className="w-full rounded-lg border border-slate-700 bg-slate-800/60 p-1.5 text-xs text-slate-300"
+              value={newWord}
+              onChange={(e) => setNewWord(e.target.value)}
+              placeholder="차단할 단어 입력..."
+              style={{
+                flex: 1,
+                padding: "6px 10px",
+                border: "1px solid #ddd",
+                font: "500 11.5px 'Pretendard'",
+                outline: "none",
+              }}
             />
+            <select
+              value={newCat}
+              onChange={(e) =>
+                setNewCat(e.target.value as "NICKNAME" | "COMMENT")
+              }
+              style={{
+                padding: "6px 10px",
+                border: "1px solid #ddd",
+                font: "500 11.5px 'Pretendard'",
+                background: "#fff",
+                outline: "none",
+              }}
+            >
+              <option value="NICKNAME">닉네임 전용</option>
+              <option value="COMMENT">댓글/제보 전용</option>
+            </select>
+            <button
+              type="submit"
+              style={{
+                padding: "6px 14px",
+                background: "#111",
+                color: "#fff",
+                border: "none",
+                font: "600 11px 'Pretendard'",
+                cursor: "pointer",
+              }}
+            >
+              등록
+            </button>
           </form>
 
-          {/* Realtime Tester Tool */}
-          <div className="rounded-lg bg-slate-950 p-3 space-y-2 border border-slate-800">
-            <span className="block text-[11px] font-bold text-slate-400">🧪 실시간 금칙어 검증 테스터</span>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={testInput}
-                onChange={(e) => {
-                  setTestInput(e.target.value);
-                  handleRunTest();
+          {/* Chips List */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+            {filteredChips.map((c) => (
+              <span
+                key={c.id}
+                className="tag"
+                style={{
+                  padding: "4px 8px",
+                  fontSize: 11,
+                  background: "#fff",
+                  borderColor: "#ccc",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
                 }}
-                placeholder="테스트할 닉네임/문장 입력..."
-                className="flex-1 rounded border border-slate-700 bg-slate-900 p-1.5 text-xs text-slate-200"
-              />
-            </div>
-            {testResult && (
-              <div className="text-xs font-bold mt-1">
-                {testResult.matched ? (
-                  <span className="text-red-400">🚨 금칙어 차단 대상! (매칭 패턴: {testResult.matchedPattern})</span>
-                ) : (
-                  <span className="text-emerald-400">✅ 정상 통과 (차단 사유 없음)</span>
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* List */}
-          <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
-            {forbiddenWords.map((word) => (
-              <div key={word.id} className="flex items-center justify-between rounded border border-slate-800 bg-slate-800/40 p-2.5 text-xs">
-                <div>
-                  <code className="font-bold text-amber-300">{word.pattern}</code>
-                  <span className="ml-2 text-[10px] text-slate-400">({word.description})</span>
-                </div>
-                <button
-                  onClick={() => handleRemoveWord(word.id)}
-                  className="text-red-400 hover:text-red-300 text-[11px] font-bold"
+              >
+                <span>{c.word}</span>
+                <span
+                  style={{
+                    font: "400 9px 'Pretendard'",
+                    color: c.category === "NICKNAME" ? "#2f6bff" : "#e08a00",
+                  }}
                 >
-                  삭제
+                  [{c.category === "NICKNAME" ? "닉네임" : "댓글"}]
+                </span>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveChip(c.id)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "#9a9a9a",
+                    fontSize: 12,
+                    cursor: "pointer",
+                    padding: 0,
+                    lineHeight: 1,
+                  }}
+                >
+                  ×
                 </button>
-              </div>
+              </span>
             ))}
           </div>
         </div>
+
+        {/* System Parameters Settings Section */}
+        <div className="admin-card" style={{ padding: "16px 20px" }}>
+          <div
+            style={{
+              font: "700 12px 'Pretendard'",
+              color: "#111",
+              marginBottom: 12,
+            }}
+          >
+            시스템 운영 임계치 (System Operational Parameters)
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+              gap: 12,
+            }}
+          >
+            <div style={{ padding: "12px 14px", border: "1px solid #e7e7e7", background: "#fff" }}>
+              <div className="fl">영수증 유효 인증 시간 (시간)</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6 }}>
+                <input
+                  type="number"
+                  value={expireHours}
+                  onChange={(e) => setExpireHours(Number(e.target.value))}
+                  style={{
+                    width: 80,
+                    padding: "6px 8px",
+                    border: "1px solid #ddd",
+                    font: "600 13px 'Pretendard'",
+                  }}
+                />
+                <span style={{ font: "400 11px 'Pretendard'", color: "#555" }}>시간 이내 결제건</span>
+              </div>
+            </div>
+
+            <div style={{ padding: "12px 14px", border: "1px solid #e7e7e7", background: "#fff" }}>
+              <div className="fl">최소 인증 인정 금액 (원)</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6 }}>
+                <input
+                  type="number"
+                  value={minAmount}
+                  onChange={(e) => setMinAmount(Number(e.target.value))}
+                  style={{
+                    width: 100,
+                    padding: "6px 8px",
+                    border: "1px solid #ddd",
+                    font: "600 13px 'Pretendard'",
+                  }}
+                />
+                <span style={{ font: "400 11px 'Pretendard'", color: "#555" }}>원 이상 영수증</span>
+              </div>
+            </div>
+
+            <div style={{ padding: "12px 14px", border: "1px solid #e7e7e7", background: "#fff" }}>
+              <div className="fl">AI OCR 자동 승인 임계점 (점)</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6 }}>
+                <input
+                  type="number"
+                  value={thresholdScore}
+                  onChange={(e) => setThresholdScore(Number(e.target.value))}
+                  style={{
+                    width: 80,
+                    padding: "6px 8px",
+                    border: "1px solid #ddd",
+                    font: "600 13px 'Pretendard'",
+                  }}
+                />
+                <span style={{ font: "400 11px 'Pretendard'", color: "#555" }}>점 이상 자동 통과</span>
+              </div>
+            </div>
+
+            <div style={{ padding: "12px 14px", border: "1px solid #e7e7e7", background: "#fff" }}>
+              <div className="fl">GPS 허용 반경 (미터)</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6 }}>
+                <input
+                  type="number"
+                  value={gpsRadius}
+                  onChange={(e) => setGpsRadius(Number(e.target.value))}
+                  style={{
+                    width: 80,
+                    padding: "6px 8px",
+                    border: "1px solid #ddd",
+                    font: "600 13px 'Pretendard'",
+                  }}
+                />
+                <span style={{ font: "400 11px 'Pretendard'", color: "#555" }}>m 이내 현장 방문</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* Toast */}
+      {toastMessage && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: 24,
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "#111",
+            color: "#fff",
+            padding: "10px 18px",
+            font: "600 12px 'Pretendard'",
+            boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
+            zIndex: 9999,
+          }}
+        >
+          {toastMessage}
+        </div>
+      )}
     </div>
   );
 }

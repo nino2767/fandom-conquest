@@ -58,32 +58,34 @@ const LOG_ITEMS = [
 ];
 
 const CHART_DATA = [
-  { approve: 30, reject: 4 },
-  { approve: 38, reject: 5 },
-  { approve: 26, reject: 3 },
-  { approve: 44, reject: 6 },
-  { approve: 40, reject: 5 },
-  { approve: 52, reject: 6 },
-  { approve: 58, reject: 7 },
+  { approved: 30, rejected: 4 },
+  { approved: 38, rejected: 5 },
+  { approved: 26, rejected: 3 },
+  { approved: 44, rejected: 6 },
+  { approved: 40, rejected: 5 },
+  { approved: 52, rejected: 6 },
+  { approved: 58, rejected: 7 },
 ];
 
 export default function AdminDashboardPage() {
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
-      {/* Top Bar */}
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      {/* Top Header Bar */}
       <div className="admin-topbar">
-        <div className="admin-title">전황 & 운영 대시보드</div>
+        <div style={{ font: "700 14px 'Pretendard'", color: "#111" }}>
+          전황 &amp; 운영 대시보드
+        </div>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <span style={{ font: "500 10.5px 'Pretendard'", color: "#111" }}>
             ● 실시간
           </span>
-          <span style={{ font: "400 10.5px 'Pretendard'", color: "#9a9a9a" }}>
-            2026.07.22 (수) 14:32 KST
+          <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
+            2026.07.25 (토) 21:20 KST
           </span>
         </div>
       </div>
 
-      {/* Main Content Area */}
+      {/* Main Content Body */}
       <div
         style={{
           flex: 1,
@@ -94,46 +96,43 @@ export default function AdminDashboardPage() {
           overflowY: "auto",
         }}
       >
-        {/* KPI Summary Cards */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-            gap: 12,
-          }}
-        >
-          <div className="admin-card" style={{ padding: "13px 16px" }}>
+        {/* KPI Summary 5 Columns */}
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div className="admin-card" style={{ flex: 1, minWidth: 140, padding: "13px 16px" }}>
             <div className="admin-card-header">DAU</div>
             <div className="admin-card-num">12,480</div>
             <div className="admin-card-sub">▲ 8.2% vs 어제</div>
           </div>
-          <div className="admin-card" style={{ padding: "13px 16px" }}>
+          <div className="admin-card" style={{ flex: 1, minWidth: 140, padding: "13px 16px" }}>
             <div className="admin-card-header">오늘 인증 시도</div>
             <div className="admin-card-num">3,214</div>
             <div className="admin-card-sub">▲ 12.4%</div>
           </div>
-          <div className="admin-card" style={{ padding: "13px 16px" }}>
+          <div className="admin-card" style={{ flex: 1, minWidth: 140, padding: "13px 16px" }}>
             <div className="admin-card-header">자동 승인</div>
             <div className="admin-card-num">2,981</div>
             <div className="admin-card-sub">92.8%</div>
           </div>
           <div
             className="admin-card"
-            style={{ padding: "13px 16px", border: "1.5px solid #111" }}
+            style={{
+              flex: 1,
+              minWidth: 140,
+              padding: "13px 16px",
+              border: "1.5px solid #111",
+            }}
           >
-            <div className="admin-card-header" style={{ color: "#111" }}>
+            <div className="admin-card-header" style={{ color: "#111", fontWeight: 600 }}>
               수동 검수 대기
             </div>
             <div className="admin-card-num">24</div>
             <div className="admin-card-sub">평균 처리 4.2분</div>
           </div>
-          <div className="admin-card" style={{ padding: "13px 16px" }}>
+          <div className="admin-card" style={{ flex: 1, minWidth: 140, padding: "13px 16px" }}>
             <div className="admin-card-header">반려</div>
             <div className="admin-card-num">
               209{" "}
-              <span
-                style={{ font: "500 10px 'Pretendard'", color: "#d64545" }}
-              >
+              <span style={{ font: "500 10px 'Pretendard'", color: "#d64545" }}>
                 6.5%
               </span>
             </div>
@@ -141,13 +140,13 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Cartogram & Log Section */}
-        <div style={{ flex: 1, display: "flex", gap: 14, minHeight: 360, flexWrap: "wrap" }}>
-          {/* Cartogram */}
+        {/* Cartogram & Log/Chart 2 Column Section */}
+        <div style={{ flex: 1, display: "flex", gap: 14, minHeight: 0, flexWrap: "wrap" }}>
+          {/* Cartogram Tile Area */}
           <div
             className="admin-card"
             style={{
-              flex: "1.35",
+              flex: 1.35,
               minWidth: 320,
               padding: "14px 16px",
               display: "flex",
@@ -160,20 +159,15 @@ export default function AdminDashboardPage() {
                 justifyContent: "space-between",
                 alignItems: "baseline",
                 marginBottom: 12,
-                flexWrap: "wrap",
-                gap: 6,
               }}
             >
               <span style={{ font: "700 12px 'Pretendard'", color: "#111" }}>
                 서울 25구 점령 카토그램
               </span>
-              <span
-                style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}
-              >
+              <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
                 <span style={{ color: "#2f6bff" }}>■</span> 뉴진스 8{" "}
                 <span style={{ color: "#e64980" }}>■</span> 에스파 7{" "}
-                <span style={{ color: "#f59f00" }}>■</span> 아이브 5 · ⚔️ 경합 3 ·
-                중립 2
+                <span style={{ color: "#f59f00" }}>■</span> 아이브 5 · 경합 3
               </span>
             </div>
 
@@ -185,42 +179,41 @@ export default function AdminDashboardPage() {
                 gap: 6,
                 justifyContent: "center",
                 alignItems: "center",
-                padding: "12px 0",
+                padding: "16px 0",
               }}
             >
               {DISTRICT_DATA.map((row, rIdx) => (
                 <div key={rIdx} style={{ display: "flex", gap: 6 }}>
-                  {row.map((item, cIdx) => (
+                  {row.map((tile, tIdx) => (
                     <div
-                      key={cIdx}
+                      key={tIdx}
                       style={{
-                        width: 68,
-                        height: 56,
-                        background: item.bg,
-                        border: item.border || "none",
-                        boxShadow: item.boxShadow || "none",
+                        width: 64,
+                        height: 54,
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
-                        borderRadius: 2,
+                        background: tile.bg,
+                        border: tile.border || "none",
+                        boxShadow: tile.boxShadow || "none",
                       }}
                     >
                       <span
                         style={{
                           font: "600 13px 'Pretendard'",
-                          color: item.textColor || "#fff",
+                          color: tile.textColor || "#111",
                         }}
                       >
-                        {item.count > 0 ? item.count : "–"}
+                        {tile.count === 0 ? "–" : tile.count}
                       </span>
                       <span
                         style={{
                           font: "400 8.5px 'Pretendard'",
-                          color: item.subColor || "#eee",
+                          color: tile.subColor || "#8a8a8a",
                         }}
                       >
-                        {item.name}
+                        {tile.name}
                       </span>
                     </div>
                   ))}
@@ -230,7 +223,7 @@ export default function AdminDashboardPage() {
                 style={{
                   font: "400 9px 'Pretendard'",
                   color: "#9a9a9a",
-                  marginTop: 8,
+                  marginTop: 10,
                 }}
               >
                 채도 = 1위 점유율 격차 · 검정 테두리 = 금일 뒤집힘 · 점선 = 경합
@@ -238,11 +231,11 @@ export default function AdminDashboardPage() {
             </div>
           </div>
 
-          {/* Realtime Flip Logs & 7-Day Trend */}
+          {/* Realtime Log & 7-Day Trend Area */}
           <div
             className="admin-card"
             style={{
-              flex: "1",
+              flex: 1,
               minWidth: 300,
               padding: "14px 16px",
               display: "flex",
@@ -259,31 +252,26 @@ export default function AdminDashboardPage() {
               실시간 뒤집힘 로그
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 9,
-                overflowY: "auto",
-                maxHeight: 160,
-              }}
-            >
-              {LOG_ITEMS.map((log, i) => (
-                <div key={i} style={{ display: "flex", gap: 9, alignItems: "center" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
+              {LOG_ITEMS.map((item, idx) => (
+                <div
+                  key={idx}
+                  style={{ display: "flex", gap: 9, alignItems: "center" }}
+                >
                   <span
                     style={{
                       width: 6,
                       height: 6,
-                      background: log.color,
+                      background: item.color,
                       flex: "none",
                     }}
                   />
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ font: "500 11px 'Pretendard'", color: "#111" }}>
-                      {log.title}
+                      {item.title}
                     </div>
-                    <div style={{ font: "400 9px 'Pretendard'", color: "#9a9a9a" }}>
-                      {log.sub}
+                    <div style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
+                      {item.sub}
                     </div>
                   </div>
                 </div>
@@ -294,7 +282,7 @@ export default function AdminDashboardPage() {
               style={{
                 marginTop: "auto",
                 borderTop: "1px solid #e7e7e7",
-                paddingTop: 12,
+                paddingTop: 10,
               }}
             >
               <div
@@ -302,7 +290,7 @@ export default function AdminDashboardPage() {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "baseline",
-                  marginBottom: 8,
+                  marginBottom: 7,
                 }}
               >
                 <span style={{ font: "700 11px 'Pretendard'", color: "#111" }}>
@@ -313,18 +301,17 @@ export default function AdminDashboardPage() {
                   <span style={{ color: "#d64545" }}>■</span> 반려
                 </span>
               </div>
-
               <div
                 style={{
                   display: "flex",
                   alignItems: "flex-end",
                   gap: 7,
-                  height: 64,
+                  height: 62,
                 }}
               >
-                {CHART_DATA.map((d, i) => (
+                {CHART_DATA.map((bar, bIdx) => (
                   <div
-                    key={i}
+                    key={bIdx}
                     style={{
                       flex: 1,
                       display: "flex",
@@ -334,10 +321,16 @@ export default function AdminDashboardPage() {
                     }}
                   >
                     <div
-                      style={{ height: d.approve, background: "#2f6bff" }}
+                      style={{
+                        height: bar.approved,
+                        background: "#2f6bff",
+                      }}
                     />
                     <div
-                      style={{ height: d.reject, background: "#d64545" }}
+                      style={{
+                        height: bar.rejected,
+                        background: "#d64545",
+                      }}
                     />
                   </div>
                 ))}

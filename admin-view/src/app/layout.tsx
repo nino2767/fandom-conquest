@@ -133,10 +133,15 @@ export default function RootLayout({
               className={`admin-sidebar ${mobileMenuOpen ? "mobile-open" : ""}`}
             >
               <div className="admin-brand">
-                <div className="admin-brand-icon">🚩</div>
+                <span className="admin-brand-icon">
+                  <svg width="13" height="13" viewBox="0 0 24 24">
+                    <path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/>
+                    <path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/>
+                  </svg>
+                </span>
                 <div className="admin-brand-text">
                   팬덤 땅따먹기
-                  <div className="admin-brand-sub">ADMIN CONSOLE</div>
+                  <span className="admin-brand-sub">ADMIN CONSOLE</span>
                 </div>
               </div>
 
