@@ -18,7 +18,6 @@ interface NavItem {
 const navItems: NavItem[] = [
   { name: "대시보드", href: "/" },
   { name: "인증 내역 통합 데이터", href: "/verification-history" },
-
   {
     name: "영수증 검수 큐",
     href: "/verification",
@@ -86,7 +85,7 @@ export default function RootLayout({
       </head>
       <body>
         <div className="admin-body">
-          {/* Mobile Top Header */}
+          {/* Mobile Top Header Bar */}
           <header className="admin-mobile-header">
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <button
@@ -128,24 +127,34 @@ export default function RootLayout({
           </header>
 
           <div className="admin-container">
-            {/* Sidebar Navigation */}
+            {/* Sidebar Navigation (dk-side 196px spec) */}
             <aside
               className={`admin-sidebar ${mobileMenuOpen ? "mobile-open" : ""}`}
             >
-              <div className="admin-brand">
-                <span className="admin-brand-icon">
+              {/* Brand Section */}
+              <div className="brand">
+                <span className="lg">
                   <svg width="13" height="13" viewBox="0 0 24 24">
-                    <path d="M6 2v20" stroke="#fff" stroke-width="2.6" fill="none"/>
-                    <path d="M6 3h13l-3 4 3 4H6z" fill="#fff"/>
+                    <path d="M6 2v20" stroke="#fff" strokeWidth="2.6" fill="none" />
+                    <path d="M6 3h13l-3 4 3 4H6z" fill="#fff" />
                   </svg>
                 </span>
-                <div className="admin-brand-text">
+                <span className="bt">
                   팬덤 땅따먹기
-                  <span className="admin-brand-sub">ADMIN CONSOLE</span>
-                </div>
+                  <b>ADMIN CONSOLE</b>
+                </span>
               </div>
 
-              <nav style={{ flex: 1, overflowY: "auto" }}>
+              {/* Navigation Items */}
+              <nav
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 0,
+                  flex: 1,
+                  overflowY: "auto",
+                }}
+              >
                 {navItems.map((item) => {
                   const isActive =
                     item.href === "/"
@@ -156,71 +165,66 @@ export default function RootLayout({
                     <React.Fragment key={item.href}>
                       <Link
                         href={item.href}
-                        className={`admin-nav-item ${isActive ? "active" : ""}`}
+                        className={`nav ${isActive ? "on" : ""}`}
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <span>{item.name}</span>
                         {item.badge?.type === "black" && (
-                          <span className="admin-badge-black">
-                            {item.badge.value}
-                          </span>
+                          <span className="b-d">{item.badge.value}</span>
                         )}
                         {item.badge?.type === "gray" && (
-                          <span className="admin-badge-gray">
-                            {item.badge.value}
-                          </span>
+                          <span className="b-g">{item.badge.value}</span>
                         )}
-                        {item.badge?.type === "dot" && (
-                          <span className="admin-dot-red" />
-                        )}
+                        {item.badge?.type === "dot" && <span className="dot" />}
                       </Link>
-                      {item.dividerAfter && (
-                        <div
-                          style={{
-                            height: 1,
-                            background: "#e7e7e7",
-                            margin: "10px 6px",
-                          }}
-                        />
-                      )}
+                      {item.dividerAfter && <div className="divider" />}
                     </React.Fragment>
                   );
                 })}
               </nav>
 
+              {/* User Account Info Bar at Sidebar Bottom */}
               <div
                 style={{
                   marginTop: "auto",
+                  paddingTop: 12,
+                  borderTop: "1px solid #e7e7e7",
                   display: "flex",
                   alignItems: "center",
                   gap: 8,
-                  padding: "10px 8px 2px",
-                  borderTop: "1px solid #e7e7e7",
                 }}
               >
-                <span
+                <div
                   style={{
-                    width: 26,
-                    height: 26,
+                    width: 24,
+                    height: 24,
                     background: "#111",
                     color: "#fff",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    font: "600 10px 'Pretendard'",
+                    font: "600 9px 'Pretendard'",
                   }}
                 >
                   운
-                </span>
-                <span
-                  style={{ font: "400 10.5px 'Pretendard'", color: "#8a8a8a" }}
-                >
-                  ops@fandom.app
-                </span>
+                </div>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <div
+                    style={{
+                      font: "500 10.5px 'Pretendard'",
+                      color: "#111",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    ops@fandom.app
+                  </div>
+                </div>
               </div>
             </aside>
 
-            {/* Main View Container */}
+            {/* Main Page Content View */}
             <main className="admin-main">{children}</main>
           </div>
         </div>
