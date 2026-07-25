@@ -4,42 +4,46 @@ import React, { useState } from "react";
 
 interface AdminAccountItem {
   id: string;
-  email: string;
+  adminId: string;
   name: string;
-  role: "슈퍼 관리자" | "일반 운영자";
-  status: "정상" | "정지";
-  tfaEnabled: boolean;
+  role: "SUPER_ADMIN" | "OPERATOR" | "AUDITOR";
+  dept: string;
+  lastLogin: string;
+  status: "ACTIVE" | "LOCKED";
 }
 
-const INITIAL_ADMINS: AdminAccountItem[] = [
+const ADMIN_ACCOUNTS: AdminAccountItem[] = [
   {
-    id: "ADMIN-01",
-    email: "ops@fandom.app",
-    name: "최고 관리자",
-    role: "슈퍼 관리자",
-    status: "정상",
-    tfaEnabled: true,
+    id: "adm_01",
+    adminId: "ops@fandom.app",
+    name: "한결 (최고관리자)",
+    role: "SUPER_ADMIN",
+    dept: "운영총괄",
+    lastLogin: "2026.07.25 21:20",
+    status: "ACTIVE",
   },
   {
-    id: "ADMIN-02",
-    email: "operator1@fandomconquest.com",
-    name: "검수 담당자 A",
-    role: "일반 운영자",
-    status: "정상",
-    tfaEnabled: true,
+    id: "adm_02",
+    adminId: "admin_02@fandom.app",
+    name: "다올 (검수운영)",
+    role: "OPERATOR",
+    dept: "인증검수팀",
+    lastLogin: "2026.07.24 14:32",
+    status: "ACTIVE",
   },
   {
-    id: "ADMIN-03",
-    email: "operator2@fandomconquest.com",
-    name: "검수 담당자 B",
-    role: "일반 운영자",
-    status: "정지",
-    tfaEnabled: false,
+    id: "adm_03",
+    adminId: "auditor@fandom.app",
+    name: "감사팀장",
+    role: "AUDITOR",
+    dept: "보안감사팀",
+    lastLogin: "2026.07.20 11:15",
+    status: "ACTIVE",
   },
 ];
 
 export default function AdminAccountsPage() {
-  const [admins, setAdmins] = useState<AdminAccountItem[]>(INITIAL_ADMINS);
+  const [accountList] = useState<AdminAccountItem[]>(ADMIN_ACCOUNTS);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -49,34 +53,22 @@ export default function AdminAccountsPage() {
     }, 2500);
   };
 
-  const handleResetPassword = (email: string) => {
-    showToast(`🔑 [${email}] 임시 비밀번호 재설정 메일이 발송되었습니다.`);
-  };
-
-  const handleToggleStatus = (id: string) => {
-    setAdmins((prev) =>
-      prev.map((a) =>
-        a.id === id
-          ? { ...a, status: a.status === "정상" ? "정지" : "정상" }
-          : a
-      )
-    );
-    showToast("⚙️ 운영자 계정 상태가 변경되었습니다.");
-  };
-
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      {/* Top Bar */}
       <div className="admin-topbar">
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div className="admin-title">어드민 계정 & 권한 관리</div>
-          <span style={{ font: "400 10.5px 'Pretendard'", color: "#9a9a9a" }}>
-            등록된 운영자 {admins.length}명
+          <span style={{ font: "700 14px 'Pretendard'", color: "#111" }}>
+            어드민 계정 &amp; 권한 관리 (ADM-ACCOUNT-01)
+          </span>
+          <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
+            등록 계정 {accountList.length}개 · RBAC 역할 기반
           </span>
         </div>
         <button
-          onClick={() => showToast("➕ 신규 운영자 계정 발급 모달이 열렸습니다.")}
+          onClick={() => showToast("➕ 신규 어드민 계정 생성 모달이 열렸습니다.")}
           style={{
-            padding: "6px 14px",
+            padding: "7px 14px",
             background: "#111",
             color: "#fff",
             border: "none",
@@ -84,101 +76,78 @@ export default function AdminAccountsPage() {
             cursor: "pointer",
           }}
         >
-          + 신규 운영자 발급
+          + 계정 생성
         </button>
       </div>
 
-      <div style={{ flex: 1, padding: "16px 20px", display: "flex", flexDirection: "column", gap: 12, overflowY: "auto" }}>
+      {/* Main Content Area */}
+      <div
+        style={{
+          flex: 1,
+          padding: "16px 20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 14,
+          overflowY: "auto",
+        }}
+      >
         <div className="admin-card" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <div
-            style={{
-              display: "flex",
-              padding: "8px 16px",
-              borderBottom: "1px solid #f0f0f0",
-              font: "500 10px 'Pretendard'",
-              color: "#9a9a9a",
-              background: "#fafafa",
-            }}
-          >
-            <span style={{ width: 90 }}>ID</span>
-            <span style={{ flex: 1 }}>이메일 (아이디)</span>
-            <span style={{ width: 140 }}>담당자 실명</span>
-            <span style={{ width: 120 }}>권한</span>
+          <div className="thr">
+            <span style={{ width: 160 }}>계정 (ID)</span>
+            <span style={{ width: 140 }}>이름</span>
+            <span style={{ width: 120 }}>RBAC 권한 등급</span>
+            <span style={{ flex: 1 }}>담당 부서</span>
+            <span style={{ width: 140 }}>최종 접속 시각</span>
             <span style={{ width: 80 }}>상태</span>
-            <span style={{ width: 90 }}>2FA OTP</span>
-            <span style={{ width: 160 }}>조치</span>
+            <span style={{ width: 70 }}>설정</span>
           </div>
 
-          {admins.map((row) => (
-            <div
-              key={row.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                padding: "12px 16px",
-                borderBottom: "1px solid #f0f0f0",
-              }}
-            >
-              <span style={{ width: 90, font: "400 10.5px 'Pretendard'", color: "#8a8a8a" }}>
-                {row.id}
-              </span>
-              <span style={{ flex: 1, font: "600 12px 'Pretendard'", color: "#111" }}>
-                {row.email}
-              </span>
-              <span style={{ width: 140, font: "500 11.5px 'Pretendard'", color: "#111" }}>
-                {row.name}
-              </span>
-              <span
-                style={{
-                  width: 120,
-                  font: "600 11px 'Pretendard'",
-                  color: row.role === "슈퍼 관리자" ? "#2f6bff" : "#111",
-                }}
-              >
-                {row.role}
-              </span>
-              <span
-                style={{
-                  width: 80,
-                  font: "600 10px 'Pretendard'",
-                  color: row.status === "정상" ? "#1fa16b" : "#d64545",
-                }}
-              >
-                {row.status}
-              </span>
-              <span style={{ width: 90, font: "400 10.5px 'Pretendard'", color: "#555" }}>
-                {row.tfaEnabled ? "🟢 적용됨" : "⚪ 미적용"}
-              </span>
-              <div style={{ width: 160, display: "flex", gap: 6 }}>
-                <button
-                  onClick={() => handleResetPassword(row.email)}
-                  style={{
-                    padding: "4px 8px",
-                    border: "1px solid #ddd",
-                    background: "#fff",
-                    font: "500 10px 'Pretendard'",
-                    color: "#555",
-                    cursor: "pointer",
-                  }}
-                >
-                  비번초기화
-                </button>
-                <button
-                  onClick={() => handleToggleStatus(row.id)}
-                  style={{
-                    padding: "4px 8px",
-                    border: "1px solid #ddd",
-                    background: "#fff",
-                    font: "500 10px 'Pretendard'",
-                    color: row.status === "정상" ? "#d64545" : "#1fa16b",
-                    cursor: "pointer",
-                  }}
-                >
-                  {row.status === "정상" ? "계정정지" : "계정활성"}
-                </button>
+          <div style={{ flex: 1, overflowY: "auto" }}>
+            {accountList.map((row) => (
+              <div key={row.id} className="tr">
+                <span style={{ width: 160, font: "600 11px ui-monospace,monospace", color: "#111" }}>
+                  {row.adminId}
+                </span>
+                <span style={{ width: 140, font: "500 11.5px 'Pretendard'", color: "#111" }}>
+                  {row.name}
+                </span>
+                <span style={{ width: 120 }}>
+                  <span
+                    className="tag"
+                    style={{
+                      borderColor: row.role === "SUPER_ADMIN" ? "#111" : "#ccc",
+                      color: row.role === "SUPER_ADMIN" ? "#111" : "#555",
+                      fontWeight: row.role === "SUPER_ADMIN" ? 700 : 500,
+                    }}
+                  >
+                    {row.role}
+                  </span>
+                </span>
+                <span style={{ flex: 1, color: "#555" }}>{row.dept}</span>
+                <span style={{ width: 140, color: "#8a8a8a" }}>{row.lastLogin}</span>
+                <span style={{ width: 80 }}>
+                  <span className="pill" style={{ color: "#1fa16b" }}>
+                    ● {row.status}
+                  </span>
+                </span>
+                <span style={{ width: 70 }}>
+                  <button
+                    onClick={() => showToast(`⚙️ [${row.name}] 권한 수정 모달이 열렸습니다.`)}
+                    style={{
+                      font: "500 10px 'Pretendard'",
+                      color: "#111",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    수정
+                  </button>
+                </span>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
@@ -187,14 +156,14 @@ export default function AdminAccountsPage() {
           style={{
             position: "fixed",
             bottom: 24,
-            right: 24,
+            left: "50%",
+            transform: "translateX(-50%)",
             background: "#111",
             color: "#fff",
             padding: "10px 18px",
-            fontSize: 12,
-            fontWeight: 500,
-            boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
-            zIndex: 1000,
+            font: "600 12px 'Pretendard'",
+            boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
+            zIndex: 9999,
           }}
         >
           {toastMessage}
