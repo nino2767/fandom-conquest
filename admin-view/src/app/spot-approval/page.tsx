@@ -72,36 +72,36 @@ export default function SpotApprovalPage() {
           overflowY: "auto",
         }}
       >
-        <div className="admin-card" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <div className="thr">
-            <span style={{ width: 140 }}>제보 ID</span>
-            <span style={{ width: 100 }}>제보 유저</span>
-            <span style={{ flex: 1.5 }}>제보 성지 명칭</span>
-            <span style={{ flex: 2 }}>위치 주소</span>
-            <span style={{ width: 110 }}>귀속 팬덤</span>
-            <span style={{ width: 140 }}>제보 일시</span>
-            <span style={{ width: 120 }}>검수 승인</span>
+        <div className="admin-card table-responsive" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <div className="thr" style={{ display: "flex", minWidth: 800 }}>
+            <span style={{ flex: "0 0 160px" }}>제보 ID</span>
+            <span style={{ flex: "0 0 110px" }}>제보 유저</span>
+            <span style={{ flex: "1 1 200px", minWidth: 160 }}>제보 성지 명칭</span>
+            <span style={{ flex: "1 1 220px", minWidth: 180 }}>위치 주소</span>
+            <span style={{ flex: "0 0 110px" }}>귀속 팬덤</span>
+            <span style={{ flex: "0 0 140px" }}>제보 일시</span>
+            <span style={{ flex: "0 0 130px" }}>검수 승인</span>
           </div>
 
           <div style={{ flex: 1, overflowY: "auto" }}>
             {approvals.map((row) => (
-              <div key={row.id} className="tr">
-                <span style={{ width: 140, font: "600 11px ui-monospace,monospace", color: "#111" }}>
+              <div key={row.id} className="tr" style={{ display: "flex", minWidth: 800 }}>
+                <span style={{ flex: "0 0 160px", font: "600 11px ui-monospace,monospace", color: "#111" }}>
                   {row.id}
                 </span>
-                <span style={{ width: 100, color: "#8a8a8a" }}>{row.submitter}</span>
-                <span style={{ flex: 1.5, font: "600 11.5px 'Pretendard'", color: "#111" }}>
+                <span style={{ flex: "0 0 110px", color: "#8a8a8a" }}>{row.submitter}</span>
+                <span style={{ flex: "1 1 200px", minWidth: 160, font: "600 11.5px 'Pretendard'", color: "#111" }}>
                   {row.spotName}
                 </span>
-                <span style={{ flex: 2, color: "#555" }}>{row.address}</span>
-                <span style={{ width: 110 }}>
+                <span style={{ flex: "1 1 220px", minWidth: 180, color: "#555" }}>{row.address}</span>
+                <span style={{ flex: "0 0 110px" }}>
                   <span className="pill">
                     <span className="col" style={{ background: row.fandomColor }} />
                     {row.fandomName}
                   </span>
                 </span>
-                <span style={{ width: 140, color: "#8a8a8a" }}>{row.submittedAt}</span>
-                <span style={{ width: 120, display: "flex", gap: 6 }}>
+                <span style={{ flex: "0 0 140px", color: "#8a8a8a" }}>{row.submittedAt}</span>
+                <span style={{ flex: "0 0 130px", display: "flex", gap: 6 }}>
                   <button
                     className="btn-d"
                     onClick={() => showToast(`✅ [${row.spotName}] 성지 핀 생성이 완료되었습니다.`)}

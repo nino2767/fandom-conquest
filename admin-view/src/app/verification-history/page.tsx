@@ -148,16 +148,16 @@ export default function VerificationHistoryPage() {
         </div>
 
         {/* Data Table */}
-        <div className="admin-card" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <div className="thr">
-            <span style={{ width: 140 }}>인증 ID</span>
-            <span style={{ width: 100 }}>유저 ID</span>
-            <span style={{ flex: 1 }}>매장명 / 상호</span>
-            <span style={{ width: 120 }}>사업자 번호</span>
-            <span style={{ width: 110 }}>귀속 팬덤</span>
-            <span style={{ width: 100 }}>인증 상태</span>
-            <span style={{ width: 90 }}>금액</span>
-            <span style={{ width: 140 }}>일시</span>
+        <div className="admin-card table-responsive" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <div className="thr" style={{ display: "flex", minWidth: 800 }}>
+            <span style={{ flex: "0 0 150px" }}>인증 ID</span>
+            <span style={{ flex: "0 0 110px" }}>유저 ID</span>
+            <span style={{ flex: "1 1 200px", minWidth: 160 }}>매장명 / 상호</span>
+            <span style={{ flex: "0 0 130px" }}>사업자 번호</span>
+            <span style={{ flex: "0 0 110px" }}>귀속 팬덤</span>
+            <span style={{ flex: "0 0 110px" }}>인증 상태</span>
+            <span style={{ flex: "0 0 90px" }}>금액</span>
+            <span style={{ flex: "0 0 140px" }}>일시</span>
           </div>
 
           <div style={{ flex: 1, overflowY: "auto" }}>
@@ -166,25 +166,25 @@ export default function VerificationHistoryPage() {
                 key={row.id}
                 className="tr"
                 onClick={() => showToast(`📋 [${row.id}] ${row.store} 상세 내역 클릭`)}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", display: "flex", minWidth: 800 }}
               >
-                <span style={{ width: 140, font: "600 11px 'Pretendard'", color: "#111" }}>
+                <span style={{ flex: "0 0 150px", font: "600 11px ui-monospace,monospace", color: "#111" }}>
                   {row.id}
                 </span>
-                <span style={{ width: 100, color: "#8a8a8a" }}>{row.user}</span>
-                <span style={{ flex: 1, font: "500 11.5px 'Pretendard'", color: "#111" }}>
+                <span style={{ flex: "0 0 110px", color: "#8a8a8a" }}>{row.user}</span>
+                <span style={{ flex: "1 1 200px", minWidth: 160, font: "500 11.5px 'Pretendard'", color: "#111" }}>
                   {row.store}
                 </span>
-                <span style={{ width: 120, fontFamily: "monospace", color: "#8a8a8a" }}>
+                <span style={{ flex: "0 0 130px", fontFamily: "monospace", color: "#8a8a8a" }}>
                   {row.bizNum}
                 </span>
-                <span style={{ width: 110, display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ width: 6, height: 6, background: row.fandomColor }} />
+                <span style={{ flex: "0 0 110px", display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ width: 8, height: 8, background: row.fandomColor, borderRadius: 1 }} />
                   <span style={{ font: "500 11px 'Pretendard'", color: "#111" }}>
                     {row.fandom}
                   </span>
                 </span>
-                <span style={{ width: 100 }}>
+                <span style={{ flex: "0 0 110px" }}>
                   <span
                     className="pill"
                     style={{
@@ -199,10 +199,10 @@ export default function VerificationHistoryPage() {
                     ● {row.type}
                   </span>
                 </span>
-                <span style={{ width: 90, font: "600 11px 'Pretendard'", color: "#111" }}>
+                <span style={{ flex: "0 0 90px", font: "600 11px 'Pretendard'", color: "#111" }}>
                   {row.amount}
                 </span>
-                <span style={{ width: 140, color: "#8a8a8a" }}>{row.timestamp}</span>
+                <span style={{ flex: "0 0 140px", color: "#8a8a8a" }}>{row.timestamp}</span>
               </div>
             ))}
           </div>

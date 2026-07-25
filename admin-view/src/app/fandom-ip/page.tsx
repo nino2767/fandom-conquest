@@ -154,22 +154,22 @@ export default function FandomIpPage() {
         </div>
 
         {/* 3-Tier Master Table */}
-        <div className="admin-card" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <div className="thr">
-            <span style={{ width: 74 }}>유형</span>
-            <span style={{ flex: 1.5 }}>팬덤 IP (영문/별칭)</span>
-            <span style={{ width: 150 }}>장르 / 지역</span>
-            <span style={{ width: 140 }}>3계층 상하위 매핑</span>
-            <span style={{ width: 104 }}>시그니처</span>
-            <span style={{ width: 56 }}>가중치</span>
-            <span style={{ width: 84 }}>귀속 유저</span>
-            <span style={{ width: 56 }}>액션</span>
+        <div className="admin-card table-responsive" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <div className="thr" style={{ display: "flex", minWidth: 850 }}>
+            <span style={{ flex: "0 0 84px" }}>유형</span>
+            <span style={{ flex: "1 1 200px", minWidth: 160 }}>팬덤 IP (영문/별칭)</span>
+            <span style={{ flex: "0 0 160px" }}>장르 / 지역</span>
+            <span style={{ flex: "0 0 150px" }}>3계층 상하위 매핑</span>
+            <span style={{ flex: "0 0 114px" }}>시그니처</span>
+            <span style={{ flex: "0 0 66px" }}>가중치</span>
+            <span style={{ flex: "0 0 94px" }}>귀속 유저</span>
+            <span style={{ flex: "0 0 66px" }}>액션</span>
           </div>
 
           <div style={{ flex: 1, overflowY: "auto" }}>
             {FANDOM_IPS.map((row) => (
-              <div key={row.id} className="tr">
-                <span style={{ width: 74 }}>
+              <div key={row.id} className="tr" style={{ display: "flex", minWidth: 850 }}>
+                <span style={{ flex: "0 0 84px" }}>
                   <span
                     className="tag"
                     style={{
@@ -190,15 +190,15 @@ export default function FandomIpPage() {
                     {row.type}
                   </span>
                 </span>
-                <span style={{ flex: 1.5 }}>
+                <span style={{ flex: "1 1 200px", minWidth: 160 }}>
                   <span className="nm">{row.name}</span>
                   <br />
                   <span className="hint">{row.subName}</span>
                 </span>
-                <span style={{ width: 150 }}>
+                <span style={{ flex: "0 0 160px" }}>
                   <span className="hint">{row.genreRegion}</span>
                 </span>
-                <span style={{ width: 140 }}>
+                <span style={{ flex: "0 0 150px" }}>
                   <span
                     style={{
                       font: "500 10px 'Pretendard'",
@@ -208,7 +208,7 @@ export default function FandomIpPage() {
                     {row.mapping}
                   </span>
                 </span>
-                <span style={{ width: 104 }}>
+                <span style={{ flex: "0 0 114px" }}>
                   <span className="pill">
                     <span className="col" style={{ background: row.signatureHex }} />
                     <span style={{ font: "500 10px ui-monospace,monospace" }}>
@@ -216,11 +216,11 @@ export default function FandomIpPage() {
                     </span>
                   </span>
                 </span>
-                <span style={{ width: 56, color: "#111", fontWeight: 600 }}>
+                <span style={{ flex: "0 0 66px", color: "#111", fontWeight: 600 }}>
                   {row.weight}
                 </span>
-                <span style={{ width: 84, color: "#555" }}>{row.usersCount}</span>
-                <span style={{ width: 56 }}>
+                <span style={{ flex: "0 0 94px", color: "#555" }}>{row.usersCount}</span>
+                <span style={{ flex: "0 0 66px" }}>
                   <button
                     onClick={() => setIsIpModalOpen(true)}
                     style={{
@@ -253,228 +253,228 @@ export default function FandomIpPage() {
         </div>
       </div>
 
-        {/* IP Edit Modal */}
-        {isIpModalOpen && (
+      {/* IP Edit Modal */}
+      {isIpModalOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 99999,
+          }}
+        >
           <div
             style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: "rgba(0,0,0,0.5)",
+              width: 520,
+              maxWidth: "90%",
+              background: "#fff",
+              border: "1px solid #ddd",
+              boxShadow: "0 24px 56px -26px rgba(0,0,0,.3)",
+              padding: "22px 24px",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              zIndex: 99999,
+              flexDirection: "column",
+              gap: 0,
             }}
           >
             <div
               style={{
-                width: 520,
-                maxWidth: "90%",
-                background: "#fff",
-                border: "1px solid #ddd",
-                boxShadow: "0 24px 56px -26px rgba(0,0,0,.3)",
-                padding: "22px 24px",
                 display: "flex",
-                flexDirection: "column",
-                gap: 0,
+                justifyContent: "space-between",
+                alignItems: "baseline",
+                marginBottom: 16,
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "baseline",
-                  marginBottom: 16,
-                }}
-              >
-                <span style={{ font: "700 15px 'Pretendard'", color: "#111" }}>
-                  팬덤 IP 등록 / 수정 (g5b)
-                </span>
-                <span className="hint">MODAL-IP-EDIT</span>
-              </div>
-              <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
-                <div style={{ flex: 1 }}>
-                  <div className="fl">국가/지역</div>
-                  <div className="fld" style={{ padding: "8px 10px" }}>
-                    DOMESTIC (국내) ▾
-                  </div>
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div className="fl">장르</div>
-                  <div className="fld" style={{ padding: "8px 10px" }}>
-                    IDOL_GROUP ▾
-                  </div>
-                </div>
-              </div>
-              <div style={{ marginBottom: 12 }}>
-                <div className="fl">IP 구분 유형</div>
-                <div style={{ display: "flex", gap: 6 }}>
-                  <span
-                    style={{
-                      flex: 1,
-                      padding: "8px 0",
-                      textAlign: "center",
-                      border: "1px solid #ddd",
-                      font: "500 11px 'Pretendard'",
-                      color: "#9a9a9a",
-                    }}
-                  >
-                    GROUP
-                  </span>
-                  <span
-                    style={{
-                      flex: 1,
-                      padding: "8px 0",
-                      textAlign: "center",
-                      border: "1.5px solid #111",
-                      font: "600 11px 'Pretendard'",
-                      color: "#111",
-                      background: "#f5f5f5",
-                    }}
-                  >
-                    UNIT
-                  </span>
-                  <span
-                    style={{
-                      flex: 1,
-                      padding: "8px 0",
-                      textAlign: "center",
-                      border: "1px solid #ddd",
-                      font: "500 11px 'Pretendard'",
-                      color: "#9a9a9a",
-                    }}
-                  >
-                    SOLO
-                  </span>
-                </div>
-              </div>
-              <div style={{ marginBottom: 12 }}>
-                <div className="fl">
-                  직속 상위 IP 연결 (parent_fandom_id)
-                </div>
+              <span style={{ font: "700 15px 'Pretendard'", color: "#111" }}>
+                팬덤 IP 등록 / 수정 (g5b)
+              </span>
+              <span className="hint">MODAL-IP-EDIT</span>
+            </div>
+            <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+              <div style={{ flex: 1 }}>
+                <div className="fl">국가/지역</div>
                 <div className="fld" style={{ padding: "8px 10px" }}>
-                  FANDOM-04 (세븐틴) — 루트 자동 매핑 ▾
+                  DOMESTIC (국내) ▾
                 </div>
               </div>
-              <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
-                <div style={{ flex: 1 }}>
-                  <div className="fl">팬덤 정식명</div>
-                  <div className="fld" style={{ padding: "8px 10px" }}>
-                    부석순
-                  </div>
+              <div style={{ flex: 1 }}>
+                <div className="fl">장르</div>
+                <div className="fld" style={{ padding: "8px 10px" }}>
+                  IDOL_GROUP ▾
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div className="fl">영문 공식명</div>
-                  <div className="fld" style={{ padding: "8px 10px" }}>
-                    BSS
-                  </div>
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  gap: 12,
-                  marginBottom: 14,
-                  padding: "12px 14px",
-                  border: "1px solid #e7e7e7",
-                  background: "#fafafa",
-                }}
-              >
-                <div style={{ width: 52 }}>
-                  <div className="fl">엠블럼</div>
-                  <div
-                    style={{
-                      width: 52,
-                      height: 52,
-                      border: "1px dashed #ccc",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      background: "#fff",
-                    }}
-                  >
-                    <span className="hint">SVG</span>
-                  </div>
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div className="fl">대표 식별 컬러 (HEX Token)</div>
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: 8,
-                      alignItems: "center",
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: 34,
-                        height: 34,
-                        background: "#FF6B6B",
-                        flex: "none",
-                      }}
-                    />
-                    <span
-                      className="fld"
-                      style={{
-                        flex: 1,
-                        padding: "8px 10px",
-                        font: "500 11.5px ui-monospace,monospace",
-                      }}
-                    >
-                      #FF6B6B
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      marginTop: 7,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 6,
-                    }}
-                  >
-                    <span
-                      className="pill"
-                      style={{ color: "#1fa16b", fontWeight: 600 }}
-                    >
-                      ✓ WCAG AA 통과
-                    </span>
-                    <span className="hint">대비 4.9:1 · 지도 채색 정상</span>
-                  </div>
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  gap: 8,
-                  marginTop: 10,
-                }}
-              >
-                <button
-                  className="btn-l"
-                  onClick={() => setIsIpModalOpen(false)}
-                  style={{ flex: 1, height: 44, cursor: "pointer" }}
-                >
-                  취소
-                </button>
-                <button
-                  className="btn-d"
-                  onClick={() => {
-                    showToast(
-                      "✅ 팬덤 IP 정보가 저장 및 전역 반영되었습니다."
-                    );
-                    setIsIpModalOpen(false);
-                  }}
-                  style={{ flex: 1.6, height: 44, cursor: "pointer" }}
-                >
-                  저장 확정
-                </button>
               </div>
             </div>
+            <div style={{ marginBottom: 12 }}>
+              <div className="fl">IP 구분 유형</div>
+              <div style={{ display: "flex", gap: 6 }}>
+                <span
+                  style={{
+                    flex: 1,
+                    padding: "8px 0",
+                    textAlign: "center",
+                    border: "1px solid #ddd",
+                    font: "500 11px 'Pretendard'",
+                    color: "#9a9a9a",
+                  }}
+                >
+                  GROUP
+                </span>
+                <span
+                  style={{
+                    flex: 1,
+                    padding: "8px 0",
+                    textAlign: "center",
+                    border: "1.5px solid #111",
+                    font: "600 11px 'Pretendard'",
+                    color: "#111",
+                    background: "#f5f5f5",
+                  }}
+                >
+                  UNIT
+                </span>
+                <span
+                  style={{
+                    flex: 1,
+                    padding: "8px 0",
+                    textAlign: "center",
+                    border: "1px solid #ddd",
+                    font: "500 11px 'Pretendard'",
+                    color: "#9a9a9a",
+                  }}
+                >
+                  SOLO
+                </span>
+              </div>
+            </div>
+            <div style={{ marginBottom: 12 }}>
+              <div className="fl">
+                직속 상위 IP 연결 (parent_fandom_id)
+              </div>
+              <div className="fld" style={{ padding: "8px 10px" }}>
+                FANDOM-04 (세븐틴) — 루트 자동 매핑 ▾
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+              <div style={{ flex: 1 }}>
+                <div className="fl">팬덤 정식명</div>
+                <div className="fld" style={{ padding: "8px 10px" }}>
+                  부석순
+                </div>
+              </div>
+              <div style={{ flex: 1 }}>
+                <div className="fl">영문 공식명</div>
+                <div className="fld" style={{ padding: "8px 10px" }}>
+                  BSS
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                gap: 12,
+                marginBottom: 14,
+                padding: "12px 14px",
+                border: "1px solid #e7e7e7",
+                background: "#fafafa",
+              }}
+            >
+              <div style={{ width: 52 }}>
+                <div className="fl">엠블럼</div>
+                <div
+                  style={{
+                    width: 52,
+                    height: 52,
+                    border: "1px dashed #ccc",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "#fff",
+                  }}
+                >
+                  <span className="hint">SVG</span>
+                </div>
+              </div>
+              <div style={{ flex: 1 }}>
+                <div className="fl">대표 식별 컬러 (HEX Token)</div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 8,
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 34,
+                      height: 34,
+                      background: "#FF6B6B",
+                      flex: "none",
+                    }}
+                  />
+                  <span
+                    className="fld"
+                    style={{
+                      flex: 1,
+                      padding: "8px 10px",
+                      font: "500 11.5px ui-monospace,monospace",
+                    }}
+                  >
+                    #FF6B6B
+                  </span>
+                </div>
+                <div
+                  style={{
+                    marginTop: 7,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                  }}
+                >
+                  <span
+                    className="pill"
+                    style={{ color: "#1fa16b", fontWeight: 600 }}
+                  >
+                    ✓ WCAG AA 통과
+                  </span>
+                  <span className="hint">대비 4.9:1 · 지도 채색 정상</span>
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                gap: 8,
+                marginTop: 10,
+              }}
+            >
+              <button
+                className="btn-l"
+                onClick={() => setIsIpModalOpen(false)}
+                style={{ flex: 1, height: 44, cursor: "pointer" }}
+              >
+                취소
+              </button>
+              <button
+                className="btn-d"
+                onClick={() => {
+                  showToast(
+                    "✅ 팬덤 IP 정보가 저장 및 전역 반영되었습니다."
+                  );
+                  setIsIpModalOpen(false);
+                }}
+                style={{ flex: 1.6, height: 44, cursor: "pointer" }}
+              >
+                저장 확정
+              </button>
+            </div>
           </div>
-        )}
+        </div>
+      )}
 
       {toastMessage && (
         <div

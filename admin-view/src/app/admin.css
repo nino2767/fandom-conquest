@@ -1,54 +1,302 @@
+/* admin.css - Sharp Monochrome v0.2 Design System Core */
+
 @import "tailwindcss";
 
-/* Fandom Conquest Admin Console Styles (v0.2 Sharp Monochrome) */
-:root {
-  --admin-bg: #fafafa;
-  --admin-card-bg: #ffffff;
-  --admin-border: #e7e7e7;
-  --admin-border-dark: #111111;
-  --admin-text-main: #111111;
-  --admin-text-sub: #8a8a8a;
-  --admin-text-muted: #9a9a9a;
-  --admin-danger: #d64545;
-  --admin-warning: #e08a00;
-  --admin-success: #1fa16b;
-  --admin-accent-blue: #2f6bff;
-  --admin-accent-pink: #e64980;
-  --admin-accent-yellow: #f59f00;
-}
+/* ----------------------------------------------------
+ * HTML v0.2 Publishing Specification Standard CSS
+ * ---------------------------------------------------- */
 
 body {
   margin: 0;
-  background-color: #fafafa;
-  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: #fafafa;
+  font-family: "Pretendard", system-ui, -apple-system, sans-serif;
   color: #111111;
-  min-height: 100vh;
 }
 
-.admin-container {
+a {
+  color: #111111;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #555555;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Sidebar Branding & Navigation */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 4px 8px 14px;
+}
+
+.lg {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  background: #111111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bt {
+  font: 700 12.5px/1.15 "Pretendard", sans-serif;
+  color: #111111;
+  display: flex;
+  flex-direction: column;
+}
+
+.bt b {
+  font: 400 8.5px "Pretendard", sans-serif;
+  color: #9a9a9a;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6.5px 10px;
+  font: 500 11.5px "Pretendard", sans-serif;
+  color: #8a8a8a;
+  cursor: pointer;
+  border-radius: 0px;
+  user-select: none;
+}
+
+.nav:hover {
+  color: #111111;
+  background: #f5f5f5;
+}
+
+.nav.on {
+  background: #ececec;
+  color: #111111;
+  font-weight: 600;
+}
+
+.divider {
+  height: 1px;
+  background: #e7e7e7;
+  margin: 8px 6px;
+}
+
+.b-d {
+  margin-left: auto;
+  padding: 1px 6px;
+  background: #111111;
+  color: #ffffff;
+  font: 600 9px "Pretendard", sans-serif;
+}
+
+.b-g {
+  margin-left: auto;
+  padding: 1px 6px;
+  background: #eee;
+  color: #888888;
+  font: 600 9px "Pretendard", sans-serif;
+}
+
+.dot {
+  margin-left: auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d64545;
+}
+
+/* Cards & Text Tokens */
+.card, .admin-card {
+  background: #ffffff;
+  border: 1px solid #e2e2e2;
+  border-radius: 0px;
+}
+
+.th {
+  font: 500 10px "Pretendard", sans-serif;
+  color: #9a9a9a;
+  letter-spacing: 0.04em;
+}
+
+.num {
+  font: 600 23px "Pretendard", sans-serif;
+  color: #111111;
+  margin-top: 5px;
+}
+
+.sub9 {
+  font: 400 10px "Pretendard", sans-serif;
+  color: #8a8a8a;
+  margin-top: 2px;
+}
+
+.h2 {
+  font: 700 12px "Pretendard", sans-serif;
+  color: #111111;
+}
+
+.hint {
+  font: 400 9.5px "Pretendard", sans-serif;
+  color: #9a9a9a;
+}
+
+.tile {
+  width: 64px;
+  height: 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Form Inputs & Fields */
+.fl {
+  font: 400 9.5px "Pretendard", sans-serif;
+  color: #9a9a9a;
+  margin-bottom: 4px;
+}
+
+.fld {
+  padding: 9px 11px;
+  border: 1px solid #ddd;
+  font: 500 11.5px "Pretendard", sans-serif;
+  color: #111111;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  border: 1px solid #ccc;
+  font: 600 8.5px "Pretendard", sans-serif;
+  color: #555555;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.col {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.btn-d {
+  background: #111111;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 600 12px "Pretendard", sans-serif;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-l {
+  border: 1px solid #ddd;
+  color: #555555;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 500 11.5px "Pretendard", sans-serif;
+  background: #ffffff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-r {
+  border: 1px solid #d64545;
+  color: #d64545;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 600 12px "Pretendard", sans-serif;
+  background: #ffffff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font: 500 10px "Pretendard", sans-serif;
+  white-space: nowrap;
+}
+
+/* ----------------------------------------------------
+ * Data Tables CSS Grid/Flex System Standard
+ * ---------------------------------------------------- */
+.thr {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  font: 500 10px "Pretendard", sans-serif;
+  color: #9a9a9a;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+
+.tr {
+  display: flex;
+  align-items: center;
+  padding: 11px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  font: 400 10.5px "Pretendard", sans-serif;
+  color: #555555;
+  box-sizing: border-box;
+  background: #ffffff;
+}
+
+.tr.sel {
+  background: #f5f5f5;
+}
+
+.tr:hover {
+  background: #fcfcfc;
+}
+
+.tr .nm {
+  font: 500 11.5px "Pretendard", sans-serif;
+  color: #111111;
+}
+
+/* Crucial Fix: Ensure span elements in thr/tr have block formatting & flex behavior */
+.thr > span,
+.tr > span {
+  display: inline-block;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+/* Main App Layout Structures */
+.admin-layout-root {
   display: flex;
   width: 100vw;
-  min-height: 100vh;
-  margin: 0;
-  max-width: 100%;
-  background: #fafafa;
-  border: none;
-  box-shadow: none;
+  height: 100vh;
   overflow: hidden;
+  background: #fafafa;
 }
 
-@media (max-width: 1024px) {
-  .admin-container {
-    height: auto;
-    min-height: 100vh;
-    margin: 0;
-    border: none;
-    box-shadow: none;
-    flex-direction: column;
-  }
-}
-
-/* Sidebar */
 .admin-sidebar {
   width: 196px;
   flex: none;
@@ -57,124 +305,9 @@ body {
   display: flex;
   flex-direction: column;
   padding: 14px 12px;
+  box-sizing: border-box;
 }
 
-@media (max-width: 1024px) {
-  .admin-sidebar {
-    display: none;
-  }
-  .admin-sidebar.mobile-open {
-    display: flex !important;
-    position: fixed !important;
-    top: 50px !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    z-index: 99999 !important;
-    width: 100vw !important;
-    height: calc(100vh - 50px) !important;
-    background: #ffffff !important;
-    overflow-y: auto !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
-  }
-}
-
-.admin-brand {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 4px 8px 14px;
-}
-
-.admin-brand-icon {
-  width: 28px;
-  height: 28px;
-  background: #111111;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  border-radius: 0px;
-}
-
-.admin-brand-text {
-  font-size: 12.5px;
-  font-weight: 700;
-  line-height: 1.15;
-  color: #111111;
-  display: flex;
-  flex-direction: column;
-}
-
-.admin-brand-sub {
-  font-size: 8.5px;
-  font-weight: 400;
-  color: #9a9a9a;
-  letter-spacing: 0.08em;
-  margin-top: 2px;
-}
-
-/* Nav Item */
-.admin-nav-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6.5px 10px;
-  font-size: 11.5px;
-  font-weight: 500;
-  color: #8a8a8a;
-  text-decoration: none;
-  border-radius: 0px;
-  transition: all 0.1s ease;
-}
-
-.admin-nav-item:hover {
-  background: #f5f5f5;
-  color: #111111;
-}
-
-.admin-nav-item.active {
-  background: #ececec;
-  color: #111111;
-  font-weight: 600;
-}
-
-.admin-badge-black {
-  margin-left: auto;
-  padding: 1px 6px;
-  background: #111111;
-  color: #ffffff;
-  font-size: 9px;
-  font-weight: 600;
-  border-radius: 0px;
-}
-
-.admin-badge-gray {
-  margin-left: auto;
-  padding: 1px 6px;
-  background: #eee;
-  color: #888;
-  font-size: 9px;
-  font-weight: 600;
-  border-radius: 0px;
-}
-
-.admin-dot-red {
-  margin-left: auto;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--admin-danger);
-}
-
-.admin-divider {
-  height: 1px;
-  background: #e7e7e7;
-  margin: 8px 6px;
-}
-
-/* Main Layout */
 .admin-main {
   flex: 1;
   min-width: 0;
@@ -195,106 +328,41 @@ body {
   justify-content: space-between;
   padding: 0 20px;
   gap: 12px;
+  box-sizing: border-box;
 }
 
-.admin-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #111111;
-}
-
-.admin-card {
-  background: #ffffff;
-  border: 1px solid #e2e2e2;
-  border-radius: 0px;
-  color: #111111;
-}
-
-.admin-card-header {
-  font-size: 10px;
-  font-weight: 500;
-  color: #9a9a9a;
-  letter-spacing: 0.04em;
-}
-
-.admin-card-num {
-  font-size: 23px;
-  font-weight: 600;
-  color: #111111;
-  margin-top: 5px;
-}
-
-.admin-card-sub {
-  font-size: 10px;
-  font-weight: 400;
-  color: #8a8a8a;
-  margin-top: 2px;
-}
-
-/* Mobile top header */
-.admin-mobile-header {
-  display: none;
-  height: 50px;
-  background: #ffffff;
-  border-bottom: 1px solid var(--admin-border);
-  padding: 0 14px;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
+/* Responsive Utilities & Drawers */
 @media (max-width: 1024px) {
-  .admin-mobile-header {
-    display: flex;
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    bottom: 0;
+    width: 240px;
+    z-index: 99999;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+    transition: left 0.2s ease-in-out;
+  }
+
+  .admin-sidebar.mobile-open {
+    left: 0 !important;
+    background: #ffffff !important;
   }
 }
 
-/* Mobile Responsive Adjustments (max-width: 768px) */
 @media (max-width: 768px) {
-  .admin-main {
-    padding: 0px;
-  }
-  
-  .admin-topbar {
-    padding: 10px 14px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    min-height: auto;
-  }
-
-  /* Make 2-column split containers wrap into single column on mobile */
   .mobile-stack {
     flex-direction: column !important;
-  }
-  
-  /* Make sidebar cover full height when opened on mobile */
-  .admin-sidebar.mobile-open {
-    top: 50px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: calc(100vh - 50px);
-    z-index: 999;
-  }
-
-  /* Table horizontal scroll wrapper for mobile */
-  .table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Responsive card grids */
-  .kpi-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
   }
 
   .detail-panel-mobile {
     width: 100% !important;
     border-left: none !important;
     border-top: 1px solid #e7e7e7 !important;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }

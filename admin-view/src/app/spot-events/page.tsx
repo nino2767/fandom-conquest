@@ -117,6 +117,7 @@ export default function SpotEventsPage() {
       <div className="mobile-stack" style={{ flex: 1, display: "flex", minHeight: 0, overflow: "hidden" }}>
         {/* Left: Pins Queue Table */}
         <div
+          className="table-responsive"
           style={{
             flex: 1,
             display: "flex",
@@ -126,12 +127,12 @@ export default function SpotEventsPage() {
             overflowY: "auto",
           }}
         >
-          <div className="thr">
-            <span style={{ flex: 1.6 }}>이벤트 성지 / 연동 장소</span>
-            <span style={{ width: 88 }}>귀속 팬덤</span>
-            <span style={{ width: 72 }}>유형</span>
-            <span style={{ width: 120 }}>운영 기간</span>
-            <span style={{ width: 74 }}>마커</span>
+          <div className="thr" style={{ display: "flex", minWidth: 500 }}>
+            <span style={{ flex: "1 1 180px", minWidth: 140 }}>이벤트 성지 / 연동 장소</span>
+            <span style={{ flex: "0 0 90px" }}>귀속 팬덤</span>
+            <span style={{ flex: "0 0 74px" }}>유형</span>
+            <span style={{ flex: "0 0 110px" }}>운영 기간</span>
+            <span style={{ flex: "0 0 74px" }}>마커</span>
           </div>
 
           {PIN_EVENTS.map((row) => {
@@ -141,9 +142,9 @@ export default function SpotEventsPage() {
                 key={row.id}
                 className={`tr ${isSel ? "sel" : ""}`}
                 onClick={() => setSelectedId(row.id)}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", display: "flex", minWidth: 500 }}
               >
-                <span style={{ flex: 1.6 }}>
+                <span style={{ flex: "1 1 180px", minWidth: 140 }}>
                   <span
                     className="nm"
                     style={{ color: row.status === "ARCHIVED" ? "#9a9a9a" : "#111" }}
@@ -155,13 +156,13 @@ export default function SpotEventsPage() {
                     {row.placeName} · {row.area}
                   </span>
                 </span>
-                <span style={{ width: 88 }}>
+                <span style={{ flex: "0 0 90px" }}>
                   <span className="pill">
                     <span className="col" style={{ background: row.fandomColor }} />
                     {row.fandomName}
                   </span>
                 </span>
-                <span style={{ width: 72 }}>
+                <span style={{ flex: "0 0 74px" }}>
                   <span
                     className="tag"
                     style={{
@@ -172,8 +173,8 @@ export default function SpotEventsPage() {
                     {row.type}
                   </span>
                 </span>
-                <span style={{ width: 120, color: "#555" }}>{row.period}</span>
-                <span style={{ width: 74 }}>
+                <span style={{ flex: "0 0 110px", color: "#555" }}>{row.period}</span>
+                <span style={{ flex: "0 0 74px" }}>
                   <span
                     style={{
                       font: "600 10.5px 'Pretendard'",
