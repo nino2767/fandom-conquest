@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { ReviewHoldModal } from "@/components/modals/SharedModals";
-import { useAdminData } from "@/context/AdminDataContext";
+import { useAdminData, VerificationQueueItem } from "@/context/AdminDataContext";
 
 const REJECT_REASONS = [
   "동일 영수증 중복 제출",
@@ -21,7 +21,9 @@ export default function ReceiptVerificationPage() {
     holdVerification 
   } = useAdminData();
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // 상세 모달 상태
+  const [selectedItem, setSelectedItem] = useState<VerificationQueueItem | null>(null);
+  
   const [rejectPopoverOpen, setRejectPopoverOpen] = useState(false);
   const [isHoldModalOpen, setIsHoldModalOpen] = useState(false);
   const [selectedRejectReason, setSelectedRejectReason] = useState(
@@ -29,20 +31,7 @@ export default function ReceiptVerificationPage() {
   );
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // 큐가 비어있거나 인덱스 범위를 초과했을 때 안전장치
   const hasItems = verificationQueue.length > 0;
-  
-  // 인덱스 안전 조정 (Effect 내 동기 갱신 제한 룰 준수하여 setTimeout 사용)
-  useEffect(() => {
-    if (verificationQueue.length > 0 && currentIndex >= verificationQueue.length) {
-      const timer = setTimeout(() => {
-        setCurrentIndex(Math.max(0, verificationQueue.length - 1));
-      }, 0);
-      return () => clearTimeout(timer);
-    }
-  }, [verificationQueue.length, currentIndex]);
-
-  const item = hasItems ? (verificationQueue[currentIndex] || verificationQueue[0]) : null;
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -51,43 +40,36 @@ export default function ReceiptVerificationPage() {
     }, 3000);
   };
 
-  const handleApprove = useCallback(() => {
-    if (!item) return;
-    const fandomName = item.fandomName;
-    const itemId = item.id;
+  const handleApprove = useCallback((itemToApprove: VerificationQueueItem) => {
+    if (!itemToApprove) return;
+    const fandomName = itemToApprove.fandomName;
+    const itemId = itemToApprove.id;
     approveVerification(itemId);
+    setSelectedItem(null);
     showToast(
       `[승인 완수] '${fandomName}' +10점 반영 ➔ 최상위 루트 그룹 스코어 자동 상향 상속 (Upward Roll-up) 실행 완료!`
     );
-    // 큐에서 빠지므로 currentIndex가 자동 유지되지만, 마지막 항목인 경우 이전으로 땡김
-    if (currentIndex >= verificationQueue.length - 1 && currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-    }
-  }, [item, currentIndex, verificationQueue.length, approveVerification]);
+  }, [approveVerification]);
 
-  const handleReject = () => {
-    if (!item) return;
-    const itemId = item.id;
+  const handleReject = (itemToReject: VerificationQueueItem) => {
+    if (!itemToReject) return;
+    const itemId = itemToReject.id;
     rejectVerification(itemId, selectedRejectReason);
-    showToast(`[반려 완료] 반려 사유: ${selectedRejectReason}`);
+    setSelectedItem(null);
     setRejectPopoverOpen(false);
-    if (currentIndex >= verificationQueue.length - 1 && currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-    }
+    showToast(`[반려 완료] 반려 사유: ${selectedRejectReason}`);
   };
 
-  const handleHold = () => {
-    if (!item) return;
-    const itemId = item.id;
+  const handleHold = (itemToHold: VerificationQueueItem) => {
+    if (!itemToHold) return;
+    const itemId = itemToHold.id;
     holdVerification(itemId);
-    showToast(`[보류 이관] 사유 처리 및 이관 완료`);
+    setSelectedItem(null);
     setIsHoldModalOpen(false);
-    if (currentIndex >= verificationQueue.length - 1 && currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-    }
+    showToast(`[보류 이관] 사유 처리 및 이관 완료`);
   };
 
-  // Keyboard Shortcuts Support
+  // Keyboard Shortcuts Support when Modal is Open
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
@@ -96,30 +78,24 @@ export default function ReceiptVerificationPage() {
       )
         return;
       
-      if (!hasItems) return;
+      if (!selectedItem) return;
 
       if (e.code === "Space") {
         e.preventDefault();
-        handleApprove();
+        handleApprove(selectedItem);
       } else if (e.code === "KeyR") {
         e.preventDefault();
         setRejectPopoverOpen(true);
       } else if (e.code === "KeyH") {
         e.preventDefault();
         setIsHoldModalOpen(true);
-      } else if (e.code === "ArrowLeft") {
-        e.preventDefault();
-        setCurrentIndex((prev) => Math.max(0, prev - 1));
-      } else if (e.code === "ArrowRight") {
-        e.preventDefault();
-        setCurrentIndex((prev) => Math.min(verificationQueue.length - 1, prev + 1));
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleApprove, hasItems, verificationQueue.length]);
+  }, [handleApprove, selectedItem]);
 
-  if (!hasItems || !item) {
+  if (!hasItems) {
     return (
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
         <div className="admin-topbar">
@@ -175,292 +151,406 @@ export default function ReceiptVerificationPage() {
             영수증 수동 검수 (ADM-VERIFY-01)
           </span>
           <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
-            단축키 지원: <b style={{ color: "#111" }}>[Space] 승인</b> |{" "}
-            <b style={{ color: "#d64545" }}>[R] 반려</b> |{" "}
-            <b style={{ color: "#e08a00" }}>[H] 보류</b> |{" "}
-            <b style={{ color: "#111" }}>[← / →] 이동</b> (건당 5초 초고속 심사)
+            목록 선택 시 상세 검수 팝업 활성화 · 검수 팝업 내 단축키: <b style={{ color: "#111" }}>[Space] 승인</b> | <b style={{ color: "#d64545" }}>[R] 반려</b> | <b style={{ color: "#e08a00" }}>[H] 보류</b>
           </span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div>
           <span className="pill" style={{ color: "#111", fontWeight: 600 }}>
-            수동 검수 대기 {verificationQueue.length}
+            수동 검수 대기 {verificationQueue.length}건
           </span>
-          <span style={{ font: "500 11px 'Pretendard'", color: "#8a8a8a" }}>
-            현재 항목: {currentIndex + 1} / {verificationQueue.length}
-          </span>
-          <button
-            className="btn-l"
-            onClick={() => setIsHoldModalOpen(true)}
-            style={{ height: 32, padding: "0 10px", fontSize: 11 }}
-          >
-            보류 이관 [COMM-02]
-          </button>
         </div>
       </div>
 
-      {/* Main 2-Column Split Content */}
+      {/* Main Single Column Grid Table */}
       <div
-        className="mobile-stack"
         style={{
           flex: 1,
+          padding: "16px 20px",
           display: "flex",
-          minHeight: 0,
-          overflow: "hidden",
-          background: "#fafafa",
+          flexDirection: "column",
+          gap: 14,
+          overflowY: "auto",
         }}
       >
-        {/* Left: Original Receipt Viewer (410px) */}
-        <div
-          style={{
-            width: 410,
-            flex: "none",
-            borderRight: "1px solid #e7e7e7",
-            padding: "16px 20px",
-            display: "flex",
-            flexDirection: "column",
-            minWidth: 0,
-            background: "#fff",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "baseline",
-              marginBottom: 10,
-            }}
-          >
-            <span style={{ font: "700 12px 'Pretendard'", color: "#111" }}>
-              📷 제출 영수증 원본 캡처
-            </span>
-            <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
-              ID: {item.id}
-            </span>
+        <div className="admin-card table-responsive" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <div className="thr" style={{ display: "flex" }}>
+            <span style={{ width: 140 }}>검수 ID</span>
+            <span style={{ width: 120 }}>제보 유저</span>
+            <span style={{ flex: 1 }}>영수증 결제처</span>
+            <span style={{ width: 130 }}>귀속 팬덤 IP</span>
+            <span style={{ width: 100 }}>인증 자치구</span>
+            <span style={{ width: 110 }}>결제 금액</span>
+            <span style={{ width: 110 }}>OCR 신뢰도</span>
+            <span style={{ width: 90 }}>자동 상태</span>
           </div>
 
-          <div
-            style={{
-              flex: 1,
-              background: "#111",
-              color: "#33ff77",
-              fontFamily: "monospace",
-              fontSize: 11,
-              lineHeight: 1.6,
-              padding: 16,
-              border: "1px solid #111",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-              whiteSpace: "pre-wrap",
-              minHeight: 300,
-            }}
-          >
-            {item.receiptImgText}
-          </div>
-
-          <div
-            style={{
-              marginTop: 10,
-              font: "400 9.5px 'Pretendard'",
-              color: "#9a9a9a",
-              textAlign: "center",
-            }}
-          >
-            확대 휠 스크롤 연동 · AI 그린 박스 대조 영역
+          <div style={{ flex: 1, overflowY: "auto" }}>
+            {verificationQueue.map((row) => (
+              <div
+                key={row.id}
+                className="tr"
+                onClick={() => setSelectedItem(row)}
+                style={{ display: "flex", cursor: "pointer" }}
+                title="클릭하여 상세 영수증 이미지 대조 및 심사"
+              >
+                <span style={{ width: 140, font: "600 11px ui-monospace,monospace", color: "#111" }}>
+                  {row.id}
+                </span>
+                <span style={{ width: 120, color: "#555" }}>
+                  {row.submitter}
+                </span>
+                <span style={{ flex: 1, font: "600 11.5px 'Pretendard'", color: "#111", textDecoration: "underline" }}>
+                  {row.storeName}
+                </span>
+                <span style={{ width: 130 }}>
+                  <span className="pill">
+                    <span
+                      className="col"
+                      style={{
+                        background:
+                          row.fandomId === "FANDOM-01"
+                            ? "#2f6bff"
+                            : row.fandomId === "FANDOM-02"
+                            ? "#e64980"
+                            : "#f59f00",
+                      }}
+                    />
+                    {row.fandomName}
+                  </span>
+                </span>
+                <span style={{ width: 100, color: "#111" }}>{row.area}</span>
+                <span style={{ width: 110, font: "600 11.5px 'Pretendard'", color: "#111" }}>
+                  {row.amount}원
+                </span>
+                <span style={{ width: 110, color: "#8a8a8a" }}>
+                  {row.ocrConfidence}%
+                </span>
+                <span style={{ width: 90 }}>
+                  <span
+                    className="pill"
+                    style={{
+                      color:
+                        row.status === "match"
+                          ? "#1fa16b"
+                          : row.status === "warning"
+                          ? "#e08a00"
+                          : "#d64545",
+                    }}
+                  >
+                    ● {row.status.toUpperCase()}
+                  </span>
+                </span>
+              </div>
+            ))}
           </div>
         </div>
+      </div>
 
-        {/* Right: AI OCR Field Analysis & Actions */}
+      {/* Receipt Detail Verification Popover Modal */}
+      {selectedItem && (
         <div
-          className="detail-panel-mobile"
           style={{
-            flex: 1,
-            padding: "16px 20px",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0, 0, 0, 0.4)",
             display: "flex",
-            flexDirection: "column",
-            minWidth: 0,
-            overflowY: "auto",
-            background: "#fff",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
           }}
         >
           <div
+            className="admin-card mobile-stack"
             style={{
+              width: 820,
+              height: "85vh",
+              background: "#fff",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
               display: "flex",
-              justifyContent: "space-between",
-              alignItems: "baseline",
-              marginBottom: 12,
+              minHeight: 0,
+              overflow: "hidden",
             }}
           >
-            <span style={{ font: "700 12px 'Pretendard'", color: "#111" }}>
-              🤖 AI OCR 4개 필드 판정 결과
-            </span>
-            <span className="pill" style={{ color: "#1fa16b", fontWeight: 600 }}>
-              AI 신뢰도 {item.ocrConfidence}
-            </span>
-          </div>
-
-          {/* Key Value Details Table */}
-          <div className="admin-card" style={{ padding: "14px 16px", marginBottom: 14 }}>
+            {/* Modal Left: Receipt Image Preview (Terminal Style Text) */}
             <div
               style={{
-                display: "grid",
-                gridTemplateColumns: "110px 1fr",
-                rowGap: 10,
-                font: "400 11px 'Pretendard'",
+                width: 380,
+                borderRight: "1px solid #e7e7e7",
+                padding: "20px 24px",
+                display: "flex",
+                flexDirection: "column",
+                minWidth: 0,
+                background: "#fff",
               }}
             >
-              <span className="th">인증 귀속 팬덤:</span>
-              <span style={{ font: "600 12px 'Pretendard'", color: "#111" }}>
-                {item.fandomName}
-              </span>
-
-              <span className="th">매장명 / 상호:</span>
-              <span style={{ font: "500 11.5px 'Pretendard'", color: "#111" }}>
-                {item.storeName}
-              </span>
-
-              <span className="th">결제 일시:</span>
-              <span style={{ color: "#111" }}>{item.dateTime}</span>
-
-              <span className="th">인증 상권:</span>
-              <span style={{ color: "#111" }}>{item.area}</span>
-
-              <span className="th">결제 금액:</span>
-              <span style={{ font: "700 13px 'Pretendard'", color: "#1fa16b" }}>
-                {item.amount}{" "}
-                <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
-                  (≥ 3,000원 기준 통과)
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
+                <span style={{ font: "700 12px 'Pretendard'", color: "#111" }}>
+                  📷 영수증 원본 OCR 덤프
                 </span>
-              </span>
-            </div>
-          </div>
-
-          <div
-            style={{
-              padding: "10px 12px",
-              background: "#f5f5f5",
-              border: "1px solid #e7e7e7",
-              font: "400 10px/1.6 'Pretendard'",
-              color: "#555",
-              marginBottom: 16,
-            }}
-          >
-            💡 <b style={{ color: "#111" }}>단방향 상향 점수 상속 (Upward Roll-up)</b>: 승인 시 멤버 스코어 +10점과 동시에 최상위 단체 그룹 스코어 `score = score + 10` 이 **단일 원자적 트랜잭션**으로 자동 반영됩니다.
-          </div>
-
-          {/* Action Button Bar */}
-          <div
-            style={{
-              marginTop: "auto",
-              display: "flex",
-              gap: 12,
-              alignItems: "center",
-              position: "relative",
-            }}
-          >
-            {/* Reject Button & Reason Popover */}
-            <div style={{ flex: 1, position: "relative" }}>
-              <button
-                className="btn-l"
-                onClick={() => setRejectPopoverOpen(!rejectPopoverOpen)}
+                <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
+                  {selectedItem.id}
+                </span>
+              </div>
+              <div
                 style={{
-                  width: "100%",
-                  height: 46,
-                  color: "#d64545",
-                  borderColor: "#d64545",
-                  fontWeight: 600,
-                  cursor: "pointer",
+                  flex: 1,
+                  background: "#111",
+                  color: "#33ff77",
+                  fontFamily: "monospace",
+                  fontSize: 10.5,
+                  lineHeight: 1.6,
+                  padding: 16,
+                  border: "1px solid #111",
+                  overflowY: "auto",
+                  alignContent: "flex-start",
                 }}
               >
-                [R] 반려 처리
-              </button>
+                {selectedItem.receiptImgText.split("\n").map((line: string, idx: number) => (
+                  <div key={idx}>{line}</div>
+                ))}
+              </div>
+            </div>
 
-              {rejectPopoverOpen && (
-                <div
+            {/* Modal Right: OCR Comparison & Actions */}
+            <div
+              style={{
+                flex: 1,
+                padding: "20px 24px",
+                display: "flex",
+                flexDirection: "column",
+                minWidth: 0,
+                background: "#fafafa",
+                overflowY: "auto",
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #e7e7e7", paddingBottom: 10, marginBottom: 12 }}>
+                <span style={{ font: "700 13px 'Pretendard'", color: "#111" }}>
+                  ⚖️ OCR 자동 판정 항목 대조
+                </span>
+                <button
+                  onClick={() => setSelectedItem(null)}
                   style={{
-                    position: "absolute",
-                    bottom: 54,
-                    left: 0,
-                    right: 0,
-                    background: "#fff",
-                    border: "1px solid #111",
-                    padding: 12,
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
-                    zIndex: 100,
+                    background: "none",
+                    border: "none",
+                    fontSize: 16,
+                    color: "#999",
+                    cursor: "pointer",
                   }}
                 >
-                  <div
-                    style={{
-                      font: "700 11px 'Pretendard'",
-                      color: "#111",
-                      marginBottom: 8,
-                    }}
-                  >
-                    반려 사유 퀵 선택
+                  ✕
+                </button>
+              </div>
+
+              {/* Specs Grid */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 14 }}>
+                <div className="admin-card" style={{ padding: "10px 12px", background: "#fff" }}>
+                  <div className="th">결제 장소 (가맹점명)</div>
+                  <div style={{ font: "600 12px 'Pretendard'", color: "#111", marginTop: 3 }}>
+                    {selectedItem.storeName}
                   </div>
-                  <select
-                    value={selectedRejectReason}
-                    onChange={(e) => setSelectedRejectReason(e.target.value)}
-                    style={{
-                      width: "100%",
-                      padding: "6px 8px",
-                      border: "1px solid #ddd",
-                      font: "500 11px 'Pretendard'",
-                      marginBottom: 8,
-                      background: "#fff",
-                    }}
-                  >
-                    {REJECT_REASONS.map((r, idx) => (
-                      <option key={idx} value={r}>
-                        {r}
-                      </option>
-                    ))}
-                  </select>
+                </div>
+                <div className="admin-card" style={{ padding: "10px 12px", background: "#fff" }}>
+                  <div className="th">결제 일시</div>
+                  <div style={{ font: "500 11.5px 'Pretendard'", color: "#111", marginTop: 3 }}>
+                    {selectedItem.dateTime}
+                  </div>
+                </div>
+                <div className="admin-card" style={{ padding: "10px 12px", background: "#fff" }}>
+                  <div className="th">인증 귀속 팬덤</div>
+                  <div style={{ marginTop: 3 }}>
+                    <span className="pill">
+                      <span
+                        className="col"
+                        style={{
+                          background:
+                            selectedItem.fandomId === "FANDOM-01"
+                              ? "#2f6bff"
+                              : selectedItem.fandomId === "FANDOM-02"
+                              ? "#e64980"
+                              : "#f59f00",
+                        }}
+                      />
+                      {selectedItem.fandomName}
+                    </span>
+                  </div>
+                </div>
+                <div className="admin-card" style={{ padding: "10px 12px", background: "#fff" }}>
+                  <div className="th">결제 총액</div>
+                  <div style={{ font: "700 13px 'Pretendard'", color: "#2f6bff", marginTop: 3 }}>
+                    {selectedItem.amount}원
+                  </div>
+                </div>
+              </div>
+
+              {/* Status Section */}
+              <div
+                style={{
+                  padding: "10px 12px",
+                  background:
+                    selectedItem.status === "match"
+                      ? "#e8f7f0"
+                      : selectedItem.status === "warning"
+                      ? "#fff3db"
+                      : "#fce8e8",
+                  border: "1px solid",
+                  borderColor:
+                    selectedItem.status === "match"
+                      ? "#1fa16b"
+                      : selectedItem.status === "warning"
+                      ? "#e08a00"
+                      : "#d64545",
+                  marginBottom: 12,
+                }}
+              >
+                <div style={{ font: "700 11px 'Pretendard'", color: "#111" }}>
+                  판정 리포트:{" "}
+                  {selectedItem.status === "match"
+                    ? "일치 (Match)"
+                    : selectedItem.status === "warning"
+                    ? "경고 (Warning)"
+                    : "오류 (Error)"}
+                </div>
+                <div style={{ font: "400 10.5px 'Pretendard'", color: "#555", marginTop: 4 }}>
+                  {selectedItem.status === "match"
+                    ? "사업자등록번호 조회 및 가맹점 매칭 성공. 결제금액 조건 충족."
+                    : selectedItem.status === "warning"
+                    ? "인근 위경도 반경 100m 이탈 정황 발견. 수동 대조를 권장합니다."
+                    : "OCR 판독 사업자번호 불일치 및 가공된 영수증 의심 플래그 탐지."}
+                </div>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 14 }}>
+                <span style={{ font: "700 10.5px 'Pretendard'", color: "#777" }}>승인 번호 대조</span>
+                <input
+                  type="text"
+                  readOnly
+                  value={selectedItem.approvalNumber}
+                  style={{
+                    padding: "8px 10px",
+                    border: "1px solid #ddd",
+                    font: "600 11.5px ui-monospace,monospace",
+                    background: "#e7e7e7",
+                    color: "#555",
+                    outline: "none",
+                  }}
+                />
+              </div>
+
+              {/* Actions Footer */}
+              <div
+                style={{
+                  marginTop: "auto",
+                  paddingTop: 12,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 8,
+                  position: "relative",
+                }}
+              >
+                <div style={{ display: "flex", gap: 8 }}>
+                  {/* Reject popover anchor */}
+                  <div style={{ flex: 1, position: "relative" }}>
+                    <button
+                      className="btn-l"
+                      onClick={() => setRejectPopoverOpen((prev) => !prev)}
+                      style={{
+                        width: "100%",
+                        height: 42,
+                        color: "#d64545",
+                        borderColor: "#d64545",
+                        fontWeight: 600,
+                        cursor: "pointer",
+                      }}
+                    >
+                      반려 [R]
+                    </button>
+
+                    {rejectPopoverOpen && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          bottom: "105%",
+                          left: 0,
+                          width: 220,
+                          background: "#fff",
+                          border: "1px solid #ddd",
+                          boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                          padding: 10,
+                          zIndex: 9999,
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 6,
+                        }}
+                      >
+                        <div style={{ font: "700 9.5px 'Pretendard'", color: "#777" }}>반려 사유 선택</div>
+                        <select
+                          value={selectedRejectReason}
+                          onChange={(e) => setSelectedRejectReason(e.target.value)}
+                          style={{
+                            padding: "5px",
+                            fontSize: 10.5,
+                            fontFamily: "Pretendard",
+                            width: "100%",
+                            outline: "none",
+                          }}
+                        >
+                          {REJECT_REASONS.map((r, rIdx) => (
+                            <option key={rIdx} value={r}>
+                              {r}
+                            </option>
+                          ))}
+                        </select>
+                        <button
+                          className="btn-d"
+                          onClick={() => handleReject(selectedItem)}
+                          style={{ height: 26, fontSize: 10, cursor: "pointer" }}
+                        >
+                          반려 확정
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
                   <button
-                    onClick={handleReject}
+                    className="btn-l"
+                    onClick={() => setIsHoldModalOpen(true)}
                     style={{
-                      width: "100%",
-                      padding: "8px",
-                      background: "#d64545",
-                      color: "#fff",
-                      border: "none",
-                      font: "600 11px 'Pretendard'",
+                      flex: 1,
+                      height: 42,
+                      color: "#e08a00",
+                      borderColor: "#e08a00",
+                      fontWeight: 600,
                       cursor: "pointer",
                     }}
                   >
-                    반려 사유 전송 및 확정
+                    보류 [H]
                   </button>
                 </div>
-              )}
-            </div>
 
-            {/* Approve Button */}
-            <button
-              onClick={handleApprove}
-              style={{
-                flex: 1.5,
-                height: 46,
-                background: "#111",
-                color: "#fff",
-                border: "none",
-                font: "700 13px 'Pretendard'",
-                cursor: "pointer",
-              }}
-            >
-              [Space] 승인 확정
-            </button>
+                <button
+                  className="btn-d"
+                  onClick={() => handleApprove(selectedItem)}
+                  style={{ height: 44, fontSize: 12, cursor: "pointer" }}
+                >
+                  최종 승인 완료 [Space]
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* Review Hold Shared Modal */}
-      <ReviewHoldModal
-        isOpen={isHoldModalOpen}
-        onClose={() => setIsHoldModalOpen(false)}
-        onConfirm={handleHold}
-      />
+      {/* Review Hold Modal */}
+      {isHoldModalOpen && selectedItem && (
+        <ReviewHoldModal
+          isOpen={isHoldModalOpen}
+          onClose={() => setIsHoldModalOpen(false)}
+          onConfirm={() => handleHold(selectedItem)}
+        />
+      )}
 
       {/* Toast Notification */}
       {toastMessage && (
