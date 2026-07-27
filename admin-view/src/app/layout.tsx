@@ -27,11 +27,10 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   // 운영정책이 금칙어관리, 시스템설정으로 분리됨
   const navItems: NavItem[] = [
     { name: "대시보드", href: "/" },
-    { name: "인증 내역 통합 데이터", href: "/verification-history" },
     {
-      name: "영수증 검수 큐",
-      href: "/verification",
-      badge: { type: "black", value: verificationQueue.length },
+      name: "인증 내역 통합 데이터",
+      href: "/verification-history",
+      badge: verificationQueue.length > 0 ? { type: "black", value: verificationQueue.length } : undefined,
     },
     { name: "반려 사유 프리셋", href: "/verification-presets" },
     {
