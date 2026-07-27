@@ -129,6 +129,7 @@ interface AdminDataContextType {
   addBannedWord: (word: string, category: "NICKNAME" | "COMMENT") => void;
   removeBannedWord: (id: string) => void;
   updateSystemSettings: (settings: Partial<SystemSettings>) => void;
+  addSpotPin: (name: string, address: string, fandomId: string) => void;
 }
 
 const AdminDataContext = createContext<AdminDataContextType | undefined>(undefined);
@@ -704,6 +705,21 @@ export const AdminDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setSpotProposals((prev) => prev.filter((p) => p.id !== id));
   };
 
+  // 성지 핀 신규 추가 액션
+  const addSpotPin = (name: string, address: string, fandomId: string) => {
+    const matchedFandom = FANDOMS.find((f) => f.id === fandomId) || FANDOMS[0];
+    const newSpot: SpotItem = {
+      id: `SPOT-${Math.floor(10 + Math.random() * 90)}`,
+      name,
+      address,
+      fandomName: matchedFandom.name,
+      fandomColor: matchedFandom.color,
+      status: "ACTIVE",
+      createdAt: new Date().toLocaleDateString(),
+    };
+    setSpots((prev) => [newSpot, ...prev]);
+  };
+
   // 16. 유저 제재 액션
   const sanctionUser = (userId: string, level: "WARNING" | "SUSPENDED" | "BANNED", reason: string) => {
     setUsers((prev) =>
@@ -791,6 +807,7 @@ export const AdminDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         addBannedWord,
         removeBannedWord,
         updateSystemSettings,
+        addSpotPin,
       }}
     >
       {children}

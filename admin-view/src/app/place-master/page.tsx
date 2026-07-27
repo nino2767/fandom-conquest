@@ -39,14 +39,49 @@ const PLACES: PlaceMasterItem[] = [
 ];
 
 export default function PlaceMasterPage() {
-  const [placeList] = useState<PlaceMasterItem[]>(PLACES);
+  const [placeList, setPlaceList] = useState<PlaceMasterItem[]>(PLACES);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  
+  // 모달 상태 및 입력 폼 필드
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [bizNum, setBizNum] = useState("");
+  const [address, setAddress] = useState("");
+  const [category, setCategory] = useState("카페 / 디저트");
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
       setToastMessage(null);
     }, 2500);
+  };
+
+  const handleRegister = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !bizNum.trim() || !address.trim()) {
+      showToast("⚠️ 모든 필드를 입력해주세요.");
+      return;
+    }
+
+    const newPlace: PlaceMasterItem = {
+      id: `place_0${placeList.length + 1}`,
+      name: name.trim(),
+      bizNum: bizNum.trim(),
+      address: address.trim(),
+      category,
+      status: "ACTIVE",
+    };
+
+    setPlaceList((prev) => [newPlace, ...prev]);
+    setIsModalOpen(false);
+    
+    // 폼 초기화
+    setName("");
+    setBizNum("");
+    setAddress("");
+    setCategory("카페 / 디저트");
+    
+    showToast(`✅ [${newPlace.name}] 거점 장소가 새로 등록되었습니다.`);
   };
 
   return (
@@ -61,7 +96,7 @@ export default function PlaceMasterPage() {
           </span>
         </div>
         <button
-          onClick={() => showToast("➕ 신규 거점 등록 모달이 열렸습니다.")}
+          onClick={() => setIsModalOpen(true)}
           style={{
             padding: "7px 14px",
             background: "#111",
@@ -85,8 +120,8 @@ export default function PlaceMasterPage() {
           overflowY: "auto",
         }}
       >
-        <div className="admin-card" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <div className="thr">
+        <div className="admin-card table-responsive" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <div className="thr" style={{ display: "flex" }}>
             <span style={{ width: 120 }}>ID</span>
             <span style={{ flex: 1.5 }}>장소명 (상호)</span>
             <span style={{ width: 140 }}>사업자 등록 번호</span>
@@ -97,7 +132,7 @@ export default function PlaceMasterPage() {
 
           <div style={{ flex: 1, overflowY: "auto" }}>
             {placeList.map((row) => (
-              <div key={row.id} className="tr">
+              <div key={row.id} className="tr" style={{ display: "flex" }}>
                 <span style={{ width: 120, font: "600 11px ui-monospace,monospace", color: "#111" }}>
                   {row.id}
                 </span>
@@ -119,6 +154,146 @@ export default function PlaceMasterPage() {
           </div>
         </div>
       </div>
+
+      {/* Registration Modal */}
+      {isModalOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0, 0, 0, 0.4)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            className="admin-card"
+            style={{
+              width: 420,
+              padding: "24px 28px",
+              background: "#fff",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ font: "700 13px 'Pretendard'", color: "#111" }}>
+                📍 신규 거점 장소 등록
+              </span>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: 16,
+                  color: "#999",
+                  cursor: "pointer",
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label style={{ font: "700 10px 'Pretendard'", color: "#555" }}>장소명 (상호)</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="예: 카페 므므흐스 성수"
+                  style={{
+                    padding: "8px 10px",
+                    border: "1px solid #ddd",
+                    font: "500 11.5px 'Pretendard'",
+                    outline: "none",
+                  }}
+                  required
+                />
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label style={{ font: "700 10px 'Pretendard'", color: "#555" }}>사업자 등록 번호</label>
+                <input
+                  type="text"
+                  value={bizNum}
+                  onChange={(e) => setBizNum(e.target.value)}
+                  placeholder="예: 120-88-99120"
+                  style={{
+                    padding: "8px 10px",
+                    border: "1px solid #ddd",
+                    font: "500 11.5px 'Pretendard'",
+                    outline: "none",
+                  }}
+                  required
+                />
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label style={{ font: "700 10px 'Pretendard'", color: "#555" }}>도로명 주소</label>
+                <input
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="예: 서울 성동구 연무장길 47"
+                  style={{
+                    padding: "8px 10px",
+                    border: "1px solid #ddd",
+                    font: "500 11.5px 'Pretendard'",
+                    outline: "none",
+                  }}
+                  required
+                />
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label style={{ font: "700 10px 'Pretendard'", color: "#555" }}>카테고리</label>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  style={{
+                    padding: "8px 10px",
+                    border: "1px solid #ddd",
+                    font: "500 11.5px 'Pretendard'",
+                    background: "#fff",
+                    outline: "none",
+                  }}
+                >
+                  <option value="카페 / 디저트">카페 / 디저트</option>
+                  <option value="프랜차이즈 카페">프랜차이즈 카페</option>
+                  <option value="복합문화공간">복합문화공간</option>
+                  <option value="식음료">식음료</option>
+                </select>
+              </div>
+
+              <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="btn-l"
+                  style={{ flex: 1, height: 38, cursor: "pointer" }}
+                >
+                  취소
+                </button>
+                <button
+                  type="submit"
+                  className="btn-d"
+                  style={{ flex: 1, height: 38, cursor: "pointer" }}
+                >
+                  등록 완료
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {toastMessage && (
         <div

@@ -4,14 +4,38 @@ import React, { useState } from "react";
 import { useAdminData } from "@/context/AdminDataContext";
 
 export default function SpotMasterPage() {
-  const { spots } = useAdminData();
+  const { spots, addSpotPin } = useAdminData();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  
+  // 모달 상태 및 입력 필드
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pinName, setPinName] = useState("");
+  const [address, setAddress] = useState("");
+  const [fandomId, setFandomId] = useState("FANDOM-01");
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
       setToastMessage(null);
     }, 2500);
+  };
+
+  const handleRegister = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!pinName.trim() || !address.trim()) {
+      showToast("⚠️ 모든 필드를 입력해주세요.");
+      return;
+    }
+
+    addSpotPin(pinName.trim(), address.trim(), fandomId);
+    setIsModalOpen(false);
+
+    // 폼 초기화
+    setPinName("");
+    setAddress("");
+    setFandomId("FANDOM-01");
+
+    showToast(`✅ [${pinName.trim()}] 성지 핀이 새로 등록되었습니다.`);
   };
 
   return (
@@ -26,7 +50,7 @@ export default function SpotMasterPage() {
           </span>
         </div>
         <button
-          onClick={() => showToast("📍 신규 성지 핀 등록 폼이 열렸습니다.")}
+          onClick={() => setIsModalOpen(true)}
           style={{
             padding: "7px 14px",
             background: "#111",
@@ -85,6 +109,128 @@ export default function SpotMasterPage() {
           </div>
         </div>
       </div>
+
+      {/* Registration Modal */}
+      {isModalOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0, 0, 0, 0.4)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            className="admin-card"
+            style={{
+              width: 420,
+              padding: "24px 28px",
+              background: "#fff",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ font: "700 13px 'Pretendard'", color: "#111" }}>
+                📍 성지 핀 신규 등록
+              </span>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: 16,
+                  color: "#999",
+                  cursor: "pointer",
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label style={{ font: "700 10px 'Pretendard'", color: "#555" }}>핀 마커 명칭</label>
+                <input
+                  type="text"
+                  value={pinName}
+                  onChange={(e) => setPinName(e.target.value)}
+                  placeholder="예: 안유진 생일카페 핀"
+                  style={{
+                    padding: "8px 10px",
+                    border: "1px solid #ddd",
+                    font: "500 11.5px 'Pretendard'",
+                    outline: "none",
+                  }}
+                  required
+                />
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label style={{ font: "700 10px 'Pretendard'", color: "#555" }}>연동 거점 장소 주소</label>
+                <input
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="예: 서울 성동구 연무장길 47"
+                  style={{
+                    padding: "8px 10px",
+                    border: "1px solid #ddd",
+                    font: "500 11.5px 'Pretendard'",
+                    outline: "none",
+                  }}
+                  required
+                />
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label style={{ font: "700 10px 'Pretendard'", color: "#555" }}>귀속 팬덤</label>
+                <select
+                  value={fandomId}
+                  onChange={(e) => setFandomId(e.target.value)}
+                  style={{
+                    padding: "8px 10px",
+                    border: "1px solid #ddd",
+                    font: "500 11.5px 'Pretendard'",
+                    background: "#fff",
+                    outline: "none",
+                  }}
+                >
+                  <option value="FANDOM-01">뉴진스</option>
+                  <option value="FANDOM-02">에스파</option>
+                  <option value="FANDOM-03">아이브</option>
+                </select>
+              </div>
+
+              <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="btn-l"
+                  style={{ flex: 1, height: 38, cursor: "pointer" }}
+                >
+                  취소
+                </button>
+                <button
+                  type="submit"
+                  className="btn-d"
+                  style={{ flex: 1, height: 38, cursor: "pointer" }}
+                >
+                  등록 완료
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {toastMessage && (
         <div
