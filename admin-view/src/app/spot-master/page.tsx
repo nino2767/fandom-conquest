@@ -3,15 +3,28 @@
 import React, { useState } from "react";
 import { useAdminData } from "@/context/AdminDataContext";
 
+interface SpotItem {
+  id: string;
+  name: string;
+  address: string;
+  fandomName: string;
+  fandomColor: string;
+  status: "ACTIVE" | "ARCHIVED";
+  createdAt?: string;
+}
+
 export default function SpotMasterPage() {
   const { spots, addSpotPin } = useAdminData();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   
   // 모달 상태 및 입력 필드
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [pinName, setPinName] = useState("");
   const [address, setAddress] = useState("");
   const [fandomId, setFandomId] = useState("FANDOM-01");
+
+  // 상세 모달 상태
+  const [selectedSpot, setSelectedSpot] = useState<SpotItem | null>(null);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -28,7 +41,7 @@ export default function SpotMasterPage() {
     }
 
     addSpotPin(pinName.trim(), address.trim(), fandomId);
-    setIsModalOpen(false);
+    setIsRegisterModalOpen(false);
 
     // 폼 초기화
     setPinName("");
@@ -46,11 +59,11 @@ export default function SpotMasterPage() {
             성지 핀 관리 (Spot Pin Master)
           </span>
           <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
-            등록 핀 {spots.length}개 · 지도 마커 동기화
+            등록 핀 {spots.length}개 · 목록 클릭 시 상세 정보 조회
           </span>
         </div>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsRegisterModalOpen(true)}
           style={{
             padding: "7px 14px",
             background: "#111",
@@ -74,7 +87,7 @@ export default function SpotMasterPage() {
           overflowY: "auto",
         }}
       >
-        <div className="admin-card" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        <div className="admin-card table-responsive" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
           <div className="thr" style={{ display: "flex" }}>
             <span style={{ width: 120 }}>핀 ID</span>
             <span style={{ flex: 1.5 }}>핀 마커 명칭</span>
@@ -85,11 +98,17 @@ export default function SpotMasterPage() {
 
           <div style={{ flex: 1, overflowY: "auto" }}>
             {spots.map((row) => (
-              <div key={row.id} className="tr" style={{ display: "flex" }}>
+              <div
+                key={row.id}
+                className="tr"
+                onClick={() => setSelectedSpot(row)}
+                style={{ display: "flex", cursor: "pointer" }}
+                title="클릭하여 상세 정보 조회"
+              >
                 <span style={{ width: 120, font: "600 11px ui-monospace,monospace", color: "#111" }}>
                   {row.id}
                 </span>
-                <span style={{ flex: 1.5, font: "600 11.5px 'Pretendard'", color: "#111" }}>
+                <span style={{ flex: 1.5, font: "600 11.5px 'Pretendard'", color: "#111", textDecoration: "underline" }}>
                   {row.name}
                 </span>
                 <span style={{ flex: 1.5, color: "#555" }}>{row.address}</span>
@@ -110,8 +129,99 @@ export default function SpotMasterPage() {
         </div>
       </div>
 
+      {/* Spot Detail Modal */}
+      {selectedSpot && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0, 0, 0, 0.4)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            className="admin-card"
+            style={{
+              width: 440,
+              padding: "24px 28px",
+              background: "#fff",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #f0f0f0", paddingBottom: 10 }}>
+              <span style={{ font: "700 13px 'Pretendard'", color: "#111" }}>
+                🔎 성지 핀 상세 정보
+              </span>
+              <button
+                onClick={() => setSelectedSpot(null)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: 16,
+                  color: "#999",
+                  cursor: "pointer",
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>핀 고유 ID</span>
+                <span style={{ font: "600 11px ui-monospace,monospace", color: "#111" }}>{selectedSpot.id}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>핀 마커 명칭</span>
+                <span style={{ font: "600 12px 'Pretendard'", color: "#111" }}>{selectedSpot.name}</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>연동 거점 주소</span>
+                <span style={{ font: "500 11.5px 'Pretendard'", color: "#333", background: "#f5f5f5", padding: "8px 10px", border: "1px solid #e7e7e7" }}>
+                  {selectedSpot.address}
+                </span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>귀속 팬덤 IP</span>
+                <span className="pill">
+                  <span className="col" style={{ background: selectedSpot.fandomColor }} />
+                  {selectedSpot.fandomName}
+                </span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>지도 등록일자</span>
+                <span style={{ font: "600 11px 'Pretendard'", color: "#111" }}>{selectedSpot.createdAt || "2026.07.22"}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>마커 활성화 상태</span>
+                <span className="pill" style={{ color: selectedSpot.status === "ACTIVE" ? "#1fa16b" : "#d64545", fontWeight: "bold" }}>
+                  ● {selectedSpot.status}
+                </span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setSelectedSpot(null)}
+              className="btn-d"
+              style={{ height: 38, cursor: "pointer", marginTop: 10 }}
+            >
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Registration Modal */}
-      {isModalOpen && (
+      {isRegisterModalOpen && (
         <div
           style={{
             position: "fixed",
@@ -143,7 +253,7 @@ export default function SpotMasterPage() {
                 📍 성지 핀 신규 등록
               </span>
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setIsRegisterModalOpen(false)}
                 style={{
                   background: "none",
                   border: "none",
@@ -213,7 +323,7 @@ export default function SpotMasterPage() {
               <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={() => setIsRegisterModalOpen(false)}
                   className="btn-l"
                   style={{ flex: 1, height: 38, cursor: "pointer" }}
                 >

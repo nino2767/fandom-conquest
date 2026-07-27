@@ -80,11 +80,10 @@ const FANDOMS = [
 
 export default function SpotEventsPage() {
   const [pinEvents, setPinEvents] = useState<PinEventItem[]>(INITIAL_PIN_EVENTS);
-  const [selectedId, setSelectedId] = useState<string>("pin_01");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // 모달 상태 및 입력 필드
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // 등록 모달 상태 및 필드
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [placeName, setPlaceName] = useState("");
   const [area, setArea] = useState("성동구");
@@ -92,8 +91,8 @@ export default function SpotEventsPage() {
   const [type, setType] = useState<"EVENT" | "PERM">("EVENT");
   const [period, setPeriod] = useState("");
 
-  const selectedItem =
-    pinEvents.find((item) => item.id === selectedId) || pinEvents[0];
+  // 상세 보기 및 편집 모달 상태
+  const [selectedEvent, setSelectedEvent] = useState<PinEventItem | null>(null);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -123,8 +122,7 @@ export default function SpotEventsPage() {
     };
 
     setPinEvents((prev) => [newEvent, ...prev]);
-    setSelectedId(newEvent.id); // 새로 등록된 핀을 상세 영역에 바로 활성화
-    setIsModalOpen(false);
+    setIsRegisterModalOpen(false);
 
     // 폼 초기화
     setTitle("");
@@ -139,10 +137,12 @@ export default function SpotEventsPage() {
 
   const handleRemovePin = (id: string, name: string) => {
     setPinEvents((prev) => prev.filter((p) => p.id !== id));
+    setSelectedEvent(null);
     showToast(`🚨 '${name}' 핀이 내리기 처리되었습니다.`);
   };
 
   const handleSavePin = (name: string) => {
+    setSelectedEvent(null);
     showToast(`✅ '${name}' 핀 정보가 저장되었습니다.`);
   };
 
@@ -155,11 +155,11 @@ export default function SpotEventsPage() {
             성지 핀 이벤트 (ADM-SPOT-02)
           </span>
           <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
-            활성 핀 {pinEvents.filter((p) => p.status === "ON").length} · 전체 {pinEvents.length}
+            활성 핀 {pinEvents.filter((p) => p.status === "ON").length} · 전체 {pinEvents.length}개
           </span>
         </div>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsRegisterModalOpen(true)}
           style={{
             padding: "7px 14px",
             background: "#111",
@@ -173,56 +173,53 @@ export default function SpotEventsPage() {
         </button>
       </div>
 
-      {/* Main 2-Column Split */}
-      <div className="mobile-stack" style={{ flex: 1, display: "flex", minHeight: 0, overflow: "hidden" }}>
-        {/* Left: Pins Queue Table */}
-        <div
-          className="table-responsive"
-          style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            borderRight: "1px solid #e7e7e7",
-            minWidth: 0,
-            overflowY: "auto",
-          }}
-        >
-          <div className="thr" style={{ display: "flex", minWidth: 500 }}>
-            <span style={{ flex: "1 1 180px", minWidth: 140 }}>이벤트 성지 / 연동 장소</span>
-            <span style={{ flex: "0 0 90px" }}>귀속 팬덤</span>
-            <span style={{ flex: "0 0 74px" }}>유형</span>
-            <span style={{ flex: "0 0 110px" }}>운영 기간</span>
-            <span style={{ flex: "0 0 74px" }}>마커</span>
+      {/* Main Single Column Layout */}
+      <div
+        style={{
+          flex: 1,
+          padding: "16px 20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 14,
+          overflowY: "auto",
+        }}
+      >
+        <div className="admin-card table-responsive" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <div className="thr" style={{ display: "flex" }}>
+            <span style={{ width: 140 }}>핀 ID</span>
+            <span style={{ flex: 2 }}>이벤트 성지 명칭</span>
+            <span style={{ flex: 1.5 }}>연동 거점 장소</span>
+            <span style={{ width: 140 }}>귀속 팬덤</span>
+            <span style={{ width: 100 }}>유형</span>
+            <span style={{ width: 140 }}>운영 기간</span>
+            <span style={{ width: 100 }}>상태</span>
           </div>
 
-          {pinEvents.map((row) => {
-            const isSel = row.id === selectedId;
-            return (
+          <div style={{ flex: 1, overflowY: "auto" }}>
+            {pinEvents.map((row) => (
               <div
                 key={row.id}
-                className={`tr ${isSel ? "sel" : ""}`}
-                onClick={() => setSelectedId(row.id)}
-                style={{ cursor: "pointer", display: "flex", minWidth: 500 }}
+                className="tr"
+                onClick={() => setSelectedEvent(row)}
+                style={{ display: "flex", cursor: "pointer" }}
+                title="클릭하여 상세 정보 및 핀 편집"
               >
-                <span style={{ flex: "1 1 180px", minWidth: 140 }}>
-                  <span
-                    className="nm"
-                    style={{ color: row.status === "ARCHIVED" ? "#9a9a9a" : "#111" }}
-                  >
-                    {row.title}
-                  </span>
-                  <br />
-                  <span className="hint">
-                    {row.placeName} · {row.area}
-                  </span>
+                <span style={{ width: 140, font: "600 11px ui-monospace,monospace", color: "#111" }}>
+                  {row.id}
                 </span>
-                <span style={{ flex: "0 0 90px" }}>
+                <span style={{ flex: 2, font: "600 11.5px 'Pretendard'", color: "#111", textDecoration: "underline" }}>
+                  {row.title}
+                </span>
+                <span style={{ flex: 1.5, color: "#555" }}>
+                  {row.placeName} · {row.area}
+                </span>
+                <span style={{ width: 140 }}>
                   <span className="pill">
                     <span className="col" style={{ background: row.fandomColor }} />
                     {row.fandomName}
                   </span>
                 </span>
-                <span style={{ flex: "0 0 74px" }}>
+                <span style={{ width: 100 }}>
                   <span
                     className="tag"
                     style={{
@@ -233,8 +230,8 @@ export default function SpotEventsPage() {
                     {row.type}
                   </span>
                 </span>
-                <span style={{ flex: "0 0 110px", color: "#555" }}>{row.period}</span>
-                <span style={{ flex: "0 0 74px" }}>
+                <span style={{ width: 140, color: "#555" }}>{row.period}</span>
+                <span style={{ width: 100 }}>
                   <span
                     style={{
                       font: "600 10.5px 'Pretendard'",
@@ -246,48 +243,70 @@ export default function SpotEventsPage() {
                           : "#9a9a9a",
                     }}
                   >
-                    {row.status}
+                    ● {row.status}
                   </span>
                 </span>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
+      </div>
 
-        {/* Right: Pin Edit Panel (388px) */}
-        {selectedItem && (
+      {/* Event Detail & Edit Popover Modal */}
+      {selectedEvent && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0, 0, 0, 0.4)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+          }}
+        >
           <div
-            className="detail-panel-mobile"
+            className="admin-card"
             style={{
-              width: 388,
-              flex: "none",
-              padding: "16px 18px",
+              width: 440,
+              padding: "24px 28px",
+              background: "#fff",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
               display: "flex",
               flexDirection: "column",
-              minWidth: 0,
-              background: "#fff",
-              overflowY: "auto",
+              gap: 16,
             }}
           >
-            <div
-              style={{
-                font: "700 12px 'Pretendard'",
-                color: "#111",
-                marginBottom: 10,
-              }}
-            >
-              핀 편집 — {selectedItem.title}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #f0f0f0", paddingBottom: 10 }}>
+              <span style={{ font: "700 13px 'Pretendard'", color: "#111" }}>
+                🔎 이벤트 핀 상세 및 편집
+              </span>
+              <button
+                onClick={() => setSelectedEvent(null)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: 16,
+                  color: "#999",
+                  cursor: "pointer",
+                }}
+              >
+                ✕
+              </button>
             </div>
 
             {/* Map Marker Preview */}
             <div
               style={{
-                height: 150,
+                height: 140,
                 background: "#eef1ec",
                 border: "1px solid #e2e2e2",
                 position: "relative",
                 overflow: "hidden",
-                marginBottom: 12,
+                borderRadius: 2,
               }}
             >
               <div
@@ -295,8 +314,8 @@ export default function SpotEventsPage() {
                   position: "absolute",
                   left: 0,
                   right: 0,
-                  top: 64,
-                  height: 8,
+                  top: 60,
+                  height: 6,
                   background: "#fff",
                   opacity: 0.8,
                 }}
@@ -306,8 +325,8 @@ export default function SpotEventsPage() {
                   position: "absolute",
                   top: 0,
                   bottom: 0,
-                  left: 150,
-                  width: 8,
+                  left: 170,
+                  width: 6,
                   background: "#fff",
                   opacity: 0.8,
                 }}
@@ -315,92 +334,80 @@ export default function SpotEventsPage() {
               <div
                 style={{
                   position: "absolute",
-                  left: "44%",
-                  top: "40%",
-                  width: 16,
-                  height: 16,
-                  background: selectedItem.fandomColor,
+                  left: "45%",
+                  top: "38%",
+                  width: 14,
+                  height: 14,
+                  background: selectedEvent.fandomColor,
                   border: "3px solid #fff",
                   boxShadow: "0 2px 8px rgba(0,0,0,.3)",
+                  borderRadius: "50%",
                 }}
               />
               <div
                 style={{
                   position: "absolute",
-                  left: "52%",
-                  top: "26%",
+                  left: "53%",
+                  top: "22%",
                   padding: "3px 8px",
                   background: "#fff",
                   border: "1px solid #ddd",
-                  font: "500 9px 'Pretendard'",
+                  font: "500 8.5px 'Pretendard'",
                   color: "#111",
                 }}
               >
-                {selectedItem.area} · 마커 프리뷰
+                {selectedEvent.area} · 마커 위치
               </div>
             </div>
 
-            {/* Form Fields */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
-              <div>
-                <div className="fl">연동 장소 (place_id)</div>
-                <div className="fld">{selectedItem.placeName} ▾</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>이벤트 성지 명칭</span>
+                <span style={{ font: "600 12px 'Pretendard'", color: "#111" }}>{selectedEvent.title}</span>
               </div>
-              <div>
-                <div className="fl">귀속 팬덤 IP</div>
-                <div className="fld">
-                  <span className="pill">
-                    <span className="col" style={{ background: selectedItem.fandomColor }} />
-                    {selectedItem.fandomName}
-                  </span>{" "}
-                  ▾
-                </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>연동 거점 장소</span>
+                <span style={{ font: "600 11px 'Pretendard'", color: "#111" }}>{selectedEvent.placeName} ({selectedEvent.area})</span>
               </div>
-              <div>
-                <div className="fl">이벤트 타이틀</div>
-                <div className="fld" style={{ fontWeight: 600 }}>{selectedItem.title}</div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>귀속 팬덤 IP</span>
+                <span className="pill">
+                  <span className="col" style={{ background: selectedEvent.fandomColor }} />
+                  {selectedEvent.fandomName}
+                </span>
               </div>
-              <div style={{ display: "flex", gap: 8 }}>
-                <div style={{ flex: 1 }}>
-                  <div className="fl">유형</div>
-                  <div className="fld">{selectedItem.type} ▾</div>
-                </div>
-                <div style={{ flex: 1.4 }}>
-                  <div className="fl">운영 기간</div>
-                  <div className="fld">{selectedItem.period}</div>
-                </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>마커 운영 유형</span>
+                <span className="tag" style={{ fontWeight: 700 }}>{selectedEvent.type}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>운영 기간</span>
+                <span style={{ font: "600 11px 'Pretendard'", color: "#111" }}>{selectedEvent.period}</span>
               </div>
             </div>
 
-            <div
-              style={{
-                marginTop: "auto",
-                paddingTop: 14,
-                display: "flex",
-                gap: 8,
-              }}
-            >
+            <div style={{ display: "flex", gap: 8, marginTop: 14 }}>
               <button
                 className="btn-r"
-                onClick={() => handleRemovePin(selectedItem.id, selectedItem.title)}
-                style={{ flex: 1, height: 42, cursor: "pointer" }}
+                onClick={() => handleRemovePin(selectedEvent.id, selectedEvent.title)}
+                style={{ flex: 1, height: 38, cursor: "pointer" }}
               >
                 핀 내리기
               </button>
               <button
                 className="btn-d"
-                onClick={() => handleSavePin(selectedItem.title)}
-                style={{ flex: 1.5, height: 42, cursor: "pointer" }}
+                onClick={() => handleSavePin(selectedEvent.title)}
+                style={{ flex: 1.5, height: 38, cursor: "pointer" }}
               >
-                핀 생성 / 저장
+                닫기 / 저장
               </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
-      {/* Registration Modal */}
-      {isModalOpen && (
+      {/* Event Registration Modal */}
+      {isRegisterModalOpen && (
         <div
           style={{
             position: "fixed",
@@ -432,7 +439,7 @@ export default function SpotEventsPage() {
                 ➕ 신규 이벤트 핀 등록
               </span>
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setIsRegisterModalOpen(false)}
                 style={{
                   background: "none",
                   border: "none",
@@ -559,7 +566,7 @@ export default function SpotEventsPage() {
               <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={() => setIsRegisterModalOpen(false)}
                   className="btn-l"
                   style={{ flex: 1, height: 38, cursor: "pointer" }}
                 >

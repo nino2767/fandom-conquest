@@ -42,12 +42,15 @@ export default function PlaceMasterPage() {
   const [placeList, setPlaceList] = useState<PlaceMasterItem[]>(PLACES);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   
-  // 모달 상태 및 입력 폼 필드
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // 거점 등록 모달 상태
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [name, setName] = useState("");
   const [bizNum, setBizNum] = useState("");
   const [address, setAddress] = useState("");
   const [category, setCategory] = useState("카페 / 디저트");
+
+  // 상세 보기 모달 상태
+  const [selectedPlace, setSelectedPlace] = useState<PlaceMasterItem | null>(null);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -73,7 +76,7 @@ export default function PlaceMasterPage() {
     };
 
     setPlaceList((prev) => [newPlace, ...prev]);
-    setIsModalOpen(false);
+    setIsRegisterModalOpen(false);
     
     // 폼 초기화
     setName("");
@@ -92,11 +95,11 @@ export default function PlaceMasterPage() {
             장소 마스터 (Place Master)
           </span>
           <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
-            등록 거점 {placeList.length}개 · 사업자 번호 대조 기반
+            등록 거점 {placeList.length}개 · 목록 클릭 시 상세 보기 팝업
           </span>
         </div>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsRegisterModalOpen(true)}
           style={{
             padding: "7px 14px",
             background: "#111",
@@ -132,11 +135,17 @@ export default function PlaceMasterPage() {
 
           <div style={{ flex: 1, overflowY: "auto" }}>
             {placeList.map((row) => (
-              <div key={row.id} className="tr" style={{ display: "flex" }}>
+              <div
+                key={row.id}
+                className="tr"
+                onClick={() => setSelectedPlace(row)}
+                style={{ display: "flex", cursor: "pointer" }}
+                title="클릭하여 상세 정보 조회"
+              >
                 <span style={{ width: 120, font: "600 11px ui-monospace,monospace", color: "#111" }}>
                   {row.id}
                 </span>
-                <span style={{ flex: 1.5, font: "500 11.5px 'Pretendard'", color: "#111" }}>
+                <span style={{ flex: 1.5, font: "600 11.5px 'Pretendard'", color: "#111", textDecoration: "underline" }}>
                   {row.name}
                 </span>
                 <span style={{ width: 140, fontFamily: "monospace", color: "#8a8a8a" }}>
@@ -155,8 +164,96 @@ export default function PlaceMasterPage() {
         </div>
       </div>
 
+      {/* Place Detail Modal */}
+      {selectedPlace && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0, 0, 0, 0.4)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            className="admin-card"
+            style={{
+              width: 440,
+              padding: "24px 28px",
+              background: "#fff",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #f0f0f0", paddingBottom: 10 }}>
+              <span style={{ font: "700 13px 'Pretendard'", color: "#111" }}>
+                🔎 거점 장소 상세 정보
+              </span>
+              <button
+                onClick={() => setSelectedPlace(null)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: 16,
+                  color: "#999",
+                  cursor: "pointer",
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>장소 고유 ID</span>
+                <span style={{ font: "600 11px ui-monospace,monospace", color: "#111" }}>{selectedPlace.id}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>장소명 (상호)</span>
+                <span style={{ font: "600 12px 'Pretendard'", color: "#111" }}>{selectedPlace.name}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>사업자 등록 번호</span>
+                <span style={{ font: "600 11px ui-monospace,monospace", color: "#111" }}>{selectedPlace.bizNum}</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>도로명 주소</span>
+                <span style={{ font: "500 11.5px 'Pretendard'", color: "#333", background: "#f5f5f5", padding: "8px 10px", border: "1px solid #e7e7e7" }}>
+                  {selectedPlace.address}
+                </span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>카테고리 분류</span>
+                <span style={{ font: "600 11px 'Pretendard'", color: "#111" }}>{selectedPlace.category}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ font: "700 11px 'Pretendard'", color: "#777" }}>운영 상태</span>
+                <span className="pill" style={{ color: "#1fa16b", fontWeight: "bold" }}>
+                  ● {selectedPlace.status}
+                </span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setSelectedPlace(null)}
+              className="btn-d"
+              style={{ height: 38, cursor: "pointer", marginTop: 10 }}
+            >
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Registration Modal */}
-      {isModalOpen && (
+      {isRegisterModalOpen && (
         <div
           style={{
             position: "fixed",
@@ -188,7 +285,7 @@ export default function PlaceMasterPage() {
                 📍 신규 거점 장소 등록
               </span>
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setIsRegisterModalOpen(false)}
                 style={{
                   background: "none",
                   border: "none",
@@ -276,7 +373,7 @@ export default function PlaceMasterPage() {
               <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={() => setIsRegisterModalOpen(false)}
                   className="btn-l"
                   style={{ flex: 1, height: 38, cursor: "pointer" }}
                 >
