@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useAdminData, FANDOMS } from "@/context/AdminDataContext";
 
 interface VerificationHistoryRow {
   id: string;
@@ -14,55 +15,8 @@ interface VerificationHistoryRow {
   timestamp: string;
 }
 
-const INITIAL_HISTORY: VerificationHistoryRow[] = [
-  {
-    id: "VERIF-0722-001",
-    user: "user_82fd",
-    store: "투썸플레이스 성수역점",
-    bizNum: "466-25-01942",
-    fandom: "뉴진스",
-    fandomColor: "#2f6bff",
-    type: "자동승인",
-    amount: "14,500원",
-    timestamp: "2026.07.22 14:30:12",
-  },
-  {
-    id: "VERIF-0722-002",
-    user: "user_94ab",
-    store: "카페 므므흐스 성수",
-    bizNum: "120-88-99120",
-    fandom: "아이브",
-    fandomColor: "#f59f00",
-    type: "수동검수대기",
-    amount: "8,900원",
-    timestamp: "2026.07.22 14:15:20",
-  },
-  {
-    id: "VERIF-0722-003",
-    user: "user_19fc",
-    store: "스타벅스 강남대로점",
-    bizNum: "220-81-12345",
-    fandom: "에스파",
-    fandomColor: "#e64980",
-    type: "수동승인",
-    amount: "12,000원",
-    timestamp: "2026.07.22 13:40:11",
-  },
-  {
-    id: "VERIF-0722-004",
-    user: "user_009x",
-    store: "이디야커피 홍대점",
-    bizNum: "105-86-54321",
-    fandom: "뉴진스",
-    fandomColor: "#2f6bff",
-    type: "최종반려",
-    amount: "4,500원",
-    timestamp: "2026.07.22 12:10:05",
-  },
-];
-
 export default function VerificationHistoryPage() {
-  const [historyList] = useState<VerificationHistoryRow[]>(INITIAL_HISTORY);
+  const { verificationHistory, verificationQueue } = useAdminData();
   const [filterType, setFilterType] = useState<string>("ALL");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -73,7 +27,22 @@ export default function VerificationHistoryPage() {
     }, 2500);
   };
 
-  const filteredData = historyList.filter((row) => {
+  // 실시간 큐 대기 목록과 처리 완료 목록 병합
+  const pendingItems: VerificationHistoryRow[] = verificationQueue.map((q) => ({
+    id: q.id,
+    user: q.submitter,
+    store: q.storeName,
+    bizNum: "대조필요 (10자리)",
+    fandom: q.fandomName.split(" ")[0],
+    fandomColor: FANDOMS.find((f) => f.id === q.fandomId)?.color || "#8a8a8a",
+    type: "수동검수대기",
+    amount: q.amount,
+    timestamp: q.dateTime,
+  }));
+
+  const allData: VerificationHistoryRow[] = [...pendingItems, ...verificationHistory];
+
+  const filteredData = allData.filter((row) => {
     if (filterType === "ALL") return true;
     return row.type === filterType;
   });
@@ -84,17 +53,25 @@ export default function VerificationHistoryPage() {
       <div className="admin-topbar">
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span style={{ font: "700 14px 'Pretendard'", color: "#111" }}>
-            인증 내역 통합 데이터 (ADM-HISTORY-01)
+            인증 내역 통합 데이터 (ADM-VERIF-01)
           </span>
           <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
-            전체 {historyList.length}건 기록
+            전체 로그 조회 및 필터링 검색 지원
           </span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div className="fld" style={{ padding: "5px 10px", fontSize: 11 }}>
-            상태 필터: {filterType} ▾
-          </div>
-        </div>
+        <button
+          onClick={() => showToast("📥 전체 데이터 CSV 추출 완료 (Mock)")}
+          style={{
+            padding: "6px 14px",
+            background: "#111",
+            color: "#fff",
+            border: "none",
+            font: "700 11px 'Pretendard'",
+            cursor: "pointer",
+          }}
+        >
+          엑셀 Export
+        </button>
       </div>
 
       {/* Main Content Area */}
@@ -112,7 +89,7 @@ export default function VerificationHistoryPage() {
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
           <div className="admin-card" style={{ flex: 1, minWidth: 140, padding: "12px 16px" }}>
             <div className="th">누적 인증 건수</div>
-            <div className="num">142,910</div>
+            <div className="num">{(allData.length + 142800).toLocaleString()}</div>
             <div className="sub9">승인율 93.5%</div>
           </div>
           <div className="admin-card" style={{ flex: 1, minWidth: 140, padding: "12px 16px" }}>
@@ -161,50 +138,56 @@ export default function VerificationHistoryPage() {
           </div>
 
           <div style={{ flex: 1, overflowY: "auto" }}>
-            {filteredData.map((row) => (
-              <div
-                key={row.id}
-                className="tr"
-                onClick={() => showToast(`📋 [${row.id}] ${row.store} 상세 내역 클릭`)}
-                style={{ cursor: "pointer", display: "flex", minWidth: 800 }}
-              >
-                <span style={{ flex: "0 0 150px", font: "600 11px ui-monospace,monospace", color: "#111" }}>
-                  {row.id}
-                </span>
-                <span style={{ flex: "0 0 110px", color: "#8a8a8a" }}>{row.user}</span>
-                <span style={{ flex: "1 1 200px", minWidth: 160, font: "500 11.5px 'Pretendard'", color: "#111" }}>
-                  {row.store}
-                </span>
-                <span style={{ flex: "0 0 130px", fontFamily: "monospace", color: "#8a8a8a" }}>
-                  {row.bizNum}
-                </span>
-                <span style={{ flex: "0 0 110px", display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ width: 8, height: 8, background: row.fandomColor, borderRadius: 1 }} />
-                  <span style={{ font: "500 11px 'Pretendard'", color: "#111" }}>
-                    {row.fandom}
-                  </span>
-                </span>
-                <span style={{ flex: "0 0 110px" }}>
-                  <span
-                    className="pill"
-                    style={{
-                      color:
-                        row.type === "자동승인" || row.type === "수동승인"
-                          ? "#1fa16b"
-                          : row.type === "최종반려"
-                          ? "#d64545"
-                          : "#e08a00",
-                    }}
-                  >
-                    ● {row.type}
-                  </span>
-                </span>
-                <span style={{ flex: "0 0 90px", font: "600 11px 'Pretendard'", color: "#111" }}>
-                  {row.amount}
-                </span>
-                <span style={{ flex: "0 0 140px", color: "#8a8a8a" }}>{row.timestamp}</span>
+            {filteredData.length === 0 ? (
+              <div style={{ textAlign: "center", padding: 40, color: "#8a8a8a", fontSize: 12 }}>
+                해당 필터 조건의 인증 내역이 없습니다.
               </div>
-            ))}
+            ) : (
+              filteredData.map((row) => (
+                <div
+                  key={row.id}
+                  className="tr"
+                  onClick={() => showToast(`📋 [${row.id}] ${row.store} 상세 내역 클릭`)}
+                  style={{ cursor: "pointer", display: "flex", minWidth: 800 }}
+                >
+                  <span style={{ flex: "0 0 150px", font: "600 11px ui-monospace,monospace", color: "#111" }}>
+                    {row.id}
+                  </span>
+                  <span style={{ flex: "0 0 110px", color: "#8a8a8a" }}>{row.user}</span>
+                  <span style={{ flex: "1 1 200px", minWidth: 160, font: "500 11.5px 'Pretendard'", color: "#111" }}>
+                    {row.store}
+                  </span>
+                  <span style={{ flex: "0 0 130px", fontFamily: "monospace", color: "#8a8a8a" }}>
+                    {row.bizNum}
+                  </span>
+                  <span style={{ flex: "0 0 110px", display: "flex", alignItems: "center", gap: 6 }}>
+                    <span style={{ width: 8, height: 8, background: row.fandomColor, borderRadius: 1 }} />
+                    <span style={{ font: "500 11px 'Pretendard'", color: "#111" }}>
+                      {row.fandom}
+                    </span>
+                  </span>
+                  <span style={{ flex: "0 0 110px" }}>
+                    <span
+                      className="pill"
+                      style={{
+                        color:
+                          row.type === "자동승인" || row.type === "수동승인"
+                            ? "#1fa16b"
+                            : row.type === "최종반려"
+                            ? "#d64545"
+                            : "#e08a00",
+                      }}
+                    >
+                      ● {row.type}
+                    </span>
+                  </span>
+                  <span style={{ flex: "0 0 90px", font: "600 11px 'Pretendard'", color: "#111" }}>
+                    {row.amount}
+                  </span>
+                  <span style={{ flex: "0 0 140px", color: "#8a8a8a" }}>{row.timestamp}</span>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

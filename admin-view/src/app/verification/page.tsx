@@ -1,52 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 import { ReviewHoldModal } from "@/components/modals/SharedModals";
-
-interface VerificationQueueItem {
-  id: string;
-  submitter: string;
-  fandomName: string;
-  fandomId: string;
-  storeName: string;
-  dateTime: string;
-  area: string;
-  amount: string;
-  ocrConfidence: string;
-  status: "match" | "warning" | "error";
-  receiptImgText: string;
-}
-
-const QUEUE_ITEMS: VerificationQueueItem[] = [
-  {
-    id: "VERIF-0722-042",
-    submitter: "user_94ab",
-    fandomName: "승관 (Seungkwan / BSS)",
-    fandomId: "FANDOM-04-M1",
-    storeName: "투썸플레이스 성수역점",
-    dateTime: "2026.07.22 14:15:20",
-    area: "서울 성동구 성수동2가",
-    amount: "14,500원",
-    ocrConfidence: "98.4%",
-    status: "match",
-    receiptImgText:
-      "A TWO SOME PLACE\n성수역점 (02-499-1234)\n------------------------\n아메리카노(R) 4,500\n조각케이크 10,000\n------------------------\n합계 14,500원\n2026-07-22 14:15:20",
-  },
-  {
-    id: "VERIF-0722-043",
-    submitter: "user_12cd",
-    fandomName: "민지 (Minji / NewJeans)",
-    fandomId: "FANDOM-01-M1",
-    storeName: "스타벅스 강남대로점",
-    dateTime: "2026.07.22 13:40:11",
-    area: "서울 강남구 역삼동",
-    amount: "8,600원",
-    ocrConfidence: "91.2%",
-    status: "warning",
-    receiptImgText:
-      "STARBUCKS COFFEE\n강남대로점\n------------------------\n카페라떼(T) 5,000\n쿠키 3,600\n------------------------\n합계 8,600원\n2026-07-22 13:40:11",
-  },
-];
+import { useAdminData } from "@/context/AdminDataContext";
 
 const REJECT_REASONS = [
   "동일 영수증 중복 제출",
@@ -57,6 +14,13 @@ const REJECT_REASONS = [
 ];
 
 export default function ReceiptVerificationPage() {
+  const { 
+    verificationQueue, 
+    approveVerification, 
+    rejectVerification, 
+    holdVerification 
+  } = useAdminData();
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [rejectPopoverOpen, setRejectPopoverOpen] = useState(false);
   const [isHoldModalOpen, setIsHoldModalOpen] = useState(false);
@@ -65,7 +29,20 @@ export default function ReceiptVerificationPage() {
   );
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const item = QUEUE_ITEMS[currentIndex] || QUEUE_ITEMS[0];
+  // 큐가 비어있거나 인덱스 범위를 초과했을 때 안전장치
+  const hasItems = verificationQueue.length > 0;
+  
+  // 인덱스 안전 조정 (Effect 내 동기 갱신 제한 룰 준수하여 setTimeout 사용)
+  useEffect(() => {
+    if (verificationQueue.length > 0 && currentIndex >= verificationQueue.length) {
+      const timer = setTimeout(() => {
+        setCurrentIndex(Math.max(0, verificationQueue.length - 1));
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [verificationQueue.length, currentIndex]);
+
+  const item = hasItems ? (verificationQueue[currentIndex] || verificationQueue[0]) : null;
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -74,20 +51,39 @@ export default function ReceiptVerificationPage() {
     }, 3000);
   };
 
-  const handleApprove = React.useCallback(() => {
+  const handleApprove = useCallback(() => {
+    if (!item) return;
+    const fandomName = item.fandomName;
+    const itemId = item.id;
+    approveVerification(itemId);
     showToast(
-      `[승인 완수] '${item.fandomName}' +1점 반영 ➔ 최상위 루트 그룹 스코어 자동 상향 상속 (Upward Roll-up) 실행 완료!`
+      `[승인 완수] '${fandomName}' +10점 반영 ➔ 최상위 루트 그룹 스코어 자동 상향 상속 (Upward Roll-up) 실행 완료!`
     );
-    if (currentIndex < QUEUE_ITEMS.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
+    // 큐에서 빠지므로 currentIndex가 자동 유지되지만, 마지막 항목인 경우 이전으로 땡김
+    if (currentIndex >= verificationQueue.length - 1 && currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
     }
-  }, [currentIndex, item.fandomName]);
+  }, [item, currentIndex, verificationQueue.length, approveVerification]);
 
   const handleReject = () => {
+    if (!item) return;
+    const itemId = item.id;
+    rejectVerification(itemId, selectedRejectReason);
     showToast(`[반려 완료] 반려 사유: ${selectedRejectReason}`);
     setRejectPopoverOpen(false);
-    if (currentIndex < QUEUE_ITEMS.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+    if (currentIndex >= verificationQueue.length - 1 && currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+    }
+  };
+
+  const handleHold = () => {
+    if (!item) return;
+    const itemId = item.id;
+    holdVerification(itemId);
+    showToast(`[보류 이관] 사유 처리 및 이관 완료`);
+    setIsHoldModalOpen(false);
+    if (currentIndex >= verificationQueue.length - 1 && currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
     }
   };
 
@@ -99,6 +95,9 @@ export default function ReceiptVerificationPage() {
         e.target instanceof HTMLTextAreaElement
       )
         return;
+      
+      if (!hasItems) return;
+
       if (e.code === "Space") {
         e.preventDefault();
         handleApprove();
@@ -108,11 +107,64 @@ export default function ReceiptVerificationPage() {
       } else if (e.code === "KeyH") {
         e.preventDefault();
         setIsHoldModalOpen(true);
+      } else if (e.code === "ArrowLeft") {
+        e.preventDefault();
+        setCurrentIndex((prev) => Math.max(0, prev - 1));
+      } else if (e.code === "ArrowRight") {
+        e.preventDefault();
+        setCurrentIndex((prev) => Math.min(verificationQueue.length - 1, prev + 1));
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleApprove]);
+  }, [handleApprove, hasItems, verificationQueue.length]);
+
+  if (!hasItems || !item) {
+    return (
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        <div className="admin-topbar">
+          <div style={{ font: "700 14px 'Pretendard'", color: "#111" }}>
+            영수증 수동 검수 (ADM-VERIFY-01)
+          </div>
+        </div>
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "#fff",
+            gap: 12,
+          }}
+        >
+          <span style={{ fontSize: 48 }}>🎉</span>
+          <span style={{ font: "700 15px 'Pretendard'", color: "#111" }}>
+            현재 대기 중인 영수증이 모두 검수 완료되었습니다!
+          </span>
+          <span style={{ font: "400 11px 'Pretendard'", color: "#8a8a8a" }}>
+            새로운 영수증이 접수되면 큐에 실시간 적재됩니다.
+          </span>
+          <Link
+            href="/"
+            className="btn-l"
+            style={{
+              marginTop: 10,
+              padding: "8px 16px",
+              background: "#111",
+              color: "#fff",
+              textDecoration: "none",
+              font: "700 11px 'Pretendard'",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            대시보드로 돌아가기
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
@@ -125,12 +177,16 @@ export default function ReceiptVerificationPage() {
           <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
             단축키 지원: <b style={{ color: "#111" }}>[Space] 승인</b> |{" "}
             <b style={{ color: "#d64545" }}>[R] 반려</b> |{" "}
-            <b style={{ color: "#e08a00" }}>[H] 보류</b> (건당 5초 초고속 심사)
+            <b style={{ color: "#e08a00" }}>[H] 보류</b> |{" "}
+            <b style={{ color: "#111" }}>[← / →] 이동</b> (건당 5초 초고속 심사)
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span className="pill" style={{ color: "#111", fontWeight: 600 }}>
-            수동 검수 대기 24
+            수동 검수 대기 {verificationQueue.length}
+          </span>
+          <span style={{ font: "500 11px 'Pretendard'", color: "#8a8a8a" }}>
+            현재 항목: {currentIndex + 1} / {verificationQueue.length}
           </span>
           <button
             className="btn-l"
@@ -291,7 +347,7 @@ export default function ReceiptVerificationPage() {
               marginBottom: 16,
             }}
           >
-            💡 <b style={{ color: "#111" }}>단방향 상향 점수 상속 (Upward Roll-up)</b>: 승인 시 멤버 스코어 +1점과 동시에 최상위 단체 그룹 스코어 `score = score + 1` 이 **단일 원자적 트랜잭션**으로 자동 반영됩니다.
+            💡 <b style={{ color: "#111" }}>단방향 상향 점수 상속 (Upward Roll-up)</b>: 승인 시 멤버 스코어 +10점과 동시에 최상위 단체 그룹 스코어 `score = score + 10` 이 **단일 원자적 트랜잭션**으로 자동 반영됩니다.
           </div>
 
           {/* Action Button Bar */}
@@ -403,13 +459,7 @@ export default function ReceiptVerificationPage() {
       <ReviewHoldModal
         isOpen={isHoldModalOpen}
         onClose={() => setIsHoldModalOpen(false)}
-        onConfirm={(_data) => {
-          showToast(`[보류 이관] 사유 처리 완료`);
-          setIsHoldModalOpen(false);
-          if (currentIndex < QUEUE_ITEMS.length - 1) {
-            setCurrentIndex(currentIndex + 1);
-          }
-        }}
+        onConfirm={handleHold}
       />
 
       {/* Toast Notification */}

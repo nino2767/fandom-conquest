@@ -1,45 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-
-interface SpotMasterItem {
-  id: string;
-  pinName: string;
-  placeName: string;
-  fandomName: string;
-  fandomColor: string;
-  activeStatus: "ACTIVE" | "INACTIVE";
-}
-
-const SPOTS: SpotMasterItem[] = [
-  {
-    id: "spot_01",
-    pinName: "안유진 생일카페 핀",
-    placeName: "카페 므므흐스 성수",
-    fandomName: "아이브",
-    fandomColor: "#F59F00",
-    activeStatus: "ACTIVE",
-  },
-  {
-    id: "spot_02",
-    pinName: "승관 성수 핫스팟 핀",
-    placeName: "투썸플레이스 성수역점",
-    fandomName: "승관",
-    fandomColor: "#FF8E53",
-    activeStatus: "ACTIVE",
-  },
-  {
-    id: "spot_03",
-    pinName: "뉴진스 상설 성지 핀",
-    placeName: "언더스탠드 카페",
-    fandomName: "뉴진스",
-    fandomColor: "#2F6BFF",
-    activeStatus: "ACTIVE",
-  },
-];
+import { useAdminData } from "@/context/AdminDataContext";
 
 export default function SpotMasterPage() {
-  const [spotList] = useState<SpotMasterItem[]>(SPOTS);
+  const { spots } = useAdminData();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -57,7 +22,7 @@ export default function SpotMasterPage() {
             성지 핀 관리 (Spot Pin Master)
           </span>
           <span style={{ font: "400 9.5px 'Pretendard'", color: "#9a9a9a" }}>
-            등록 핀 {spotList.length}개 · 지도 마커 동기화
+            등록 핀 {spots.length}개 · 지도 마커 동기화
           </span>
         </div>
         <button
@@ -86,24 +51,24 @@ export default function SpotMasterPage() {
         }}
       >
         <div className="admin-card" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <div className="thr">
+          <div className="thr" style={{ display: "flex" }}>
             <span style={{ width: 120 }}>핀 ID</span>
             <span style={{ flex: 1.5 }}>핀 마커 명칭</span>
-            <span style={{ flex: 1.5 }}>연동 거점 장소</span>
+            <span style={{ flex: 1.5 }}>연동 거점 장소 주소</span>
             <span style={{ width: 140 }}>귀속 팬덤</span>
             <span style={{ width: 100 }}>상태</span>
           </div>
 
           <div style={{ flex: 1, overflowY: "auto" }}>
-            {spotList.map((row) => (
-              <div key={row.id} className="tr">
+            {spots.map((row) => (
+              <div key={row.id} className="tr" style={{ display: "flex" }}>
                 <span style={{ width: 120, font: "600 11px ui-monospace,monospace", color: "#111" }}>
                   {row.id}
                 </span>
                 <span style={{ flex: 1.5, font: "600 11.5px 'Pretendard'", color: "#111" }}>
-                  {row.pinName}
+                  {row.name}
                 </span>
-                <span style={{ flex: 1.5, color: "#555" }}>{row.placeName}</span>
+                <span style={{ flex: 1.5, color: "#555" }}>{row.address}</span>
                 <span style={{ width: 140 }}>
                   <span className="pill">
                     <span className="col" style={{ background: row.fandomColor }} />
@@ -111,8 +76,8 @@ export default function SpotMasterPage() {
                   </span>
                 </span>
                 <span style={{ width: 100 }}>
-                  <span className="pill" style={{ color: "#1fa16b" }}>
-                    ● {row.activeStatus}
+                  <span className="pill" style={{ color: row.status === "ACTIVE" ? "#1fa16b" : "#d64545" }}>
+                    ● {row.status}
                   </span>
                 </span>
               </div>

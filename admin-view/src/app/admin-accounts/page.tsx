@@ -40,10 +40,20 @@ const ADMIN_ACCOUNTS: AdminAccountItem[] = [
     lastLogin: "2026.07.20 11:15",
     status: "ACTIVE",
   },
+  {
+    id: "adm_04",
+    adminId: "locked_operator@fandom.app",
+    name: "비활성 검수원",
+    role: "OPERATOR",
+    dept: "인증검수팀",
+    lastLogin: "2026.07.18 10:00",
+    status: "LOCKED",
+  },
 ];
 
 export default function AdminAccountsPage() {
   const [accountList] = useState<AdminAccountItem[]>(ADMIN_ACCOUNTS);
+  const [statusFilter, setStatusFilter] = useState<"ACTIVE" | "LOCKED" | "ALL">("ACTIVE");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -52,6 +62,11 @@ export default function AdminAccountsPage() {
       setToastMessage(null);
     }, 2500);
   };
+
+  const filteredAccounts = accountList.filter((item) => {
+    if (statusFilter === "ALL") return true;
+    return item.status === statusFilter;
+  });
 
   return (
     <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
@@ -91,8 +106,29 @@ export default function AdminAccountsPage() {
           overflowY: "auto",
         }}
       >
-        <div className="admin-card" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <div className="thr">
+        {/* Status Filter Tab (ACTIVE default) */}
+        <div style={{ display: "flex", gap: 6 }}>
+          {(["ACTIVE", "LOCKED", "ALL"] as const).map((status) => (
+            <button
+              key={status}
+              onClick={() => setStatusFilter(status)}
+              style={{
+                padding: "5px 12px",
+                background: statusFilter === status ? "#111" : "#eee",
+                color: statusFilter === status ? "#fff" : "#555",
+                border: "none",
+                font: "600 10.5px 'Pretendard'",
+                cursor: "pointer",
+              }}
+            >
+              {status === "ALL" ? "전체 보기" : status === "ACTIVE" ? "활성 계정 (Active)" : "잠금 계정 (Locked)"}
+            </button>
+          ))}
+        </div>
+
+        {/* Data Table */}
+        <div className="admin-card table-responsive" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <div className="thr" style={{ display: "flex" }}>
             <span style={{ width: 160 }}>계정 (ID)</span>
             <span style={{ width: 140 }}>이름</span>
             <span style={{ width: 120 }}>RBAC 권한 등급</span>
@@ -103,50 +139,56 @@ export default function AdminAccountsPage() {
           </div>
 
           <div style={{ flex: 1, overflowY: "auto" }}>
-            {accountList.map((row) => (
-              <div key={row.id} className="tr">
-                <span style={{ width: 160, font: "600 11px ui-monospace,monospace", color: "#111" }}>
-                  {row.adminId}
-                </span>
-                <span style={{ width: 140, font: "500 11.5px 'Pretendard'", color: "#111" }}>
-                  {row.name}
-                </span>
-                <span style={{ width: 120 }}>
-                  <span
-                    className="tag"
-                    style={{
-                      borderColor: row.role === "SUPER_ADMIN" ? "#111" : "#ccc",
-                      color: row.role === "SUPER_ADMIN" ? "#111" : "#555",
-                      fontWeight: row.role === "SUPER_ADMIN" ? 700 : 500,
-                    }}
-                  >
-                    {row.role}
-                  </span>
-                </span>
-                <span style={{ flex: 1, color: "#555" }}>{row.dept}</span>
-                <span style={{ width: 140, color: "#8a8a8a" }}>{row.lastLogin}</span>
-                <span style={{ width: 80 }}>
-                  <span className="pill" style={{ color: "#1fa16b" }}>
-                    ● {row.status}
-                  </span>
-                </span>
-                <span style={{ width: 70 }}>
-                  <button
-                    onClick={() => showToast(`⚙️ [${row.name}] 권한 수정 모달이 열렸습니다.`)}
-                    style={{
-                      font: "500 10px 'Pretendard'",
-                      color: "#111",
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
-                      textDecoration: "underline",
-                    }}
-                  >
-                    수정
-                  </button>
-                </span>
+            {filteredAccounts.length === 0 ? (
+              <div style={{ textAlign: "center", padding: 40, color: "#8a8a8a", fontSize: 12 }}>
+                해당 필터 조건에 부합하는 계정이 없습니다.
               </div>
-            ))}
+            ) : (
+              filteredAccounts.map((row) => (
+                <div key={row.id} className="tr" style={{ display: "flex" }}>
+                  <span style={{ width: 160, font: "600 11px ui-monospace,monospace", color: "#111" }}>
+                    {row.adminId}
+                  </span>
+                  <span style={{ width: 140, font: "500 11.5px 'Pretendard'", color: "#111" }}>
+                    {row.name}
+                  </span>
+                  <span style={{ width: 120 }}>
+                    <span
+                      className="tag"
+                      style={{
+                        borderColor: row.role === "SUPER_ADMIN" ? "#111" : "#ccc",
+                        color: row.role === "SUPER_ADMIN" ? "#111" : "#555",
+                        fontWeight: row.role === "SUPER_ADMIN" ? 700 : 500,
+                      }}
+                    >
+                      {row.role}
+                    </span>
+                  </span>
+                  <span style={{ flex: 1, color: "#555" }}>{row.dept}</span>
+                  <span style={{ width: 140, color: "#8a8a8a" }}>{row.lastLogin}</span>
+                  <span style={{ width: 80 }}>
+                    <span className="pill" style={{ color: row.status === "ACTIVE" ? "#1fa16b" : "#d64545" }}>
+                      ● {row.status}
+                    </span>
+                  </span>
+                  <span style={{ width: 70 }}>
+                    <button
+                      onClick={() => showToast(`⚙️ [${row.name}] 권한 수정 모달이 열렸습니다.`)}
+                      style={{
+                        font: "500 10px 'Pretendard'",
+                        color: "#111",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                      }}
+                    >
+                      수정
+                    </button>
+                  </span>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
