@@ -36,7 +36,7 @@ description: "마크다운 기획 문서나 스펙 문서를 AFTERGLOW Industry(
     <div style="display:grid; grid-template-columns:230px 1fr; max-width:1180px; margin:0 auto;">
       <!-- 사이드바 네비게이션 -->
       <aside style="padding:44px 22px; position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto;">
-        <div style="font-family:'Arial Narrow', Arial, sans-serif; font-weight:600; font-size:24px;">AFTERGLOW</div>
+        <div style="font-family:'Arial Narrow', Arial, sans-serif; font-weight:600; font-size:24px;">FANDOM CONQUEST</div>
         <div style="font-size:12px; opacity:.72; margin-top:8px; line-height:1.5;">[문서 부제목]</div>
         <nav style="margin-top:26px; display:flex; flex-direction:column; gap:1px;">
           <a href="#i-s1" style="display:flex; gap:10px; align-items:baseline; padding:8px 6px; color:#1d1f20; text-decoration:none; font-size:13px; border-left:2px solid transparent;"><span style="color:#416180; font-size:11px; min-width:16px;">01</span>섹션 제목 1</a>
