@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>성지 인증 방식 다변화 기획 제안서</title>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>body{margin:0}</style>
+</helmet>
+<div style="background:#f3f2f2; color:#201e1d; font-family:Arial, Helvetica, sans-serif; font-size:15.5px; line-height:1.6; min-height:100vh;">
+    <div style="max-width:940px; margin:0 auto; padding:0 16px;">
+      <!-- 상단 헤더 및 가로 네비게이션 -->
+      <header style="padding:64px 24px 0;">
+        <div style="font-family:Arial, sans-serif; font-weight:800; font-size:37px; letter-spacing:-.01em;">AFTERGLOW</div>
+        <div style="font-size:14.5px; margin-top:10px; max-width:600px; font-weight: 700; color:#201e1d;">[기획 제안] 성지 인증 다변화(LBS+사진 필수화) 및 점수 모델 설계안</div>
+        <div style="font-size:11px; opacity:.6; margin-top:16px; text-transform:uppercase; letter-spacing:.05em;">DATE: 2026.07.29 | WRITER: AI AGENT | STATUS: DRAFT FOR DISCUSSION</div>
+        
+        <nav style="display:flex; flex-wrap:wrap; margin-top:26px; border-top:2px solid #201e1d; padding-top:4px;">
+          <a href="#m-s1" style="color:#201e1d; text-decoration:none; font-size:12.5px; padding:10px 18px 10px 0; margin-right:16px; display:flex; gap:6px; font-family:Arial, Helvetica, sans-serif; font-weight:700;"><span style="color:#ec3013;">01</span>제안 배경 및 문제 정의</a>
+          <a href="#m-s2" style="color:#201e1d; text-decoration:none; font-size:12.5px; padding:10px 18px 10px 0; margin-right:16px; display:flex; gap:6px; font-family:Arial, Helvetica, sans-serif; font-weight:700;"><span style="color:#ec3013;">02</span>인증 다변화 & 점수 모델</a>
+          <a href="#m-s3" style="color:#201e1d; text-decoration:none; font-size:12.5px; padding:10px 18px 10px 0; margin-right:16px; display:flex; gap:6px; font-family:Arial, Helvetica, sans-serif; font-weight:700;"><span style="color:#ec3013;">03</span>기획 영향도 분석</a>
+          <a href="#m-s4" style="color:#201e1d; text-decoration:none; font-size:12.5px; padding:10px 18px 10px 0; display:flex; gap:6px; font-family:Arial, Helvetica, sans-serif; font-weight:700;"><span style="color:#ec3013;">04</span>논의/의사결정 과제</a>
+        </nav>
+      </header>
+      
+      <!-- 메인 영역 -->
+      <main style="padding:0 24px 140px;">
+        
+        <!-- SECTION 1 -->
+        <section id="m-s1" style="padding-top:60px;">
+          <h2 style="font-size:26px; display:flex; align-items:baseline; gap:14px; font-family:Arial, sans-serif; font-weight:800; margin:0 0 24px; color:#201e1d; border-bottom: 1px solid rgba(32,30,29,.15); padding-bottom: 8px;">
+            <span style="font-size:16px; color:#ec3013; font-weight:700;">01</span>제안 배경 및 문제 정의
+          </h2>
+          
+          <div style="background:#ec3013; color:#fff; padding:36px 32px; margin-bottom:30px;">
+            <div style="font-size:12px; text-transform:uppercase; letter-spacing:.06em; opacity:.85;">Core Challenge</div>
+            <blockquote style="font-family:Arial, sans-serif; font-weight:800; font-size:22px; line-height:1.4; margin:14px 0 0;">
+              "영수증 인증 방식만을 고집하는 것은 지도 내 확장성을 가로막습니다. 상업 매장 외 공원, 벽화, 촬영지 등 팬덤의 다양한 '성지' 방문을 보장하기 위해 위치 기반 사진 인증으로의 대안 전환이 절실합니다."
+            </blockquote>
+          </div>
+
+          <p style="margin: 0 0 16px;">
+            현재 팬덤 땅따먹기 서비스는 오직 <strong>가맹점 결제 영수증(사업자등록번호) 대조</strong> 방식으로만 성지 인증 및 점유 획득을 인정하고 있습니다. 이 정책은 상업적인 매장에 한해서는 유효하나, 팬들이 방문하는 조형물, 공원, 거리 벽화, 야외 뮤직비디오 촬영지 등 비상업적인 장소를 시스템 내의 성지로 등록할 수 없게 만듭니다.
+          </p>
+          <p style="margin: 0 0 16px;">
+            이에 따라 성지 인증의 기본 요건을 <strong>현위치(GPS) 200m 이내 도달 및 사진 촬영</strong>으로 변경하고, 추가적인 소비 행위(영수증)와 정보 공유 행위(리뷰)에 점수 가산점(게이미피케이션 가중치)을 부여하는 다변화된 인증 및 점수 모델을 제안합니다.
+          </p>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="m-s2" style="padding-top:60px; margin-top:48px; border-top:2px solid #201e1d;">
+          <h2 style="font-size:26px; display:flex; align-items:baseline; gap:14px; font-family:Arial, sans-serif; font-weight:800; margin:0 0 24px; color:#201e1d; border-bottom: 1px solid rgba(32,30,29,.15); padding-bottom: 8px;">
+            <span style="font-size:16px; color:#ec3013; font-weight:700;">02</span>인증 다변화 & 점수 모델 설계
+          </h2>
+
+          <p style="margin: 0 0 20px;">
+            유저가 성지 방문 시 인증에 기여한 강도에 따라 점수 보상을 세분화하여, 가이드가 명확한 정보 획득과 지역 소비 활성화를 함께 자극합니다.
+          </p>
+
+          <table style="width:100%; border-collapse:collapse; font-size:14px; margin-bottom:30px;">
+            <thead>
+              <tr>
+                <th style="width:20%; text-align:left; font-size:11px; text-transform:uppercase; padding:12px 10px 12px 0; border-bottom:2px solid #201e1d; font-weight:700; color:#201e1d;">인증 유형</th>
+                <th style="width:30%; text-align:left; font-size:11px; text-transform:uppercase; padding:12px 10px 12px 0; border-bottom:2px solid #201e1d; font-weight:700; color:#201e1d;">필수 및 선택 항목</th>
+                <th style="width:15%; text-align:left; font-size:11px; text-transform:uppercase; padding:12px 10px 12px 0; border-bottom:2px solid #201e1d; font-weight:700; color:#201e1d; text-align:center;">부여 점수</th>
+                <th style="width:35%; text-align:left; font-size:11px; text-transform:uppercase; padding:12px 10px 12px 0; border-bottom:2px solid #201e1d; font-weight:700; color:#201e1d;">설계 근거</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25); font-weight:700;">① 기본 방문 인증</td>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25);">
+                  <span style="display:inline-flex; align-items:center; font-size:10px; letter-spacing:.02em; padding:2px 6px; border:1px solid #201e1d; color:#201e1d; font-weight:700; margin-right:4px;">필수</span> GPS 반경 200m 이내 + 사진 1장
+                </td>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25); font-weight:800; color:#ec3013; text-align:center; font-size:16px;">1.0 점</td>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25); opacity:.8;">성지에 물리적으로 발을 딛는 행동 자체에 보장하는 기본 점수.</td>
+              </tr>
+              <tr>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25); font-weight:700;">② 소비 촉진 인증</td>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25);">
+                  <span style="display:inline-flex; align-items:center; font-size:10px; letter-spacing:.02em; padding:2px 6px; border:1px solid #201e1d; color:#201e1d; font-weight:700; margin-right:4px;">필수</span> GPS+사진<br>
+                  <span style="display:inline-flex; align-items:center; font-size:10px; letter-spacing:.02em; padding:2px 6px; border:1px solid #ec3013; color:#ec3013; font-weight:700; margin-top:4px;">선택</span> 실시간 영수증 OCR 대조
+                </td>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25); font-weight:800; color:#ec3013; text-align:center; font-size:16px;">2.0 점</td>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25); opacity:.8;">지역 상권 매장의 소비 촉진을 이끌어 낸 핵심 기여 가산점 반영 (+1.0점).</td>
+              </tr>
+              <tr>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25); font-weight:700;">③ 정보 공유 인증</td>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25);">
+                  <span style="display:inline-flex; align-items:center; font-size:10px; letter-spacing:.02em; padding:2px 6px; border:1px solid #201e1d; color:#201e1d; font-weight:700; margin-right:4px;">필수</span> GPS+사진<br>
+                  <span style="display:inline-flex; align-items:center; font-size:10px; letter-spacing:.02em; padding:2px 6px; border:1px solid #ec3013; color:#ec3013; font-weight:700; margin-top:4px;">선택</span> 상세 리뷰 작성 (10자 이상)
+                </td>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25); font-weight:800; color:#ec3013; text-align:center; font-size:16px;">1.5 점</td>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25); opacity:.8;">성지에 대한 텍스트 피드백과 설명 제공으로 서비스 콘텐츠 기여 가산점 반영 (+0.5점).</td>
+              </tr>
+              <tr>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25); font-weight:700;">④ 복합 완결 인증</td>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25);">
+                  <span style="display:inline-flex; align-items:center; font-size:10px; letter-spacing:.02em; padding:2px 6px; border:1px solid #201e1d; color:#201e1d; font-weight:700; margin-right:4px;">필수</span> GPS+사진<br>
+                  <span style="display:inline-flex; align-items:center; font-size:10px; letter-spacing:.02em; padding:2px 6px; border:1px solid #ec3013; color:#ec3013; font-weight:700; margin-top:4px;">선택</span> 영수증 제출 + 리뷰 작성
+                </td>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25); font-weight:800; color:#ec3013; text-align:center; font-size:16px;">2.5 점</td>
+                <td style="padding:14px 10px 14px 0; border-bottom:1px solid rgba(32,30,29,.25); opacity:.8;">한 번의 방문에 제공할 수 있는 최대 정보와 실질 소비 리워드 가중치 합산 반영.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="m-s3" style="padding-top:60px; margin-top:48px; border-top:2px solid #201e1d;">
+          <h2 style="font-size:26px; display:flex; align-items:baseline; gap:14px; font-family:Arial, sans-serif; font-weight:800; margin:0 0 24px; color:#201e1d; border-bottom: 1px solid rgba(32,30,29,.15); padding-bottom: 8px;">
+            <span style="font-size:16px; color:#ec3013; font-weight:700;">03</span>기획 영향도 및 시스템 정합성
+          </h2>
+
+          <p style="margin: 0 0 16px;">
+            인증 매커니즘이 복합적으로 확장됨에 따라 시스템 하부 설계의 변경이 필수적입니다.
+          </p>
+
+          <h3 style="font-size:18px; font-weight:800; margin:24px 0 12px; color:#201e1d;">3.1. DB 스키마 설계 개편</h3>
+          <ul style="margin:0 0 20px; padding-left:20px; line-height:1.8;">
+            <li><strong>places (장소 테이블)</strong>: 가맹점 여부를 판독하는 <code>place_type</code> (BUSINESS / PUBLIC) 컬럼이 신설되며, 공공장소일 시 <code>biz_no</code>(사업자등록번호)는 <code>Nullable</code> 처리됩니다. 중복 검출은 상호명과 위경도 좌표 조합 복합 인덱스로 차단합니다.</li>
+            <li><strong>verifications (인증 내역 테이블)</strong>: <code>photo_urls</code>(JSON 형식의 최대 10장 이미지 어레이) 및 영수증 정보 컬럼(Nullable), 리뷰 컬럼(<code>review_text VARCHAR(500)</code>)이 신설됩니다.</li>
+            <li><strong>dedup_key (중복 차단 키)</strong>: 영수증 인증 건은 기존 <code>biz_no + approval_no</code>로 방어하고, 영수증이 없는 일반 사진 인증 건은 <code>user_id + spot_id + date(KST)</code>의 복합 고유 키를 사용하여 당일 1회 쿨다운을 DB 레벨에서 엄격히 제한합니다.</li>
+          </ul>
+
+          <h3 style="font-size:18px; font-weight:800; margin:24px 0 12px; color:#201e1d;">3.2. 어뷰징 방어 전략의 다변화</h3>
+          <blockquote style="font-size:15px; line-height:1.6; margin:16px 0; padding:16px 20px; border-left:3px solid #ec3013; background:rgba(236,48,19,.03);">
+            기존 영수증 승인번호 고유성 대조 단일 필터에서 탈피하여 <strong>'GPS 200m 경계'</strong> 및 <strong>'이미지 해시 비교'</strong>를 통한 다차원 방어를 가동합니다.
+          </blockquote>
+          <ul style="margin:0 0 20px; padding-left:20px; line-height:1.8;">
+            <li><strong>위치 이탈 인증 필터링</strong>: GPS 반경 200m를 벗어난 경우, 주소를 증명할 영수증 정보가 존재할 때에만 '수동 검수 큐'로 이관하며, 영수증 조차 첨부되지 않은 단순 사진 인증건은 즉시 <strong>자동 반려(Hard Reject)</strong> 처리하여 운영 낭비를 차단합니다.</li>
+            <li><strong>이미지 도용 검사</strong>: 업로드된 인증 샷들의 파일 바이너리 MD5 해시 대조 및 고유 해시 테이블 롤링 대조를 활용해 인터넷 캡처 다운로드 및 중복 제출 어뷰징을 기계적으로 사전 분류합니다.</li>
+          </ul>
+
+          <h3 style="font-size:18px; font-weight:800; margin:24px 0 12px; color:#201e1d;">3.3. 백오피스 검수 화면 확장 (ADM-VERIF-02)</h3>
+          <p style="margin: 0 0 16px;">
+            기존 OCR 매칭 비교 좌우 2분할 뷰에서 확장하여, 유저가 올린 현장 사진 갤러리 슬라이더와 작성한 리뷰 텍스트, 그리고 영수증 원본 이미지를 종합하여 검수할 수 있는 통합 SOP 패널로 개편합니다.
+          </p>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="m-s4" style="padding-top:60px; margin-top:48px; border-top:2px solid #201e1d;">
+          <h2 style="font-size:26px; display:flex; align-items:baseline; gap:14px; font-family:Arial, sans-serif; font-weight:800; margin:0 0 24px; color:#201e1d; border-bottom: 1px solid rgba(32,30,29,.15); padding-bottom: 8px;">
+            <span style="font-size:16px; color:#ec3013; font-weight:700;">04</span>토의 및 의사결정 과제 (Agenda)
+          </h2>
+          
+          <div style="border:1px solid #201e1d; padding:24px; background:#fff;">
+            <h4 style="margin:0 0 12px; font-size:16px; font-weight:800; color:#ec3013;">회의 테이블 주요 Agenda</h4>
+            <ol style="margin:0; padding-left:20px; line-height:1.9;">
+              <li><strong>영토전 점수 누적 시뮬레이션</strong>: 기본점수(1.0)와 가산점수(영수증 +1.0, 리뷰 +0.5) 도입 시 경합 구의 뒤집힘 주기 밸런싱이 적절한가? 특정 헤비 과금유저의 영수증 도배 대비 점수 상한 제한 설계 필요성.</li>
+              <li><strong>사진 진위 자동 판정 고도화</strong>: 간판 OCR 판독 및 랜드마크 지오태그 매칭 AI 필터를 연동하여 어드민 수동 검수의 업무 강도를 낮추는 기획적 로드맵 합의.</li>
+              <li><strong>리뷰 텍스트 품질 검증 룰</strong>: 무의미한 단순 도배 텍스트 필터링을 위한 최소 입력 기준 수립 (예: 최소 10자 이상, 중복 문자열 연속 3회 제한 등).</li>
+            </ol>
+          </div>
+        </section>
+
+      </main>
+    </div>
+</div>
+</x-dc>
+</body>
+</html>
