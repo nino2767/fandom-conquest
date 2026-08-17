@@ -1,8 +1,12 @@
 # 팬덤 땅따먹기 상세기획 — 전체 통합 정보구조도 (Full System Information Architecture)
 
+> **문서 버전**: v0.2
+> **최종 수정일**: 2026-08-17
+> **문서 상태**: Approved Spec
 > 본 문서는 '팬덤 땅따먹기' 전체 시스템(**User View App 및 Admin Back-Office**)의 **통합 정보 구조도(IA Tree), 메뉴 계층, 화면 ID(총 39개) 및 화면별 주요 UI 요소·동작 명세**를 다루는 상위 마스터 개요 문서이다.
 > 
 > 🔗 **관련 문서**: [fandom_핵심정책_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_핵심정책_v0.1_20260722.md) | [fandom_추후개선_로드맵_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_추후개선_로드맵_v0.1_20260722.md)
+> 🔄 **v0.2 반영 (User View 한정)**: [fandom_인증다변화_기획제안_v0.1_20260729.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/03_discussion/fandom_인증다변화_기획제안_v0.1_20260729.md) 논의안 채택에 따라 `3.0 Verification` 플로우를 GPS+사진 기본 인증·영수증/리뷰 가산 구조로, `2.5 성지 제보 모달`을 `PUBLIC`(비상업 성지) 지원 구조로 갱신. Admin Back-Office(Part 2) 섹션은 이번 갱신 대상에서 제외.
 
 ---
 
@@ -24,14 +28,14 @@ Fandom Conquest System
 │   │   ├── 2.2 성지 상세 모달 (Spot Detail Modal) [UV-MAIN-02]
 │   │   ├── 2.3 주변 성지 바텀시트 (Nearby Spots Sheet) [UV-MAIN-03]
 │   │   ├── 2.4 IP 팬덤 필터 바텀시트 (Fandom Filter Sheet) [UV-MAIN-04]
-│   │   └── 2.5 성지 제보 모달 (User Spot Proposal Modal) [UV-SPOT-04]
+│   │   └── 2.5 성지 제보 모달 ✨(v0.2: PUBLIC 비상업 성지 지원) (User Spot Proposal Modal) [UV-SPOT-04]
 │   │
-│   ├── 3.0 Verification (영수증 인증 플로우)
-│   │   ├── 3.1 영수증 촬영/선택 (Camera & Photo Picker) [UV-VERIF-01]
-│   │   ├── 3.2 AI OCR 스캐닝 (AI OCR Scanning Progress) [UV-VERIF-02]
-│   │   ├── 3.3 인증 성공 피드백 (Verification Success Result) [UV-VERIF-03]
+│   ├── 3.0 Verification ✨(v0.2: 방문 인증 플로우 — GPS+사진 필수, 영수증/리뷰 가산)
+│   │   ├── 3.1 방문 사진 촬영 (GPS+Photo Capture) [UV-VERIF-01]
+│   │   ├── 3.2 가산 옵션 선택(영수증/리뷰) & AI OCR 스캐닝 (Add-on Select & AI OCR Scanning) [UV-VERIF-02]
+│   │   ├── 3.3 인증 성공 피드백 (획득 점수 1.0~2.5점 표시) (Verification Success Result) [UV-VERIF-03]
 │   │   ├── 3.4 수동 검수 대기 (Manual Review Pending Sheet) [UV-VERIF-04]
-│   │   ├── 3.5 인증 반려 모달 (Verification Rejection Modal) [UV-VERIF-05]
+│   │   ├── 3.5 인증 반려 모달 (이미지 도용/GPS외곽/리뷰필터 등 사유 확장) (Verification Rejection Modal) [UV-VERIF-05]
 │   │   └── 3.6 점령 승리 공유 카드 (Conquest Victory Share Card) [UV-SHARE-01]
 │   │
 │   ├── 4.0 War Status & Leaderboard (전황 및 랭킹)

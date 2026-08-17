@@ -1,6 +1,10 @@
 # 팬덤 땅따먹기 상세기획 — 팬덤 & 땅점령 (Fandom & Territory Specification)
 
+> **문서 버전**: v0.2
+> **최종 수정일**: 2026-08-17
+> **문서 상태**: Approved Spec
 > 본 문서는 [fandom_핵심정책_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_핵심정책_v0.1_20260722.md)의 팬덤(Fandom)·땅(Territory) 도메인을 바탕으로 **팬덤 IP 브랜드 토큰, 구(區) 단위 4단계 점령 상태, 14일 롤링 감쇠 수학 알고리즘, 영토 전황 보드(`UV-WAR-01`) UI 와이어프레임 및 뒤집힘/방어 푸시 디바운스 정책**을 촘촘히 명세한다.
+> 🔄 **v0.2 반영**: [fandom_인증다변화_기획제안_v0.1_20260729.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/03_discussion/fandom_인증다변화_기획제안_v0.1_20260729.md) 논의안 채택에 따라 14일 롤링 감쇠 공식의 베이스 점수를 가변화.
 
 ---
 
@@ -48,8 +52,9 @@
 상설형 성지 점수의 무한 누적으로 인한 세대교체 블로킹을 방지하기 위해 **인증 시점부터 14일(336시간) 동안 선형 감쇠**가 적용됩니다.
 
 * **감쇠 가중치 공식**:
-  $$Score(t) = 1.0 \times \max\left(0, \frac{336 - t}{336}\right)$$
-  *(여기서 $t$는 인증 시점으로부터 경과된 시간(Hour))*
+  $$Score(t) = S_{base} \times \max\left(0, \frac{336 - t}{336}\right)$$
+  *(여기서 $t$는 인증 시점으로부터 경과된 시간(Hour), $S_{base}$는 인증 건당 베이스 점수)*
+* ✨(v0.2) **베이스 점수 $S_{base}$ 가변화**: [fandom_상세기획_인증_어뷰징_v0.2_20260817.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/02_user_view/fandom_상세기획_인증_어뷰징_v0.2_20260817.md) §1의 인증 조합에 따라 고정 `1.0`이 아닌 **`1.0`(기본) / `1.5`(리뷰) / `2.0`(영수증) / `2.5`(복합)** 중 하나가 각 인증 건의 $S_{base}$로 대입되며, 이후 동일한 14일 선형 감쇠가 적용됨.
 * **집계 방식**: 매일 자정 KST 기준 14일이 지난 옛날 인증 점수는 자동 차감 소멸.
 
 ### 3.2 이벤트형 vs 상설형 성지 점수 합산 방식

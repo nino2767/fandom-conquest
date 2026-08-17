@@ -1,6 +1,10 @@
 # 팬덤 땅따먹기 상세기획 — 데이터 모델 (Database Data Model)
 
+> **문서 버전**: v0.2
+> **최종 수정일**: 2026-08-17
+> **문서 상태**: Approved Spec
 > 본 문서는 '팬덤 땅따먹기' 백엔드 DB 설계 및 ERD 구성을 위한 **엔티티 스키마, 필드명, 데이터 타입, 제약조건, FK 관계 및 Enum 정의**를 다룬다.
+> 🔄 **v0.2 반영**: [fandom_인증다변화_기획제안_v0.1_20260729.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/03_discussion/fandom_인증다변화_기획제안_v0.1_20260729.md) 논의안 채택에 따라 `places`/`verifications` 스키마를 GPS+사진 기본 인증 및 영수증/리뷰 가산 점수 모델에 맞게 개편.
 
 ---
 
@@ -25,6 +29,7 @@ erDiagram
     }
     PLACES {
         uuid id PK
+        string place_type
         string biz_no
         string name
         string address
@@ -47,10 +52,18 @@ erDiagram
         uuid spot_id FK
         uuid fandom_id FK
         string dedup_key
-        datetime trans_dt
-        decimal amount
-        string approval_no
+        string photo_urls
+        boolean has_receipt
+        string receipt_img
+        string receipt_biz_no
+        string receipt_approval_no
+        datetime receipt_trans_dt
+        decimal receipt_amount
+        boolean has_review
+        string review_text
+        decimal score
         point gps_location
+        boolean gps_valid
         string status
     }
     FANDOMS {
@@ -103,13 +116,16 @@ erDiagram
 | 필드명 | 타입 | Null | 제약조건 / 설명 |
 | :--- | :--- | :--- | :--- |
 | `id` | `UUID` | NO | **PK**, 기본키 |
-| `biz_no` | `VARCHAR(12)` | NO | **Unique Index**, 사업자등록번호 (10자리) |
-| `name` | `VARCHAR(100)` | NO | 상호명 (예: 어반소스) |
+| `place_type` | `VARCHAR(20)` | NO | ✨(v0.2) Default: `'BUSINESS'`, Enum: `BUSINESS`(상업 가맹점), `PUBLIC`(비상업 공공/야외 성지 — 벽화, 촬영지, 기념 공원, 조형물 등) |
+| `biz_no` | `VARCHAR(12)` | **YES** | ✨(v0.2) `place_type = PUBLIC`인 경우 사업자등록번호가 없으므로 `Nullable`로 전환. `BUSINESS`인 경우 등록 권장 |
+| `name` | `VARCHAR(100)` | NO | 상호명 (예: 어반소스) / `PUBLIC` 유형은 장소 고유 명칭 |
 | `address` | `VARCHAR(255)` | NO | 도로명 주소 |
 | `region_code` | `VARCHAR(20)` | NO | 소속 구 코드 (예: `KR-SEOUL-MAPO`) |
 | `latitude` | `DECIMAL(10,7)` | NO | 위도 |
 | `longitude` | `DECIMAL(10,7)` | NO | 경도 |
 | `status` | `VARCHAR(20)` | NO | Default: `'OPEN'`, Enum: `OPEN`, `CLOSED` |
+
+> ✨(v0.2) **중복 등록 방지 인덱스 추가**: `biz_no`가 없는 `PUBLIC` 장소의 중복 등록을 막기 위해 `name + latitude + longitude` 복합 유니크 인덱스 신설 (§3 참조).
 
 ### 2.4 `spots` (성지 핀)
 | 필드명 | 타입 | Null | 제약조건 / 설명 |
@@ -123,17 +139,28 @@ erDiagram
 | `end_date` | `DATE` | YES | 이벤트 종료일 (`EVENT` 전용) |
 | `status` | `VARCHAR(20)` | NO | Default: `'ACTIVE'`, Enum: `ACTIVE`, `ARCHIVED` |
 
-### 2.5 `verifications` (영수증 인증 로그)
+### 2.5 `verifications` (방문 인증 로그) — ✨(v0.2) GPS+사진 기본 인증으로 전면 개편
+
+> 기존 "영수증 필수" 모델에서 **"GPS + 방문 사진" 필수, 영수증/리뷰는 가산 점수용 선택 항목**으로 전환. 상세 인증 조합 및 점수 기준은 [fandom_상세기획_인증_어뷰징_v0.2_20260817.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/02_user_view/fandom_상세기획_인증_어뷰징_v0.2_20260817.md) §1 참조.
+
 | 필드명 | 타입 | Null | 제약조건 / 설명 |
 | :--- | :--- | :--- | :--- |
 | `id` | `UUID` | NO | **PK**, 기본키 |
 | `user_id` | `UUID` | YES | **FK** ➔ `users.id` (탈퇴 시 Nullable 익명화) |
 | `spot_id` | `UUID` | NO | **FK** ➔ `spots.id` |
 | `fandom_id` | `UUID` | NO | **FK** ➔ `fandoms.id` (인증 당시 귀속 팬덤) |
-| `dedup_key` | `VARCHAR(128)` | NO | **Unique Index**, `biz_no + approval_no` 중복 차단키 |
-| `trans_dt` | `TIMESTAMP` | NO | 영수증 결제 일시 |
-| `amount` | `DECIMAL(12,2)`| NO | 결제 금액 (KRW) |
-| `approval_no` | `VARCHAR(50)` | YES | 승인번호 |
+| `photo_urls` | `JSON` (`TEXT[]`) | NO | ✨(v0.2) 방문 증빙 사진 1~10장 URL 배열 (필수 항목) |
+| `has_receipt` | `BOOLEAN` | NO | ✨(v0.2) Default: `FALSE`, 영수증 가산 항목 첨부 여부 |
+| `receipt_img` | `VARCHAR(512)` | YES | ✨(v0.2) 영수증 원본 이미지 URL (`has_receipt = TRUE`일 때만) |
+| `receipt_biz_no` | `VARCHAR(12)` | YES | ✨(v0.2, 舊 대조용) OCR 추출 사업자등록번호 |
+| `receipt_approval_no` | `VARCHAR(50)` | YES | ✨(v0.2, 舊 `approval_no`) OCR 추출 승인번호 |
+| `receipt_trans_dt` | `TIMESTAMP` | YES | ✨(v0.2, 舊 `trans_dt`) 영수증 결제 일시 |
+| `receipt_amount` | `DECIMAL(12,2)`| YES | ✨(v0.2, 舊 `amount`) 결제 금액 (KRW) |
+| `has_review` | `BOOLEAN` | NO | ✨(v0.2) Default: `FALSE`, 리뷰 가산 항목 작성 여부 |
+| `review_text` | `VARCHAR(500)` | YES | ✨(v0.2) 방문 후기 텍스트 (최소 10자, `has_review = TRUE`일 때만) |
+| `photo_hash` | `VARCHAR(64)` | NO | ✨(v0.2) 방문 사진 MD5 해시 (이미지 도용/재사용 탐지용) |
+| `score` | `DECIMAL(3,1)` | NO | ✨(v0.2) 인증 조합에 따른 획득 점수 (`1.0`/`1.5`/`2.0`/`2.5`) |
+| `dedup_key` | `VARCHAR(128)` | NO | **Unique Index**, ✨(v0.2) 이원화: 영수증 有 시 `receipt_biz_no + receipt_approval_no`, 영수증 無 시 `user_id + spot_id + date(created_at)` (1일 1회 쿨다운 겸용) |
 | `user_lat` | `DECIMAL(10,7)` | YES | 유저 인증 제출 시 위도 |
 | `user_lng` | `DECIMAL(10,7)` | YES | 유저 인증 제출 시 경도 |
 | `gps_valid` | `BOOLEAN` | NO | Default: `TRUE`, GPS 200m 이내 여부 |
@@ -177,9 +204,11 @@ erDiagram
 ## 3. 주요 데이터베이스 인덱스 설계 (Indexes)
 
 1. **`verifications` 테이블**:
-   * `CREATE UNIQUE INDEX idx_dedup_key ON verifications(dedup_key);` (중복 인증 근본 차단)
+   * `CREATE UNIQUE INDEX idx_dedup_key ON verifications(dedup_key);` (중복 인증 근본 차단 — 영수증 有/無 이원화 키)
    * `CREATE INDEX idx_verif_spot_fandom ON verifications(spot_id, fandom_id, status);` (성지별 점유율 빠른 집계)
+   * ✨(v0.2) `CREATE INDEX idx_verif_photo_hash ON verifications(photo_hash);` (사진 도용/재사용 어뷰징 탐지용)
 2. **`places` 테이블**:
-   * `CREATE UNIQUE INDEX idx_places_biz_no ON places(biz_no);` (사업자번호 식별)
+   * `CREATE UNIQUE INDEX idx_places_biz_no ON places(biz_no) WHERE biz_no IS NOT NULL;` (사업자번호 식별, ✨v0.2: `biz_no` Nullable 전환에 따라 부분 인덱스로 변경)
+   * ✨(v0.2) `CREATE UNIQUE INDEX idx_places_name_geo ON places(name, latitude, longitude);` (`biz_no` 없는 `PUBLIC` 장소 중복 등록 방지)
 3. **`spots` 테이블**:
    * `CREATE INDEX idx_spots_status_date ON spots(status, end_date);` (아카이빙 스케줄러 배치용)

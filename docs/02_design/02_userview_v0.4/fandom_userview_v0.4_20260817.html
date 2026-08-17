@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>팬덤 땅따먹기 — 유저뷰 전체 26개 화면 기능 와이어프레임 v0.4 (2026-08-17, 390×844 모바일 사이즈)</title>
+</head>
+<body>
+<style>
+  :root{
+    --page-bg:#F0EEE8; --page-ink:#18181A; --page-sub:rgba(24,24,26,.6);
+    --page-faint:rgba(24,24,26,.38); --page-line:rgba(24,24,26,.15);
+    --accent:#A8631A; --accent-soft:#F0DFC2;
+    --success:#1F8A5A; --warn:#B5790A; --danger:#C23B3B; --gap-flag:#9B4FBF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --page-bg:#121113; --page-ink:#EFEDE7; --page-sub:rgba(239,237,231,.64);
+      --page-faint:rgba(239,237,231,.4); --page-line:rgba(239,237,231,.16);
+      --accent:#E0A855; --accent-soft:rgba(224,168,85,.16);
+      --success:#4ED399; --warn:#F0B93D; --danger:#FF7A7A; --gap-flag:#C594F2; }
+  }
+  :root[data-theme="dark"]{ --page-bg:#121113; --page-ink:#EFEDE7; --page-sub:rgba(239,237,231,.64);
+    --page-faint:rgba(239,237,231,.4); --page-line:rgba(239,237,231,.16);
+    --accent:#E0A855; --accent-soft:rgba(224,168,85,.16);
+    --success:#4ED399; --warn:#F0B93D; --danger:#FF7A7A; --gap-flag:#C594F2; }
+  :root[data-theme="light"]{ --page-bg:#F0EEE8; --page-ink:#18181A; --page-sub:rgba(24,24,26,.6);
+    --page-faint:rgba(24,24,26,.38); --page-line:rgba(24,24,26,.15);
+    --accent:#A8631A; --accent-soft:#F0DFC2;
+    --success:#1F8A5A; --warn:#B5790A; --danger:#C23B3B; --gap-flag:#9B4FBF; }
+
+  .fw{ font-family: ui-sans-serif, "Segoe UI", system-ui, -apple-system, "Noto Sans KR", sans-serif; background:var(--page-bg); color:var(--page-ink); }
+  .fw *{ box-sizing:border-box; }
+
+  /* ===== page chrome ===== */
+  .fw-head{ max-width:1360px; margin:0 auto; padding:36px 26px 18px; position:sticky; top:0; }
+  .fw-eyebrow{ display:flex; align-items:center; gap:9px; font:700 10.5px/1 ui-monospace,"SF Mono",Menlo,monospace; letter-spacing:.07em; color:var(--accent); text-transform:uppercase; }
+  .fw-eyebrow .dot{ width:5px; height:5px; border-radius:50%; background:var(--accent); }
+  .fw-title{ font-size:23px; font-weight:700; letter-spacing:-.01em; margin:9px 0 6px; text-wrap:balance; }
+  .fw-sub{ font-size:12.5px; line-height:1.6; color:var(--page-sub); max-width:720px; }
+  .fw-count{ display:inline-flex; gap:6px; margin-top:14px; flex-wrap:wrap; }
+  .fw-count span{ font:600 10.5px/1 ui-monospace,Menlo,monospace; padding:5px 9px; border-radius:20px; background:var(--accent-soft); color:var(--accent); }
+  .fw-nav{ display:flex; gap:6px; flex-wrap:wrap; margin-top:16px; padding-top:14px; border-top:1px solid var(--page-line); }
+  .fw-nav a{ font:600 10.5px/1 ui-sans-serif; padding:6px 11px; border-radius:20px; border:1px solid var(--page-line); color:var(--page-sub); text-decoration:none; }
+
+  .fw-section{ max-width:1360px; margin:0 auto; padding:34px 26px; border-top:1px solid var(--page-line); scroll-margin-top:70px; }
+  .fw-shead{ display:flex; align-items:baseline; gap:11px; margin-bottom:4px; flex-wrap:wrap; }
+  .fw-tag{ font:700 10px/1 ui-monospace,Menlo,monospace; padding:4px 8px; border-radius:5px; background:var(--accent-soft); color:var(--accent); }
+  .fw-sname{ font-size:15.5px; font-weight:700; }
+  .fw-scap{ font-size:11.5px; line-height:1.6; color:var(--page-sub); max-width:760px; margin:6px 0 22px; }
+
+  .fw-grid{ display:flex; flex-wrap:wrap; gap:30px 22px; align-items:flex-start; }
+  .fw-unit{ width:390px; flex:none; }
+  .fw-fid{ font:700 10px/1 ui-monospace,Menlo,monospace; color:var(--page-faint); margin-bottom:8px; }
+  .fw-fname{ font:700 11.5px/1.3 ui-sans-serif; margin-bottom:8px; }
+  .fw-devnote{ font:500 9px/1 ui-monospace,Menlo,monospace; color:var(--page-faint); margin:-4px 0 8px; }
+
+  /* ===== the wireframe frame itself: fixed light "paper" look, fixed at a common mobile viewport (390×844 = iPhone 12/13/14) regardless of page theme ===== */
+  .wf{ width:390px; min-height:844px; display:flex; flex-direction:column; background:#FCFCFA; color:#141414; border:1.5px solid #141414; border-radius:3px; overflow:hidden; font-family:ui-sans-serif,"Segoe UI",system-ui,-apple-system,"Noto Sans KR",sans-serif; }
+  .wf-bar{ flex:none; display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1.5px solid #141414; font:700 12px/1 ui-sans-serif; }
+  .wf-bar .ic{ width:22px; height:22px; border:1.3px solid #141414; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:11px; }
+  .wf-pad{ flex:1; display:flex; flex-direction:column; padding:16px; }
+  .wf-h1{ font:700 16px/1.3 ui-sans-serif; margin-bottom:10px; }
+  .wf-p{ font:400 11.5px/1.55 ui-sans-serif; color:#444; margin-bottom:10px; }
+  .wf-img{ position:relative; flex:none; height:150px; border:1.3px dashed #141414; border-radius:4px; background:
+    linear-gradient(135deg, transparent 47%, #141414 47% 53%, transparent 53%),
+    linear-gradient(45deg, transparent 47%, #141414 47% 53%, transparent 53%); margin-bottom:10px; }
+  .wf-img.sm{ height:44px; width:44px; flex:none; margin-bottom:0; }
+  .wf-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px dashed #cfcfc8; font:600 12.5px/1.3 ui-sans-serif; }
+  .wf-row:last-child{ border-bottom:none; }
+  .wf-row small{ display:block; font:400 10.5px/1.4 ui-sans-serif; color:#666; margin-top:3px; font-weight:400; }
+  .wf-chk{ width:17px; height:17px; border:1.5px solid #141414; flex:none; }
+  .wf-chk.on{ background:#141414; }
+  .wf-radio{ width:17px; height:17px; border:1.5px solid #141414; border-radius:50%; flex:none; position:relative; }
+  .wf-radio.on::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:#141414; }
+  .wf-sw{ font:700 10.5px/1 ui-monospace,Menlo,monospace; border:1.5px solid #141414; border-radius:12px; padding:3px 9px; }
+  .wf-sw.on{ background:#141414; color:#fff; }
+  .wf-btn{ text-align:center; padding:13px; border:1.5px solid #141414; border-radius:4px; font:700 13px/1 ui-sans-serif; margin-top:9px; }
+  .wf-btn.solid{ background:#141414; color:#fff; }
+  .wf-input{ padding:11px 12px; border:1.3px solid #141414; border-radius:4px; font:500 12px/1 ui-sans-serif; color:#555; margin-bottom:10px; }
+  .wf-tabs{ display:flex; gap:7px; margin-bottom:10px; }
+  .wf-tab{ font:700 10.5px/1 ui-sans-serif; padding:7px 10px; border:1.3px solid #141414; border-radius:20px; }
+  .wf-tab.sel{ background:#141414; color:#fff; }
+  .wf-bar-track{ height:11px; border:1px solid #141414; border-radius:6px; overflow:hidden; display:flex; margin-top:4px; }
+  .wf-bar-fill{ height:100%; background:#141414; }
+  .wf-toast{ border:1.3px solid #141414; border-left:5px solid #141414; border-radius:4px; padding:11px 12px; margin-bottom:9px; }
+  .wf-toast b{ display:block; font:700 10px/1 ui-monospace,Menlo,monospace; text-transform:uppercase; margin-bottom:5px; }
+  .wf-toast p{ margin:0; font:600 12px/1.4 ui-sans-serif; }
+  .wf-badge-row{ display:flex; gap:7px; margin-bottom:10px; flex-wrap:wrap; }
+  .wf-badge{ width:48px; height:48px; border:1.3px solid #141414; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .wf-badge.off{ opacity:.28; }
+  .wf-gap{ display:inline-block; font:700 10px/1 ui-monospace,Menlo,monospace; padding:3px 7px; border-radius:4px; background:#141414; color:#fff; margin-left:6px; }
+
+  .fw-check{ margin-top:10px; padding:0; list-style:none; }
+  .fw-check li{ position:relative; padding-left:16px; font:400 10.5px/1.55 ui-sans-serif; color:var(--page-sub); margin-bottom:3px; }
+  .fw-check li::before{ content:"✓"; position:absolute; left:0; color:var(--success); font-weight:700; }
+  .fw-note{ margin-top:8px; padding:8px 10px; border-radius:6px; background:rgba(155,79,191,.1); border:1px dashed var(--gap-flag); font:600 10px/1.5 ui-sans-serif; color:var(--gap-flag); }
+  .wf-bubble{ position:relative; align-self:center; margin:14px 0 20px; padding:9px 14px; border:1.3px solid #141414; border-radius:14px; background:#FCFCFA; font:600 11.5px/1.3 ui-sans-serif; text-align:center; }
+  .wf-bubble::after{ content:""; position:absolute; left:50%; bottom:-7px; width:12px; height:12px; margin-left:-6px; background:#FCFCFA; border-right:1.3px solid #141414; border-bottom:1.3px solid #141414; transform:rotate(45deg); }
+
+  /* persistent bottom tab bar — 4 primary destinations (지도/전황/랭킹/마이) */
+  .wf-tabbar{ flex:none; display:flex; border-top:1.5px solid #141414; background:#FCFCFA; }
+  .wf-tabitem{ flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 0 16px; font:600 10.5px/1 ui-sans-serif; color:#9c9c96; }
+  .wf-tabitem span{ font-size:20px; filter:grayscale(1); opacity:.55; }
+  .wf-tabitem.sel{ color:#141414; }
+  .wf-tabitem.sel span{ filter:none; opacity:1; }
+
+  .fw-foot{ max-width:1360px; margin:0 auto; padding:26px 26px 70px; font:400 11px/1.7 ui-sans-serif; color:var(--page-faint); border-top:1px solid var(--page-line); }
+  @media (max-width:640px){ .fw-head,.fw-section,.fw-foot{ padding-left:16px; padding-right:16px; } }
+</style>
+
+<div class="fw">
+  <header class="fw-head">
+    <div class="fw-eyebrow"><span class="dot"></span>FANDOM CONQUEST · USER-VIEW · FULL WIREFRAME</div>
+    <h1 class="fw-title">유저뷰 전체 26개 화면 기능 와이어프레임</h1>
+    <p class="fw-sub">IA 마스터 문서(전체_정보구조도_IA v0.2) 기준 유저뷰 전 화면을 저해상도로 그린 기능 점검용 초안입니다. 디자인은 추후 갱신 예정이라 배치·비주얼은 최소화했고, 각 화면 하단 체크리스트에 상세기획의 필드·인터랙션을 빠짐없이 표기했습니다.</p>
+    <div class="fw-count">
+      <span>총 26개 화면</span><span>프레임 390×844 (iPhone 12/13/14 기준 모바일 앱 배포 사이즈)</span><span>1.0 인증·온보딩 6</span><span>2.0 지도·성지 5</span><span>3.0 방문인증 6</span><span>4.0 전황·랭킹 3</span><span>5.0 마이페이지 6</span>
+    </div>
+    <nav class="fw-nav">
+      <a href="#g1">1.0 인증·온보딩</a><a href="#g2">2.0 지도·성지</a><a href="#g3">3.0 방문 인증</a><a href="#g4">4.0 전황·랭킹</a><a href="#g5">5.0 마이페이지</a>
+    </nav>
+  </header>
+
+  <!-- ============ GROUP 1: AUTH & ONBOARDING ============ -->
+  <section class="fw-section" id="g1">
+    <div class="fw-shead"><span class="fw-tag">1.0</span><span class="fw-sname">인증 & 온보딩 (6)</span></div>
+    <p class="fw-scap">소셜 OAuth 3종 전용, 이메일가입 미지원. 근거: 온보딩_로그인 상세기획.</p>
+    <div class="fw-grid">
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-AUTH-00 · 스플래시</div>
+        <div class="wf"><div class="wf-bar"><span>9:41</span><span>5G</span></div>
+          <div class="wf-pad" style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
+            <div class="wf-img" style="width:52px;height:52px;margin:0;"></div>
+            <div class="wf-h1" style="margin:0;">FANDOM CONQUEST</div>
+            <div class="wf-p" style="margin:0;">● ● ○ 로딩 중</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>로고/브랜드명 노출 + 로딩 인디케이터</li>
+          <li>자동 로그인 판별 (Refresh Token 14일 유효)</li>
+          <li>기존회원 → 온보딩 스킵, 신규회원 → Step1 이동 분기</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-AUTH-01 · 소셜 로그인 모달</div>
+        <div class="wf"><div class="wf-bar"><span>로그인</span><span class="ic">✕</span></div>
+          <div class="wf-pad">
+            <div class="wf-h1">시작하기</div>
+            <div class="wf-btn solid">G  Google로 계속하기</div>
+            <div class="wf-btn solid">K  카카오로 계속하기</div>
+            <div class="wf-btn solid">A  Apple로 계속하기</div>
+            <div class="wf-p" style="text-align:center;margin-top:8px;">둘러보기 (게스트로 계속) →</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>Google / Kakao / Apple 3종 버튼 (이메일·비번 가입 미지원)</li>
+          <li>게스트(비회원) 조회 전용 진입 링크</li>
+          <li>OAuth 성공 시 is_registered로 신규/기존 자동 분기</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-AUTH-02 · 약관 동의</div>
+        <div class="wf"><div class="wf-bar"><span>Step 2/4</span><span class="ic">‹</span></div>
+          <div class="wf-pad">
+            <div class="wf-row"><span>전체 동의</span><div class="wf-chk"></div></div>
+            <div class="wf-row"><span>[필수] 이용약관</span><div class="wf-chk on"></div></div>
+            <div class="wf-row"><span>[필수] 개인정보 수집·이용</span><div class="wf-chk on"></div></div>
+            <div class="wf-row"><span>[필수] LBS 위치기반서비스</span><div class="wf-chk on"></div></div>
+            <div class="wf-row"><span>[선택] 마케팅/푸시 수신</span><div class="wf-chk"></div></div>
+            <div class="wf-btn solid">다음</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>필수 3종(이용약관/개인정보/LBS) + 선택 1종(마케팅) 개별 체크</li>
+          <li>전체 동의 일괄 체크박스</li>
+          <li>필수 미동의 시 [다음] 비활성화</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-AUTH-03 · 프로필/닉네임 설정</div>
+        <div class="wf"><div class="wf-bar"><span>Step 3/4</span><span class="ic">‹</span></div>
+          <div class="wf-pad">
+            <div class="wf-img" style="width:52px;height:52px;border-radius:50%;margin:0 auto 8px;"></div>
+            <div class="wf-p" style="text-align:center;">캐릭터 4종 중 선택 / 소셜 기본이미지</div>
+            <div class="wf-row"><span>닉네임 입력</span></div>
+            <div class="wf-input">덕질마스터_92</div>
+            <div class="wf-btn">중복 확인</div>
+            <div class="wf-p">2~12자 · 한글/영문/숫자/언더바(_)만 허용 · 금지어 필터링</div>
+            <div class="wf-btn solid">다음</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>프로필 이미지: 소셜 기본 이미지 또는 캐릭터 4종 선택</li>
+          <li>닉네임 2~12자, 한글/영문/숫자/언더바만 허용</li>
+          <li>실시간 중복확인 API 버튼 (통과 필수)</li>
+          <li>비속어·타팬덤비하·사칭어 금지어 필터링 에러 메시지</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-AUTH-04 · 선호 팬덤 선택</div>
+        <div class="wf"><div class="wf-bar"><span>Step 4/4</span><span class="ic">‹</span></div>
+          <div class="wf-pad">
+            <div class="wf-input">🔍 팬덤/아티스트 검색</div>
+            <div class="wf-row"><span>대표 메인 팬덤</span></div>
+            <div class="wf-row"><div class="wf-radio on"></div><span style="flex:1">뉴진스 (NewJeans)</span></div>
+            <div class="wf-row"><div class="wf-radio"></div><span style="flex:1">아이브 (IVE)</span></div>
+            <div class="wf-row"><span>추가 선호 팬덤(다중)</span></div>
+            <div class="wf-row"><div class="wf-chk on"></div><span style="flex:1">뉴진스</span><div class="wf-chk"></div><span style="flex:1">세븐틴</span></div>
+            <div class="wf-p">+ IP 직접 신청하기</div>
+            <div class="wf-btn solid">가입 완료</div>
+            <div class="wf-bubble">나중에 선택할 수 있어요.</div>
+            <div class="wf-btn">나중에 선택</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>팬덤 검색 + 3계층(그룹/유닛/개인) × 장르 트리 탐색</li>
+          <li>다중 선택 체크박스 + 대표 메인 팬덤 라디오 1개 지정</li>
+          <li>[IP 직접 신청하기] → 팬덤명/아티스트명/장르/사유 입력 → ADM-IP-REQUEST-01 큐 전송</li>
+          <li>[나중에 선택] 버튼 + 말풍선 넛지("나중에 선택할 수 있어요.") → 무소속/탐색 유저 상태로 예외 처리</li>
+          <li>완료 시 POST /api/v1/auth/signup 호출</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-AUTH-05 · 가입 완료 웰컴 모달</div>
+        <div class="wf"><div class="wf-bar"><span>Welcome</span><span class="ic">✕</span></div>
+          <div class="wf-pad" style="text-align:center;">
+            <div class="wf-img" style="width:44px;height:44px;margin:0 auto 8px;"></div>
+            <div class="wf-h1">가입을 환영해요!</div>
+            <div class="wf-p">메인 팬덤: 💙 뉴진스</div>
+            <div class="wf-btn solid">메인 지도로 시작하기</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>가입 완료 축하 카피 + 애니메이션 자리</li>
+          <li>선택한 메인 팬덤 요약 뱃지</li>
+          <li>[메인 지도로 시작하기] CTA → UV-MAIN-01</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ GROUP 2: MAIN MAP & SPOT ============ -->
+  <section class="fw-section" id="g2">
+    <div class="fw-shead"><span class="fw-tag">2.0</span><span class="fw-sname">메인 지도 & 성지 (5)</span></div>
+    <p class="fw-scap">근거: 장소_성지 v0.2 (PUBLIC 성지 유형 반영), 팬덤_땅점령 v0.2.</p>
+    <div class="fw-grid">
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-MAIN-01 · 메인 성지 지도 <span class="wf-gap" style="background:var(--accent);position:static;display:inline-block;">컨셉전환</span></div>
+        <div class="wf">
+          <div class="wf-pad" style="position:relative; flex:1; padding:0;">
+            <div style="position:absolute; inset:0; background:repeating-linear-gradient(0deg,transparent 0 19px,#e4e2da 19px 20px),repeating-linear-gradient(90deg,transparent 0 19px,#e4e2da 19px 20px);"></div>
+
+            <div style="position:absolute; top:120px; left:66px; width:16px; height:16px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:#141414; border:1.4px solid #141414;"></div>
+            <div style="position:absolute; top:186px; left:238px; width:16px; height:16px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:transparent; border:1.4px solid #141414;"></div>
+            <div style="position:absolute; top:274px; left:128px; width:16px; height:16px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:#141414; border:1.4px solid #141414;"></div>
+            <div style="position:absolute; top:346px; left:262px; width:16px; height:16px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:transparent; border:1.4px solid #141414;"></div>
+
+            <div style="position:absolute; top:14px; left:14px; right:14px; display:flex; justify-content:space-between;">
+              <div class="wf-input" style="margin:0;padding:9px 12px;">🔍 필터</div>
+              <div style="position:relative; width:40px; height:40px; border:1.3px solid #141414; border-radius:50%; background:#FCFCFA; display:flex; align-items:center; justify-content:center; font-size:17px;">🔔
+                <span style="position:absolute; top:-2px; right:-2px; width:11px; height:11px; border-radius:50%; background:var(--danger); border:1.3px solid #FCFCFA;"></span>
+              </div>
+            </div>
+
+            <div style="position:absolute; top:64px; left:14px; display:flex; align-items:center; gap:6px; border:1.3px solid #141414; border-radius:20px; padding:6px 10px; background:#FCFCFA; font:700 10.5px/1 ui-sans-serif;">⚔️ 전황 보기 <span class="wf-sw" style="margin-left:2px;">OFF</span></div>
+            <div style="position:absolute; top:100px; left:14px; width:190px; font:500 8.8px/1.45 ui-sans-serif; color:#666;">ON 시 "뉴진스 팬 발자국 63%"처럼 동행 톤 라벨로 구별 오버레이 표시</div>
+
+            <div style="position:absolute; bottom:58px; right:16px; border:1.5px solid #141414; border-radius:24px; padding:12px 16px; background:#FCFCFA; font:700 12.5px/1 ui-sans-serif;">📸 발자국 남기기</div>
+            <div style="position:absolute; bottom:58px; left:16px; width:44px; height:44px; border:1.5px solid #141414; border-radius:12px; background:#FCFCFA; display:flex; align-items:center; justify-content:center;">
+              <div style="position:relative; width:20px; height:20px;">
+                <div style="position:absolute; top:4px; left:4px; width:12px; height:12px; border-radius:50%; border:1.6px solid #141414;"></div>
+                <div style="position:absolute; top:0; left:50%; width:1.6px; height:4px; margin-left:-0.8px; background:#141414;"></div>
+                <div style="position:absolute; bottom:0; left:50%; width:1.6px; height:4px; margin-left:-0.8px; background:#141414;"></div>
+                <div style="position:absolute; left:0; top:50%; width:4px; height:1.6px; margin-top:-0.8px; background:#141414;"></div>
+                <div style="position:absolute; right:0; top:50%; width:4px; height:1.6px; margin-top:-0.8px; background:#141414;"></div>
+              </div>
+            </div>
+            <div style="position:absolute; bottom:0; left:0; right:0; height:44px; border-top:1.5px solid #141414; background:#FCFCFA; display:flex; align-items:center; justify-content:center; font:700 12px/1 ui-sans-serif;">▲ 주변 성지 (스와이프)</div>
+          </div>
+          <div class="wf-tabbar">
+            <div class="wf-tabitem sel"><span>🗺️</span>지도</div>
+            <div class="wf-tabitem"><span>⚔️</span>점령보드</div>
+            <div class="wf-tabitem"><span>🏆</span>랭킹</div>
+            <div class="wf-tabitem"><span>👤</span>마이</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>✨ 내 최애 성지 핀 — 방문(●채움)/미방문(◇테두리만) 상태 구분, "성지순례 도장판" 컨셉으로 기본 노출</li>
+          <li>✨ [전황 보기] 토글(기본 OFF) — ON일 때만 25개 구 GeoJSON 점유 색상(DOMINATED/COMPETING/NEUTRAL/REVERSED) 오버레이 노출</li>
+          <li>✨ 라벨 톤 전환 — 승패("역전"/"점령") 대신 동행·누적 뉘앙스(예: "뉴진스 팬 발자국 63%")</li>
+          <li>성지 마커 핀 (D-Day, 🆕신규거점, 🔒폐업 뱃지)</li>
+          <li>IP 팬덤 필터 진입 버튼 → UV-MAIN-04</li>
+          <li>✨ 플로팅 CTA [📸 발자국 남기기] → UV-VERIF-01 (문구 미확정 — 대안: "다녀왔어요 인증하기")</li>
+          <li>3단 접이식 바텀시트 핸들 → UV-MAIN-03</li>
+          <li>알림 아이콘(미확인 뱃지) → UV-NOTIF-01</li>
+          <li>현위치로 이동 버튼(좌하단) — 지도 중심을 내 GPS 위치로 재조정</li>
+          <li>하단 탭바(지도/점령보드/랭킹/마이) — 4대 주요 화면 상시 전환 (탭 명칭 변경은 미반영, 별도 확정 필요)</li>
+        </ul>
+        <div class="fw-note">🔄 컨셉 전환 반영: fandom_UV-MAIN-01_컨셉전환_지시서_v0.1_20260817.md — "땅따먹기(진영전)" 중심에서 "최애 성지순례" 중심으로 기본 뷰 전환, 진영 색상은 토글 뒤로 이동. 하단 탭바 명칭 변경(지시서 §5)은 영향 범위가 커서 이번 반영에서 제외.</div>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-MAIN-02 · 성지 상세 모달</div>
+        <div class="wf"><div class="wf-bar"><span class="ic">✕</span><span>🔗 공유</span></div>
+          <div class="wf-img" style="margin:8px 8px 0;"></div>
+          <div class="wf-pad">
+            <div class="wf-p">🏷️ 이벤트형 D-3 · 💙 뉴진스</div>
+            <div class="wf-h1">카페 어반소스</div>
+            <div class="wf-p">📍 마포구 · 📅 07.01~07.15</div>
+            <div class="wf-row"><span>뉴진스 60%</span><span>아이브 40%</span></div>
+            <div class="wf-bar-track"><div class="wf-bar-fill" style="width:60%"></div></div>
+            <div class="wf-tabs"><span class="wf-tab sel">기여 현황</span><span class="wf-tab">과거 이력</span></div>
+            <div class="wf-p">👑 수호신 덕질마스터(15점) · Top3 포디움 · 최근 인증 로그</div>
+            <div class="wf-btn solid">📸 이 성지에 기여하기</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>포스터/매장사진 슬라이더 + 전체화면 확대뷰어</li>
+          <li>이벤트 D-day 뱃지 · 귀속 팬덤 뱃지 · 운영기간 · 주소/길찾기</li>
+          <li>팬덤별 점유율 프로그레스바 + 1위 표시</li>
+          <li>탭1 기여현황: 수호신·Top3 포디움·최근 인증 로그 / 탭2 과거 장소 이력</li>
+          <li>고정 CTA [기여하기] → UV-VERIF-01 (폐업 시 비활성화)</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-MAIN-03 · 주변 성지 바텀시트</div>
+        <div class="wf"><div class="wf-bar"><span>주변 성지 (12)</span></div>
+          <div class="wf-pad">
+            <div class="wf-row"><div class="wf-img sm"></div><span style="flex:1">카페 어반소스 · 320m</span></div>
+            <div class="wf-row"><div class="wf-img sm"></div><span style="flex:1">홍대 포토시그니처 · 540m</span></div>
+            <div class="wf-row"><div class="wf-img sm"></div><span style="flex:1">뉴진스 벽화 골목 · 700m</span></div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>1단 고정 바 → 스와이프업 시 3단 확장</li>
+          <li>거리순 성지 카드 리스트, 카드 탭 → UV-MAIN-02</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-MAIN-04 · IP 팬덤 필터 바텀시트</div>
+        <div class="wf"><div class="wf-bar"><span>팬덤 필터</span><span class="ic">✕</span></div>
+          <div class="wf-pad">
+            <div class="wf-p">내 선호 IP: [뉴진스] [아이브]</div>
+            <div class="wf-input">🔍 팬덤/아티스트 검색</div>
+            <div class="wf-row"><span>💙 뉴진스</span><span>인기 1위</span></div>
+            <div class="wf-row"><span>🔴 아이브</span><span>인기 2위</span></div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>내 선호 IP 칩 바로가기</li>
+          <li>팬덤/아티스트 검색창</li>
+          <li>인기 팬덤 순 카드 리스트</li>
+          <li>선택 시 지도 마커·구 하이라이트 필터링</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-SPOT-04 · 성지 제보 모달 <span class="wf-gap" style="background:var(--accent);position:static;display:inline-block;">v0.2</span></div>
+        <div class="wf"><div class="wf-bar"><span>성지 제보하기</span><span class="ic">✕</span></div>
+          <div class="wf-pad">
+            <div class="wf-row"><div class="wf-radio on"></div><span style="flex:1">이벤트형</span><div class="wf-radio"></div><span style="flex:1">상설형</span></div>
+            <div class="wf-input">귀속 팬덤: 💙 뉴진스</div>
+            <div class="wf-input">성지/이벤트명</div>
+            <div class="wf-input">장소 상호명</div>
+            <div class="wf-input">주소 📍검색</div>
+            <div class="wf-input">운영기간 (이벤트형만)</div>
+            <div class="wf-img" style="height:34px;"></div>
+            <div class="wf-row"><span>사업자등록번호 <span class="wf-gap">선택</span></span></div>
+            <div class="wf-p">미입력 시 PUBLIC(비상업) 성지로 등록</div>
+            <div class="wf-btn solid">제보 제출하기</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>1.성지유형(이벤트/상설) 2.귀속팬덤 3.성지명 4.상호명 5.주소(카카오/구글API) 6.운영기간(조건부) 7.포스터사진(최대3) 8.사업자번호(선택)</li>
+          <li>✨ 사업자번호 미입력 시 PUBLIC 비상업 성지로 등록 안내</li>
+          <li>제출 시 ADM-SPOT-03 승인 큐로 이관</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ GROUP 3: VERIFICATION ============ -->
+  <section class="fw-section" id="g3">
+    <div class="fw-shead"><span class="fw-tag">3.0</span><span class="fw-sname">방문 인증 플로우 (6)</span></div>
+    <p class="fw-scap">근거: 인증_어뷰징 v0.2 — GPS+사진 필수, 영수증/리뷰 가산(1.0/1.5/2.0/2.5점).</p>
+    <div class="fw-grid">
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-VERIF-01 · 촬영</div>
+        <div class="wf">
+          <div class="wf-pad" style="position:relative; flex:1; padding:0; background:repeating-linear-gradient(45deg,#efeee9 0 10px,#e5e3dc 10px 20px);">
+            <div style="position:absolute; top:16px; left:16px; width:26px; height:26px; border:1.3px solid #141414; border-radius:4px; background:#FCFCFA; display:flex; align-items:center; justify-content:center; font:700 12px/1 ui-sans-serif;">✕</div>
+            <div style="position:absolute; top:16px; right:16px; border:1.3px solid #141414; border-radius:20px; padding:6px 11px; font:700 11px/1 ui-sans-serif; background:#FCFCFA;">📍 12m 확인됨</div>
+            <div style="position:absolute; inset:60px 30px 100px; border:1.5px dashed #141414; border-radius:14px; display:flex; align-items:flex-end; justify-content:center; padding-bottom:14px;"><span style="font:700 12px/1.4 ui-sans-serif; text-align:center;">성지가 보이도록<br/>촬영해주세요</span></div>
+            <div style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); width:56px; height:56px; border:3px solid #141414; border-radius:50%;"></div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>GPS 반경 200m 이내 확인 칩 표시</li>
+          <li>뷰파인더 가이드 프레임 + 촬영 안내 문구</li>
+          <li>방문 사진 1~10장 촬영/카운터, 취소(X)</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-VERIF-02 · 가산옵션 & OCR스캐닝</div>
+        <div class="wf"><div class="wf-bar"><span>방문 인증 제출</span></div>
+          <div class="wf-pad">
+            <div class="wf-img sm" style="margin-bottom:8px;"></div>
+            <div class="wf-row"><span>🧾 영수증 추가 (+1.0점)</span><div class="wf-sw on">ON</div></div>
+            <div class="wf-p">AI OCR 판독 중... ▓▓▓▓▓▓░░░░ 62%</div>
+            <div class="wf-row"><span>✏️ 리뷰 작성 (+0.5점)</span><div class="wf-sw">OFF</div></div>
+            <div class="wf-p">예상 획득 점수: 2.0점 (1.0/1.5/2.0/2.5 중)</div>
+            <div class="wf-btn solid">제출하기</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>캡처 사진 썸네일 확인</li>
+          <li>영수증 추가 토글 → AI OCR 스캐닝 진행 상태(프로그레스)</li>
+          <li>리뷰 작성 토글 (최소 10자)</li>
+          <li>조합별 예상 점수(1.0/1.5/2.0/2.5) 실시간 미리보기</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-VERIF-03 · 인증 성공 피드백</div>
+        <div class="wf"><div class="wf-pad">
+          <div class="wf-toast" style="border-left-color:var(--success);"><b style="color:var(--success);">자동 승인</b><p>🎉 인증 완료! 마포구 뉴진스 점유율 +0.4%</p></div>
+          <div class="wf-row"><span>획득 점수</span><span>+2.0점</span></div>
+          <div class="wf-btn">지도로 돌아가기</div>
+        </div></div>
+        <ul class="fw-check">
+          <li>승인 완료 토스트/카드 + 축하 카피</li>
+          <li>구 점유율 변화 % 표시</li>
+          <li>획득 점수(1.0~2.5) 명시</li>
+          <li>지도 복귀 CTA</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-VERIF-04 · 수동 검수 대기</div>
+        <div class="wf"><div class="wf-bar"><span>검수 대기중</span></div>
+          <div class="wf-pad">
+            <div class="wf-toast" style="border-left-color:var(--warn);"><b style="color:var(--warn);">수동 검수</b><p>⏳ 인증 판독 중입니다. 10분 내 처리됩니다.</p></div>
+            <div class="wf-btn">인증 내역에서 확인하기</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>수동 검수 이관 안내 카피(10분 내 처리)</li>
+          <li>대기중 상태 칩</li>
+          <li>UV-MY-03 인증내역으로 이동 링크</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-VERIF-05 · 인증 반려 모달</div>
+        <div class="wf"><div class="wf-bar"><span>인증 반려</span><span class="ic">✕</span></div>
+          <div class="wf-pad">
+            <div class="wf-toast" style="border-left-color:var(--danger);"><b style="color:var(--danger);">반려</b><p>⚠️ 이미 사용된 사진입니다.</p></div>
+            <div class="wf-btn solid">📸 다시 촬영하기</div>
+            <div class="wf-btn">❓ 문의하기</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>반려 사유 문구 (이미지도용/중복/GPS외곽/최신성만료/리뷰필터 등)</li>
+          <li>[다시 촬영하기] → UV-VERIF-01 재진입</li>
+          <li>[문의하기] CS 연결</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-SHARE-01 · 점령 승리 공유 카드</div>
+        <div class="wf"><div class="wf-bar"><span>점령 성공!</span><span class="ic">✕</span></div>
+          <div class="wf-pad" style="text-align:center;">
+            <div class="wf-img" style="margin:0 auto 8px;"></div>
+            <div class="wf-h1">마포구 점령!</div>
+            <div class="wf-p">💙 뉴진스 40% 단독 1위 달성</div>
+            <div class="wf-btn solid">공유 이미지로 저장/공유</div>
+            <div class="wf-btn">닫기</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>점령/역전 요약 이미지(구·팬덤·점유율)</li>
+          <li>SNS 공유 · 이미지 저장 CTA</li>
+        </ul>
+        <div class="fw-note">⚠️ 상세 스펙 문서 없음 — IA 문서에 화면명만 존재. 트리거 조건(DOMINATED 달성 시점 등)·문구 확정 필요.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ GROUP 4: WAR & LEADERBOARD ============ -->
+  <section class="fw-section" id="g4">
+    <div class="fw-shead"><span class="fw-tag">4.0</span><span class="fw-sname">전황 & 랭킹 (3)</span></div>
+    <p class="fw-scap">근거: 팬덤_땅점령 v0.2 (UV-WAR-01), 팬_유저 v0.1 (UV-RANK-02).</p>
+    <div class="fw-grid">
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-WAR-01 · 영토 전황 보드</div>
+        <div class="wf"><div class="wf-bar"><span>🗺️ 영토 전황</span><span class="ic">↻</span></div>
+          <div class="wf-pad">
+            <div class="wf-row"><span>💙 뉴진스 10구</span><span>🔴 아이브 8구</span></div>
+            <div class="wf-p">⚡ 14:20 마포구 뉴진스가 아이브 역전!</div>
+            <div class="wf-row"><span>🔥 마포구 41% vs 39%</span><span class="wf-btn" style="margin:0;padding:4px 7px;">기여하기</span></div>
+          </div>
+          <div class="wf-tabbar">
+            <div class="wf-tabitem"><span>🗺️</span>지도</div>
+            <div class="wf-tabitem sel"><span>⚔️</span>점령보드</div>
+            <div class="wf-tabitem"><span>🏆</span>랭킹</div>
+            <div class="wf-tabitem"><span>👤</span>마이</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>25개 구 팬덤별 점령 구 개수 요약</li>
+          <li>실시간 뒤집힘 타임라인</li>
+          <li>경합구 Top3 + [기여하러 가기] → UV-VERIF-01</li>
+          <li>실시간 갱신 버튼</li>
+          <li>✨ 하단 탭바(지도/점령보드/랭킹/마이)</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-RANK-01 · 랭킹 보드 메인</div>
+        <div class="wf"><div class="wf-bar"><span>랭킹</span></div>
+          <div class="wf-pad">
+            <div class="wf-tabs"><span class="wf-tab sel">개인</span><span class="wf-tab">팬덤</span></div>
+            <div class="wf-row"><span>🥇 덕질마스터</span><span>152점</span></div>
+            <div class="wf-row"><span>🥈 럭키팬</span><span>140점</span></div>
+            <div class="wf-row" style="background:#f2f0ea;"><span>12위 나</span><span>42점</span></div>
+          </div>
+          <div class="wf-tabbar">
+            <div class="wf-tabitem"><span>🗺️</span>지도</div>
+            <div class="wf-tabitem"><span>⚔️</span>점령보드</div>
+            <div class="wf-tabitem sel"><span>🏆</span>랭킹</div>
+            <div class="wf-tabitem"><span>👤</span>마이</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>개인/팬덤 랭킹 탭 전환(추정)</li>
+          <li>TOP N 리스트 + 내 순위 고정 하이라이트</li>
+          <li>랭킹 카드 클릭 → UV-RANK-02 진입</li>
+          <li>✨ 하단 탭바(지도/점령보드/랭킹/마이)</li>
+        </ul>
+        <div class="fw-note">⚠️ 상세 스펙 문서 없음 — PRD/IA에 화면명만 존재. 탭 구성·정렬 기준·기간(전체/주간) 등 확정 필요.</div>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-RANK-02 · 개인 기여도 상세 모달</div>
+        <div class="wf"><div class="wf-bar"><span class="ic">✕</span><span>개인 기여도</span></div>
+          <div class="wf-pad">
+            <div class="wf-row"><div class="wf-img sm" style="border-radius:50%;"></div><span style="flex:1">덕질마스터 👑</span></div>
+            <div class="wf-p">누적 인증 42건 · 전체 12위 · 칭호 2개</div>
+            <div class="wf-row"><span>🥇 마포구 25점</span><span>16.6%</span></div>
+            <div class="wf-bar-track"><div class="wf-bar-fill" style="width:16%"></div></div>
+            <div class="wf-badge-row"><div class="wf-badge">👑</div><div class="wf-badge">🛡️</div><div class="wf-badge">🔥</div><div class="wf-badge off">📍</div></div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>프로필 헤더 + 수호신 칭호 뱃지</li>
+          <li>전체 누적 성적(인증횟수/전체랭킹순위/보유칭호수)</li>
+          <li>구별 기여 지분율 리스트 + 프로그레스바(순위 표시)</li>
+          <li>뱃지 수집함(획득 4/5, 미획득 흑백)</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ GROUP 5: MY PAGE & SETTINGS ============ -->
+  <section class="fw-section" id="g5">
+    <div class="fw-shead"><span class="fw-tag">5.0</span><span class="fw-sname">마이페이지 & 설정 (6)</span></div>
+    <p class="fw-scap">근거: 마이페이지 v0.1, 팬_유저 v0.1(뱃지·7일쿨다운), 알림_푸시 v0.1.</p>
+    <div class="fw-grid">
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-MY-01 · 마이 프로필 메인</div>
+        <div class="wf"><div class="wf-bar"><span>마이 프로필</span><span class="ic">⚙</span></div>
+          <div class="wf-pad">
+            <div class="wf-row"><div class="wf-img sm" style="border-radius:50%;"></div><span style="flex:1">덕질마스터 ✏️</span></div>
+            <div class="wf-p">💙 뉴진스 · D+45 · 인증42건 · 뱃지4개</div>
+            <div class="wf-badge-row"><div class="wf-badge">👑</div><div class="wf-badge">🛡️</div><div class="wf-badge">🔥</div><div class="wf-badge">📍</div><div class="wf-badge off">🎗</div></div>
+            <div class="wf-row"><span>🥇 마포구 16.6%</span></div>
+            <div class="wf-row"><span>💙 선호 팬덤 관리</span><span>›</span></div>
+            <div class="wf-row"><span>📜 인증 내역</span><span>›</span></div>
+            <div class="wf-row"><span>🔔 알림 센터</span><span>›</span></div>
+          </div>
+          <div class="wf-tabbar">
+            <div class="wf-tabitem"><span>🗺️</span>지도</div>
+            <div class="wf-tabitem"><span>⚔️</span>점령보드</div>
+            <div class="wf-tabitem"><span>🏆</span>랭킹</div>
+            <div class="wf-tabitem sel"><span>👤</span>마이</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>프로필 사진 수정 · 닉네임 변경 · 메인팬덤/가입일수 표시</li>
+          <li>누적 인증 건수 · 총 획득 뱃지 수</li>
+          <li>수호신 뱃지 수집함(5종, 획득/미획득 구분, 클릭시 조건 툴팁)</li>
+          <li>구별 영토 기여 요약 카드(기여점수·지분율·순위)</li>
+          <li>서브메뉴 3종(팬덤관리/인증내역/알림센터) + 서비스설정 아이콘</li>
+          <li>✨ 하단 탭바(지도/점령보드/랭킹/마이)</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-MY-02 · 선호 팬덤 관리</div>
+        <div class="wf"><div class="wf-bar"><span>선호 팬덤 관리</span><span class="ic">‹</span></div>
+          <div class="wf-pad">
+            <div class="wf-p">⚠️ 메인 팬덤 변경 시 7일간 재변경 제한</div>
+            <div class="wf-input">🔍 팬덤 검색</div>
+            <div class="wf-row"><div class="wf-radio on"></div><span style="flex:1">뉴진스 (메인)</span></div>
+            <div class="wf-row"><div class="wf-radio"></div><span style="flex:1">아이브</span></div>
+            <div class="wf-row"><div class="wf-chk on"></div><span style="flex:1">세븐틴</span></div>
+            <div class="wf-btn solid">변경 사항 저장하기</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>3계층 팬덤 검색 + 신규 팬덤 등록 신청 CTA(모달: 팬덤명/아티스트명/장르/사유)</li>
+          <li>메인 대표 팬덤 라디오 지정 + 응원 팬덤 다중 체크</li>
+          <li>저장 시 7일 쿨다운 + 과거점수 소급불가 확인 팝업</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-MY-03 · 인증 내역 히스토리</div>
+        <div class="wf"><div class="wf-bar"><span>인증 히스토리</span><span class="ic">‹</span></div>
+          <div class="wf-pad">
+            <div class="wf-tabs"><span class="wf-tab sel">전체42</span><span class="wf-tab">승인40</span><span class="wf-tab">대기1</span><span class="wf-tab">반려1</span></div>
+            <div class="wf-toast" style="border-left-color:var(--success);"><b style="color:var(--success);">승인완료</b><p>카페 어반소스 · +0.4% · 07.22</p></div>
+            <div class="wf-toast" style="border-left-color:var(--warn);"><b style="color:var(--warn);">검수대기</b><p>포토시그니처 홍대점 · 07.22</p></div>
+            <div class="wf-toast" style="border-left-color:var(--danger);"><b style="color:var(--danger);">반려됨</b><p>중복 영수증 · [다시촬영]</p></div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>상태 탭 4종(전체/승인완료/검수대기/반려됨)</li>
+          <li>인증 카드: 상태·팬덤·일시·장소·기여% (승인) / 사유메시지(대기) / 반려사유+재촬영·문의CTA(반려)</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-NOTIF-01 · 알림 센터</div>
+        <div class="wf"><div class="wf-bar"><span>알림</span><span class="ic">‹</span></div>
+          <div class="wf-pad">
+            <div class="wf-tabs"><span class="wf-tab sel">전체</span><span class="wf-tab">영토전</span><span class="wf-tab">인증/검수</span></div>
+            <div class="wf-row"><span>⚡ 마포구 점령지 역전!</span><span>10분전</span></div>
+            <div class="wf-row"><span>🛡️ 성지가 위태로워요</span><span>1시간전</span></div>
+            <div class="wf-row"><span>🎉 영수증 승인 (+0.4%)</span><span>어제</span></div>
+            <div class="wf-p">모두 읽음으로 표시 · ⚙️ 알림설정</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>탭 3종(전체/영토전/인증검수), 미확인 카운트 뱃지</li>
+          <li>카테고리 아이콘 + 메시지 + 상대시간 + 읽음/안읽음 구분</li>
+          <li>카드 클릭 시 딥링크 이동(성지상세/구뷰포트/인증내역/기여도상세)</li>
+          <li>[모두 읽음] · [⚙️알림설정 → UV-MY-05] 버튼</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-MY-05 · 서비스 설정</div>
+        <div class="wf"><div class="wf-bar"><span>서비스 설정</span><span class="ic">‹</span></div>
+          <div class="wf-pad">
+            <div class="wf-p">📱 OS 알림 권한: 🟢 허용됨</div>
+            <div class="wf-row"><span>뒤집힘 알림</span><div class="wf-sw on">ON</div></div>
+            <div class="wf-row"><span>방어/수호신 알림</span><div class="wf-sw on">ON</div></div>
+            <div class="wf-row"><span>검수 결과 알림</span><div class="wf-sw on">ON</div></div>
+            <div class="wf-row"><span>이벤트/마케팅</span><div class="wf-sw">OFF</div></div>
+            <div class="wf-row"><span>방해금지 시간대</span><div class="wf-sw on">ON</div></div>
+            <div class="wf-row"><span>표시 언어</span><span>한국어 ▾</span></div>
+            <div class="wf-row"><span>로그아웃 / 회원탈퇴</span></div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>OS 알림 권한 상태 감지 배너(꺼짐 시 설정 유도 + 하위토글 락)</li>
+          <li>푸시 카테고리 4종 토글(뒤집힘/방어수호신/검수결과/이벤트마케팅) → UV-MY-06 상세 연동</li>
+          <li>방해금지 시간대 ON/OFF + 시작~종료 시각 피커(기본 22:00~07:00)</li>
+          <li>약관/방침 보기 · 언어설정(i18n) · 앱버전</li>
+          <li>로그아웃 · 회원탈퇴(개인정보 파기+익명보존 안내 팝업)</li>
+        </ul>
+      </div>
+
+      <div class="fw-unit">
+        <div class="fw-fid">UV-MY-06 · 알림 설정 상세</div>
+        <div class="wf"><div class="wf-bar"><span>푸시 알림 설정</span><span class="ic">‹</span></div>
+          <div class="wf-pad">
+            <div class="wf-row"><span>영토 뒤집힘 알림<small>30분 쿨다운 적용</small></span><div class="wf-sw on">ON</div></div>
+            <div class="wf-row"><span>성지 방어·수호신 알림<small>성지당 1일 1회</small></span><div class="wf-sw on">ON</div></div>
+            <div class="wf-row"><span>영수증 검수 결과<small>승인/반려 즉시</small></span><div class="wf-sw on">ON</div></div>
+            <div class="wf-row"><span>신규 성지·이벤트 소식<small>마케팅 동의 연동</small></span><div class="wf-sw">OFF</div></div>
+            <div class="wf-p">야간(21~08시) 광고성 정보 수신은 별도 법적 동의 팝업 필요</div>
+          </div>
+        </div>
+        <ul class="fw-check">
+          <li>카테고리별 세부 토글 4종 + 정책 설명(쿨다운/빈도 제한 명시)</li>
+          <li>야간 마케팅 푸시 법적 동의 팝업(agreed_at 저장)</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <p class="fw-foot">이 초안은 기능 완전성 점검용입니다. 시각 디자인은 추후 별도 갱신 예정이며, 보라색 점선 카드로 표시된 2개 화면(UV-SHARE-01, UV-RANK-01)은 상세기획 문서가 아직 없어 IA 문서명과 인접 맥락만으로 추정 구성했습니다 — 확정 전 기획 검토가 필요합니다.</p>
+</div>
+</body>
+</html>

@@ -10,7 +10,7 @@
 
 | 구분 | 문서명 및 위치 | 전달 목적 및 내용 |
 | :--- | :--- | :--- |
-| **1. 통합 정보구조도 (IA)** | 📄 [fandom_전체_정보구조도_IA_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_전체_정보구조도_IA_v0.1_20260722.md) | **[최종] 총 38개 화면** (User View 26개 + Admin 12개) 계층 구조, Screen ID, 진입 경로 명세 |
+| **1. 통합 정보구조도 (IA)** | 📄 [fandom_전체_정보구조도_IA_v0.2_20260817.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_전체_정보구조도_IA_v0.2_20260817.md) | **[최종] 총 38개 화면** (User View 26개 + Admin 12개) 계층 구조, Screen ID, 진입 경로 명세 |
 | **2. 화면 레이아웃 오버뷰** | 📄 [fandom_디자인_화면목업오버뷰_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/02_design/fandom_디자인_화면목업오버뷰_v0.1_20260722.md) | 주요 핵심 화면의 레이아웃, 컴포넌트(포디움, 지도 채색, OCR 애니메이션 등) 명세 |
 | **3. 상세기획 문서군** | 📁 `docs/01_planning/02_detail/` <br> (유저뷰 7개 + 어드민 5개) | 각 화면별 폼 입력 항목, 탭 상태, 예외 처리 및 팝업/모달 수치 사양 |
 | **4. 핵심 정책 & PRD** | 📄 [fandom_기능명세_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_기능명세_v0.1_20260722.md) <br> 📄 [fandom_PRD_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_PRD_v0.1_20260722.md) | 영수증 OCR 인증 정책, 25개 구 점령전, 수호신 제도, 7일 쿨다운 등 비즈니스 로직 |

@@ -2,8 +2,15 @@
 
 * **작성일**: 2026-07-29
 * **작성자**: AI 에이전트
-* **문서 상태**: Draft (기획 검토 및 논의용)
+* **문서 상태**: ✅ **반영완료 (Adopted)** — 2026-08-17, 아래 §1~3의 인증 모델·점수 밸런스·스키마 변경 내역을 상세기획에 반영함. §4 미결 안건은 계속 논의 중.
 * **논의 주제**: 상업적 가맹점 외 일반/공공 성지 포용을 위한 LBS + 사진 인증 체계 전환 및 점수 밸런싱
+
+> 🔗 **반영된 상세기획 문서**:
+> * [fandom_상세기획_인증_어뷰징_v0.2_20260817.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/02_user_view/fandom_상세기획_인증_어뷰징_v0.2_20260817.md) (v0.2) — 인증 모델·점수 밸런스·5겹 어뷰징 방어
+> * [fandom_상세기획_장소_성지_v0.2_20260817.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/02_user_view/fandom_상세기획_장소_성지_v0.2_20260817.md) — `PUBLIC` 장소 유형 도메인 확장
+> * [fandom_상세기획_팬덤_땅점령_v0.2_20260817.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/02_user_view/fandom_상세기획_팬덤_땅점령_v0.2_20260817.md) — 14일 롤링 감쇠 베이스 점수 가변화
+> * [fandom_상세기획_데이터모델_v0.2_20260817.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/01_common/fandom_상세기획_데이터모델_v0.2_20260817.md) — `places`/`verifications` 스키마 개편
+> * [fandom_상세기획_어드민_인증검수_v0.3_20260817.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/03_admin/fandom_상세기획_어드민_인증검수_v0.3_20260817.md) (v0.3) — 어드민 수동 검수 큐 종합 뷰 확장
 
 ---
 

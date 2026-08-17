@@ -1,6 +1,6 @@
 # 팬덤 땅따먹기 상세기획 — 마이페이지 & 프로필 (My Page & Profile Specification)
 
-> 본 문서는 [fandom_핵심정책_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_핵심정책_v0.1_20260722.md) 및 [fandom_전체_정보구조도_IA_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_전체_정보구조도_IA_v0.1_20260722.md)를 바탕으로 **유저 프로필 관리, 수호신 뱃지 수집함, 영토 기여 지분율, 선호 팬덤 변경, 인증 히스토리 및 알림/서비스 설정**의 세부 기능과 텍스트 UI 와이어프레임 박스를 정밀 명세한다.
+> 본 문서는 [fandom_핵심정책_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_핵심정책_v0.1_20260722.md) 및 [fandom_전체_정보구조도_IA_v0.2_20260817.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_전체_정보구조도_IA_v0.2_20260817.md)를 바탕으로 **유저 프로필 관리, 수호신 뱃지 수집함, 영토 기여 지분율, 선호 팬덤 변경, 인증 히스토리 및 알림/서비스 설정**의 세부 기능과 텍스트 UI 와이어프레임 박스를 정밀 명세한다.
 
 ---
 

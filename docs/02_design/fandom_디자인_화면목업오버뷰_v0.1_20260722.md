@@ -2,7 +2,7 @@
 
 > 본 문서는 '팬덤 땅따먹기' 전체 38개 화면(User View 26개 + Admin 12개)의 UI 컴포넌트 구조, 뷰 아키텍처, 와이어프레임 화면 목업 레이아웃 개요를 정의하는 디자인 마스터 문서이다.
 > 
-> 🔗 **전체 정보구조도 (IA)**: [fandom_전체_정보구조도_IA_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_전체_정보구조도_IA_v0.1_20260722.md)
+> 🔗 **전체 정보구조도 (IA)**: [fandom_전체_정보구조도_IA_v0.2_20260817.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/01_overview/fandom_전체_정보구조도_IA_v0.2_20260817.md)
 
 ---
 

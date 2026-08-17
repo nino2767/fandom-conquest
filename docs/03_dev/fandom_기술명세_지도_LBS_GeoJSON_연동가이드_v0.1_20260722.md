@@ -1,6 +1,6 @@
 # 팬덤 땅따먹기 기술명세 — 지도 · LBS · GeoJSON 연동 가이드 (Map & LBS Spec)
 
-> 본 문서는 [fandom_상세기획_장소_성지_v0.1_20260722.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/02_user_view/fandom_상세기획_장소_성지_v0.1_20260722.md)의 기획 정책을 바탕으로 **네이버/카카오/구글 맵 SDK 연동, BBOX Spatial Query, 서울시 25개 구 GeoJSON 렌더링, LBS 반경 200m Haversine 알고리즘 및 클러스터링 명세**를 정의하는 개발자 전용 기술 문서입니다.
+> 본 문서는 [fandom_상세기획_장소_성지_v0.2_20260817.md](file:///Users/jmk/develop/fandom-conquest/docs/01_planning/02_detail/02_user_view/fandom_상세기획_장소_성지_v0.2_20260817.md)의 기획 정책을 바탕으로 **네이버/카카오/구글 맵 SDK 연동, BBOX Spatial Query, 서울시 25개 구 GeoJSON 렌더링, LBS 반경 200m Haversine 알고리즘 및 클러스터링 명세**를 정의하는 개발자 전용 기술 문서입니다.
 
 ---
 
