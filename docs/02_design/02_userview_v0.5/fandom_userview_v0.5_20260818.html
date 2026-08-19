@@ -207,12 +207,16 @@
         <div class="wf"><div class="wf-bar"><span>Step 4/4</span><span class="ic">‹</span></div>
           <div class="wf-pad">
             <div class="wf-input">🔍 팬덤/아티스트 검색</div>
-            <div class="wf-row"><span>대표 메인 팬덤</span></div>
-            <div class="wf-row"><div class="wf-radio on"></div><span style="flex:1">뉴진스 (NewJeans)</span></div>
-            <div class="wf-row"><div class="wf-radio"></div><span style="flex:1">아이브 (IVE)</span></div>
-            <div class="wf-row"><span>추가 선호 팬덤(다중)</span></div>
-            <div class="wf-row"><div class="wf-chk on"></div><span style="flex:1">뉴진스</span><div class="wf-chk"></div><span style="flex:1">세븐틴</span></div>
-            <div class="wf-p">+ IP 직접 신청하기</div>
+            <div class="wf-row"><span>선호 팬덤 선택 (다중)</span></div>
+            <div class="wf-row"><div class="wf-chk on"></div><span style="flex:1">뉴진스 (NewJeans)</span></div>
+            <div class="wf-row"><div class="wf-chk on"></div><span style="flex:1">아이브 (IVE)</span></div>
+            <div class="wf-row"><div class="wf-chk"></div><span style="flex:1">세븐틴 (SEVENTEEN)</span></div>
+            <div class="wf-p" style="margin-top:8px;">+ IP 직접 신청하기</div>
+            <div class="wf-row"><span>선택한 팬덤 (2)</span></div>
+            <div class="wf-tabs" style="flex-wrap:wrap; margin-bottom:12px;">
+              <span class="wf-tab sel">💙 뉴진스 ✕</span>
+              <span class="wf-tab sel">🔴 아이브 ✕</span>
+            </div>
             <div class="wf-btn solid">가입 완료</div>
             <div class="wf-bubble">나중에 선택할 수 있어요.</div>
             <div class="wf-btn">나중에 선택</div>
@@ -220,7 +224,8 @@
         </div>
         <ul class="fw-check">
           <li>팬덤 검색 + 3계층(그룹/유닛/개인) × 장르 트리 탐색</li>
-          <li>다중 선택 체크박스 + 대표 메인 팬덤 라디오 1개 지정</li>
+          <li>✨ 다중 선택 체크박스 전용 — 대표 메인 팬덤 지정(라디오) 제거</li>
+          <li>✨ [선택한 팬덤] 리스트 상시 노출 — 선택 즉시 칩으로 표시, 칩의 ✕로 개별 해제</li>
           <li>[IP 직접 신청하기] → 팬덤명/아티스트명/장르/사유 입력 → ADM-IP-REQUEST-01 큐 전송</li>
           <li>[나중에 선택] 버튼 + 말풍선 넛지("나중에 선택할 수 있어요.") → 무소속/탐색 유저 상태로 예외 처리</li>
           <li>완료 시 POST /api/v1/auth/signup 호출</li>
@@ -233,13 +238,13 @@
           <div class="wf-pad" style="text-align:center;">
             <div class="wf-img" style="width:44px;height:44px;margin:0 auto 8px;"></div>
             <div class="wf-h1">가입을 환영해요!</div>
-            <div class="wf-p">메인 팬덤: 💙 뉴진스</div>
+            <div class="wf-p">선호 팬덤: 💙 뉴진스 · 🔴 아이브</div>
             <div class="wf-btn solid">메인 지도로 시작하기</div>
           </div>
         </div>
         <ul class="fw-check">
           <li>가입 완료 축하 카피 + 애니메이션 자리</li>
-          <li>선택한 메인 팬덤 요약 뱃지</li>
+          <li>선택한 선호 팬덤 요약 뱃지(다중, 대표 지정 없음)</li>
           <li>[메인 지도로 시작하기] CTA → UV-MAIN-01</li>
         </ul>
       </div>
@@ -261,8 +266,8 @@
 
             <div style="position:absolute; top:120px; left:66px; width:16px; height:16px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:#141414; border:1.4px solid #141414;"></div>
             <div style="position:absolute; top:186px; left:238px; width:16px; height:16px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:transparent; border:1.4px solid #141414;"></div>
-            <div style="position:absolute; top:274px; left:128px; width:16px; height:16px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:#141414; border:1.4px dashed #141414;"></div>
-            <div style="position:absolute; top:346px; left:262px; width:16px; height:16px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:transparent; border:1.4px dashed #141414;"></div>
+            <div style="position:absolute; top:274px; left:128px; width:16px; height:16px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:#141414; border:1.4px solid #141414;"></div>
+            <div style="position:absolute; top:346px; left:262px; width:16px; height:16px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:transparent; border:1.4px solid #141414;"></div>
 
             <div style="position:absolute; top:14px; left:14px; right:14px; display:flex; justify-content:space-between; align-items:center;">
               <div style="display:flex; align-items:center; gap:7px; border:1.3px solid #141414; border-radius:20px; padding:5px 12px 5px 5px; background:#FCFCFA;">
@@ -297,10 +302,11 @@
           </div>
         </div>
         <ul class="fw-check">
-          <li>✨ 내 최애 성지 핀 — 방문(●채움)/미방문(◇테두리만) 상태 + 실선(실제방문확인)/점선(팬커뮤니티성지) 타입 구분, "성지순례 도장판" 컨셉으로 기본 노출</li>
+          <li>✨ 내 최애 성지 핀 — 방문(●채움)/미방문(◇테두리만) 상태, "성지순례 도장판" 컨셉으로 기본 노출</li>
+          <li>✨ MVP 범위 확정 — 성지 = 스타가 방문(발도장)한 장소만. 이벤트형 성지는 MVP에서 제외, 팬커뮤니티성지 타입은 MVP 이후로 보류</li>
           <li>✨ 구별 점령 색칠(4색 오버레이)은 지도 탭에서 완전 제거 — 토글도 두지 않음, 해당 역할은 점령보드(UV-WAR-01) 탭이 전담</li>
           <li>✨ 점유율/성과 라벨 톤 전환 — 승패("역전"/"점령") 대신 동행·누적 뉘앙스(예: "뉴진스 팬 발자국 63%") — 지도 탭 한정, 점령보드 탭은 경쟁 톤 유지</li>
-          <li>성지 마커 핀 (D-Day, 🆕신규거점, 🔒폐업 뱃지)</li>
+          <li>성지 마커 핀 (🆕신규거점, 🔒폐업 뱃지) — 이벤트 D-Day 뱃지 제거</li>
           <li>✨ 좌상단 프로필 칩 — 내 프로필 사진 + 닉네임 + 현재 조회 중인 팬덤(색상칩) + 드롭다운(▼) 표시. 탭 시 UV-MAIN-04(팬덤 필터 바텀시트) 진입 — 별도 [필터] 버튼 없이 이 칩이 유일한 진입점 (상단 "내 선호 IP" 빠른 선택 + 하단 검색/전체 팬덤 탐색을 한 화면에서 처리)</li>
           <li>✨ 플로팅 CTA [📸 발자국 남기기] → UV-VERIF-00 사진 선택 액션시트</li>
           <li>3단 접이식 바텀시트 핸들 → UV-MAIN-03</li>
@@ -309,7 +315,8 @@
           <li>✨ 무소속(최애 미지정) 유저 진입 시 — 빈 지도/강제 팝업 대신 탐색모드 기본값(전체 팬덤 성지 인기·거리순 혼합 노출) + 상단 비침습 넛지 배너("관심있는 아티스트를 선택하면 발자취를 따라갈 수 있어요" + 인기 팬덤 칩 바로 선택)</li>
           <li>하단 탭바(지도/점령보드/랭킹/마이) — 4대 주요 화면 상시 전환, 명칭 변경 없이 유지 확정</li>
         </ul>
-        <div class="fw-note">🔄 컨셉 전환 반영(v0.2, 2026-08-18): fandom_UV-MAIN-01_컨셉전환_지시서_v0.2_20260818.md — 지도 탭은 "최애 성지순례"만 남기고 구별 점령 색칠은 완전 제거(전황 보기 토글도 삭제), 그 역할은 점령보드(UV-WAR-01) 탭이 전담. 성지 타입(실제방문확인/팬커뮤니티성지) 구분, 무소속 유저 탐색모드가 신규 반영됨. 하단 탭바 명칭은 변경 없이 유지 확정.</div>
+        <div class="fw-note">🔄 컨셉 전환 반영(v0.2, 2026-08-18): fandom_UV-MAIN-01_컨셉전환_지시서_v0.2_20260818.md — 지도 탭은 "최애 성지순례"만 남기고 구별 점령 색칠은 완전 제거(전황 보기 토글도 삭제), 그 역할은 점령보드(UV-WAR-01) 탭이 전담. 무소속 유저 탐색모드가 신규 반영됨. 하단 탭바 명칭은 변경 없이 유지 확정.</div>
+        <div class="fw-note">💬 리뷰 반영(2026-08-19): 이벤트형 성지 제거. MVP 성지 정의 = "스타가 발도장 찍은(실제 방문한) 장소"로 한정하고, 팬커뮤니티성지 타입은 MVP 이후로 보류 — 지도 마커의 성지 타입 구분(실선/점선)도 함께 삭제.</div>
       </div>
 
       <div class="fw-unit">
@@ -317,22 +324,45 @@
         <div class="wf"><div class="wf-bar"><span class="ic">✕</span><span>🔗 공유</span></div>
           <div class="wf-img" style="margin:8px 8px 0;"></div>
           <div class="wf-pad">
-            <div class="wf-p">🏷️ 이벤트형 D-3 · 💙 뉴진스</div>
+            <div class="wf-p">💙 뉴진스</div>
             <div class="wf-h1">카페 어반소스</div>
-            <div class="wf-p">📍 마포구 · 📅 07.01~07.15</div>
-            <div class="wf-row"><span>뉴진스 60%</span><span>아이브 40%</span></div>
-            <div class="wf-bar-track"><div class="wf-bar-fill" style="width:60%"></div></div>
-            <div class="wf-tabs"><span class="wf-tab sel">기여 현황</span><span class="wf-tab">과거 이력</span></div>
-            <div class="wf-p">👑 수호신 덕질마스터(15점) · Top3 포디움 · 최근 인증 로그</div>
-            <div class="wf-btn solid">📸 이 성지에 기여하기</div>
+            <div class="wf-p">📍 마포구</div>
+            <div class="wf-p" style="color:#555; font-style:italic;">뉴진스가 다녀간 성지 — 성지 설명 문구가 들어갑니다. (선택)</div>
+
+            <div class="wf-p" style="font-weight:700; margin:6px 0 6px;">이 성지 팬덤 랭킹</div>
+            <!-- 1위 강조 -->
+            <div class="wf-row" style="align-items:center; gap:9px; padding:11px 10px; border:1.5px solid #141414; border-radius:6px; border-bottom:1.5px solid #141414; margin-bottom:8px;">
+              <span style="font:800 16px/1 ui-sans-serif; width:16px;">1</span>
+              <span style="width:16px; height:16px; border-radius:50%; background:#4a7fd6; border:1.3px solid #141414; flex:none;"></span>
+              <span style="flex:1; font:800 14px/1.2 ui-sans-serif;">뉴진스 ›</span>
+              <span style="text-align:right; font:700 12px/1.3 ui-sans-serif;">63%<small>발자국 1.2k · 연속 12일</small></span>
+            </div>
+            <!-- 2~10위 축소 -->
+            <div class="wf-row" style="align-items:center; gap:8px; padding:7px 6px;">
+              <span style="font:700 11px/1 ui-sans-serif; width:14px;">2</span>
+              <span style="width:12px; height:12px; border-radius:50%; background:#d64a4a; border:1.2px solid #141414; flex:none;"></span>
+              <span style="flex:1; font:700 11.5px/1.2 ui-sans-serif;">아이브 ›</span>
+              <span style="text-align:right; font:600 10px/1.3 ui-sans-serif;">22%<small>발자국 430 · 연속 3일</small></span>
+            </div>
+            <div class="wf-row" style="align-items:center; gap:8px; padding:7px 6px;">
+              <span style="font:700 11px/1 ui-sans-serif; width:14px;">3</span>
+              <span style="width:12px; height:12px; border-radius:50%; background:#3fa66a; border:1.2px solid #141414; flex:none;"></span>
+              <span style="flex:1; font:700 11.5px/1.2 ui-sans-serif;">세븐틴 ›</span>
+              <span style="text-align:right; font:600 10px/1.3 ui-sans-serif;">9%<small>발자국 180 · 연속 1일</small></span>
+            </div>
+            <div class="wf-p" style="text-align:center; color:#666; font:600 10.5px/1 ui-sans-serif; margin-top:2px;">전체 순위 (10위까지) 펼치기 ▾</div>
+
+            <div class="wf-p" style="margin-top:10px;">👑 수호신 덕질마스터(15점) · Top3 포디움 · 최근 인증 로그</div>
+            <div class="wf-btn solid">📸 발자국 남기기</div>
           </div>
         </div>
         <ul class="fw-check">
           <li>포스터/매장사진 슬라이더 + 전체화면 확대뷰어</li>
-          <li>이벤트 D-day 뱃지 · 귀속 팬덤 뱃지 · 운영기간 · 주소/길찾기</li>
-          <li>팬덤별 점유율 프로그레스바 + 1위 표시</li>
-          <li>탭1 기여현황: 수호신·Top3 포디움·최근 인증 로그 / 탭2 과거 장소 이력</li>
-          <li>고정 CTA [기여하기] → UV-VERIF-00 사진 선택 액션시트 (폐업 시 비활성화)</li>
+          <li>✨ 귀속 팬덤 뱃지 · 주소/길찾기 — 이벤트형 표기·운영기간(날짜) 제거</li>
+          <li>✨ 성지 설명 문구(선택) 노출</li>
+          <li>✨ 팬덤 점유 랭킹 — 1위 크게 강조(점유율·발자국 수·연속 유지일 병기), 2~10위 축소 리스트(동일 정보). 각 행에 팬덤 컬러칩 부착, 컬러칩/팬덤명 탭 시 해당 팬덤 성지 리스트 화면으로 연결</li>
+          <li>✨ 수호신·Top3 포디움·최근 인증 로그 — 단일 뷰(기여현황/과거이력 탭 구분 제거)</li>
+          <li>✨ 고정 CTA [📸 발자국 남기기] → UV-VERIF-00 사진 선택 액션시트 (폐업 시 비활성화)</li>
         </ul>
       </div>
 
@@ -796,5 +826,248 @@
 
   <p class="fw-foot">이 초안은 기능 완전성 점검용입니다. 시각 디자인은 추후 별도 갱신 예정이며, 보라색 점선 카드로 표시된 2개 화면(UV-SHARE-01, UV-RANK-01)은 상세기획 문서가 아직 없어 IA 문서명과 인접 맥락만으로 추정 구성했습니다 — 확정 전 기획 검토가 필요합니다.</p>
 </div>
+
+<!-- ============================================================
+     핀 댓글 시스템 (자체 내장 · 외부 의존성 없음 · localStorage 저장)
+     - 우측 하단 툴바의 💬 버튼으로 댓글 모드 on/off
+     - 댓글 모드에서 화면(와이어프레임 카드)을 클릭하면 그 지점에 핀 생성
+     - 핀 위치는 화면 코드(UV-XXX)에 상대 좌표(%)로 저장 → 창 크기가 바뀌어도 유지
+     - JSON 내보내기/불러오기로 댓글을 파일로 공유 가능
+     ============================================================ -->
+<style>
+  #cmt-toolbar{ position:fixed; right:18px; bottom:18px; z-index:9998; display:flex; flex-direction:column-reverse; align-items:flex-end; gap:9px; font-family:ui-sans-serif,system-ui,"Noto Sans KR",sans-serif; }
+  #cmt-toolbar button{ cursor:pointer; border:1.5px solid #141414; background:#FCFCFA; color:#141414; border-radius:22px; font:700 12px/1 ui-sans-serif; padding:0; box-shadow:0 3px 10px rgba(0,0,0,.18); transition:transform .08s; }
+  #cmt-toolbar button:active{ transform:scale(.94); }
+  @media (prefers-color-scheme:dark){ #cmt-toolbar button{ background:#26242a; color:#EFEDE7; border-color:#EFEDE7; } }
+  #cmt-fab{ width:52px; height:52px; font-size:22px; display:flex; align-items:center; justify-content:center; }
+  #cmt-fab.on{ background:#141414; color:#fff; }
+  .cmt-mini{ height:38px; padding:0 14px !important; display:flex; align-items:center; gap:6px; }
+  #cmt-count{ position:absolute; top:-4px; right:-4px; min-width:20px; height:20px; padding:0 5px; border-radius:11px; background:#C23B3B; color:#fff; font:700 11px/20px ui-sans-serif; text-align:center; border:1.5px solid #FCFCFA; }
+  #cmt-count[data-n="0"]{ display:none; }
+
+  body.cmt-mode .fw-unit{ cursor:crosshair; }
+  body.cmt-mode .fw-unit:hover{ outline:2px dashed var(--accent); outline-offset:3px; }
+
+  .cmt-pin{ position:absolute; width:26px; height:26px; margin:-26px 0 0 -2px; z-index:50; cursor:pointer; }
+  .cmt-pin .bubble{ width:26px; height:26px; border-radius:50% 50% 50% 2px; background:#C23B3B; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,.35); transform:rotate(-45deg); display:flex; align-items:center; justify-content:center; }
+  .cmt-pin .num{ transform:rotate(45deg); color:#fff; font:700 12px/1 ui-sans-serif; }
+  .cmt-pin.resolved .bubble{ background:#1F8A5A; }
+  body.cmt-hide .cmt-pin{ display:none; }
+
+  #cmt-pop{ position:fixed; z-index:9999; width:288px; max-width:calc(100vw - 24px); background:#FCFCFA; color:#18181A; border:1.5px solid #141414; border-radius:10px; box-shadow:0 10px 34px rgba(0,0,0,.28); font-family:ui-sans-serif,system-ui,"Noto Sans KR",sans-serif; overflow:hidden; }
+  @media (prefers-color-scheme:dark){ #cmt-pop{ background:#1c1b1f; color:#EFEDE7; border-color:#555; } }
+  #cmt-pop header{ display:flex; align-items:center; justify-content:space-between; padding:9px 12px; border-bottom:1px solid rgba(128,128,128,.25); font:700 11px/1 ui-monospace,Menlo,monospace; }
+  #cmt-pop header .x{ cursor:pointer; font-size:15px; padding:2px 4px; }
+  #cmt-pop .body{ max-height:220px; overflow-y:auto; padding:10px 12px; }
+  .cmt-item{ font:400 12.5px/1.5 ui-sans-serif; padding:8px 0; border-bottom:1px dashed rgba(128,128,128,.25); }
+  .cmt-item:last-child{ border-bottom:none; }
+  .cmt-item .meta{ font:600 10px/1 ui-monospace,Menlo,monospace; color:#8a8a8a; margin-bottom:4px; display:flex; gap:8px; align-items:center; }
+  .cmt-item .meta .del{ margin-left:auto; cursor:pointer; color:#C23B3B; }
+  .cmt-item .txt{ white-space:pre-wrap; word-break:break-word; }
+  #cmt-pop .foot{ padding:10px 12px; border-top:1px solid rgba(128,128,128,.25); }
+  #cmt-pop textarea{ width:100%; min-height:52px; resize:vertical; border:1.3px solid #999; border-radius:6px; padding:7px 8px; font:400 12.5px/1.4 ui-sans-serif; background:transparent; color:inherit; box-sizing:border-box; }
+  #cmt-pop .foot-row{ display:flex; gap:7px; margin-top:8px; align-items:center; }
+  #cmt-pop .foot-row input{ flex:1; min-width:0; border:1.3px solid #999; border-radius:6px; padding:6px 8px; font:400 11.5px/1 ui-sans-serif; background:transparent; color:inherit; box-sizing:border-box; }
+  #cmt-pop .foot-row button{ cursor:pointer; border:1.5px solid #141414; background:#141414; color:#fff; border-radius:6px; font:700 12px/1 ui-sans-serif; padding:8px 14px; }
+  #cmt-pop .foot-row button.ghost{ background:transparent; color:inherit; border-color:#999; }
+  @media (prefers-color-scheme:dark){ #cmt-pop .foot-row button{ background:#EFEDE7; color:#18181A; border-color:#EFEDE7; } }
+</style>
+
+<div id="cmt-toolbar">
+  <button id="cmt-fab" title="댓글 모드 켜기/끄기">💬<span id="cmt-count" data-n="0">0</span></button>
+  <button class="cmt-mini" id="cmt-toggle" title="핀 숨기기/보이기">👁 핀</button>
+  <button class="cmt-mini" id="cmt-export" title="댓글 JSON 내보내기">⬇ 내보내기</button>
+  <button class="cmt-mini" id="cmt-import" title="댓글 JSON 불러오기">⬆ 불러오기</button>
+</div>
+<input type="file" id="cmt-file" accept="application/json" style="display:none">
+
+<script>
+(function(){
+  "use strict";
+  var STORE_KEY = "fandom-cmt::" + (location.pathname.split("/").pop() || "doc");
+  var pins = [];        // {id, anchor, x, y, resolved, comments:[{text,author,at}]}
+  var seq = 0;
+
+  /* ---- 화면 카드(.fw-unit)에 안정적 앵커 키 부여 ---- */
+  var units = Array.prototype.slice.call(document.querySelectorAll(".fw-unit"));
+  var anchorMap = {};
+  units.forEach(function(u, i){
+    u.style.position = u.style.position || "relative";
+    var fid = u.querySelector(".fw-fid");
+    var code = fid ? (fid.textContent.match(/[A-Z]{2}-[A-Z]+-\d+/) || [])[0] : null;
+    var key = code || ("unit-" + i);
+    if (anchorMap[key]) key = key + "#" + i;   // 중복 코드 방지
+    u.setAttribute("data-cmt-anchor", key);
+    anchorMap[key] = u;
+  });
+
+  /* ---- 저장/로드 ---- */
+  function save(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(pins)); }catch(e){} }
+  function load(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      if(raw){ pins = JSON.parse(raw) || []; }
+    }catch(e){ pins = []; }
+    pins.forEach(function(p){ var n = parseInt((p.id||"").replace(/\D/g,""),10); if(n>seq) seq=n; });
+  }
+
+  /* ---- 렌더 ---- */
+  function render(){
+    document.querySelectorAll(".cmt-pin").forEach(function(el){ el.remove(); });
+    var idx = 0;
+    pins.forEach(function(p){
+      idx++;
+      var host = anchorMap[p.anchor];
+      if(!host) return;              // 앵커가 사라진 핀은 표시 안 함(데이터는 보존)
+      var pin = document.createElement("div");
+      pin.className = "cmt-pin" + (p.resolved ? " resolved" : "");
+      pin.style.left = (p.x * 100) + "%";
+      pin.style.top  = (p.y * 100) + "%";
+      pin.innerHTML = '<div class="bubble"><span class="num">'+idx+'</span></div>';
+      pin.addEventListener("click", function(ev){ ev.stopPropagation(); openPop(p, pin); });
+      host.appendChild(pin);
+    });
+    var badge = document.getElementById("cmt-count");
+    badge.textContent = pins.length;
+    badge.setAttribute("data-n", pins.length);
+  }
+
+  /* ---- 팝오버 ---- */
+  var pop = null;
+  function closePop(){ if(pop){ pop.remove(); pop = null; } }
+  function fmt(ts){ var d = new Date(ts); return (d.getMonth()+1)+"/"+d.getDate()+" "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2); }
+
+  function openPop(p, pinEl){
+    closePop();
+    pop = document.createElement("div");
+    pop.id = "cmt-pop";
+    var rows = p.comments.map(function(c, ci){
+      return '<div class="cmt-item"><div class="meta"><span>'+ (c.author||"익명") +'</span><span>'+ fmt(c.at) +
+             '</span><span class="del" data-ci="'+ci+'">삭제</span></div><div class="txt"></div></div>';
+    }).join("") || '<div class="cmt-item" style="color:#8a8a8a">아직 댓글이 없습니다. 아래에 첫 댓글을 남겨보세요.</div>';
+    pop.innerHTML =
+      '<header><span>'+ p.anchor +'</span><span class="x" title="닫기">✕</span></header>'+
+      '<div class="body">'+ rows +'</div>'+
+      '<div class="foot">'+
+        '<textarea placeholder="댓글 입력 (Ctrl+Enter 등록)"></textarea>'+
+        '<div class="foot-row">'+
+          '<input type="text" class="who" placeholder="이름(선택)">'+
+          '<button class="add">등록</button>'+
+        '</div>'+
+        '<div class="foot-row">'+
+          '<button class="ghost resolve">'+ (p.resolved?"↺ 재오픈":"✓ 해결") +'</button>'+
+          '<button class="ghost delpin" style="color:#C23B3B;border-color:#C23B3B">핀 삭제</button>'+
+        '</div>'+
+      '</div>';
+    document.body.appendChild(pop);
+    // 댓글 텍스트를 안전하게 삽입(HTML 이스케이프)
+    var txts = pop.querySelectorAll(".cmt-item .txt");
+    var ti = 0;
+    p.comments.forEach(function(c){ if(txts[ti]) txts[ti].textContent = c.text; ti++; });
+
+    // 위치잡기
+    var r = pinEl.getBoundingClientRect();
+    var left = Math.min(r.left, window.innerWidth - 300);
+    var top = r.bottom + 8;
+    if(top + 260 > window.innerHeight) top = Math.max(8, r.top - 268);
+    pop.style.left = Math.max(12, left) + "px";
+    pop.style.top = top + "px";
+
+    var ta = pop.querySelector("textarea");
+    var who = pop.querySelector(".who");
+    try{ who.value = localStorage.getItem("fandom-cmt-name") || ""; }catch(e){}
+    ta.focus();
+
+    function add(){
+      var t = ta.value.trim(); if(!t) return;
+      var name = who.value.trim();
+      try{ localStorage.setItem("fandom-cmt-name", name); }catch(e){}
+      p.comments.push({ text:t, author:name, at:Date.now() });
+      save(); openPop(p, pinEl); render();
+    }
+    pop.querySelector(".add").addEventListener("click", add);
+    ta.addEventListener("keydown", function(e){ if((e.ctrlKey||e.metaKey)&&e.key==="Enter") add(); });
+    pop.querySelector(".x").addEventListener("click", closePop);
+    pop.querySelectorAll(".del").forEach(function(d){
+      d.addEventListener("click", function(){
+        p.comments.splice(parseInt(d.getAttribute("data-ci"),10),1);
+        save(); openPop(p, pinEl); render();
+      });
+    });
+    pop.querySelector(".resolve").addEventListener("click", function(){
+      p.resolved = !p.resolved; save(); render(); openPop(p, pinEl);
+    });
+    pop.querySelector(".delpin").addEventListener("click", function(){
+      if(!confirm("이 핀과 댓글을 모두 삭제할까요?")) return;
+      pins = pins.filter(function(x){ return x !== p; });
+      save(); render(); closePop();
+    });
+  }
+
+  /* ---- 핀 생성 (댓글 모드에서 카드 클릭) ---- */
+  document.addEventListener("click", function(e){
+    if(!document.body.classList.contains("cmt-mode")) return;
+    if(e.target.closest("#cmt-toolbar") || e.target.closest("#cmt-pop") || e.target.closest(".cmt-pin")) return;
+    var host = e.target.closest(".fw-unit");
+    if(!host) return;
+    e.preventDefault();
+    var rect = host.getBoundingClientRect();
+    var x = (e.clientX - rect.left) / rect.width;
+    var y = (e.clientY - rect.top) / rect.height;
+    var p = { id:"p"+(++seq), anchor:host.getAttribute("data-cmt-anchor"),
+              x:Math.max(0,Math.min(1,x)), y:Math.max(0,Math.min(1,y)),
+              resolved:false, comments:[] };
+    pins.push(p); save(); render();
+    var el = host.querySelector(".cmt-pin:last-child");
+    if(el) openPop(p, el);
+  }, true);
+
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closePop(); });
+  window.addEventListener("scroll", closePop, true);
+
+  /* ---- 툴바 ---- */
+  document.getElementById("cmt-fab").addEventListener("click", function(){
+    var on = document.body.classList.toggle("cmt-mode");
+    this.classList.toggle("on", on);
+    if(on) document.body.classList.remove("cmt-hide");
+  });
+  document.getElementById("cmt-toggle").addEventListener("click", function(){
+    document.body.classList.toggle("cmt-hide");
+  });
+  document.getElementById("cmt-export").addEventListener("click", function(){
+    var blob = new Blob([JSON.stringify(pins,null,2)], {type:"application/json"});
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "fandom-userview-v0.5-comments.json";
+    a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  });
+  document.getElementById("cmt-import").addEventListener("click", function(){
+    document.getElementById("cmt-file").click();
+  });
+  document.getElementById("cmt-file").addEventListener("change", function(e){
+    var f = e.target.files[0]; if(!f) return;
+    var rd = new FileReader();
+    rd.onload = function(){
+      try{
+        var data = JSON.parse(rd.result);
+        if(!Array.isArray(data)) throw 0;
+        if(pins.length && !confirm("현재 댓글을 불러온 내용으로 교체할까요? (취소 시 병합)")){
+          data.forEach(function(d){ pins.push(d); });
+        } else {
+          pins = data;
+        }
+        seq = 0; pins.forEach(function(p){ var n=parseInt((p.id||"").replace(/\D/g,""),10); if(n>seq)seq=n; });
+        save(); render();
+        alert("불러오기 완료: 댓글 핀 " + pins.length + "개");
+      }catch(err){ alert("JSON 형식이 올바르지 않습니다."); }
+      e.target.value = "";
+    };
+    rd.readAsText(f);
+  });
+
+  load(); render();
+})();
+</script>
 </body>
 </html>
